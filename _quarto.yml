@@ -1,0 +1,48 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "The Unjournal evaluations: data and analysis"
+  author: "David Reinstein and the TUnjournal team"
+  repo-url: https://github.com/daaronr/unjournaldata/
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - chapters/evaluation_data.qmd
+      #- references.qmd
+  reader-mode: true
+  page-navigation: true
+  date: today
+
+execute:
+  freeze: auto # re-render only when source changes
+  warning: false
+  message: false
+  error: true
+
+comments:
+    hypothesis: true
+
+      #bibliography: references.bib
+
+format:
+  html:
+    code-fold: true
+    code-link: true #note: this isn't working for me
+    code-tools: true
+    theme: cosmo
+    citations-hover: true
+    footnotes-hover: true
+    #css: styles.css
+
+    # margin-right: 0.5em
+    #  margin-left: 0.5em
+    #  max-width: 3200px
+ # pdf:
+  #  documentclass: scrreprt
+  #
+
+
+#editor: visual
+

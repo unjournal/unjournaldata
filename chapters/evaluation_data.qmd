@@ -1,0 +1,18 @@
+# Evaluation data: description, exploration, checks
+
+## Input evaluation data
+
+<!-- need airtable API stuff -->
+
+## Clean and impute 
+
+
+## Basic presentation
+
+## Aggregation of expert opinion (modeling)
+
+## Inter-rater reliability
+
+## Decomposing variation, dimension reduction, simple linear models
+
+
