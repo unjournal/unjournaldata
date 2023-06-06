@@ -68,6 +68,9 @@ evals_pub <- evals %>%
   dplyr::filter(stage_of_process == "published") 
 
 evals_pub %>% saveRDS(file = here("data", "evals.Rdata"))
+evals_pub %>% write_csv(file = here("data", "evals.csv"))
+
+
 
 ```
 
