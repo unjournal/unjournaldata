@@ -1,6 +1,73 @@
 # Evaluation data: description, exploration, checks
 
+```{r, warning=FALSE}
+#| label: load-packages
+#| code-summary: "load packages"
+
+
+#devtools::install_github("rethinkpriorities/rp-r-package")
+library(rethinkpriorities)
+
+#devtools::install_github("rethinkpriorities/r-noodling-package")
+library(rnoodling)
+
+library(here)
+#source(here::here("code", "shared_packages_code.R"))
+library(dplyr)
+library(pacman)
+
+p_load(santoku, lme4, huxtable, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
+
+p_load(ggthemes, paletteer, ggridges, install=FALSE)
+
+select <- dplyr::select
+
+options(knitr.duplicate.label = "allow")
+
+options(mc.cores = parallel::detectCores())
+#rstan_options(auto_write = TRUE)
+`
+
+#library(hunspell)
+
+#(brms)
+
+#devtools::install_github("bergant/airtabler")
+p_load(airtabler)
+
+#remotes::install_github("rmcelreath/rethinking")
+#library(rethinking)
+
+```
+
+
 ## Input evaluation data
+
+```{r}
+
+base_id <- "appbPYEw9nURln7Qg"
+
+# Set your Airtable API key
+#Sys.setenv(AIRTABLE_API_KEY = "") 
+#this should be set in my .Renviron file
+
+
+# Read data from a specific view
+evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval")
+
+
+
+```
+
+```{r}
+#| label: savedata
+#| code-summary: "save the data for others to have access"
+
+saveRDS(evals, file = here("data", "evals.Rdata"))
+ 
+
+```
+
 
 <!-- need airtable API stuff -->
 
