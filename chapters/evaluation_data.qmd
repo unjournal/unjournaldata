@@ -12,11 +12,11 @@ library(rethinkpriorities)
 library(rnoodling)
 
 library(here)
-#source(here::here("code", "shared_packages_code.R"))
+source(here::here("code", "shared_packages_code.R"))
 library(dplyr)
 library(pacman)
 
-p_load(santoku, lme4, huxtable, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
+p_load(santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
 
 p_load(ggthemes, paletteer, ggridges, install=FALSE)
 
@@ -53,8 +53,7 @@ base_id <- "appbPYEw9nURln7Qg"
 
 
 # Read data from a specific view
-evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval")
-
+evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval") 
 
 
 ```
@@ -63,8 +62,12 @@ evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval")
 #| label: savedata
 #| code-summary: "save the data for others to have access"
 
-saveRDS(evals, file = here("data", "evals.Rdata"))
- 
+evals_pub <- evals %>% 
+  dplyr::rename(stage_of_process = "stage of process/todo (from crucial_research 2)") %>%  
+  mutate(stage_of_process = unlist(stage_of_process)) %>% 
+  dplyr::filter(stage_of_process == "published") 
+
+evals_pub %>% saveRDS(file = here("data", "evals.Rdata"))
 
 ```
 
@@ -73,6 +76,10 @@ saveRDS(evals, file = here("data", "evals.Rdata"))
 
 ## Clean and impute 
 
+- Unlist list rows
+
+- Reconcile the uncertainty ratings and CIs (this is hard)
+    
 
 ## Basic presentation
 
