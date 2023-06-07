@@ -27,9 +27,7 @@ options(knitr.duplicate.label = "allow")
 options(mc.cores = parallel::detectCores())
 #rstan_options(auto_write = TRUE)
 `
-
 #library(hunspell)
-
 #(brms)
 
 #devtools::install_github("bergant/airtabler")
@@ -62,24 +60,119 @@ evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval")
 #| label: savedata
 #| code-summary: "save the data for others to have access"
 
+colnames(evals) <- snakecase::to_snake_case(colnames(evals))
+
 evals_pub <- evals %>% 
-  dplyr::rename(stage_of_process = "stage of process/todo (from crucial_research 2)") %>%  
+  dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
   mutate(stage_of_process = unlist(stage_of_process)) %>% 
-  dplyr::filter(stage_of_process == "published") 
+  dplyr::filter(stage_of_process == "published") %>% 
+  select(id, evaluator_name, crucial_research, overall, lb_overall, ub_overall, conf_index_overall, advancing_knowledge_and_practice, lb_advancing_knowledge_and_practice, ub_advancing_knowledge_and_practice, conf_index_advancing_knowledge_and_practice, methods_justification_reasonableness_validity_robustness, lb_methods_justification_reasonableness_validity_robustness, ub_methods_justification_reasonableness_validity_robustness, conf_index_methods_justification_reasonableness_validity_robustness, logic_communication, lb_logic_communication, ub_logic_communication, conf_index_logic_communication, engaging_with_real_world_impact_quantification_practice_realism_and_relevance, lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, relevance_to_global_priorities, lb_relevance_to_global_priorities, ub_relevance_to_global_priorities, conf_index_relevance_to_global_priorities, journal_quality_predict, lb_journal_quality_predict, ub_journal_quality_predict, conf_index_journal_quality_predict, open_collaborative_replicable, conf_index_open_collaborative_replicable, lb_open_collaborative_replicable, ub_open_collaborative_replicable, merits_journal, lb_merits_journal, ub_merits_journal, conf_index_merits_journal)
+
+evals_pub %<>%
+   mutate(across(everything(), unlist)) #unlist list columns
 
 evals_pub %>% saveRDS(file = here("data", "evals.Rdata"))
 evals_pub %>% write_csv(file = here("data", "evals.csv"))
 
-
-
-```
+```                   
 
 
 <!-- need airtable API stuff -->
 
-## Clean and impute 
+Impute CIs from stated confidence level 'dots', correspondence loosely described [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis)
 
-- Unlist list rows
+::: {.callout-note collapse="true"}
+## Dots to interval choices
+
+> 5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)
+
+For 0-100 ratings, code the LB as $min(R - 4\times \frac{R}{100},0)$ and the UB as $max(R + 4\times \frac{R}{100},0)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.
+
+> 4 = Very*confident: 90% confidence interval +/- 8 points or less
+
+For 0-100 ratings, code the LB as $min(R - 8\times \frac{R}{100},0)$ and the UB as $max(R + 8\times \frac{R}{100},0)$, where R is the stated (middle) rating. 
+
+> 3 = Somewhat** confident: 90% confidence interval +/- 15 points or less&#x20;
+
+> 2 = Not very** confident: 90% confidence interval, +/- 25 points or less
+
+Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.
+
+> 1 = Not** confident: (90% confidence interval +/- more than 25 points)
+
+Code LB as $min(R - 37.5\times \frac{R}{100},0)$ and the UB as $max(R + 37.5\times \frac{R}{100},0)$. 
+    
+This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings.
+
+::: 
+
+
+```{r}
+
+# Define the baseline widths for each confidence rating
+baseline_widths <- c(4, 8, 15, 25, 37.5)
+
+# Define a function to calculate the lower and upper bounds
+calc_bounds <- function(rating, confidence, scale=100) {
+    # Print out input values
+  print(paste("Rating:", rating, "Confidence:", confidence, "Scale:", scale))
+  
+  baseline_width <- baseline_widths[confidence]
+  lb <- pmax(rating - baseline_width * rating / scale, 0)
+  ub <- pmin(rating + baseline_width * rating / scale, scale)
+  return(c(lb, ub))
+}
+
+# Function to calculate bounds for a single category
+calc_category_bounds <- function(df, category, scale=100) {
+  # Calculate bounds
+  bounds <- mapply(calc_bounds, df[[category]], df[[paste0("conf_index_", category)]])
+  
+  # Convert to data frame and ensure it has the same number of rows as the input
+  bounds_df <- as.data.frame(t(bounds))
+  rownames(bounds_df) <- NULL
+  
+  # Add bounds to original data frame
+  df[[paste0(category, "_lb_imp")]] <- bounds_df[, 1]
+  df[[paste0(category, "_ub_imp")]] <- bounds_df[, 2]
+  
+  return(df)
+}
+
+
+# List of categories
+
+rating_cats <- c("overall", "uadvancing_knowledge_and_practice", "methods_justification_reasonableness_validity_robustness", "logic_communication", "engaging_with_real_world_impact_quantification_practice_realism_and_relevance", "relevance_to_global_priorities", "open_collaborative_replicable")
+
+pred_cats <- c("journal_quality_predict", "merits_journal")
+
+# Apply the function to each category
+
+evals_pubX <- purrr::map_dfr(rating_cats, ~calc_category_bounds(evals_pub, .x, scale=100))
+
+evals_pubX <- evals_pub %>%  
+  filter(!is.na(conf_index_overall))
+  purrr::reduce(categories, calc_category_bounds, .init = df)
+
+
+evals_pubX <- evals_pub %>%
+# Apply the function to each row of your data frame
+  mutate(bounds = pmap(list(overall, conf_index_overall), calc_bounds))
+
+# Split the bounds into separate columns
+df <- df %>%
+  mutate(lb = map_dbl(bounds, 1),
+         ub = map_dbl(bounds, 2)) %>%
+  select(-bounds)
+
+
+
+# Apply the function to each category
+df <- purrr::reduce(categories, calc_category_bounds, .init = df)
+
+  
+```
+
 
 - Reconcile the uncertainty ratings and CIs (this is hard)
     
