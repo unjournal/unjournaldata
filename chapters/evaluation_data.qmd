@@ -131,18 +131,18 @@ labels <- str_replace_all(new_names, "_", " ")
 labels <- str_to_title(labels)
  
 # Assign labels to the dataframe
-for(i in seq_along(labels)) {
-   col_name <- new_names[names(new_names)[i]]
-   label <- labels[i]
-   attr(evals_pub[[col_name]], "label") <- label
- }
-
+# for(i in seq_along(labels)) {
+#    col_name <- new_names[names(new_names)[i]]
+#    label <- labels[i]
+#    attr(evals_pub[[col_name]], "label") <- label
+#  }
+# 
 
 ```
 
 <!-- need airtable API stuff -->
 
-### Reconcile the uncertainty ratings and CIs (this is hard)
+### Reconcile the uncertainty ratings and CIs (first-pass) {-}
 
 Impute CIs from stated confidence level 'dots', correspondence loosely described [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis)
 
@@ -243,12 +243,12 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 ```
 
     
-## Basic presentation
+# Basic presentation
 
 - Simple data summaries/codebooks/dashboards and visualization
 
 
-### The distribution of ratings and predictions
+### The distribution of ratings and predictions {-}
 
 - For each category and prediction (overall and by paper)
 
@@ -259,7 +259,7 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 - By evaluation manager
 
 
-### Relationship among the ratings (and predictions)
+### Relationship among the ratings (and predictions) {-} 
 
 - Correlation matrix
 
@@ -283,7 +283,7 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 
 - Assumptions over unit-level random terms 
 
-### Explicit modeling of 'research quality' (for use in prizes, etc.)
+### Explicit modeling of 'research quality' (for use in prizes, etc.) {-}
 
 - Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?
 
