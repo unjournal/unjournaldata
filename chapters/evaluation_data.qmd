@@ -277,6 +277,8 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 
 (Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
 
+`aggrecat` package
+
 - Simple averaging
 
 - Bayesian approaches 
