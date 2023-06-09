@@ -8,9 +8,9 @@ Some goals below
 
 Some things to do:
 
-- [ ] Import evaluation rating/predictions data (5 Jun 2023 -- currently in Airtable)
+- DONE: Import evaluation rating/predictions data
 
-- [ ] Clean and reconcile missing data, different metrics
+- DONE for now: Clean and reconcile missing data, different metrics
 - [ ] Aggregations of ratings under stated uncertainty
 - [ ] Assess inter-rater reliability, etc.
 
