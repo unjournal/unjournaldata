@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Unjournal evaluations: data and analysis",
+    "section": "",
+    "text": "This is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n\nCode\noptions(knitr.duplicate.label = \"allow\")"
+  },
+  {
+    "objectID": "chapters/evaluation_data.html",
+    "href": "chapters/evaluation_data.html",
+    "title": "1  Evaluation data: description, exploration, checks",
+    "section": "",
+    "text": "load packages\n#devtools::install_github(\"rethinkpriorities/rp-r-package\")\nlibrary(rethinkpriorities)\n\n#devtools::install_github(\"rethinkpriorities/r-noodling-package\")\nlibrary(rnoodling)\n\nlibrary(here)\nsource(here::here(\"code\", \"shared_packages_code.R\"))\nlibrary(dplyr)\nlibrary(pacman)\n\np_load(santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)\n\np_load(ggthemes, paletteer, ggridges, install=FALSE)\n\nselect <- dplyr::select\n\noptions(knitr.duplicate.label = \"allow\")\n\noptions(mc.cores = parallel::detectCores())\n#rstan_options(auto_write = TRUE)\n\n#library(hunspell)\n\n#(brms)\n\n#devtools::install_github(\"bergant/airtabler\")\np_load(airtabler)\n\n#remotes::install_github(\"rmcelreath/rethinking\")\n#library(rethinking)"
+  },
+  {
+    "objectID": "chapters/evaluation_data.html#aggregation-of-expert-opinion-modeling",
+    "href": "chapters/evaluation_data.html#aggregation-of-expert-opinion-modeling",
+    "title": "1  Evaluation data: description, exploration, checks",
+    "section": "2.1 Aggregation of expert opinion (modeling)",
+    "text": "2.1 Aggregation of expert opinion (modeling)\n(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)\n\nSimple averaging\nBayesian approaches\nAssumptions over unit-level random terms\n\n\nExplicit modeling of ‘research quality’ (for use in prizes, etc.)\n\nUse the above aggregation as the outcome of interest, or weight towards categories of greater interest?\nModel with controls – look for greatest positive residual?"
+  },
+  {
+    "objectID": "chapters/evaluation_data.html#inter-rater-reliability",
+    "href": "chapters/evaluation_data.html#inter-rater-reliability",
+    "title": "1  Evaluation data: description, exploration, checks",
+    "section": "2.2 Inter-rater reliability",
+    "text": "2.2 Inter-rater reliability"
+  },
+  {
+    "objectID": "chapters/evaluation_data.html#decomposing-variation-dimension-reduction-simple-linear-models",
+    "href": "chapters/evaluation_data.html#decomposing-variation-dimension-reduction-simple-linear-models",
+    "title": "1  Evaluation data: description, exploration, checks",
+    "section": "2.3 Decomposing variation, dimension reduction, simple linear models",
+    "text": "2.3 Decomposing variation, dimension reduction, simple linear models"
+  },
+  {
+    "objectID": "chapters/evaluation_data.html#later-possiblities",
+    "href": "chapters/evaluation_data.html#later-possiblities",
+    "title": "1  Evaluation data: description, exploration, checks",
+    "section": "2.4 Later possiblities",
+    "text": "2.4 Later possiblities\n\nRelation to evaluation text content (NLP?)\nRelation/prediction of later outcomes (traditional publication, citations, replication)"
+  }
+]
