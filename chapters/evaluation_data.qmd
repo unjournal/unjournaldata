@@ -247,6 +247,14 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 
 - Simple data summaries/codebooks/dashboards and visualization
 
+- Composition of research evaluated
+     - By field (economics, psychology, etc.)
+     - By subfield of economics 
+     - By topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc.)
+     - By source (submitted, identified with author permission, direct evaluation)
+     
+- Timing of intake and evaluation 
+
 
 ### The distribution of ratings and predictions {-}
 
