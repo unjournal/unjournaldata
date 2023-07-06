@@ -4,7 +4,6 @@
 #| label: load-packages
 #| code-summary: "load packages"
 
-
 #devtools::install_github("rethinkpriorities/rp-r-package")
 library(rethinkpriorities)
 
@@ -52,7 +51,7 @@ p_load(airtabler)
 ```{r}
 #| label: input_at
 #| code-summary: "input from airtable"
- 
+   
 
 base_id <- "appbPYEw9nURln7Qg"
 
@@ -418,4 +417,17 @@ We can also hold onto these aggregated metrics for later use in modeling.
 
 - Relation/prediction of later outcomes (traditional publication, citations, replication)
 
+
+
+## Scoping our future coverage
+
+We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.
+
+Consider:
+
+- How many relevant NBER papers come out per year?
+
+- How much relevant work in other prestige archives?
+
+- What quotas do we want (by cause, etc.) and how feasible are these?
 
