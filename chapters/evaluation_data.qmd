@@ -7,7 +7,7 @@
 #devtools::install_github("rethinkpriorities/rp-r-package")
 library(rethinkpriorities)
 
-#devtools::install_github("rethinkpriorities/r-noodling-package")
+#devtools::install_github("rethinkpriorities/r-noodling-package") #mainly used playing in real time
 library(rnoodling)
 
 library(here)
@@ -19,7 +19,7 @@ p_load(DT, santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects,
 
 p_load(ggthemes, paletteer, ggridges, install=FALSE)
 
-select <- dplyr::select
+select <- dplyr::select 
 
 options(knitr.duplicate.label = "allow")
 
@@ -47,7 +47,6 @@ p_load(airtabler)
 
 ```
 
-
 ```{r}
 #| label: input_at
 #| code-summary: "input from airtable"
@@ -62,6 +61,7 @@ base_id <- "appbPYEw9nURln7Qg"
 
 # Read data from a specific view
 evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval") 
+crucial_research <- air_get(base = "appbPYEw9nURln7Qg", "crucial_research") 
 
 
 ```
@@ -79,9 +79,12 @@ evals_pub <- evals %>%
     select(id, crucial_research, evaluator_name, category, source_main, author_agreement, overall, lb_overall, ub_overall, conf_index_overall, advancing_knowledge_and_practice, lb_advancing_knowledge_and_practice, ub_advancing_knowledge_and_practice, conf_index_advancing_knowledge_and_practice, methods_justification_reasonableness_validity_robustness, lb_methods_justification_reasonableness_validity_robustness, ub_methods_justification_reasonableness_validity_robustness, conf_index_methods_justification_reasonableness_validity_robustness, logic_communication, lb_logic_communication, ub_logic_communication, conf_index_logic_communication, engaging_with_real_world_impact_quantification_practice_realism_and_relevance, lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, relevance_to_global_priorities, lb_relevance_to_global_priorities, ub_relevance_to_global_priorities, conf_index_relevance_to_global_priorities, journal_quality_predict, lb_journal_quality_predict, ub_journal_quality_predict, conf_index_journal_quality_predict, open_collaborative_replicable, conf_index_open_collaborative_replicable, lb_open_collaborative_replicable, ub_open_collaborative_replicable, merits_journal, lb_merits_journal, ub_merits_journal, conf_index_merits_journal)
 
 evals_pub %<>%
-mutate(across(everything(), ~ map(.x, ~ ifelse(is.null(.x), NA, .x)), .names = "{.col}_unlisted")) %>% 
+mutate(across(everything(), ~ map(.x, ~ ifelse(is.null(.x), NA, .x)), .names = "{.col}_unlisted")) %>%  # for each co
  tidyr::unnest_wider(category, names_sep = "") %>%
 mutate(across(everything(), unlist)) #unlist list columns
+
+
+#Todo -- check the unlist is not propagating the entry
 
 #Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
 
@@ -311,7 +314,8 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
      - By topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc.    )
      - By source (submitted, identified with author permission, direct evaluation)
      
-- Timing of intake and evaluation 
+    
+- Timing of intake and evaluation (Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves)
 
 
 ### The distribution of ratings and predictions {-}
@@ -324,6 +328,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 
 - By evaluation manager
 
+\
 
 ### Relationship among the ratings (and predictions) {-} 
 
@@ -331,7 +336,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 
 - ANOVA
 
-- PCI
+- PCA (Principle components)
 
 - With other 'control' factors?
 
