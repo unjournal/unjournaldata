@@ -36,6 +36,7 @@ p_load(airtabler)
 #remotes::install_github("rmcelreath/rethinking")
 #library(rethinking)
 
+
 ```
 
 
@@ -61,7 +62,30 @@ base_id <- "appbPYEw9nURln7Qg"
 
 
 # Read data from a specific view
-evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval") 
+evals <- air_get(base = base_id, "output_eval") 
+
+
+all_pub_records <- data.frame()
+pub_records <- air_get(base = base_id, table = "crucial_research")
+
+# Append the records to the list
+all_pub_records <- bind_rows(all_pub_records, pub_records)
+
+# While the length of the records list is 100 (the maximum), fetch more records
+while(length(pub_records) == 100) {
+  # Get the ID of the last record in the list
+  last_id <- pub_records[[nrow(pub_records)]]$id
+  
+  # Fetch the next 100 records, starting after the last ID
+  pub_records <- air_get(base = base_id, table = "crucial_research", filter_by_formula = paste0("RECORD_ID() > '", last_id, "'"))
+  
+  # Append the records to the list
+  all_pub_records <- c(all_pub_records, pub_records)
+}
+
+# Convert the list of records to a dataframe
+
+
 
 
 ```
@@ -314,15 +338,85 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 - Timing of intake and evaluation 
 
 
+
+```{r}
+
+#update to be automated
+papers_considered = 200
+papers_rejected = 10
+papers_evaluated = 10
+papers_complete = 7
+papers_in_progress = 3
+papers_still_in_consideration = 180
+
+
+fig <- plot_ly(
+    type = "sankey",
+    orientation = "h",
+
+    node = list(
+      label = c("All paper considered", "Papers evaluated", "Papers complete", "Papers in progress", "Papers still in consideration", "Papers rejected"),
+      color = c("orange", "green", "green", "orange", "orange", "red"),
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = c(0,1,1,0,0),
+      target = c(1,2,3,4,5),
+      value =  c(
+        papers_evaluated,
+        papers_complete,
+        papers_in_progress,
+        papers_in_consideration,
+        papers_rejected
+    ))
+  )
+fig <- fig %>% layout(
+    title = "Unjournal paper funnel",
+    font = list(
+      size = 10
+    )
+)
+
+fig
+
+```
+
+
 ### The distribution of ratings and predictions {-}
 
 - For each category and prediction (overall and by paper)
+
+
+```{r}
+
+summary_df <- df %>%
+  group_by(category1, category2) %>%
+  summarise(count = n())
+
+# Create stacked bar chart
+ggplot(summary_df, aes(x = category1, y = count, fill = category2)) +
+  geom_bar(stat = "identity", position = "fill") + 
+  coord_flip() + # This makes the chart horizontal
+  theme_minimal() +
+  labs(x = "Category 1", y = "Count", fill = "Category 2", 
+       title = "Stacked bar chart of counts based on 2 categories") 
+
+```
 
 - By field and topic area of paper
 
 - By submission/selection route
 
 - By evaluation manager
+
+
+
 
 
 ### Relationship among the ratings (and predictions) {-} 
