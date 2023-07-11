@@ -66,26 +66,22 @@ evals <- air_get(base = base_id, "output_eval")
 
 
 all_pub_records <- data.frame()
-pub_records <- air_get(base = base_id, table = "crucial_research")
+pub_records <- air_select(base = base_id, table = "crucial_research")
 
 # Append the records to the list
 all_pub_records <- bind_rows(all_pub_records, pub_records)
 
 # While the length of the records list is 100 (the maximum), fetch more records
-while(length(pub_records) == 100) {
+while(nrow(pub_records) == 100) {
   # Get the ID of the last record in the list
-  last_id <- pub_records[[nrow(pub_records)]]$id
+  offset <- get_offset(pub_records)
   
   # Fetch the next 100 records, starting after the last ID
-  pub_records <- air_get(base = base_id, table = "crucial_research", filter_by_formula = paste0("RECORD_ID() > '", last_id, "'"))
+  pub_records <- air_select(base = base_id, table = "crucial_research", offset =  offset)
   
-  # Append the records to the list
-  all_pub_records <- c(all_pub_records, pub_records)
+  # Append the records to the df
+  all_pub_records <- bind_rows(all_pub_records, pub_records)
 }
-
-# Convert the list of records to a dataframe
-
-
 
 
 ```
