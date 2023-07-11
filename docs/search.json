@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "The Unjournal evaluations: data and analysis",
     "section": "",
-    "text": "This is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n\nCode\noptions(knitr.duplicate.label = \"allow\")"
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\nCodeoptions(knitr.duplicate.label = \"allow\")\n\n\n\n\n\nSource Code\n# Preface {.unnumbered}\n\nThis is a Quarto book.\n\nTo learn more about Quarto books visit <https://quarto.org/docs/books>.\n\n```{r}\noptions(knitr.duplicate.label = \"allow\")\n\n```"
   },
   {
     "objectID": "chapters/evaluation_data.html",
