@@ -285,7 +285,6 @@ Below, we give a data table of key attributes of the paper, the author, and the 
 ```{r}
 #| label: datatable
 #| code-summary: "Data datable (all shareable relevant data)"
- 
 (
   all_evals_dt <- evals_pub %>%
   arrange(crucial_rsx, eval_name) %>%
@@ -337,7 +336,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 
 ```{r}
 
-#update to be automated
+#update to be automated rather than hard-coded - to look at David's work here
 papers_considered = 200
 papers_rejected = 10
 papers_evaluated = 10
@@ -368,7 +367,7 @@ fig <- plot_ly(
         papers_evaluated,
         papers_complete,
         papers_in_progress,
-        papers_in_consideration,
+        papers_still_in_consideration,
         papers_rejected
     ))
   )
@@ -391,7 +390,7 @@ fig
 
 ```{r}
 
-summary_df <- df %>%
+summary_df <- all_pub_records %>%
   group_by(category1, category2) %>%
   summarise(count = n())
 
@@ -405,6 +404,33 @@ ggplot(summary_df, aes(x = category1, y = count, fill = category2)) +
 
 ```
 
+```{r}
+
+
+wrap_text <- function(text, width) {
+  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
+}
+
+evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
+
+# Dot plot
+ggplot(evals_pub, aes(x = wrapped_pub_names, y = overall)) +
+  geom_point(stat = "identity", size = 5, shape = 1, colour = "lightblue", stroke = 3) +
+  geom_text(aes(label = evaluator_name_unlisted),vjust = -1, size = 5,check_overlap = TRUE) +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  theme_light() +
+  xlab("Paper") + # remove x-axis label
+  ylab("Overal score") + # name y-axis
+  ggtitle("Overall scores of evaluated papers") +# add title
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(size = 16), # changing all text size to 16
+    axis.text.y = element_text(size = 14),
+    axis.text.x = element_text(size = 14)
+    )
+
+```
 - By field and topic area of paper
 
 - By submission/selection route
