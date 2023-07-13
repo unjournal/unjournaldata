@@ -336,13 +336,17 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 
 ```{r}
 
+#Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
-papers_considered = 200
-papers_rejected = 10
-papers_evaluated = 10
-papers_complete = 7
-papers_in_progress = 3
-papers_still_in_consideration = 180
+papers_considered = all_pub_records %>%nrow()
+papers_deprio = all_pub_records %>% filter(`stage of process/todo` ==  "de-prioritized") %>%nrow()
+papers_evaluated = all_pub_records %>% filter(`stage of process/todo` %in%  c("published",
+                                                                              "contacting/awaiting_authors_response_to_evaluation",
+                                                                               "awaiting_publication_ME_comments",
+                                                                              "awaiting_evaluations")) %>%nrow()
+papers_complete = all_pub_records %>% filter(`stage of process/todo` ==  "published") %>% nrow()
+papers_in_progress = papers_evaluated-papers_complete
+papers_still_in_consideration = all_pub_records %>% filter(`stage of process/todo` ==  "considering") %>%nrow()
 
 
 fig <- plot_ly(
@@ -378,7 +382,7 @@ fig <- fig %>% layout(
     )
 )
 
-fig
+fig #why did this stop working
 
 ```
 
@@ -390,17 +394,24 @@ fig
 
 ```{r}
 
-summary_df <- all_pub_records %>%
-  group_by(category1, category2) %>%
-  summarise(count = n())
+summary_df <- evals_pub %>%
+  distinct(crucial_research_unlisted, .keep_all = T) %>% 
+  group_by(category_unlisted) %>%
+  summarise(count = n()) 
+
+summary_df$category_unlisted[is.na(summary_df$category_unlisted)] <- "Unknown"
+
+summary_df <- summary_df%>%
+  arrange(-desc(count)) %>%
+  mutate(category_unlisted = factor(category_unlisted, levels = unique(category_unlisted)))
 
 # Create stacked bar chart
-ggplot(summary_df, aes(x = category1, y = count, fill = category2)) +
-  geom_bar(stat = "identity", position = "fill") + 
+ggplot(summary_df, aes(x = category_unlisted, y = count)) +
+  geom_bar(stat = "identity") + 
   coord_flip() + # This makes the chart horizontal
   theme_minimal() +
-  labs(x = "Category 1", y = "Count", fill = "Category 2", 
-       title = "Stacked bar chart of counts based on 2 categories") 
+  labs(x = "Paper category", y = "Count", 
+       title = "Count of evaluated papaers by category") 
 
 ```
 
