@@ -36,6 +36,7 @@ p_load(airtabler)
 #remotes::install_github("rmcelreath/rethinking")
 #library(rethinking)
 
+
 ```
 
 
@@ -60,8 +61,27 @@ base_id <- "appbPYEw9nURln7Qg"
 
 
 # Read data from a specific view
-evals <- air_get(base = "appbPYEw9nURln7Qg", "output_eval") 
-crucial_research <- air_get(base = "appbPYEw9nURln7Qg", "crucial_research") 
+
+evals <- air_get(base = base_id, "output_eval") 
+
+
+all_pub_records <- data.frame()
+pub_records <- air_select(base = base_id, table = "crucial_research")
+
+# Append the records to the list
+all_pub_records <- bind_rows(all_pub_records, pub_records)
+
+# While the length of the records list is 100 (the maximum), fetch more records
+while(nrow(pub_records) == 100) {
+  # Get the ID of the last record in the list
+  offset <- get_offset(pub_records)
+  
+  # Fetch the next 100 records, starting after the last ID
+  pub_records <- air_select(base = base_id, table = "crucial_research", offset =  offset)
+  
+  # Append the records to the df
+  all_pub_records <- bind_rows(all_pub_records, pub_records)
+}
 
 
 ```
@@ -268,7 +288,6 @@ Below, we give a data table of key attributes of the paper, the author, and the 
 ```{r}
 #| label: datatable
 #| code-summary: "Data datable (all shareable relevant data)"
- 
 (
   all_evals_dt <- evals_pub %>%
   arrange(crucial_rsx, eval_name) %>%
@@ -318,10 +337,115 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 - Timing of intake and evaluation (Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves)
 
 
+
+```{r}
+
+#Add in the 3 different evaluation input sources
+#update to be automated rather than hard-coded - to look at David's work here
+papers_considered = all_pub_records %>%nrow()
+papers_deprio = all_pub_records %>% filter(`stage of process/todo` ==  "de-prioritized") %>%nrow()
+papers_evaluated = all_pub_records %>% filter(`stage of process/todo` %in%  c("published",
+                                                                              "contacting/awaiting_authors_response_to_evaluation",
+                                                                               "awaiting_publication_ME_comments",
+                                                                              "awaiting_evaluations")) %>%nrow()
+papers_complete = all_pub_records %>% filter(`stage of process/todo` ==  "published") %>% nrow()
+papers_in_progress = papers_evaluated-papers_complete
+papers_still_in_consideration = all_pub_records %>% filter(`stage of process/todo` ==  "considering") %>%nrow()
+
+
+fig <- plot_ly(
+    type = "sankey",
+    orientation = "h",
+
+    node = list(
+      label = c("All paper considered", "Papers evaluated", "Papers complete", "Papers in progress", "Papers still in consideration", "Papers rejected"),
+      color = c("orange", "green", "green", "orange", "orange", "red"),
+      pad = 15,
+      thickness = 20,
+      line = list(
+        color = "black",
+        width = 0.5
+      )
+    ),
+
+    link = list(
+      source = c(0,1,1,0,0),
+      target = c(1,2,3,4,5),
+      value =  c(
+        papers_evaluated,
+        papers_complete,
+        papers_in_progress,
+        papers_still_in_consideration,
+        papers_rejected
+    ))
+  )
+fig <- fig %>% layout(
+    title = "Unjournal paper funnel",
+    font = list(
+      size = 10
+    )
+)
+
+fig #why did this stop working
+
+```
+
+
 ### The distribution of ratings and predictions {-}
 
 - For each category and prediction (overall and by paper)
 
+
+```{r}
+
+summary_df <- evals_pub %>%
+  distinct(crucial_research_unlisted, .keep_all = T) %>% 
+  group_by(category_unlisted) %>%
+  summarise(count = n()) 
+
+summary_df$category_unlisted[is.na(summary_df$category_unlisted)] <- "Unknown"
+
+summary_df <- summary_df%>%
+  arrange(-desc(count)) %>%
+  mutate(category_unlisted = factor(category_unlisted, levels = unique(category_unlisted)))
+
+# Create stacked bar chart
+ggplot(summary_df, aes(x = category_unlisted, y = count)) +
+  geom_bar(stat = "identity") + 
+  coord_flip() + # This makes the chart horizontal
+  theme_minimal() +
+  labs(x = "Paper category", y = "Count", 
+       title = "Count of evaluated papaers by category") 
+
+```
+
+```{r}
+
+
+wrap_text <- function(text, width) {
+  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
+}
+
+evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
+
+# Dot plot
+ggplot(evals_pub, aes(x = wrapped_pub_names, y = overall)) +
+  geom_point(stat = "identity", size = 5, shape = 1, colour = "lightblue", stroke = 3) +
+  geom_text(aes(label = evaluator_name_unlisted),vjust = -1, size = 5,check_overlap = TRUE) +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  theme_light() +
+  xlab("Paper") + # remove x-axis label
+  ylab("Overal score") + # name y-axis
+  ggtitle("Overall scores of evaluated papers") +# add title
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(size = 16), # changing all text size to 16
+    axis.text.y = element_text(size = 14),
+    axis.text.x = element_text(size = 14)
+    )
+
+```
 - By field and topic area of paper
 
 - By submission/selection route
@@ -329,6 +453,9 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
 - By evaluation manager
 
 \
+
+
+
 
 ### Relationship among the ratings (and predictions) {-} 
 
