@@ -4,7 +4,7 @@ project:
 
 book:
   title: "The Unjournal evaluations: data and analysis"
-  author: "David Reinstein and the Unjournal team"
+  author: "David Reinstein and the TUnjournal team"
   repo-url: https://github.com/daaronr/unjournaldata/
   repo-actions: [edit, issue]
   chapters:
