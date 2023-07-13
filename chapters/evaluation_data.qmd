@@ -294,7 +294,7 @@ Below, we give a data table of key attributes of the paper, the author, and the 
   dplyr::select(crucial_rsx, eval_name, everything())) %>%
   dplyr::select(-id) %>% 
     dplyr::select(-matches("ub_|lb_|conf")) %>% 
-    rename_all(~ gsub("_", " ", .)) %>% 
+    #rename_all(~ gsub("_", " ", .)) %>% 
     rename("Research  _____________________" = "crucial rsx" 
       ) %>%
   DT::datatable(
@@ -312,7 +312,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
   all_evals_dt_ci <- evals_pub %>%
   arrange(crucial_rsx, eval_name) %>%
   dplyr::select(crucial_rsx, eval_name, conf_overall, matches("ub_imp|lb_imp")) %>%
-    rename_all(~ gsub("_", " ", .)) %>% 
+    #ename_all(~ gsub("_", " ", .)) %>% 
     rename("Research  _____________________" = "crucial rsx" 
       ) %>%
   DT::datatable(
