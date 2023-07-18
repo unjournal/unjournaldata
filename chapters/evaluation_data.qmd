@@ -14,6 +14,8 @@ library(here)
 source(here::here("code", "shared_packages_code.R"))
 library(dplyr)
 library(pacman)
+library(formattable)
+library(sparkline)
 
 p_load(DT, santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
 
@@ -312,8 +314,8 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
   all_evals_dt_ci <- evals_pub %>%
   arrange(crucial_rsx, eval_name) %>%
   dplyr::select(crucial_rsx, eval_name, conf_overall, matches("ub_imp|lb_imp")) %>%
-    #ename_all(~ gsub("_", " ", .)) %>% 
-    rename("Research  _____________________" = "crucial rsx" 
+    #rename_all(~ gsub("_", " ", .)) %>% 
+    rename("Research  _____________________" = "crucial_rsx" 
       ) %>%
   DT::datatable(
     caption = "Evaluations and (imputed*) confidence bounds)", 
@@ -376,7 +378,7 @@ fig <- plot_ly(
         papers_complete,
         papers_in_progress,
         papers_still_in_consideration,
-        papers_rejected
+        papers_deprio
     ))
   )
 fig <- fig %>% layout(
@@ -446,6 +448,55 @@ ggplot(evals_pub, aes(x = wrapped_pub_names, y = overall)) +
     )
 
 ```
+
+```{r}
+wrap_text <- function(text, width) {
+  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
+}
+
+evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
+
+# Dot plot
+ggplot(df, aes(fill = group, y = value, x = category)) + 
+  geom_bar(position = "stack", stat = "identity") +
+  labs(x = "Category", y = "Value", fill = "Group") +
+  theme_minimal()
+```
+
+
+
+```{r}
+
+
+evaluations_table <- evals_pub %>%
+  select(crucial_rsx, eval_name, cat_1, source_main, Overall, overall, adv_knowledge, methods, logic_comms, journal_predict)
+
+
+out = formattable(
+  evaluations_table,
+  list(
+    overall = color_bar("lightblue"),
+    area(col = 6:9) ~ function(x) percent(x / 100, digits = 0),
+    area(col = 6:9) ~ color_tile("#DeF7E9", "#3E7DCC")
+  )
+)
+out
+
+
+
+```
+
+```{r}
+df = data.frame("Type" = c("test"),
+               Sparkline = c(as.character(htmltools::as.tags(sparkline(c(90,70,80, 60), type = "bullet")))))
+out = as.htmlwidget(formattable(df))
+                         
+out$dependencies = c(out$dependencies, htmlwidgets:::widget_dependencies("sparkline", "sparkline"))
+out
+
+```
+
+
 - By field and topic area of paper
 
 - By submission/selection route
