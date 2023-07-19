@@ -562,8 +562,8 @@ Dots to interval choices
 <span></span>
 <span><span class="va">fig</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<div id="htmlwidget-c7521918870229579a8a" style="width:100%;height:464px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c7521918870229579a8a">{"x":{"visdat":{"43b44b4f588f":["function () ","plotlyVisDat"]},"cur_data":"43b44b4f588f","attrs":{"43b44b4f588f":{"orientation":"h","node":{"label":["All paper considered","Papers evaluated","Papers complete","Papers in progress","Papers still in consideration","Papers rejected"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[10,8,2,20,1]},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sankey"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Unjournal paper funnel","font":{"size":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"orientation":"h","node":{"label":["All paper considered","Papers evaluated","Papers complete","Papers in progress","Papers still in consideration","Papers rejected"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[10,8,2,20,1]},"type":"sankey","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2b430fca47e059777821" style="width:100%;height:464px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2b430fca47e059777821">{"x":{"visdat":{"49974adc8828":["function () ","plotlyVisDat"]},"cur_data":"49974adc8828","attrs":{"49974adc8828":{"orientation":"h","node":{"label":["All paper considered","Papers evaluated","Papers complete","Papers in progress","Papers still in consideration","Papers rejected"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[10,8,2,20,1]},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sankey"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Unjournal paper funnel","font":{"size":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"orientation":"h","node":{"label":["All paper considered","Papers evaluated","Papers complete","Papers in progress","Papers still in consideration","Papers rejected"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[10,8,2,20,1]},"type":"sankey","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <section id="the-distribution-of-ratings-and-predictions" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="the-distribution-of-ratings-and-predictions">The distribution of ratings and predictions</h3>
@@ -578,7 +578,7 @@ Dots to interval choices
 <span></span>
 <span><span class="va">summary_df</span><span class="op">$</span><span class="va">category_unlisted</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">summary_df</span><span class="op">$</span><span class="va">category_unlisted</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Unknown"</span></span>
 <span></span>
-<span><span class="va">summary_df</span> <span class="op">&lt;-</span> <span class="va">summary_df</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">summary_df</span> <span class="op">&lt;-</span> <span class="va">summary_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>category_unlisted <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">category_unlisted</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">category_unlisted</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -588,7 +588,7 @@ Dots to interval choices
 <span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># This makes the chart horizontal</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Paper category"</span>, y <span class="op">=</span> <span class="st">"Count"</span>, </span>
-<span>       title <span class="op">=</span> <span class="st">"Count of evaluated papaers by category"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>       title <span class="op">=</span> <span class="st">"Count of evaluated papers by category"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="evaluation_data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -663,20 +663,28 @@ Dots to interval choices
 </div>
 </div>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">evals_pub</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">source_main</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Function to insert a newline character every 15 characters</span></span>
+<span><span class="va">wrap_text</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">width</span> <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"(.{1,15})"</span>, <span class="st">"\\1-\n"</span>, <span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">evals_pub</span><span class="op">$</span><span class="va">source_main_wrapped</span> <span class="op">&lt;-</span> <span class="fu">wrap_text</span><span class="op">(</span><span class="va">evals_pub</span><span class="op">$</span><span class="va">source_main</span>, <span class="fl">15</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Bar plot</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">evals_pub</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">source_main_wrapped</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack"</span>, stat <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Source"</span>, y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
 <span>  <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Evaluations by source of the paper"</span><span class="op">)</span> <span class="op">+</span><span class="co"># add title</span></span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Evaluations by source of the paper"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add title</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>    panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>, <span class="co"># changing all text size to 16</span></span>
-<span>    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>    axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="evaluation_data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -688,7 +696,10 @@ Dots to interval choices
 <span>                                                                              <span class="st">"awaiting_evaluations"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span><span class="op">[</span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span> <span class="op">==</span> <span class="st">"NA"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Not applicable"</span>  </span>
+<span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span><span class="op">[</span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span> <span class="op">==</span> <span class="st">"internal-from-syllabus-agenda-policy-database"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Internal: syllabus, agenda, etc."</span>  </span>
 <span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span> <span class="op">=</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="va">all_pub_records</span><span class="op">$</span><span class="va">source_main</span>, <span class="st">"Unknown"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">all_pub_records</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">source_main</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">is_evaluated</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack"</span>, stat <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -701,7 +712,7 @@ Dots to interval choices
 <span>    panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>, <span class="co"># changing all text size to 16</span></span>
-<span>    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
 <span>    axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -1867,340 +1878,352 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>By subfield of economics </span>
 <span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>By topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc.    )</span>
 <span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="ss">     - </span>By source (submitted, identified with author permission, direct evaluation)</span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Timing of intake and evaluation (Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves)</span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Timing of intake and evaluation (Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves)</span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a><span class="co">#Add in the 3 different evaluation input sources</span></span>
-<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a><span class="co">#update to be automated rather than hard-coded - to look at David's work here</span></span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>papers_considered <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
-<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a>papers_deprio <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"de-prioritized"</span>) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
-<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a>papers_evaluated <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">%in%</span>  <span class="fu">c</span>(<span class="st">"published"</span>,</span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"contacting/awaiting_authors_response_to_evaluation"</span>,</span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>                                                                               <span class="st">"awaiting_publication_ME_comments"</span>,</span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"awaiting_evaluations"</span>)) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>papers_complete <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"published"</span>) <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>papers_in_progress <span class="ot">=</span> papers_evaluated<span class="sc">-</span>papers_complete</span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>papers_still_in_consideration <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"considering"</span>) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a><span class="co">#Add in the 3 different evaluation input sources</span></span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a><span class="co">#update to be automated rather than hard-coded - to look at David's work here</span></span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>papers_considered <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>papers_deprio <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"de-prioritized"</span>) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a>papers_evaluated <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">%in%</span>  <span class="fu">c</span>(<span class="st">"published"</span>,</span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"contacting/awaiting_authors_response_to_evaluation"</span>,</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>                                                                               <span class="st">"awaiting_publication_ME_comments"</span>,</span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"awaiting_evaluations"</span>)) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>papers_complete <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"published"</span>) <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a>papers_in_progress <span class="ot">=</span> papers_evaluated<span class="sc">-</span>papers_complete</span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>papers_still_in_consideration <span class="ot">=</span> all_pub_records <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">==</span>  <span class="st">"considering"</span>) <span class="sc">%&gt;%</span><span class="fu">nrow</span>()</span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">plot_ly</span>(</span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"sankey"</span>,</span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a>    <span class="at">orientation =</span> <span class="st">"h"</span>,</span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a>    <span class="at">node =</span> <span class="fu">list</span>(</span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"All paper considered"</span>, <span class="st">"Papers evaluated"</span>, <span class="st">"Papers complete"</span>, <span class="st">"Papers in progress"</span>, <span class="st">"Papers still in consideration"</span>, <span class="st">"Papers rejected"</span>),</span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"green"</span>, <span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>),</span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>      <span class="at">pad =</span> <span class="dv">15</span>,</span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>      <span class="at">thickness =</span> <span class="dv">20</span>,</span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>      <span class="at">line =</span> <span class="fu">list</span>(</span>
-<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="fl">0.5</span></span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">link =</span> <span class="fu">list</span>(</span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a>      <span class="at">source =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a>      <span class="at">target =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
-<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a>      <span class="at">value =</span>  <span class="fu">c</span>(</span>
-<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a>        papers_evaluated,</span>
-<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a>        papers_complete,</span>
-<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>        papers_in_progress,</span>
-<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a>        papers_still_in_consideration,</span>
-<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>        papers_deprio</span>
-<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> fig <span class="sc">%&gt;%</span> <span class="fu">layout</span>(</span>
-<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Unjournal paper funnel"</span>,</span>
-<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>    <span class="at">font =</span> <span class="fu">list</span>(</span>
-<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">10</span></span>
-<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a>fig </span>
-<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="fu">plot_ly</span>(</span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"sankey"</span>,</span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>    <span class="at">orientation =</span> <span class="st">"h"</span>,</span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a>    <span class="at">node =</span> <span class="fu">list</span>(</span>
+<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"All paper considered"</span>, <span class="st">"Papers evaluated"</span>, <span class="st">"Papers complete"</span>, <span class="st">"Papers in progress"</span>, <span class="st">"Papers still in consideration"</span>, <span class="st">"Papers rejected"</span>),</span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"green"</span>, <span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>),</span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>      <span class="at">pad =</span> <span class="dv">15</span>,</span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>      <span class="at">thickness =</span> <span class="dv">20</span>,</span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>      <span class="at">line =</span> <span class="fu">list</span>(</span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="fl">0.5</span></span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a>    <span class="at">link =</span> <span class="fu">list</span>(</span>
+<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>      <span class="at">source =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a>      <span class="at">target =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a>      <span class="at">value =</span>  <span class="fu">c</span>(</span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a>        papers_evaluated,</span>
+<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a>        papers_complete,</span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a>        papers_in_progress,</span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>        papers_still_in_consideration,</span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a>        papers_deprio</span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> fig <span class="sc">%&gt;%</span> <span class="fu">layout</span>(</span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Unjournal paper funnel"</span>,</span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>    <span class="at">font =</span> <span class="fu">list</span>(</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">10</span></span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>fig </span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a><span class="fu">### The distribution of ratings and predictions {-}</span></span>
-<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For each category and prediction (overall and by paper)</span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a><span class="fu">### The distribution of ratings and predictions {-}</span></span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For each category and prediction (overall and by paper)</span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a>summary_df <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span></span>
-<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(crucial_research_unlisted, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(category_unlisted) <span class="sc">%&gt;%</span></span>
-<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) </span>
-<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a>summary_df<span class="sc">$</span>category_unlisted[<span class="fu">is.na</span>(summary_df<span class="sc">$</span>category_unlisted)] <span class="ot">&lt;-</span> <span class="st">"Unknown"</span></span>
-<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a>summary_df <span class="ot">&lt;-</span> summary_df<span class="sc">%&gt;%</span></span>
-<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span><span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category_unlisted =</span> <span class="fu">factor</span>(category_unlisted, <span class="at">levels =</span> <span class="fu">unique</span>(category_unlisted)))</span>
-<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a><span class="co"># Create stacked bar chart</span></span>
-<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summary_df, <span class="fu">aes</span>(<span class="at">x =</span> category_unlisted, <span class="at">y =</span> count)) <span class="sc">+</span></span>
-<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
-<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># This makes the chart horizontal</span></span>
-<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Paper category"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, </span>
-<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Count of evaluated papaers by category"</span>) </span>
-<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>wrap_text <span class="ot">&lt;-</span> <span class="cf">function</span>(text, width) {</span>
-<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(<span class="fu">strwrap</span>(text, <span class="at">width =</span> width, <span class="at">simplify =</span> <span class="cn">FALSE</span>), paste, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>wrapped_pub_names <span class="ot">&lt;-</span> <span class="fu">wrap_text</span>(evals_pub<span class="sc">$</span>crucial_research_unlisted, <span class="at">width =</span> <span class="dv">60</span>)</span>
+<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a>summary_df <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span></span>
+<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(crucial_research_unlisted, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(category_unlisted) <span class="sc">%&gt;%</span></span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) </span>
+<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a>summary_df<span class="sc">$</span>category_unlisted[<span class="fu">is.na</span>(summary_df<span class="sc">$</span>category_unlisted)] <span class="ot">&lt;-</span> <span class="st">"Unknown"</span></span>
+<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a>summary_df <span class="ot">&lt;-</span> summary_df <span class="sc">%&gt;%</span></span>
+<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span><span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category_unlisted =</span> <span class="fu">factor</span>(category_unlisted, <span class="at">levels =</span> <span class="fu">unique</span>(category_unlisted)))</span>
+<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a><span class="co"># Create stacked bar chart</span></span>
+<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summary_df, <span class="fu">aes</span>(<span class="at">x =</span> category_unlisted, <span class="at">y =</span> count)) <span class="sc">+</span></span>
+<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># This makes the chart horizontal</span></span>
+<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Paper category"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, </span>
+<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Count of evaluated papers by category"</span>) </span>
+<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a>wrap_text <span class="ot">&lt;-</span> <span class="cf">function</span>(text, width) {</span>
+<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(<span class="fu">strwrap</span>(text, <span class="at">width =</span> width, <span class="at">simplify =</span> <span class="cn">FALSE</span>), paste, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>wrapped_pub_names <span class="ot">&lt;-</span> <span class="fu">wrap_text</span>(evals_pub<span class="sc">$</span>crucial_research_unlisted, <span class="at">width =</span> <span class="dv">60</span>)</span>
+<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a><span class="co"># original names</span></span>
-<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a>original_names <span class="ot">&lt;-</span> evals_pub<span class="sc">$</span>crucial_research_unlisted</span>
-<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a><span class="co"># shortened names</span></span>
-<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a>shortened_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Resilient Foods vs AGI Safety"</span>,</span>
-<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
-<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wildlife Trade Demand"</span>,</span>
-<span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
-<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Economic Prod. &amp; Biodiversity"</span>,</span>
-<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
-<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"AI and Economic Growth"</span>,</span>
-<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wildlife Trade Demand"</span>,</span>
-<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Non-Profits Governance &amp; Impact"</span>,</span>
-<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"AI and Economic Growth"</span>,</span>
-<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Mental Health Therapy &amp; Human Capital"</span>,</span>
-<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Economic Prod. &amp; Biodiversity"</span>,</span>
+<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a><span class="co"># original names</span></span>
+<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a>original_names <span class="ot">&lt;-</span> evals_pub<span class="sc">$</span>crucial_research_unlisted</span>
+<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a><span class="co"># shortened names</span></span>
+<span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a>shortened_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Resilient Foods vs AGI Safety"</span>,</span>
+<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
+<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wildlife Trade Demand"</span>,</span>
+<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
+<span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Economic Prod. &amp; Biodiversity"</span>,</span>
+<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Advance Market Commitments"</span>,</span>
+<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"AI and Economic Growth"</span>,</span>
+<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wildlife Trade Demand"</span>,</span>
+<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Non-Profits Governance &amp; Impact"</span>,</span>
+<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"AI and Economic Growth"</span>,</span>
+<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Mental Health Therapy &amp; Human Capital"</span>,</span>
+<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Economic Prod. &amp; Biodiversity"</span>,</span>
+<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Cash Transfers vs Psychotherapy"</span>,</span>
 <span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Cash Transfers vs Psychotherapy"</span>,</span>
-<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Cash Transfers vs Psychotherapy"</span>,</span>
-<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Resilient Foods vs AGI Safety"</span>,</span>
-<span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Mental Health Therapy &amp; Human Capital"</span>,</span>
-<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Resilient Foods vs AGI Safety"</span>)</span>
-<span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a><span class="co"># create a named vector for easy lookup</span></span>
-<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a>name_lookup <span class="ot">&lt;-</span> <span class="fu">setNames</span>(shortened_names, original_names)</span>
-<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a><span class="co"># use the lookup to create the new column</span></span>
-<span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>shortened_names <span class="ot">&lt;-</span> name_lookup[evals_pub<span class="sc">$</span>crucial_research_unlisted]</span>
-<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-476"><a href="#cb16-476" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>wrapped_shortened_names <span class="ot">&lt;-</span> <span class="fu">wrap_text</span>(evals_pub<span class="sc">$</span>shortened_names, <span class="at">width =</span> <span class="dv">15</span>)</span>
-<span id="cb16-477"><a href="#cb16-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a><span class="co">#Move this to do this 'cleaning' earlier</span></span>
-<span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>revised_evaluator_name <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
-<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"^</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b$|</span><span class="sc">\\</span><span class="st">bAnonymous</span><span class="sc">\\</span><span class="st">b"</span>, evals_pub<span class="sc">$</span>evaluator_name_unlisted),</span>
-<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"Anonymous_"</span>, <span class="fu">seq_along</span>(evals_pub<span class="sc">$</span>evaluator_name_unlisted)),</span>
-<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a>  evals_pub<span class="sc">$</span>evaluator_name_unlisted</span>
-<span id="cb16-483"><a href="#cb16-483" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Resilient Foods vs AGI Safety"</span>,</span>
+<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Mental Health Therapy &amp; Human Capital"</span>,</span>
+<span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Resilient Foods vs AGI Safety"</span>)</span>
+<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a><span class="co"># create a named vector for easy lookup</span></span>
+<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>name_lookup <span class="ot">&lt;-</span> <span class="fu">setNames</span>(shortened_names, original_names)</span>
+<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a><span class="co"># use the lookup to create the new column</span></span>
+<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>shortened_names <span class="ot">&lt;-</span> name_lookup[evals_pub<span class="sc">$</span>crucial_research_unlisted]</span>
+<span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>wrapped_shortened_names <span class="ot">&lt;-</span> <span class="fu">wrap_text</span>(evals_pub<span class="sc">$</span>shortened_names, <span class="at">width =</span> <span class="dv">15</span>)</span>
+<span id="cb16-476"><a href="#cb16-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-477"><a href="#cb16-477" aria-hidden="true" tabindex="-1"></a><span class="co">#Move this to do this 'cleaning' earlier</span></span>
+<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>revised_evaluator_name <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"^</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b$|</span><span class="sc">\\</span><span class="st">bAnonymous</span><span class="sc">\\</span><span class="st">b"</span>, evals_pub<span class="sc">$</span>evaluator_name_unlisted),</span>
+<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"Anonymous_"</span>, <span class="fu">seq_along</span>(evals_pub<span class="sc">$</span>evaluator_name_unlisted)),</span>
+<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a>  evals_pub<span class="sc">$</span>evaluator_name_unlisted</span>
+<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-483"><a href="#cb16-483" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-484"><a href="#cb16-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-485"><a href="#cb16-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-486"><a href="#cb16-486" aria-hidden="true" tabindex="-1"></a><span class="co"># Dot plot</span></span>
-<span id="cb16-487"><a href="#cb16-487" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evals_pub, <span class="fu">aes</span>(<span class="at">x =</span> shortened_names, <span class="at">y =</span> overall)) <span class="sc">+</span></span>
-<span id="cb16-488"><a href="#cb16-488" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"lightblue"</span>, <span class="at">stroke =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb16-489"><a href="#cb16-489" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> revised_evaluator_name), </span>
-<span id="cb16-490"><a href="#cb16-490" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>, </span>
-<span id="cb16-491"><a href="#cb16-491" aria-hidden="true" tabindex="-1"></a>                  <span class="at">box.padding =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"lines"</span>),</span>
-<span id="cb16-492"><a href="#cb16-492" aria-hidden="true" tabindex="-1"></a>                  <span class="at">point.padding =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">"lines"</span>)) <span class="sc">+</span></span>
-<span id="cb16-493"><a href="#cb16-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
-<span id="cb16-494"><a href="#cb16-494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb16-495"><a href="#cb16-495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Paper"</span>) <span class="sc">+</span> <span class="co"># remove x-axis label</span></span>
-<span id="cb16-496"><a href="#cb16-496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Overall score"</span>) <span class="sc">+</span> <span class="co"># name y-axis</span></span>
-<span id="cb16-497"><a href="#cb16-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Overall scores of evaluated papers"</span>) <span class="sc">+</span><span class="co"># add title</span></span>
-<span id="cb16-498"><a href="#cb16-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb16-499"><a href="#cb16-499" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-500"><a href="#cb16-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-501"><a href="#cb16-501" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>), <span class="co"># changing all text size to 16</span></span>
-<span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-506"><a href="#cb16-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evals_pub, <span class="fu">aes</span>(<span class="at">x =</span> source_main)) <span class="sc">+</span> </span>
-<span id="cb16-511"><a href="#cb16-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
-<span id="cb16-512"><a href="#cb16-512" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Source"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
-<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb16-515"><a href="#cb16-515" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Evaluations by source of the paper"</span>) <span class="sc">+</span><span class="co"># add title</span></span>
-<span id="cb16-517"><a href="#cb16-517" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb16-518"><a href="#cb16-518" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-519"><a href="#cb16-519" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-520"><a href="#cb16-520" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), <span class="co"># changing all text size to 16</span></span>
-<span id="cb16-521"><a href="#cb16-521" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb16-522"><a href="#cb16-522" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>)</span>
-<span id="cb16-523"><a href="#cb16-523" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb16-524"><a href="#cb16-524" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-525"><a href="#cb16-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>is_evaluated <span class="ot">=</span> all_pub_records<span class="sc">$</span><span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">%in%</span>  <span class="fu">c</span>(<span class="st">"published"</span>,</span>
-<span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"contacting/awaiting_authors_response_to_evaluation"</span>,</span>
-<span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a>                                                                               <span class="st">"awaiting_publication_ME_comments"</span>,</span>
-<span id="cb16-532"><a href="#cb16-532" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"awaiting_evaluations"</span>)</span>
+<span id="cb16-485"><a href="#cb16-485" aria-hidden="true" tabindex="-1"></a><span class="co"># Dot plot</span></span>
+<span id="cb16-486"><a href="#cb16-486" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evals_pub, <span class="fu">aes</span>(<span class="at">x =</span> shortened_names, <span class="at">y =</span> overall)) <span class="sc">+</span></span>
+<span id="cb16-487"><a href="#cb16-487" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"lightblue"</span>, <span class="at">stroke =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb16-488"><a href="#cb16-488" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> revised_evaluator_name), </span>
+<span id="cb16-489"><a href="#cb16-489" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>, </span>
+<span id="cb16-490"><a href="#cb16-490" aria-hidden="true" tabindex="-1"></a>                  <span class="at">box.padding =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"lines"</span>),</span>
+<span id="cb16-491"><a href="#cb16-491" aria-hidden="true" tabindex="-1"></a>                  <span class="at">point.padding =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">"lines"</span>)) <span class="sc">+</span></span>
+<span id="cb16-492"><a href="#cb16-492" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
+<span id="cb16-493"><a href="#cb16-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb16-494"><a href="#cb16-494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Paper"</span>) <span class="sc">+</span> <span class="co"># remove x-axis label</span></span>
+<span id="cb16-495"><a href="#cb16-495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Overall score"</span>) <span class="sc">+</span> <span class="co"># name y-axis</span></span>
+<span id="cb16-496"><a href="#cb16-496" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Overall scores of evaluated papers"</span>) <span class="sc">+</span><span class="co"># add title</span></span>
+<span id="cb16-497"><a href="#cb16-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-498"><a href="#cb16-498" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-499"><a href="#cb16-499" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-500"><a href="#cb16-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>), <span class="co"># changing all text size to 16</span></span>
+<span id="cb16-501"><a href="#cb16-501" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to insert a newline character every 15 characters</span></span>
+<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a>wrap_text <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">width =</span> <span class="dv">15</span>) {</span>
+<span id="cb16-511"><a href="#cb16-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(.{1,15})"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1-</span><span class="sc">\n</span><span class="st">"</span>, x)</span>
+<span id="cb16-512"><a href="#cb16-512" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>source_main_wrapped <span class="ot">&lt;-</span> <span class="fu">wrap_text</span>(evals_pub<span class="sc">$</span>source_main, <span class="dv">15</span>)</span>
+<span id="cb16-515"><a href="#cb16-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot</span></span>
+<span id="cb16-517"><a href="#cb16-517" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evals_pub, <span class="fu">aes</span>(<span class="at">x =</span> source_main_wrapped)) <span class="sc">+</span> </span>
+<span id="cb16-518"><a href="#cb16-518" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb16-519"><a href="#cb16-519" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Source"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb16-520"><a href="#cb16-520" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
+<span id="cb16-521"><a href="#cb16-521" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb16-522"><a href="#cb16-522" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-523"><a href="#cb16-523" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Evaluations by source of the paper"</span>) <span class="sc">+</span> <span class="co"># add title</span></span>
+<span id="cb16-524"><a href="#cb16-524" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-525"><a href="#cb16-525" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-526"><a href="#cb16-526" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-527"><a href="#cb16-527" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), <span class="co"># changing all text size to 16</span></span>
+<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>)</span>
+<span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-532"><a href="#cb16-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-533"><a href="#cb16-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-534"><a href="#cb16-534" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>source_main[all_pub_records<span class="sc">$</span>source_main <span class="sc">==</span> <span class="st">"NA"</span>] <span class="ot">&lt;-</span> <span class="st">"Not applicable"</span>  </span>
-<span id="cb16-535"><a href="#cb16-535" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>source_main <span class="ot">=</span> tidyr<span class="sc">::</span><span class="fu">replace_na</span>(all_pub_records<span class="sc">$</span>source_main, <span class="st">"Unknown"</span>)</span>
-<span id="cb16-536"><a href="#cb16-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-537"><a href="#cb16-537" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_pub_records, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(source_main), <span class="at">fill =</span> is_evaluated)) <span class="sc">+</span> </span>
-<span id="cb16-538"><a href="#cb16-538" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
-<span id="cb16-539"><a href="#cb16-539" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Source"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Selected for</span><span class="sc">\n</span><span class="st">evaluation?"</span>) <span class="sc">+</span></span>
-<span id="cb16-540"><a href="#cb16-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
-<span id="cb16-541"><a href="#cb16-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb16-542"><a href="#cb16-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb16-543"><a href="#cb16-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Evaluations by source of the paper"</span>) <span class="sc">+</span><span class="co"># add title</span></span>
-<span id="cb16-544"><a href="#cb16-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb16-545"><a href="#cb16-545" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-546"><a href="#cb16-546" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-547"><a href="#cb16-547" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), <span class="co"># changing all text size to 16</span></span>
-<span id="cb16-548"><a href="#cb16-548" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb16-549"><a href="#cb16-549" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>)</span>
-<span id="cb16-550"><a href="#cb16-550" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb16-551"><a href="#cb16-551" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-554"><a href="#cb16-554" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-555"><a href="#cb16-555" aria-hidden="true" tabindex="-1"></a>unit.scale <span class="ot">=</span> <span class="cf">function</span>(x) (x<span class="sc">*</span><span class="dv">100</span> <span class="sc">-</span> <span class="fu">min</span>(x<span class="sc">*</span><span class="dv">100</span>)) <span class="sc">/</span> (<span class="fu">max</span>(x<span class="sc">*</span><span class="dv">100</span>) <span class="sc">-</span> <span class="fu">min</span>(x<span class="sc">*</span><span class="dv">100</span>))</span>
-<span id="cb16-556"><a href="#cb16-556" aria-hidden="true" tabindex="-1"></a>evaluations_table <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span></span>
-<span id="cb16-557"><a href="#cb16-557" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(crucial_rsx, eval_name, cat_1, source_main, overall, adv_knowledge, methods, logic_comms, journal_predict) <span class="sc">%&gt;%</span></span>
-<span id="cb16-558"><a href="#cb16-558" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(crucial_rsx))</span>
-<span id="cb16-559"><a href="#cb16-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-560"><a href="#cb16-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-561"><a href="#cb16-561" aria-hidden="true" tabindex="-1"></a>out <span class="ot">=</span> <span class="fu">formattable</span>(</span>
-<span id="cb16-562"><a href="#cb16-562" aria-hidden="true" tabindex="-1"></a>  evaluations_table,</span>
-<span id="cb16-563"><a href="#cb16-563" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb16-564"><a href="#cb16-564" aria-hidden="true" tabindex="-1"></a>    <span class="co">#area(col = 5:8) ~ function(x) percent(x / 100, digits = 0),</span></span>
-<span id="cb16-565"><a href="#cb16-565" aria-hidden="true" tabindex="-1"></a>    <span class="fu">area</span>(<span class="at">col =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">~</span> <span class="fu">color_tile</span>(<span class="st">"#FA614B66"</span>,<span class="st">"#3E7DCC"</span>),</span>
-<span id="cb16-566"><a href="#cb16-566" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">journal_predict</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">proportion_bar</span>(<span class="st">"#DeF7E9"</span>, unit.scale)</span>
-<span id="cb16-567"><a href="#cb16-567" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-568"><a href="#cb16-568" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-569"><a href="#cb16-569" aria-hidden="true" tabindex="-1"></a>out</span>
-<span id="cb16-570"><a href="#cb16-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-536"><a href="#cb16-536" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-537"><a href="#cb16-537" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>is_evaluated <span class="ot">=</span> all_pub_records<span class="sc">$</span><span class="st">`</span><span class="at">stage of process/todo</span><span class="st">`</span> <span class="sc">%in%</span>  <span class="fu">c</span>(<span class="st">"published"</span>,</span>
+<span id="cb16-538"><a href="#cb16-538" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"contacting/awaiting_authors_response_to_evaluation"</span>,</span>
+<span id="cb16-539"><a href="#cb16-539" aria-hidden="true" tabindex="-1"></a>                                                                               <span class="st">"awaiting_publication_ME_comments"</span>,</span>
+<span id="cb16-540"><a href="#cb16-540" aria-hidden="true" tabindex="-1"></a>                                                                              <span class="st">"awaiting_evaluations"</span>)</span>
+<span id="cb16-541"><a href="#cb16-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-542"><a href="#cb16-542" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>source_main[all_pub_records<span class="sc">$</span>source_main <span class="sc">==</span> <span class="st">"NA"</span>] <span class="ot">&lt;-</span> <span class="st">"Not applicable"</span>  </span>
+<span id="cb16-543"><a href="#cb16-543" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>source_main[all_pub_records<span class="sc">$</span>source_main <span class="sc">==</span> <span class="st">"internal-from-syllabus-agenda-policy-database"</span>] <span class="ot">&lt;-</span> <span class="st">"Internal: syllabus, agenda, etc."</span>  </span>
+<span id="cb16-544"><a href="#cb16-544" aria-hidden="true" tabindex="-1"></a>all_pub_records<span class="sc">$</span>source_main <span class="ot">=</span> tidyr<span class="sc">::</span><span class="fu">replace_na</span>(all_pub_records<span class="sc">$</span>source_main, <span class="st">"Unknown"</span>)</span>
+<span id="cb16-545"><a href="#cb16-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-546"><a href="#cb16-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-547"><a href="#cb16-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-548"><a href="#cb16-548" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_pub_records, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(source_main), <span class="at">fill =</span> is_evaluated)) <span class="sc">+</span> </span>
+<span id="cb16-549"><a href="#cb16-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb16-550"><a href="#cb16-550" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Source"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">fill =</span> <span class="st">"Selected for</span><span class="sc">\n</span><span class="st">evaluation?"</span>) <span class="sc">+</span></span>
+<span id="cb16-551"><a href="#cb16-551" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
+<span id="cb16-552"><a href="#cb16-552" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb16-553"><a href="#cb16-553" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-554"><a href="#cb16-554" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Evaluations by source of the paper"</span>) <span class="sc">+</span><span class="co"># add title</span></span>
+<span id="cb16-555"><a href="#cb16-555" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-556"><a href="#cb16-556" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-557"><a href="#cb16-557" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-558"><a href="#cb16-558" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), <span class="co"># changing all text size to 16</span></span>
+<span id="cb16-559"><a href="#cb16-559" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb16-560"><a href="#cb16-560" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>)</span>
+<span id="cb16-561"><a href="#cb16-561" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-562"><a href="#cb16-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-563"><a href="#cb16-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-566"><a href="#cb16-566" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-567"><a href="#cb16-567" aria-hidden="true" tabindex="-1"></a>unit.scale <span class="ot">=</span> <span class="cf">function</span>(x) (x<span class="sc">*</span><span class="dv">100</span> <span class="sc">-</span> <span class="fu">min</span>(x<span class="sc">*</span><span class="dv">100</span>)) <span class="sc">/</span> (<span class="fu">max</span>(x<span class="sc">*</span><span class="dv">100</span>) <span class="sc">-</span> <span class="fu">min</span>(x<span class="sc">*</span><span class="dv">100</span>))</span>
+<span id="cb16-568"><a href="#cb16-568" aria-hidden="true" tabindex="-1"></a>evaluations_table <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span></span>
+<span id="cb16-569"><a href="#cb16-569" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(crucial_rsx, eval_name, cat_1, source_main, overall, adv_knowledge, methods, logic_comms, journal_predict) <span class="sc">%&gt;%</span></span>
+<span id="cb16-570"><a href="#cb16-570" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(crucial_rsx))</span>
 <span id="cb16-571"><a href="#cb16-571" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-572"><a href="#cb16-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-573"><a href="#cb16-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-574"><a href="#cb16-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-575"><a href="#cb16-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-576"><a href="#cb16-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-577"><a href="#cb16-577" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By field and topic area of paper</span>
-<span id="cb16-578"><a href="#cb16-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-579"><a href="#cb16-579" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By submission/selection route</span>
-<span id="cb16-580"><a href="#cb16-580" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-581"><a href="#cb16-581" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By evaluation manager</span>
+<span id="cb16-573"><a href="#cb16-573" aria-hidden="true" tabindex="-1"></a>out <span class="ot">=</span> <span class="fu">formattable</span>(</span>
+<span id="cb16-574"><a href="#cb16-574" aria-hidden="true" tabindex="-1"></a>  evaluations_table,</span>
+<span id="cb16-575"><a href="#cb16-575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb16-576"><a href="#cb16-576" aria-hidden="true" tabindex="-1"></a>    <span class="co">#area(col = 5:8) ~ function(x) percent(x / 100, digits = 0),</span></span>
+<span id="cb16-577"><a href="#cb16-577" aria-hidden="true" tabindex="-1"></a>    <span class="fu">area</span>(<span class="at">col =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">~</span> <span class="fu">color_tile</span>(<span class="st">"#FA614B66"</span>,<span class="st">"#3E7DCC"</span>),</span>
+<span id="cb16-578"><a href="#cb16-578" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">journal_predict</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">proportion_bar</span>(<span class="st">"#DeF7E9"</span>, unit.scale)</span>
+<span id="cb16-579"><a href="#cb16-579" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-580"><a href="#cb16-580" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-581"><a href="#cb16-581" aria-hidden="true" tabindex="-1"></a>out</span>
 <span id="cb16-582"><a href="#cb16-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-583"><a href="#cb16-583" aria-hidden="true" tabindex="-1"></a>\</span>
+<span id="cb16-583"><a href="#cb16-583" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-584"><a href="#cb16-584" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-585"><a href="#cb16-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-585"><a href="#cb16-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-586"><a href="#cb16-586" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-587"><a href="#cb16-587" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a><span class="fu">### Relationship among the ratings (and predictions) {-} </span></span>
-<span id="cb16-589"><a href="#cb16-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-590"><a href="#cb16-590" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation matrix</span>
-<span id="cb16-591"><a href="#cb16-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-592"><a href="#cb16-592" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ANOVA</span>
-<span id="cb16-593"><a href="#cb16-593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PCA (Principle components)</span>
-<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>With other 'control' factors?</span>
+<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-589"><a href="#cb16-589" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By field and topic area of paper</span>
+<span id="cb16-590"><a href="#cb16-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-591"><a href="#cb16-591" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By submission/selection route</span>
+<span id="cb16-592"><a href="#cb16-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-593"><a href="#cb16-593" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>By evaluation manager</span>
+<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a>\</span>
+<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-597"><a href="#cb16-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How do the specific measures predict the aggregate ones (overall rating, merited publication)</span>
-<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>CF 'our suggested weighting'</span>
-<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a><span class="fu">### Relationship among the ratings (and predictions) {-} </span></span>
 <span id="cb16-601"><a href="#cb16-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aggregation of expert opinion (modeling)</span></span>
+<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Correlation matrix</span>
 <span id="cb16-603"><a href="#cb16-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes on sources and approaches</span></span>
-<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ANOVA</span>
+<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PCA (Principle components)</span>
 <span id="cb16-607"><a href="#cb16-607" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>With other 'control' factors?</span>
 <span id="cb16-609"><a href="#cb16-609" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-610"><a href="#cb16-610" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hanea et al {-}</span></span>
-<span id="cb16-611"><a href="#cb16-611" aria-hidden="true" tabindex="-1"></a>(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)</span>
+<span id="cb16-610"><a href="#cb16-610" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How do the specific measures predict the aggregate ones (overall rating, merited publication)</span>
+<span id="cb16-611"><a href="#cb16-611" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>CF 'our suggested weighting'</span>
 <span id="cb16-612"><a href="#cb16-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-613"><a href="#cb16-613" aria-hidden="true" tabindex="-1"></a><span class="in">`aggrecat`</span> package</span>
-<span id="cb16-614"><a href="#cb16-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-615"><a href="#cb16-615" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.</span></span>
+<span id="cb16-613"><a href="#cb16-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-614"><a href="#cb16-614" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aggregation of expert opinion (modeling)</span></span>
+<span id="cb16-615"><a href="#cb16-615" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-616"><a href="#cb16-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-617"><a href="#cb16-617" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Hanea et al, 2021</span><span class="co">](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256919#sec007)</span></span>
+<span id="cb16-617"><a href="#cb16-617" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes on sources and approaches</span></span>
 <span id="cb16-618"><a href="#cb16-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-619"><a href="#cb16-619" aria-hidden="true" tabindex="-1"></a> However, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a 'lower bound' and 'upper bound' for that probability. We could roughly compare that to our continuous metrics with 90% CI's (or imputations for these).</span>
-<span id="cb16-620"><a href="#cb16-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-621"><a href="#cb16-621" aria-hidden="true" tabindex="-1"></a>Furthermore, many (all their successful measures?) use 'performance-based weights', accessing metrics from prior prediction performance of the same forecasters We do not have these, nor do we have a sensible proxy for this. </span>
-<span id="cb16-622"><a href="#cb16-622" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-623"><a href="#cb16-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-619"><a href="#cb16-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-620"><a href="#cb16-620" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb16-621"><a href="#cb16-621" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-622"><a href="#cb16-622" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hanea et al {-}</span></span>
+<span id="cb16-623"><a href="#cb16-623" aria-hidden="true" tabindex="-1"></a>(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)</span>
 <span id="cb16-624"><a href="#cb16-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-625"><a href="#cb16-625" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb16-626"><a href="#cb16-626" aria-hidden="true" tabindex="-1"></a><span class="fu">## D Veen et al (2017)</span></span>
-<span id="cb16-627"><a href="#cb16-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-628"><a href="#cb16-628" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">link</span><span class="co">](https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf)</span></span>
-<span id="cb16-629"><a href="#cb16-629" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-630"><a href="#cb16-630" aria-hidden="true" tabindex="-1"></a>... we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover. </span>
-<span id="cb16-631"><a href="#cb16-631" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-632"><a href="#cb16-632" aria-hidden="true" tabindex="-1"></a>Be sure to consult the <span class="co">[</span><span class="ot">correction made here</span><span class="co">](https://www.semanticscholar.org/paper/Correction%3A-Veen%2C-D.%3B-Stoel%2C-D.%3B-Schalken%2C-N.%3B-K.%3B-Veen-Stoel/a2882e0e8606ef876133f25a901771259e7033b1)</span></span>
-<span id="cb16-633"><a href="#cb16-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-634"><a href="#cb16-634" aria-hidden="true" tabindex="-1"></a>:::   </span>
+<span id="cb16-625"><a href="#cb16-625" aria-hidden="true" tabindex="-1"></a><span class="in">`aggrecat`</span> package</span>
+<span id="cb16-626"><a href="#cb16-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-627"><a href="#cb16-627" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.</span></span>
+<span id="cb16-628"><a href="#cb16-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-629"><a href="#cb16-629" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Hanea et al, 2021</span><span class="co">](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256919#sec007)</span></span>
+<span id="cb16-630"><a href="#cb16-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-631"><a href="#cb16-631" aria-hidden="true" tabindex="-1"></a> However, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a 'lower bound' and 'upper bound' for that probability. We could roughly compare that to our continuous metrics with 90% CI's (or imputations for these).</span>
+<span id="cb16-632"><a href="#cb16-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-633"><a href="#cb16-633" aria-hidden="true" tabindex="-1"></a>Furthermore, many (all their successful measures?) use 'performance-based weights', accessing metrics from prior prediction performance of the same forecasters We do not have these, nor do we have a sensible proxy for this. </span>
+<span id="cb16-634"><a href="#cb16-634" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-635"><a href="#cb16-635" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-636"><a href="#cb16-636" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-637"><a href="#cb16-637" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb16-638"><a href="#cb16-638" aria-hidden="true" tabindex="-1"></a><span class="fu">## Also seems relevant:</span></span>
+<span id="cb16-638"><a href="#cb16-638" aria-hidden="true" tabindex="-1"></a><span class="fu">## D Veen et al (2017)</span></span>
 <span id="cb16-639"><a href="#cb16-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-640"><a href="#cb16-640" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Gsheet HERE</span><span class="co">](https://docs.google.com/spreadsheets/d/14japw6eLGpGjEWy1MjHNJXU1skZY_GAIc2uC2HIUalM/edit#gid=0)</span>, generated from an Elicit.org inquiry.</span>
+<span id="cb16-640"><a href="#cb16-640" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">link</span><span class="co">](https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf)</span></span>
 <span id="cb16-641"><a href="#cb16-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-642"><a href="#cb16-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-643"><a href="#cb16-643" aria-hidden="true" tabindex="-1"></a>::: </span>
-<span id="cb16-644"><a href="#cb16-644" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-642"><a href="#cb16-642" aria-hidden="true" tabindex="-1"></a>... we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover. </span>
+<span id="cb16-643"><a href="#cb16-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-644"><a href="#cb16-644" aria-hidden="true" tabindex="-1"></a>Be sure to consult the <span class="co">[</span><span class="ot">correction made here</span><span class="co">](https://www.semanticscholar.org/paper/Correction%3A-Veen%2C-D.%3B-Stoel%2C-D.%3B-Schalken%2C-N.%3B-K.%3B-Veen-Stoel/a2882e0e8606ef876133f25a901771259e7033b1)</span></span>
 <span id="cb16-645"><a href="#cb16-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-646"><a href="#cb16-646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-647"><a href="#cb16-647" aria-hidden="true" tabindex="-1"></a>In spite of the caveats in the fold above, we construct some  measures of aggregate beliefs  using the <span class="in">`aggrecat`</span> package. We will make (and explain) some ad-hoc choices here. We present these:</span>
+<span id="cb16-646"><a href="#cb16-646" aria-hidden="true" tabindex="-1"></a>:::   </span>
+<span id="cb16-647"><a href="#cb16-647" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-648"><a href="#cb16-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-649"><a href="#cb16-649" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>For each paper</span>
-<span id="cb16-650"><a href="#cb16-650" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>For categories of papers and cross-paper categories of evaluations</span>
-<span id="cb16-651"><a href="#cb16-651" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>For the overall set of papers and evaluations</span>
-<span id="cb16-652"><a href="#cb16-652" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-653"><a href="#cb16-653" aria-hidden="true" tabindex="-1"></a>We can also hold onto these aggregated metrics for later use in modeling.</span>
+<span id="cb16-649"><a href="#cb16-649" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb16-650"><a href="#cb16-650" aria-hidden="true" tabindex="-1"></a><span class="fu">## Also seems relevant:</span></span>
+<span id="cb16-651"><a href="#cb16-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-652"><a href="#cb16-652" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Gsheet HERE</span><span class="co">](https://docs.google.com/spreadsheets/d/14japw6eLGpGjEWy1MjHNJXU1skZY_GAIc2uC2HIUalM/edit#gid=0)</span>, generated from an Elicit.org inquiry.</span>
+<span id="cb16-653"><a href="#cb16-653" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-654"><a href="#cb16-654" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-655"><a href="#cb16-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-656"><a href="#cb16-656" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simple averaging</span>
+<span id="cb16-655"><a href="#cb16-655" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb16-656"><a href="#cb16-656" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-657"><a href="#cb16-657" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-658"><a href="#cb16-658" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bayesian approaches </span>
-<span id="cb16-659"><a href="#cb16-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-660"><a href="#cb16-660" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Best-performing approaches from elsewhere   </span>
-<span id="cb16-661"><a href="#cb16-661" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-662"><a href="#cb16-662" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Assumptions over unit-level random terms </span>
-<span id="cb16-663"><a href="#cb16-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-664"><a href="#cb16-664" aria-hidden="true" tabindex="-1"></a><span class="fu">### Explicit modeling of 'research quality' (for use in prizes, etc.) {-}</span></span>
-<span id="cb16-665"><a href="#cb16-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-666"><a href="#cb16-666" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?</span>
+<span id="cb16-658"><a href="#cb16-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-659"><a href="#cb16-659" aria-hidden="true" tabindex="-1"></a>In spite of the caveats in the fold above, we construct some  measures of aggregate beliefs  using the <span class="in">`aggrecat`</span> package. We will make (and explain) some ad-hoc choices here. We present these:</span>
+<span id="cb16-660"><a href="#cb16-660" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-661"><a href="#cb16-661" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>For each paper</span>
+<span id="cb16-662"><a href="#cb16-662" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>For categories of papers and cross-paper categories of evaluations</span>
+<span id="cb16-663"><a href="#cb16-663" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>For the overall set of papers and evaluations</span>
+<span id="cb16-664"><a href="#cb16-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-665"><a href="#cb16-665" aria-hidden="true" tabindex="-1"></a>We can also hold onto these aggregated metrics for later use in modeling.</span>
+<span id="cb16-666"><a href="#cb16-666" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-667"><a href="#cb16-667" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-668"><a href="#cb16-668" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Model with controls -- look for greatest positive residual?   </span>
+<span id="cb16-668"><a href="#cb16-668" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simple averaging</span>
 <span id="cb16-669"><a href="#cb16-669" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-670"><a href="#cb16-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-671"><a href="#cb16-671" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inter-rater reliability</span></span>
-<span id="cb16-672"><a href="#cb16-672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-673"><a href="#cb16-673" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decomposing variation, dimension reduction, simple linear models</span></span>
-<span id="cb16-674"><a href="#cb16-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-670"><a href="#cb16-670" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bayesian approaches </span>
+<span id="cb16-671"><a href="#cb16-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-672"><a href="#cb16-672" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Best-performing approaches from elsewhere   </span>
+<span id="cb16-673"><a href="#cb16-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-674"><a href="#cb16-674" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Assumptions over unit-level random terms </span>
 <span id="cb16-675"><a href="#cb16-675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-676"><a href="#cb16-676" aria-hidden="true" tabindex="-1"></a><span class="fu">## Later possiblities</span></span>
+<span id="cb16-676"><a href="#cb16-676" aria-hidden="true" tabindex="-1"></a><span class="fu">### Explicit modeling of 'research quality' (for use in prizes, etc.) {-}</span></span>
 <span id="cb16-677"><a href="#cb16-677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-678"><a href="#cb16-678" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Relation to evaluation text content (NLP?)</span>
+<span id="cb16-678"><a href="#cb16-678" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?</span>
 <span id="cb16-679"><a href="#cb16-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-680"><a href="#cb16-680" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Relation/prediction of later outcomes (traditional publication, citations, replication)</span>
+<span id="cb16-680"><a href="#cb16-680" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Model with controls -- look for greatest positive residual?   </span>
 <span id="cb16-681"><a href="#cb16-681" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-682"><a href="#cb16-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-683"><a href="#cb16-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-684"><a href="#cb16-684" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scoping our future coverage</span></span>
-<span id="cb16-685"><a href="#cb16-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-686"><a href="#cb16-686" aria-hidden="true" tabindex="-1"></a>We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.</span>
+<span id="cb16-683"><a href="#cb16-683" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inter-rater reliability</span></span>
+<span id="cb16-684"><a href="#cb16-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-685"><a href="#cb16-685" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decomposing variation, dimension reduction, simple linear models</span></span>
+<span id="cb16-686"><a href="#cb16-686" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-687"><a href="#cb16-687" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-688"><a href="#cb16-688" aria-hidden="true" tabindex="-1"></a>Consider:</span>
+<span id="cb16-688"><a href="#cb16-688" aria-hidden="true" tabindex="-1"></a><span class="fu">## Later possiblities</span></span>
 <span id="cb16-689"><a href="#cb16-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-690"><a href="#cb16-690" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How many relevant NBER papers come out per year?</span>
+<span id="cb16-690"><a href="#cb16-690" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Relation to evaluation text content (NLP?)</span>
 <span id="cb16-691"><a href="#cb16-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-692"><a href="#cb16-692" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How much relevant work in other prestige archives?</span>
+<span id="cb16-692"><a href="#cb16-692" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Relation/prediction of later outcomes (traditional publication, citations, replication)</span>
 <span id="cb16-693"><a href="#cb16-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-694"><a href="#cb16-694" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What quotas do we want (by cause, etc.) and how feasible are these?</span>
+<span id="cb16-694"><a href="#cb16-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-695"><a href="#cb16-695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-696"><a href="#cb16-696" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scoping our future coverage</span></span>
+<span id="cb16-697"><a href="#cb16-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-698"><a href="#cb16-698" aria-hidden="true" tabindex="-1"></a>We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.</span>
+<span id="cb16-699"><a href="#cb16-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-700"><a href="#cb16-700" aria-hidden="true" tabindex="-1"></a>Consider:</span>
+<span id="cb16-701"><a href="#cb16-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-702"><a href="#cb16-702" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How many relevant NBER papers come out per year?</span>
+<span id="cb16-703"><a href="#cb16-703" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-704"><a href="#cb16-704" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>How much relevant work in other prestige archives?</span>
+<span id="cb16-705"><a href="#cb16-705" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-706"><a href="#cb16-706" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What quotas do we want (by cause, etc.) and how feasible are these?</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
