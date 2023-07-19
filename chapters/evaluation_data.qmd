@@ -4,6 +4,8 @@
 #| label: load-packages
 #| code-summary: "load packages"
 
+source(here::here("code", "shared_packages_code.R"))
+
 #devtools::install_github("rethinkpriorities/rp-r-package")
 library(rethinkpriorities)
 
@@ -11,11 +13,10 @@ library(rethinkpriorities)
 library(rnoodling)
 
 library(here)
-source(here::here("code", "shared_packages_code.R"))
 library(dplyr)
 library(pacman)
-library(formattable)
-library(sparkline)
+
+p_load(formattable, sparkline, install=FALSE)
 
 p_load(DT, santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
 
@@ -37,7 +38,6 @@ p_load(airtabler)
 
 #remotes::install_github("rmcelreath/rethinking")
 #library(rethinking)
-
 
 ```
 
@@ -423,30 +423,70 @@ ggplot(summary_df, aes(x = category_unlisted, y = count)) +
 
 ```{r}
 
-
 wrap_text <- function(text, width) {
   sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
 }
 
 evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
 
+
+# original names
+original_names <- evals_pub$crucial_research_unlisted
+
+# shortened names
+shortened_names <- c("Resilient Foods vs AGI Safety",
+                     "Advance Market Commitments",
+                     "Wildlife Trade Demand",
+                     "Advance Market Commitments",
+                     "Economic Prod. & Biodiversity",
+                     "Advance Market Commitments",
+                     "AI and Economic Growth",
+                     "Wildlife Trade Demand",
+                     "Non-Profits Governance & Impact",
+                     "AI and Economic Growth",
+                     "Mental Health Therapy & Human Capital",
+                     "Economic Prod. & Biodiversity",
+                     "Cash Transfers vs Psychotherapy",
+                     "Cash Transfers vs Psychotherapy",
+                     "Resilient Foods vs AGI Safety",
+                     "Mental Health Therapy & Human Capital",
+                     "Resilient Foods vs AGI Safety")
+
+# create a named vector for easy lookup
+name_lookup <- setNames(shortened_names, original_names)
+
+# use the lookup to create the new column
+evals_pub$shortened_names <- name_lookup[evals_pub$crucial_research_unlisted]
+
+evals_pub$wrapped_shortened_names <- wrap_text(evals_pub$shortened_names, width = 15)
+
+#Move this to do this 'cleaning' earlier
+evals_pub$revised_evaluator_name <- ifelse(
+  grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$evaluator_name_unlisted),
+  paste0("Anonymous_", seq_along(evals_pub$evaluator_name_unlisted)),
+  evals_pub$evaluator_name_unlisted
+)
+
+
 # Dot plot
-ggplot(evals_pub, aes(x = wrapped_pub_names, y = overall)) +
-  geom_point(stat = "identity", size = 5, shape = 1, colour = "lightblue", stroke = 3) +
-  geom_text(aes(label = evaluator_name_unlisted),vjust = -1, size = 5,check_overlap = TRUE) +
+ggplot(evals_pub, aes(x = shortened_names, y = overall)) +
+  geom_point(stat = "identity", size = 4, shape = 1, colour = "lightblue", stroke = 3) +
+  geom_text_repel(aes(label = revised_evaluator_name), 
+                  size = 3, 
+                  box.padding = unit(0.35, "lines"),
+                  point.padding = unit(0.3, "lines")) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   theme_light() +
   xlab("Paper") + # remove x-axis label
-  ylab("Overal score") + # name y-axis
+  ylab("Overall score") + # name y-axis
   ggtitle("Overall scores of evaluated papers") +# add title
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 14),
-    axis.text.x = element_text(size = 14)
-    )
-
+    text = element_text(size = 14), # changing all text size to 16
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 12)
+  )
 ```
 
 ```{r}
@@ -549,6 +589,7 @@ out
 
 
 ::: {.callout-note collapse="true"}
+
 ## Hanea et al {-}
 (Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
 
