@@ -1,5 +1,5 @@
 {
-  "hash": "435ee4bfb859013ed99473715f8766fc",
+  "hash": "12728bc7421cebb627855bbdc83056a4",
   "result": {
     "markdown": "# Preface {.unnumbered}\n\nThis is a Quarto book.\n\nTo learn more about Quarto books visit <https://quarto.org/docs/books>.\n\n\n::: {.cell}\n\n```{.r .cell-code}\noptions(knitr.duplicate.label = \"allow\")\n```\n:::\n",
     "supporting": [
