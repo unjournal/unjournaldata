@@ -334,7 +334,6 @@ Next, we present the ratings and predictions along with 'uncertainty measures'. 
      - By subfield of economics 
      - By topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc.    )
      - By source (submitted, identified with author permission, direct evaluation)
-     
     
 - Timing of intake and evaluation (Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves)
 
@@ -407,7 +406,7 @@ summary_df <- evals_pub %>%
 
 summary_df$category_unlisted[is.na(summary_df$category_unlisted)] <- "Unknown"
 
-summary_df <- summary_df%>%
+summary_df <- summary_df %>%
   arrange(-desc(count)) %>%
   mutate(category_unlisted = factor(category_unlisted, levels = unique(category_unlisted)))
 
@@ -417,7 +416,7 @@ ggplot(summary_df, aes(x = category_unlisted, y = count)) +
   coord_flip() + # This makes the chart horizontal
   theme_minimal() +
   labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papaers by category") 
+       title = "Count of evaluated papers by category") 
 
 ```
 
@@ -491,20 +490,29 @@ ggplot(evals_pub, aes(x = shortened_names, y = overall)) +
 
 ```{r}
 
-ggplot(evals_pub, aes(x = source_main)) + 
+# Function to insert a newline character every 15 characters
+wrap_text <- function(x, width = 15) {
+  gsub("(.{1,15})", "\\1-\n", x)
+}
+
+evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
+
+# Bar plot
+ggplot(evals_pub, aes(x = source_main_wrapped)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count") +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   theme_light() +
   theme_minimal() +
-  ggtitle("Evaluations by source of the paper") +# add title
+  ggtitle("Evaluations by source of the paper") + # add title
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 14),
+    axis.text.y = element_text(size = 10),
     axis.text.x = element_text(size = 14)
-    )
+  )
+
 ```
 
 ```{r}
@@ -514,7 +522,10 @@ all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in%  c("
                                                                               "awaiting_evaluations")
 
 all_pub_records$source_main[all_pub_records$source_main == "NA"] <- "Not applicable"  
+all_pub_records$source_main[all_pub_records$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
 all_pub_records$source_main = tidyr::replace_na(all_pub_records$source_main, "Unknown")
+
+
 
 ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
   geom_bar(position = "stack", stat = "count") +
@@ -527,12 +538,12 @@ ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) +
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 14),
+    axis.text.y = element_text(size = 12),
     axis.text.x = element_text(size = 14)
     )
 ```
-```{r}
 
+```{r}
 
 
 unit.scale = function(x) (x*100 - min(x*100)) / (max(x*100) - min(x*100))
