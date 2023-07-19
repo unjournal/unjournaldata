@@ -287,7 +287,7 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 
 Below, we give a data table of key attributes of the paper, the author, and the 'middle' ratings and predictions.  
 
-```{r}
+```{r eval = FALSE}
 #| label: datatable
 #| code-summary: "Data datable (all shareable relevant data)"
 (
@@ -297,7 +297,7 @@ Below, we give a data table of key attributes of the paper, the author, and the 
   dplyr::select(-id) %>% 
     dplyr::select(-matches("ub_|lb_|conf")) %>% 
     #rename_all(~ gsub("_", " ", .)) %>% 
-    rename("Research  _____________________" = "crucial rsx" 
+    rename("Research  _____________________" = "crucial_rsx" 
       ) %>%
   DT::datatable(
     caption = "Evaluations (confidence bounds not shown)", 
@@ -309,7 +309,7 @@ Below, we give a data table of key attributes of the paper, the author, and the 
 
 Next, we present the ratings and predictions along with 'uncertainty measures'. We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators. Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
-```{r}
+```{r eval = FALSE}
 (
   all_evals_dt_ci <- evals_pub %>%
   arrange(crucial_rsx, eval_name) %>%
@@ -388,7 +388,7 @@ fig <- fig %>% layout(
     )
 )
 
-fig #why did this stop working
+fig 
 
 ```
 
@@ -450,34 +450,63 @@ ggplot(evals_pub, aes(x = wrapped_pub_names, y = overall)) +
 ```
 
 ```{r}
-wrap_text <- function(text, width) {
-  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
-}
 
-evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
-
-# Dot plot
-ggplot(df, aes(fill = group, y = value, x = category)) + 
-  geom_bar(position = "stack", stat = "identity") +
-  labs(x = "Category", y = "Value", fill = "Group") +
-  theme_minimal()
+ggplot(evals_pub, aes(x = source_main)) + 
+  geom_bar(position = "stack", stat = "count") +
+  labs(x = "Source", y = "Count") +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  theme_light() +
+  theme_minimal() +
+  ggtitle("Evaluations by source of the paper") +# add title
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(size = 16), # changing all text size to 16
+    axis.text.y = element_text(size = 14),
+    axis.text.x = element_text(size = 14)
+    )
 ```
 
+```{r}
+all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in%  c("published",
+                                                                              "contacting/awaiting_authors_response_to_evaluation",
+                                                                               "awaiting_publication_ME_comments",
+                                                                              "awaiting_evaluations")
 
+all_pub_records$source_main[all_pub_records$source_main == "NA"] <- "Not applicable"  
+all_pub_records$source_main = tidyr::replace_na(all_pub_records$source_main, "Unknown")
 
+ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
+  geom_bar(position = "stack", stat = "count") +
+  labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  theme_light() +
+  theme_minimal() +
+  ggtitle("Evaluations by source of the paper") +# add title
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(size = 16), # changing all text size to 16
+    axis.text.y = element_text(size = 14),
+    axis.text.x = element_text(size = 14)
+    )
+```
 ```{r}
 
 
+
+unit.scale = function(x) (x*100 - min(x*100)) / (max(x*100) - min(x*100))
 evaluations_table <- evals_pub %>%
-  select(crucial_rsx, eval_name, cat_1, source_main, Overall, overall, adv_knowledge, methods, logic_comms, journal_predict)
+  select(crucial_rsx, eval_name, cat_1, source_main, overall, adv_knowledge, methods, logic_comms, journal_predict) %>%
+  arrange(desc(crucial_rsx))
 
 
 out = formattable(
   evaluations_table,
   list(
-    overall = color_bar("lightblue"),
-    area(col = 6:9) ~ function(x) percent(x / 100, digits = 0),
-    area(col = 6:9) ~ color_tile("#DeF7E9", "#3E7DCC")
+    #area(col = 5:8) ~ function(x) percent(x / 100, digits = 0),
+    area(col = 5:8) ~ color_tile("#FA614B66","#3E7DCC"),
+    `journal_predict` = proportion_bar("#DeF7E9", unit.scale)
   )
 )
 out
@@ -486,15 +515,6 @@ out
 
 ```
 
-```{r}
-df = data.frame("Type" = c("test"),
-               Sparkline = c(as.character(htmltools::as.tags(sparkline(c(90,70,80, 60), type = "bullet")))))
-out = as.htmlwidget(formattable(df))
-                         
-out$dependencies = c(out$dependencies, htmlwidgets:::widget_dependencies("sparkline", "sparkline"))
-out
-
-```
 
 
 - By field and topic area of paper
