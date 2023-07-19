@@ -886,6 +886,19 @@
       "Hash": "32b25c97ce306a760c4d9f787991b5d9",
       "Requirements": []
     },
+    "formattable": {
+      "Package": "formattable",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "870d6d5d39b23923d0c816f904075b4c",
+      "Requirements": [
+        "htmltools",
+        "htmlwidgets",
+        "knitr",
+        "rmarkdown"
+      ]
+    },
     "fs": {
       "Package": "fs",
       "Version": "1.5.2",
@@ -2921,6 +2934,17 @@
       "Repository": "CRAN",
       "Hash": "3606bb09e0914edd4fc8313b500dcd5e",
       "Requirements": []
+    },
+    "sparkline": {
+      "Package": "sparkline",
+      "Version": "2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "06e5e4017ecb00fd142bada4b380c59a",
+      "Requirements": [
+        "htmltools",
+        "htmlwidgets"
+      ]
     },
     "spatial": {
       "Package": "spatial",
