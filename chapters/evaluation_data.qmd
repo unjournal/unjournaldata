@@ -605,7 +605,8 @@ Furthermore, many (all their successful measures?) use 'performance-based weight
 :::
 
 
-### D Veen et al (2017)
+::: {.callout-note collapse="true"}
+## D Veen et al (2017)
 
 [link](https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf)
 
