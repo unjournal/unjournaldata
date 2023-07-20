@@ -156,6 +156,11 @@ new_names <- c(
 evals_pub <- evals_pub %>%
   rename(!!!new_names)
 
+# Function to insert a newline character every 15 characters
+wrap_text <- function(x, width = 15) {
+  gsub("(.{1,15})", "\\1-\n", x)
+}
+
 evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
 
 evals_pub$eval_name <- ifelse(
@@ -460,10 +465,7 @@ ggplot(summary_df, aes(x = cat_1, y = count)) +
 
 ```{r}
 
-# Function to insert a newline character every 15 characters
-wrap_text <- function(x, width = 15) {
-  gsub("(.{1,15})", "\\1-\n", x)
-}
+
 
 
 # Bar plot
@@ -534,11 +536,10 @@ evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
 
 
 
-
 # Dot plot
 ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
   geom_point(stat = "identity", size = 4, shape = 1, colour = "lightblue", stroke = 3) +
-  geom_text_repel(aes(label = revised_evaluator_name), 
+  geom_text_repel(aes(label = eval_name), 
                   size = 3, 
                   box.padding = unit(0.35, "lines"),
                   point.padding = unit(0.3, "lines")) +
