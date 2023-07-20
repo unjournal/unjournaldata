@@ -101,13 +101,11 @@ evals_pub <- evals %>%
 evals_pub %<>%
  tidyr::unnest_wider(category, names_sep = "") %>%
  tidyr::unnest_wider(paper_abbrev, names_sep = "") %>%
-mutate(across(everything(), unlist)) #unlist list columns
-
+mutate(across(everything(), unlist)) %>%  #unlist list columns 
+  dplyr::rename(paper_abbrev = paper_abbrev1)
 
 #Todo -- check the unlist is not propagating the entry
-  
 #Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
-
 
 ```                   
 
@@ -158,10 +156,17 @@ new_names <- c(
 evals_pub <- evals_pub %>%
   rename(!!!new_names)
 
+evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
+
+evals_pub$eval_name <- ifelse(
+  grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$eval_name),
+  paste0("Anonymous_", seq_along(evals_pub$eval_name)),
+  evals_pub$eval_name
+)
+
+
 # make the old names into labels
 
-library(stringr)
- 
 #  Create a list of labels
 labels <- str_replace_all(new_names, "_", " ")
 labels <- str_to_title(labels)
@@ -280,18 +285,23 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
     
 # Basic presentation
 
-## Simple data summaries and visualizations
+## What sorts of papers/projects are we considering and evaluating? 
 
-Below, we give a data table of key attributes of the paper, the author, and the 'middle' ratings and predictions.  
+In this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal's coverage. 
 
-```{r eval = FALSE}
-#| label: datatable
-#| code-summary: "Data datable (all shareable relevant data)"
+In the interactive tables below we give some key attributes of the papers and the evaluators, and a preview of the evaluations.
+
+
+::: column-body-outset
+
+
+```{r }
+#| label: datatable0
+
 (
   all_evals_dt <- evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, eval_name, everything())) %>%
-  dplyr::select(-id) %>% 
+  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main_wrapped, author_agreement) %>%
     dplyr::select(-matches("ub_|lb_|conf")) %>% 
     #rename_all(~ gsub("_", " ", .)) %>% 
     rename("Research  _____________________" = "crucial_rsx" 
@@ -302,18 +312,41 @@ Below, we give a data table of key attributes of the paper, the author, and the 
     rownames= FALSE,
     options = list(pageLength = 7)
     )
+)
 ```
 
-Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
-```{r eval = FALSE}
+\
+
+Next, the 'middle ratings and predictions'.
+
+```{r }
+#| label: datatable
+#| code-summary: "Data datable (all shareable relevant data)"
+
+(
+  all_evals_dt <- evals_pub %>%
+  arrange(paper_abbrev, eval_name, overall) %>%
+  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
+  DT::datatable(
+    caption = "Evaluations and predictions (confidence bounds not shown)", 
+    filter = 'top',
+    rownames= FALSE,
+    options = list(pageLength = 7)
+    )
+)
+
+```
+\
+
+<!-- Todo -- Present these, including bounds, in a useful way -->
+
+```{r eval=FALSE}
+
 (
   all_evals_dt_ci <- evals_pub %>%
-  arrange(crucial_rsx, eval_name) %>%
-  dplyr::select(crucial_rsx, eval_name, conf_overall, matches("ub_imp|lb_imp")) %>%
-    #rename_all(~ gsub("_", " ", .)) %>% 
-    rename("Research  _____________________" = "crucial_rsx" 
-      ) %>%
+  arrange(paper_abbrev, eval_name) %>%
+  dplyr::select(paper_abbrev, eval_name, conf_overall, rating_cats, matches("ub_imp|lb_imp")) %>%
   DT::datatable(
     caption = "Evaluations and (imputed*) confidence bounds)", 
     filter = 'top',
@@ -323,7 +356,11 @@ Next, we present the ratings and predictions along with 'uncertainty measures'.^
 )
 
 ```
+:::
 
+
+::: {.callout-note collapse="true"}
+## Next consider...
 
 - Composition of research evaluated
      - By field (economics, psychology, etc.)
@@ -332,6 +369,8 @@ Next, we present the ratings and predictions along with 'uncertainty measures'.^
      - By source (submitted, identified with author permission, direct evaluation)
     
 - Timing of intake and evaluation^[Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves]
+
+:::
 
 The funnel plot below starts with the paper we prioritized for likely Unjournal evaluation, marking these as 'considering'.
 
@@ -398,67 +437,26 @@ fig
 ```{r}
 
 summary_df <- evals_pub %>%
-  distinct(crucial_research_unlisted, .keep_all = T) %>% 
-  group_by(category_unlisted) %>%
+  distinct(crucial_rsx, .keep_all = T) %>% 
+  group_by(cat_1) %>%
   summarise(count = n()) 
 
-summary_df$category_unlisted[is.na(summary_df$category_unlisted)] <- "Unknown"
+summary_df$cat_1[is.na(summary_df$cat_1)] <- "Unknown"
 
 summary_df <- summary_df %>%
   arrange(-desc(count)) %>%
-  mutate(category_unlisted = factor(category_unlisted, levels = unique(category_unlisted)))
+  mutate(cat_1 = factor(cat_1, levels = unique(cat_1)))
 
 # Create stacked bar chart
-ggplot(summary_df, aes(x = category_unlisted, y = count)) +
+ggplot(summary_df, aes(x = cat_1, y = count)) +
   geom_bar(stat = "identity") + 
-  coord_flip() + # This makes the chart horizontal
   theme_minimal() +
   labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papers by category") 
+       title = "Count of evaluated papers by primary category") 
 
 ```
 
-### The distribution of ratings and predictions {-}
 
-- For each category and prediction (overall and by paper)
-
-
-```{r}
-
-wrap_text <- function(text, width) {
-  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
-}
-
-evals_pub$wrapped_pub_names <- wrap_text(evals_pub$crucial_research_unlisted, width = 60)
-
-
-evals_pub$revised_evaluator_name <- ifelse(
-  grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$evaluator_name_unlisted),
-  paste0("Anonymous_", seq_along(evals_pub$evaluator_name_unlisted)),
-  evals_pub$evaluator_name_unlisted
-)
-
-
-# Dot plot
-ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
-  geom_point(stat = "identity", size = 4, shape = 1, colour = "lightblue", stroke = 3) +
-  geom_text_repel(aes(label = revised_evaluator_name), 
-                  size = 3, 
-                  box.padding = unit(0.35, "lines"),
-                  point.padding = unit(0.3, "lines")) +
-  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  theme_light() +
-  xlab("Paper") + # remove x-axis label
-  ylab("Overall score") + # name y-axis
-  ggtitle("Overall scores of evaluated papers") +# add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 14), # changing all text size to 16
-    axis.text.y = element_text(size = 10),
-    axis.text.x = element_text(size = 12)
-  )
-```
 
 ```{r}
 
@@ -467,13 +465,11 @@ wrap_text <- function(x, width = 15) {
   gsub("(.{1,15})", "\\1-\n", x)
 }
 
-evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
 
 # Bar plot
 ggplot(evals_pub, aes(x = source_main_wrapped)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count") +
-  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   theme_light() +
   theme_minimal() +
   ggtitle("Evaluations by source of the paper") + # add title
@@ -488,6 +484,7 @@ ggplot(evals_pub, aes(x = source_main_wrapped)) +
 ```
 
 ```{r}
+
 all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in%  c("published",
                                                                               "contacting/awaiting_authors_response_to_evaluation",
                                                                                "awaiting_publication_ME_comments",
@@ -515,14 +512,60 @@ ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) +
     )
 ```
 
+
+### The distribution of ratings and predictions {-}
+
+Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
+
+
+- For each category and prediction (overall and by paper)
+
+
+::: column-body-outset
+
+
 ```{r}
 
+wrap_text <- function(text, width) {
+  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
+}
+
+evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
+
+
+
+
+# Dot plot
+ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
+  geom_point(stat = "identity", size = 4, shape = 1, colour = "lightblue", stroke = 3) +
+  geom_text_repel(aes(label = revised_evaluator_name), 
+                  size = 3, 
+                  box.padding = unit(0.35, "lines"),
+                  point.padding = unit(0.3, "lines")) +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  theme_light() +
+  xlab("Paper") + # remove x-axis label
+  ylab("Overall score") + # name y-axis
+  ggtitle("Overall scores of evaluated papers") +# add title
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(size = 14), # changing all text size to 16
+    axis.text.y = element_text(size = 8),
+    axis.text.x = element_text(size = 12)
+  )
+```
+:::
+
+
+::: column-body-outset
+
+```{r}
 
 unit.scale = function(x) (x*100 - min(x*100)) / (max(x*100) - min(x*100))
 evaluations_table <- evals_pub %>%
-  select(crucial_rsx, eval_name, cat_1, source_main, overall, adv_knowledge, methods, logic_comms, journal_predict) %>%
-  arrange(desc(crucial_rsx))
-
+  select(paper_abbrev, eval_name, cat_1, source_main, overall, adv_knowledge, methods, logic_comms, journal_predict) %>%
+  arrange(desc(paper_abbrev))
 
 out = formattable(
   evaluations_table,
@@ -537,14 +580,18 @@ out
 
 
 ```
+:::
 
 
+Next, look for systematic variation 
 
 - By field and topic area of paper
 
 - By submission/selection route
 
 - By evaluation manager
+
+... perhaps building a model of this. We are looking for systematic 'biases and trends', loosely speaking, to help us better understand how our evaluation system is working.
 
 \
 
