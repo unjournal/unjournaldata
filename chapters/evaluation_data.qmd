@@ -396,18 +396,21 @@ papers_evaluated <- all_pub_records %>% filter(`stage of process/todo` %in%  c("
 papers_complete <- all_pub_records %>% filter(`stage of process/todo` ==  "published") %>% 
 nrow()
 
-papers_in_progress <-  papers_evaluated-papers_complete
+papers_in_progress <-  papers_evaluated - papers_complete
 
 papers_still_in_consideration <-  all_pub_records %>% filter(`stage of process/todo` ==  "considering") %>% nrow()
 
+
+#todo: adjust wording of hover notes ('source, target...etc')
 
 fig <- plot_ly(
     type = "sankey",
     orientation = "h",
 
     node = list(
-      label = c("Prioritized", "Eval    uated", "Complete", "In progress", "Still in consideration", "De-prioritized"),
+      label = c("Prioritized", "Evaluating(ed)", "Complete", "In progress", "Still in consideration", "De-prioritized"),
       color = c("orange", "green", "green", "orange", "orange", "red"),
+#Todo: adjust 'location' to group these left to right
       pad = 15,
       thickness = 20,
       line = list(
@@ -438,6 +441,8 @@ fig
 
 ```
 
+
+(In future, will make interactive/dashboards of the elements below)
 
 ```{r}
 
@@ -474,7 +479,7 @@ ggplot(evals_pub, aes(x = source_main_wrapped)) +
   labs(x = "Source", y = "Count") +
   theme_light() +
   theme_minimal() +
-  ggtitle("Evaluations by source of the paper") + # add title
+  ggtitle("Pool of research/evaluations by paper source") + # add title
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
@@ -535,10 +540,13 @@ wrap_text <- function(text, width) {
 evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
 
 
+#todo -- sort by average overall, use color and vertical spacing more
+#todo: introduce a carriage return into the paper names (workaround) to wrap these and save horizontal space
+
 
 # Dot plot
 ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
-  geom_point(stat = "identity", size = 4, shape = 1, colour = "lightblue", stroke = 3) +
+  geom_point(stat = "identity", size = 3, shape = 1, colour = "lightblue", stroke = 2) +
   geom_text_repel(aes(label = eval_name), 
                   size = 3, 
                   box.padding = unit(0.35, "lines"),
@@ -555,9 +563,32 @@ ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
     axis.text.y = element_text(size = 8),
     axis.text.x = element_text(size = 12)
   )
+#todo -- add more vertical space between papers
+
 ```
 :::
 
+
+In future (todo), we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)
+
+*The below should be fixed -- the column widths below are misleading*
+
+::: {.callout-note collapse="true"}
+## Future vis
+
+Spider or radial chart 
+
+Each rating is a dimension or attribute (potentially normalized)
+potentially superimpose a 'circle' for the suggested weighting or overall. 
+
+Each paper gets its own spider, with all others (or the average) in faded color behind it as a comparator. 
+
+Ideally user can switch on/off 
+
+Beware -- people infer things from the shape's size
+
+
+::: 
 
 ::: column-body-outset
 
