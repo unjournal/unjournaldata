@@ -1,5 +1,7 @@
 # Evaluation data: description, exploration, checks
 
+## Data input, cleaning, feature construction and imputation  
+
 ```{r, warning=FALSE}
 #| label: load-packages
 #| code-summary: "load packages"
@@ -190,7 +192,7 @@ labels <- str_to_title(labels)
 
 ### Reconcile uncertainty ratings and CIs {-}
 
-Where people gave only confidence level 'dots', we impute CIs (confidence/credible intervals). We follow the correspondence described   [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis). (Otherwise where they gave actual CIs, we use these.)^[Note this is only a first-pass; a more sophisticated approach may be warranted in future.]
+Where people gave only confidence level 'dots', we impute CIs (confidence/credible intervals). We follow the correspondence described [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis). (Otherwise, where they gave actual CIs, we use these.)^[Note this is only a first-pass; a more sophisticated approach may be warranted in future.]
 
 ::: {.callout-note collapse="true"}
 ## Dots to interval choices
@@ -288,17 +290,18 @@ evals_pub %>% write_csv(file = here("data", "evals.csv"))
 ```
 
     
-# Basic presentation
+## Basic presentation
 
-## What sorts of papers/projects are we considering and evaluating? 
+### What sorts of papers/projects are we considering and evaluating? 
 
 In this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal's coverage. 
 
-In the interactive tables below we give some key attributes of the papers and the evaluators, and a preview of the evaluations.
+In the interactive table below we give some key attributes of the papers and the evaluators.
 
 
 ::: column-body-outset
 
+<!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
 
 ```{r }
 #| label: datatable0
@@ -323,7 +326,7 @@ In the interactive tables below we give some key attributes of the papers and th
 
 \
 
-Next, the 'middle ratings and predictions'.
+Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
 
 ```{r }
 #| label: datatable
@@ -377,7 +380,7 @@ Next, the 'middle ratings and predictions'.
 
 :::
 
-The funnel plot below starts with the paper we prioritized for likely Unjournal evaluation, marking these as 'considering'.
+The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^(Those marked as 'considering' in the Airtable).
 
 ```{r}
 
@@ -408,7 +411,7 @@ fig <- plot_ly(
     orientation = "h",
 
     node = list(
-      label = c("Prioritized", "Evaluating(ed)", "Complete", "In progress", "Still in consideration", "De-prioritized"),
+      label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
       color = c("orange", "green", "green", "orange", "orange", "red"),
 #Todo: adjust 'location' to group these left to right
       pad = 15,
@@ -442,7 +445,7 @@ fig
 ```
 
 
-(In future, will make interactive/dashboards of the elements below)
+Todo: ^[Make interactive/dashboards of the elements below]
 
 ```{r}
 
@@ -469,8 +472,6 @@ ggplot(summary_df, aes(x = cat_1, y = count)) +
 
 
 ```{r}
-
-
 
 
 # Bar plot
