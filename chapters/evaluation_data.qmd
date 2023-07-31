@@ -2,53 +2,96 @@
 
 ## Data input, cleaning, feature construction and imputation  
 
-```{r, warning=FALSE}
+```{r setup, warning=FALSE}
 #| label: load-packages
 #| code-summary: "load packages"
 
-source(here::here("code", "shared_packages_code.R"))
+library(tidyverse) 
 
-#devtools::install_github("rethinkpriorities/rp-r-package")
-library(rethinkpriorities)
+# data acquisition ----
+#devtools::install_github("bergant/airtabler")
+library(airtabler)
+# library(qualtRics) # Download 'Qualtrics' Survey Data
 
-#devtools::install_github("rethinkpriorities/r-noodling-package") #mainly used playing in real time
-library(rnoodling)
+# data cleaning & shaping ----
+# library(data.table) # Extension of 'data.frame' for speedy things
+# library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
+# library(reshape2) # Flexibly Reshape Data: A Reboot of the Reshape Package
+# library(santoku) # A Versatile Cutting Tool
+# library(miceadds) # Some Additional Multiple Imputation Functions, Especially for 'mice'
+# library(labelled) # Manipulating Labelled Data
 
-library(here)
-library(dplyr)
-library(pacman)
+# data analysis ----
+# library(lme4)
+# library(lmtest) # Testing Linear Regression Models
+# library(lavaan) # Latent Variable Analysis
+# library(jtools) # Analysis and Presentation of Social Scientific Data
+# library(plm) # Linear Models for Panel Data
+# library(corrr) # Correlations in R
+# library(nFactors) # Parallel Analysis and Other Non Graphical Solutions to the Cattell Scree Test
+# library(GPArotation) # Gradient Projection Factor Rotation
+# library(quantreg) # Quantile Regression
+# library(psych) # Procedures for Psychological, Psychometric, and Personality Research
+# library(skimr) # Compact and Flexible Summaries of Data
+# library(modeest) # Mode Estimation
+# library(DescTools) # Tools for Descriptive Statistics
+# library(effectsize) #Indices of Effect Size
+# library(mediation) # Causal Mediation Analysis
+# library(pryr) # Tools for Computing on the Language
+# library(sjmisc) # Data and Variable Transformation Functions
+# library(emmeans) #  Estimated Marginal Means, aka Least-Squares Means
+# library(sandwich) # Robust Covariance Matrix Estimators
+# library(pastecs) # Package for Analysis of Space-Time Ecological Series
+# library(likert) # Analysis and Visualization Likert Items
 
-p_load(formattable, sparkline, install=FALSE)
+# markdown et al. ----
+# library(knitr)
+# library(bookdown)
+# library(kableExtra)
+# library(huxtable) # Easily Create and Style Tables for LaTeX, HTML and Other Formats
+library(formattable) # Create 'Formattable' Data Structures
+# library(sparkline) # 'jQuery' Sparkline 'htmlwidget'
+library(DT) # R interface to DataTables library (JavaScript)
 
-p_load(DT, santoku, lme4, huxtable, janitor, emmeans, sjPlot, sjmisc, ggeffects, ggrepel, likert, labelled, plotly, stringr, install=FALSE)
+# dataviz ----
+# library(ggeffects) # Create Tidy Data Frames of Marginal Effects for 'ggplot' from Model Outputs
+# library(scales) # Scale Functions for Visualization
+# library(RColorBrewer)
+# library(plotrix) # Various Plotting Functions
+# library(ggthemes)
+# library(ggridges)
+library(ggrepel)
+# library(paletteer) # Comprehensive Collection of Color Palettes
+# library(sjPlot) # Data Visualization for Statistics in Social Science
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
 
-p_load(ggthemes, paletteer, ggridges, install=FALSE)
+# others ----
+library(here) # A Simpler Way to Find Your Files
+# library(digest) # Create Compact Hash Digests of R Objects
+# library(pacman) # Package management tools
+# library(devtools) # Tools to Make Developing R Packages Easier
+# #devtools::install_github("rethinkpriorities/rp-r-package")
+# library(rethinkpriorities)
+# #devtools::install_github("rethinkpriorities/r-noodling-package") #mainly used playing in real time
+# library(rnoodling)
 
+# Currently unused packages ----
+# library(BayesianFirstAid)
+
+#devtools::install_github("paulhendricks/anonymizer")
+#library(anonymizer)
+
+#devtools::install_github("metamelb-repliCATS/aggreCAT")
+#library(aggrecat)
+# Make sure select is always the dplyr version
 select <- dplyr::select 
 
+# options
 options(knitr.duplicate.label = "allow")
-
 options(mc.cores = parallel::detectCores())
-#rstan_options(auto_write = TRUE)
-
-#library(hunspell)
-
-#(brms)
-
-#devtools::install_github("bergant/airtabler")
-p_load(airtabler)
-
-#remotes::install_github("rmcelreath/rethinking")
-#library(rethinking)
 
 ```
 
-
-<!-- #| label: aggrecat
-#| code-summary: "install aggrecat package"
-
-#devtools::install_github("metamelb-repliCATS/aggreCAT")
--->
 
 
 ```{r}
@@ -59,9 +102,8 @@ p_load(airtabler)
 base_id <- "appbPYEw9nURln7Qg"
 
 # Set your Airtable API key
-#Sys.setenv(AIRTABLE_API_KEY = "") 
+Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_KEY"))
 #this should be set in my .Renviron file
-
 
 # Read data from a specific view
 
@@ -387,17 +429,22 @@ The funnel plot below starts with the papers we prioritized for likely *Unjourna
 #Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
 
-papers_considered <- all_pub_records %>% nrow()
+papers_considered <- all_pub_records %>% 
+  nrow()
 
-papers_deprio <- all_pub_records %>% filter(`stage of process/todo` ==  "de-prioritized") %>% nrow()
+papers_deprio <- all_pub_records %>% 
+  filter(`stage of process/todo` ==  "de-prioritized") %>% 
+  nrow()
 
-papers_evaluated <- all_pub_records %>% filter(`stage of process/todo` %in%  c("published",
-                                                                              "contacting/awaiting_authors_response_to_evaluation",
-                                                                               "awaiting_publication_ME_comments",
-                                                                              "awaiting_evaluations")) %>% nrow()
+papers_evaluated <- all_pub_records %>% 
+  filter(`stage of process/todo` %in% c("published",
+                                        "contacting/awaiting_authors_response_to_evaluation",
+                                        "awaiting_publication_ME_comments","awaiting_evaluations")) %>% 
+  nrow()
 
-papers_complete <- all_pub_records %>% filter(`stage of process/todo` ==  "published") %>% 
-nrow()
+papers_complete <- all_pub_records %>% 
+  filter(`stage of process/todo` ==  "published") %>%
+  nrow()
 
 papers_in_progress <-  papers_evaluated - papers_complete
 
