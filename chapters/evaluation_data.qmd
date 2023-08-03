@@ -45,8 +45,9 @@ library(airtabler)
 # library(likert) # Analysis and Visualization Likert Items
 
 # markdown et al. ----
-# library(knitr)
-# library(bookdown)
+library(knitr)
+library(bookdown)
+library(quarto)
 # library(kableExtra)
 # library(huxtable) # Easily Create and Style Tables for LaTeX, HTML and Other Formats
 library(formattable) # Create 'Formattable' Data Structures
