@@ -99,11 +99,11 @@ options(mc.cores = parallel::detectCores())
 #| label: input_at
 #| code-summary: "input from airtable"
    
-
 base_id <- "appbPYEw9nURln7Qg"
 
-# Set your Airtable API key
-Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_KEY"))
+
+# Set your Airtable API key 
+Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_API_KEY"))
 #this should be set in my .Renviron file
 
 # Read data from a specific view
@@ -423,7 +423,7 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 
 :::
 
-The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^(Those marked as 'considering' in the Airtable).
+The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
 
 ```{r}
 
