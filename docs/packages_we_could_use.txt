@@ -1,0 +1,94 @@
+This is just a dump with all the packages we originally had loaded into this project.
+I'm making this so we can clean up the actual setup chunk in the files but
+still keep this list in case we need it. --Julia
+
+```{r setup, warning=FALSE}
+#| label: load-packages
+#| code-summary: "load packages"
+
+library(tidyverse) 
+
+# data acquisition ----
+#devtools::install_github("bergant/airtabler")
+library(airtabler)
+# library(qualtRics) # Download 'Qualtrics' Survey Data
+
+# data cleaning & shaping ----
+# library(data.table) # Extension of 'data.frame' for speedy things
+# library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
+# library(reshape2) # Flexibly Reshape Data: A Reboot of the Reshape Package
+# library(santoku) # A Versatile Cutting Tool
+# library(miceadds) # Some Additional Multiple Imputation Functions, Especially for 'mice'
+# library(labelled) # Manipulating Labelled Data
+
+# data analysis ----
+# library(lme4)
+# library(lmtest) # Testing Linear Regression Models
+# library(lavaan) # Latent Variable Analysis
+# library(jtools) # Analysis and Presentation of Social Scientific Data
+# library(plm) # Linear Models for Panel Data
+# library(corrr) # Correlations in R
+# library(nFactors) # Parallel Analysis and Other Non Graphical Solutions to the Cattell Scree Test
+# library(GPArotation) # Gradient Projection Factor Rotation
+# library(quantreg) # Quantile Regression
+# library(psych) # Procedures for Psychological, Psychometric, and Personality Research
+# library(skimr) # Compact and Flexible Summaries of Data
+# library(modeest) # Mode Estimation
+# library(DescTools) # Tools for Descriptive Statistics
+# library(effectsize) #Indices of Effect Size
+# library(mediation) # Causal Mediation Analysis
+# library(pryr) # Tools for Computing on the Language
+# library(sjmisc) # Data and Variable Transformation Functions
+# library(emmeans) #  Estimated Marginal Means, aka Least-Squares Means
+# library(sandwich) # Robust Covariance Matrix Estimators
+# library(pastecs) # Package for Analysis of Space-Time Ecological Series
+# library(likert) # Analysis and Visualization Likert Items
+
+# markdown et al. ----
+library(knitr)
+library(bookdown)
+library(quarto)
+# library(kableExtra)
+# library(huxtable) # Easily Create and Style Tables for LaTeX, HTML and Other Formats
+library(formattable) # Create 'Formattable' Data Structures
+# library(sparkline) # 'jQuery' Sparkline 'htmlwidget'
+library(DT) # R interface to DataTables library (JavaScript)
+
+# dataviz ----
+# library(ggeffects) # Create Tidy Data Frames of Marginal Effects for 'ggplot' from Model Outputs
+# library(scales) # Scale Functions for Visualization
+# library(RColorBrewer)
+# library(plotrix) # Various Plotting Functions
+# library(ggthemes)
+# library(ggridges)
+library(ggrepel)
+# library(paletteer) # Comprehensive Collection of Color Palettes
+# library(sjPlot) # Data Visualization for Statistics in Social Science
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+
+# others ----
+library(here) # A Simpler Way to Find Your Files
+# library(digest) # Create Compact Hash Digests of R Objects
+# library(pacman) # Package management tools
+# library(devtools) # Tools to Make Developing R Packages Easier
+# #devtools::install_github("rethinkpriorities/rp-r-package")
+# library(rethinkpriorities)
+# #devtools::install_github("rethinkpriorities/r-noodling-package") #mainly used playing in real time
+# library(rnoodling)
+
+# Currently unused packages ----
+# library(BayesianFirstAid)
+
+#devtools::install_github("paulhendricks/anonymizer")
+#library(anonymizer)
+
+#devtools::install_github("metamelb-repliCATS/aggreCAT")
+#library(aggrecat)
+# Make sure select is always the dplyr version
+select <- dplyr::select 
+
+# options
+options(knitr.duplicate.label = "allow")
+options(mc.cores = parallel::detectCores())
+
+```
