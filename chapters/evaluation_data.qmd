@@ -11,79 +11,29 @@ library(tidyverse)
 # data acquisition ----
 #devtools::install_github("bergant/airtabler")
 library(airtabler)
-# library(qualtRics) # Download 'Qualtrics' Survey Data
 
 # data cleaning & shaping ----
-# library(data.table) # Extension of 'data.frame' for speedy things
-# library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
-# library(reshape2) # Flexibly Reshape Data: A Reboot of the Reshape Package
-# library(santoku) # A Versatile Cutting Tool
-# library(miceadds) # Some Additional Multiple Imputation Functions, Especially for 'mice'
-# library(labelled) # Manipulating Labelled Data
 
 # data analysis ----
 # library(lme4)
 # library(lmtest) # Testing Linear Regression Models
-# library(lavaan) # Latent Variable Analysis
-# library(jtools) # Analysis and Presentation of Social Scientific Data
-# library(plm) # Linear Models for Panel Data
-# library(corrr) # Correlations in R
-# library(nFactors) # Parallel Analysis and Other Non Graphical Solutions to the Cattell Scree Test
-# library(GPArotation) # Gradient Projection Factor Rotation
-# library(quantreg) # Quantile Regression
-# library(psych) # Procedures for Psychological, Psychometric, and Personality Research
-# library(skimr) # Compact and Flexible Summaries of Data
-# library(modeest) # Mode Estimation
-# library(DescTools) # Tools for Descriptive Statistics
-# library(effectsize) #Indices of Effect Size
-# library(mediation) # Causal Mediation Analysis
-# library(pryr) # Tools for Computing on the Language
-# library(sjmisc) # Data and Variable Transformation Functions
-# library(emmeans) #  Estimated Marginal Means, aka Least-Squares Means
-# library(sandwich) # Robust Covariance Matrix Estimators
-# library(pastecs) # Package for Analysis of Space-Time Ecological Series
-# library(likert) # Analysis and Visualization Likert Items
 
 # markdown et al. ----
 library(knitr)
 library(bookdown)
 library(quarto)
-# library(kableExtra)
-# library(huxtable) # Easily Create and Style Tables for LaTeX, HTML and Other Formats
 library(formattable) # Create 'Formattable' Data Structures
-# library(sparkline) # 'jQuery' Sparkline 'htmlwidget'
 library(DT) # R interface to DataTables library (JavaScript)
 
 # dataviz ----
-# library(ggeffects) # Create Tidy Data Frames of Marginal Effects for 'ggplot' from Model Outputs
-# library(scales) # Scale Functions for Visualization
-# library(RColorBrewer)
-# library(plotrix) # Various Plotting Functions
-# library(ggthemes)
-# library(ggridges)
 library(ggrepel)
-# library(paletteer) # Comprehensive Collection of Color Palettes
-# library(sjPlot) # Data Visualization for Statistics in Social Science
 library(plotly) # Create Interactive Web Graphics via 'plotly.js'
 
 # others ----
 library(here) # A Simpler Way to Find Your Files
-# library(digest) # Create Compact Hash Digests of R Objects
-# library(pacman) # Package management tools
-# library(devtools) # Tools to Make Developing R Packages Easier
-# #devtools::install_github("rethinkpriorities/rp-r-package")
-# library(rethinkpriorities)
-# #devtools::install_github("rethinkpriorities/r-noodling-package") #mainly used playing in real time
-# library(rnoodling)
-
-# Currently unused packages ----
-# library(BayesianFirstAid)
-
-#devtools::install_github("paulhendricks/anonymizer")
-#library(anonymizer)
-
 #devtools::install_github("metamelb-repliCATS/aggreCAT")
 #library(aggrecat)
+
 # Make sure select is always the dplyr version
 select <- dplyr::select 
 
@@ -132,39 +82,62 @@ while(nrow(pub_records) == 100) {
 ```
 
 ```{r}
-#| label: extract
+#| label: extract & clean
 #| code-summary: "just the useful and publish-able data, clean a bit"
 
+# clean evals names to snakecase
 colnames(evals) <- snakecase::to_snake_case(colnames(evals))
 
 evals_pub <- evals %>% 
   dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
   mutate(stage_of_process = unlist(stage_of_process)) %>% 
   dplyr::filter(stage_of_process == "published") %>% 
-    select(id, crucial_research, paper_abbrev, evaluator_name, category, source_main, author_agreement, overall, lb_overall, ub_overall, conf_index_overall, advancing_knowledge_and_practice, lb_advancing_knowledge_and_practice, ub_advancing_knowledge_and_practice, conf_index_advancing_knowledge_and_practice, methods_justification_reasonableness_validity_robustness, lb_methods_justification_reasonableness_validity_robustness, ub_methods_justification_reasonableness_validity_robustness, conf_index_methods_justification_reasonableness_validity_robustness, logic_communication, lb_logic_communication, ub_logic_communication, conf_index_logic_communication, engaging_with_real_world_impact_quantification_practice_realism_and_relevance, lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, relevance_to_global_priorities, lb_relevance_to_global_priorities, ub_relevance_to_global_priorities, conf_index_relevance_to_global_priorities, journal_quality_predict, lb_journal_quality_predict, ub_journal_quality_predict, conf_index_journal_quality_predict, open_collaborative_replicable, conf_index_open_collaborative_replicable, lb_open_collaborative_replicable, ub_open_collaborative_replicable, merits_journal, lb_merits_journal, ub_merits_journal, conf_index_merits_journal)
+    select(id, 
+           crucial_research, 
+           paper_abbrev, 
+           evaluator_name, 
+           category, 
+           source_main, 
+           author_agreement, 
+           overall, 
+           lb_overall, 
+           ub_overall, 
+           conf_index_overall, 
+           advancing_knowledge_and_practice, 
+           lb_advancing_knowledge_and_practice, 
+           ub_advancing_knowledge_and_practice, 
+           conf_index_advancing_knowledge_and_practice,
+           methods_justification_reasonableness_validity_robustness,
+           lb_methods_justification_reasonableness_validity_robustness,
+           ub_methods_justification_reasonableness_validity_robustness,
+           conf_index_methods_justification_reasonableness_validity_robustness, 
+           logic_communication, lb_logic_communication, ub_logic_communication, 
+           conf_index_logic_communication,
+           engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           relevance_to_global_priorities, 
+           lb_relevance_to_global_priorities, 
+           ub_relevance_to_global_priorities, 
+           conf_index_relevance_to_global_priorities, 
+           journal_quality_predict, 
+           lb_journal_quality_predict, 
+           ub_journal_quality_predict,
+           conf_index_journal_quality_predict, 
+           open_collaborative_replicable, 
+           conf_index_open_collaborative_replicable, 
+           lb_open_collaborative_replicable, 
+           ub_open_collaborative_replicable, 
+           merits_journal, 
+           lb_merits_journal, 
+           ub_merits_journal, 
+           conf_index_merits_journal)
 
-evals_pub %<>%
- tidyr::unnest_wider(category, names_sep = "") %>%
- tidyr::unnest_wider(paper_abbrev, names_sep = "") %>%
-mutate(across(everything(), unlist)) %>%  #unlist list columns 
-  dplyr::rename(paper_abbrev = paper_abbrev1)
-
-#Todo -- check the unlist is not propagating the entry
-#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
-
-```                   
-
-
-
-```{r}
-#| label: shorten_names
-#| code-summary: "Shorten names "
-
+# shorten names (before you expand into columns)
 new_names <- c(
   "eval_name" = "evaluator_name",
-  "cat_1" = "category1",
-  "cat_2" = "category2",
-  "cat_3" = "category3",
+  "cat" = "category",
   "crucial_rsx" = "crucial_research",
   "conf_overall" = "conf_index_overall",
   "adv_knowledge" = "advancing_knowledge_and_practice",
@@ -201,13 +174,25 @@ new_names <- c(
 evals_pub <- evals_pub %>%
   rename(!!!new_names)
 
-# Function to insert a newline character every 15 characters
-wrap_text <- function(x, width = 15) {
-  gsub("(.{1,15})", "\\1-\n", x)
-}
+#  Create a list of labels with the old, longer names
+labels <- str_replace_all(new_names, "_", " ") %>% str_to_title()
 
-evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
+# Assign labels to the dataframe / tibble
+# (maybe this can be done as an attribute, not currently working)
+# for(i in seq_along(labels)) {
+#    col_name <- new_names[names(new_names)[i]]
+#    label <- labels[i]
+#    attr(evals_pub[[col_name]], "label") <- label
+#  }
 
+
+# expand categories into columns, unlist everything
+evals_pub %<>%
+  tidyr::unnest_wider(cat, names_sep = "_") %>% # give each of these its own col
+  mutate(across(everything(), unlist))  # maybe check why some of these are lists in the first place
+  
+
+# clean the Anonymous names
 evals_pub$eval_name <- ifelse(
   grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$eval_name),
   paste0("Anonymous_", seq_along(evals_pub$eval_name)),
@@ -215,21 +200,13 @@ evals_pub$eval_name <- ifelse(
 )
 
 
-# make the old names into labels
+#Todo -- check the unlist is not propagating the entry
+#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
 
-#  Create a list of labels
-labels <- str_replace_all(new_names, "_", " ")
-labels <- str_to_title(labels)
- 
-# Assign labels to the dataframe
-# for(i in seq_along(labels)) {
-#    col_name <- new_names[names(new_names)[i]]
-#    label <- labels[i]
-#    attr(evals_pub[[col_name]], "label") <- label
-#  }
-# 
+```                   
 
-```
+
+
 
 <!-- need airtable API stuff -->
 
@@ -352,7 +329,7 @@ In the interactive table below we give some key attributes of the papers and the
 (
   all_evals_dt <- evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main_wrapped, author_agreement) %>%
+  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
     dplyr::select(-matches("ub_|lb_|conf")) %>% 
     #rename_all(~ gsub("_", " ", .)) %>% 
     rename("Research  _____________________" = "crucial_rsx" 
@@ -510,10 +487,11 @@ summary_df <- summary_df %>%
 
 # Create stacked bar chart
 ggplot(summary_df, aes(x = cat_1, y = count)) +
-  geom_bar(stat = "identity") + 
+  geom_bar(stat = "identity", color = "grey30", fill = "grey80") + 
   theme_minimal() +
   labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papers by primary category") 
+       title = "Count of evaluated papers by primary category") +
+  theme_bw()
 
 ```
 
@@ -523,49 +501,38 @@ ggplot(summary_df, aes(x = cat_1, y = count)) +
 
 
 # Bar plot
-ggplot(evals_pub, aes(x = source_main_wrapped)) + 
-  geom_bar(position = "stack", stat = "count") +
+evals_pub %>% 
+  rowwise() %>% 
+  mutate(source_main = str_replace_all(string = source_main, 
+                                       pattern = "-", 
+                                       replace = " ") %>% str_to_title()) %>% 
+  ggplot(aes(x = source_main)) + 
+  geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
   labs(x = "Source", y = "Count") +
-  theme_light() +
-  theme_minimal() +
-  ggtitle("Pool of research/evaluations by paper source") + # add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 10),
-    axis.text.x = element_text(size = 14)
-  )
+  labs(title = "Pool of research/evaluations by paper source") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 
 ```
 
 ```{r}
-
-all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in%  c("published",
-                                                                              "contacting/awaiting_authors_response_to_evaluation",
-                                                                               "awaiting_publication_ME_comments",
-                                                                              "awaiting_evaluations")
+all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
 
 all_pub_records$source_main[all_pub_records$source_main == "NA"] <- "Not applicable"  
 all_pub_records$source_main[all_pub_records$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
 all_pub_records$source_main = tidyr::replace_na(all_pub_records$source_main, "Unknown")
 
-
-
-ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
+all_pub_records %>% 
+ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  theme_light() +
-  theme_minimal() +
-  ggtitle("Evaluations by source of the paper") +# add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 14)
-    )
+  labs(title = "Evaluations by source of the paper") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 ```
 
 
@@ -581,7 +548,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'.^
 
 
 ```{r}
-
+#| fig-height: 7
 wrap_text <- function(text, width) {
   sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
 }
@@ -594,26 +561,23 @@ evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
 
 
 # Dot plot
-ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
-  geom_point(stat = "identity", size = 3, shape = 1, colour = "lightblue", stroke = 2) +
-  geom_text_repel(aes(label = eval_name), 
-                  size = 3, 
-                  box.padding = unit(0.35, "lines"),
-                  point.padding = unit(0.3, "lines")) +
+g1 <- evals_pub %>% 
+  ggplot(aes(x = paper_abbrev, y = overall)) +
+  geom_point(aes(color = eval_name), stat = "identity", size = 3, shape = 1, stroke = 2) +
+  # geom_text_repel(aes(label = eval_name), 
+  #                 size = 3, 
+  #                 box.padding = unit(0.35, "lines"),
+  #                 point.padding = unit(0.3, "lines")) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  theme_light() +
-  xlab("Paper") + # remove x-axis label
-  ylab("Overall score") + # name y-axis
-  ggtitle("Overall scores of evaluated papers") +# add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 14), # changing all text size to 16
-    axis.text.y = element_text(size = 8),
-    axis.text.x = element_text(size = 12)
-  )
+  labs(x = "Paper", y = "Overall score",
+       title = "Overall scores of evaluated papers") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  theme(legend.position = "none") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 #todo -- add more vertical space between papers
 
+ggplotly(g1, tooltip = c("eval_name", "overall"))
 ```
 :::
 
