@@ -528,7 +528,7 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  labs(title = "Evaluations by source of the paper") +
+  labs(title = "Prioritized and evaluated research by source") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
   scale_fill_brewer(palette = "Set1") +
