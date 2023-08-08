@@ -460,10 +460,11 @@ summary_df <- summary_df %>%
 
 # Create stacked bar chart
 ggplot(summary_df, aes(x = cat_1, y = count)) +
-  geom_bar(stat = "identity") + 
+  geom_bar(stat = "identity", color = "grey30", fill = "grey80") + 
   theme_minimal() +
   labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papers by primary category") 
+       title = "Count of evaluated papers by primary category") +
+  theme_bw()
 
 ```
 
@@ -473,49 +474,32 @@ ggplot(summary_df, aes(x = cat_1, y = count)) +
 
 
 # Bar plot
-ggplot(evals_pub, aes(x = source_main_wrapped)) + 
-  geom_bar(position = "stack", stat = "count") +
+evals_pub %>% 
+  ggplot(aes(x = source_main_wrapped)) + 
+  geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
   labs(x = "Source", y = "Count") +
-  theme_light() +
-  theme_minimal() +
-  ggtitle("Pool of research/evaluations by paper source") + # add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 10),
-    axis.text.x = element_text(size = 14)
-  )
+  labs(title = "Pool of research/evaluations by paper source") +
+  theme_bw() +
+  theme(text = element_text(size = 15))
 
 ```
 
 ```{r}
-
-all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in%  c("published",
-                                                                              "contacting/awaiting_authors_response_to_evaluation",
-                                                                               "awaiting_publication_ME_comments",
-                                                                              "awaiting_evaluations")
+all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
 
 all_pub_records$source_main[all_pub_records$source_main == "NA"] <- "Not applicable"  
 all_pub_records$source_main[all_pub_records$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
 all_pub_records$source_main = tidyr::replace_na(all_pub_records$source_main, "Unknown")
 
-
-
-ggplot(all_pub_records, aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
+all_pub_records %>% 
+ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  theme_light() +
-  theme_minimal() +
-  ggtitle("Evaluations by source of the paper") +# add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 16), # changing all text size to 16
-    axis.text.y = element_text(size = 12),
-    axis.text.x = element_text(size = 14)
-    )
+  labs(title = "Evaluations by source of the paper") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_fill_brewer(palette = "Set1")
 ```
 
 
@@ -544,26 +528,22 @@ evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
 
 
 # Dot plot
-ggplot(evals_pub, aes(x = paper_abbrev, y = overall)) +
-  geom_point(stat = "identity", size = 3, shape = 1, colour = "lightblue", stroke = 2) +
-  geom_text_repel(aes(label = eval_name), 
-                  size = 3, 
-                  box.padding = unit(0.35, "lines"),
-                  point.padding = unit(0.3, "lines")) +
+g1 <- evals_pub %>% 
+  ggplot(aes(x = paper_abbrev, y = overall)) +
+  geom_point(aes(color = eval_name), stat = "identity", size = 3, shape = 1, stroke = 2) +
+  # geom_text_repel(aes(label = eval_name), 
+  #                 size = 3, 
+  #                 box.padding = unit(0.35, "lines"),
+  #                 point.padding = unit(0.3, "lines")) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  theme_light() +
-  xlab("Paper") + # remove x-axis label
-  ylab("Overall score") + # name y-axis
-  ggtitle("Overall scores of evaluated papers") +# add title
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    text = element_text(size = 14), # changing all text size to 16
-    axis.text.y = element_text(size = 8),
-    axis.text.x = element_text(size = 12)
-  )
+  labs(x = "Paper", y = "Overall score",
+       title = "Overall scores of evaluated papers") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  theme(legend.position = "none")
 #todo -- add more vertical space between papers
 
+ggplotly(g1, tooltip = c("eval_name", "overall"))
 ```
 :::
 
