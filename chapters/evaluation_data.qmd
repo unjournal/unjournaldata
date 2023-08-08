@@ -82,39 +82,62 @@ while(nrow(pub_records) == 100) {
 ```
 
 ```{r}
-#| label: extract
+#| label: extract & clean
 #| code-summary: "just the useful and publish-able data, clean a bit"
 
+# clean evals names to snakecase
 colnames(evals) <- snakecase::to_snake_case(colnames(evals))
 
 evals_pub <- evals %>% 
   dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
   mutate(stage_of_process = unlist(stage_of_process)) %>% 
   dplyr::filter(stage_of_process == "published") %>% 
-    select(id, crucial_research, paper_abbrev, evaluator_name, category, source_main, author_agreement, overall, lb_overall, ub_overall, conf_index_overall, advancing_knowledge_and_practice, lb_advancing_knowledge_and_practice, ub_advancing_knowledge_and_practice, conf_index_advancing_knowledge_and_practice, methods_justification_reasonableness_validity_robustness, lb_methods_justification_reasonableness_validity_robustness, ub_methods_justification_reasonableness_validity_robustness, conf_index_methods_justification_reasonableness_validity_robustness, logic_communication, lb_logic_communication, ub_logic_communication, conf_index_logic_communication, engaging_with_real_world_impact_quantification_practice_realism_and_relevance, lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance, relevance_to_global_priorities, lb_relevance_to_global_priorities, ub_relevance_to_global_priorities, conf_index_relevance_to_global_priorities, journal_quality_predict, lb_journal_quality_predict, ub_journal_quality_predict, conf_index_journal_quality_predict, open_collaborative_replicable, conf_index_open_collaborative_replicable, lb_open_collaborative_replicable, ub_open_collaborative_replicable, merits_journal, lb_merits_journal, ub_merits_journal, conf_index_merits_journal)
+    select(id, 
+           crucial_research, 
+           paper_abbrev, 
+           evaluator_name, 
+           category, 
+           source_main, 
+           author_agreement, 
+           overall, 
+           lb_overall, 
+           ub_overall, 
+           conf_index_overall, 
+           advancing_knowledge_and_practice, 
+           lb_advancing_knowledge_and_practice, 
+           ub_advancing_knowledge_and_practice, 
+           conf_index_advancing_knowledge_and_practice,
+           methods_justification_reasonableness_validity_robustness,
+           lb_methods_justification_reasonableness_validity_robustness,
+           ub_methods_justification_reasonableness_validity_robustness,
+           conf_index_methods_justification_reasonableness_validity_robustness, 
+           logic_communication, lb_logic_communication, ub_logic_communication, 
+           conf_index_logic_communication,
+           engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
+           relevance_to_global_priorities, 
+           lb_relevance_to_global_priorities, 
+           ub_relevance_to_global_priorities, 
+           conf_index_relevance_to_global_priorities, 
+           journal_quality_predict, 
+           lb_journal_quality_predict, 
+           ub_journal_quality_predict,
+           conf_index_journal_quality_predict, 
+           open_collaborative_replicable, 
+           conf_index_open_collaborative_replicable, 
+           lb_open_collaborative_replicable, 
+           ub_open_collaborative_replicable, 
+           merits_journal, 
+           lb_merits_journal, 
+           ub_merits_journal, 
+           conf_index_merits_journal)
 
-evals_pub %<>%
- tidyr::unnest_wider(category, names_sep = "") %>%
- tidyr::unnest_wider(paper_abbrev, names_sep = "") %>%
-mutate(across(everything(), unlist)) %>%  #unlist list columns 
-  dplyr::rename(paper_abbrev = paper_abbrev1)
-
-#Todo -- check the unlist is not propagating the entry
-#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
-
-```                   
-
-
-
-```{r}
-#| label: shorten_names
-#| code-summary: "Shorten names "
-
+# shorten names (before you expand into columns)
 new_names <- c(
   "eval_name" = "evaluator_name",
-  "cat_1" = "category1",
-  "cat_2" = "category2",
-  "cat_3" = "category3",
+  "cat" = "category",
   "crucial_rsx" = "crucial_research",
   "conf_overall" = "conf_index_overall",
   "adv_knowledge" = "advancing_knowledge_and_practice",
@@ -151,13 +174,25 @@ new_names <- c(
 evals_pub <- evals_pub %>%
   rename(!!!new_names)
 
-# Function to insert a newline character every 15 characters
-wrap_text <- function(x, width = 15) {
-  gsub("(.{1,15})", "\\1-\n", x)
-}
+#  Create a list of labels with the old, longer names
+labels <- str_replace_all(new_names, "_", " ") %>% str_to_title()
 
-evals_pub$source_main_wrapped <- wrap_text(evals_pub$source_main, 15)
+# Assign labels to the dataframe / tibble
+# (maybe this can be done as an attribute, not currently working)
+# for(i in seq_along(labels)) {
+#    col_name <- new_names[names(new_names)[i]]
+#    label <- labels[i]
+#    attr(evals_pub[[col_name]], "label") <- label
+#  }
 
+
+# expand categories into columns, unlist everything
+evals_pub %<>%
+  tidyr::unnest_wider(cat, names_sep = "_") %>% # give each of these its own col
+  mutate(across(everything(), unlist))  # maybe check why some of these are lists in the first place
+  
+
+# clean the Anonymous names
 evals_pub$eval_name <- ifelse(
   grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$eval_name),
   paste0("Anonymous_", seq_along(evals_pub$eval_name)),
@@ -165,21 +200,13 @@ evals_pub$eval_name <- ifelse(
 )
 
 
-# make the old names into labels
+#Todo -- check the unlist is not propagating the entry
+#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
 
-#  Create a list of labels
-labels <- str_replace_all(new_names, "_", " ")
-labels <- str_to_title(labels)
- 
-# Assign labels to the dataframe
-# for(i in seq_along(labels)) {
-#    col_name <- new_names[names(new_names)[i]]
-#    label <- labels[i]
-#    attr(evals_pub[[col_name]], "label") <- label
-#  }
-# 
+```                   
 
-```
+
+
 
 <!-- need airtable API stuff -->
 
@@ -302,7 +329,7 @@ In the interactive table below we give some key attributes of the papers and the
 (
   all_evals_dt <- evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main_wrapped, author_agreement) %>%
+  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
     dplyr::select(-matches("ub_|lb_|conf")) %>% 
     #rename_all(~ gsub("_", " ", .)) %>% 
     rename("Research  _____________________" = "crucial_rsx" 
@@ -475,12 +502,17 @@ ggplot(summary_df, aes(x = cat_1, y = count)) +
 
 # Bar plot
 evals_pub %>% 
-  ggplot(aes(x = source_main_wrapped)) + 
+  rowwise() %>% 
+  mutate(source_main = str_replace_all(string = source_main, 
+                                       pattern = "-", 
+                                       replace = " ") %>% str_to_title()) %>% 
+  ggplot(aes(x = source_main)) + 
   geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
   labs(x = "Source", y = "Count") +
   labs(title = "Pool of research/evaluations by paper source") +
   theme_bw() +
-  theme(text = element_text(size = 15))
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 
 ```
 
@@ -499,7 +531,8 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
   labs(title = "Evaluations by source of the paper") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
-  scale_fill_brewer(palette = "Set1")
+  scale_fill_brewer(palette = "Set1") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 ```
 
 
@@ -515,7 +548,7 @@ Next, we present the ratings and predictions along with 'uncertainty measures'.^
 
 
 ```{r}
-
+#| fig-height: 7
 wrap_text <- function(text, width) {
   sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
 }
@@ -540,7 +573,8 @@ g1 <- evals_pub %>%
        title = "Overall scores of evaluated papers") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
 #todo -- add more vertical space between papers
 
 ggplotly(g1, tooltip = c("eval_name", "overall"))
