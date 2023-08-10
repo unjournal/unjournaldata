@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.113">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>The Unjournal evaluations: data and analysis - 1&nbsp; Evaluation data: input/features</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: 1;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/evaluation_data_analysis.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://hypothes.is/embed.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluation data: input/features</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Unjournal evaluations: data and analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/daaronr/unjournaldata/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/evaluation_data_input.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluation data: input/features</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/evaluation_data_analysis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#reconcile-uncertainty-ratings-and-cis" id="toc-reconcile-uncertainty-ratings-and-cis" class="nav-link active" data-scroll-target="#reconcile-uncertainty-ratings-and-cis">Reconcile uncertainty ratings and CIs</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/daaronr/unjournaldata/edit/main/chapters/evaluation_data_input.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/daaronr/unjournaldata/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block">
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Evaluation data: input/features</span>
+</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><div class="cell">
+<details><summary>load packages</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># data acquisition ----</span></span>
+<span><span class="co">#devtools::install_github("bergant/airtabler")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bergant/airtabler">airtabler</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># data cleaning &amp; shaping ----</span></span>
+<span></span>
+<span><span class="co"># data analysis ----</span></span>
+<span><span class="co"># library(lme4)</span></span>
+<span><span class="co"># library(lmtest) # Testing Linear Regression Models</span></span>
+<span></span>
+<span><span class="co"># markdown et al. ----</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/bookdown">bookdown</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quarto-dev/quarto-r">quarto</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://renkun-ken.github.io/formattable/">formattable</a></span><span class="op">)</span> <span class="co"># Create 'Formattable' Data Structures</span></span>
+<span></span>
+<span><span class="co"># others ----</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span> <span class="co"># A Simpler Way to Find Your Files</span></span>
+<span><span class="co">#devtools::install_github("metamelb-repliCATS/aggreCAT")</span></span>
+<span><span class="co">#library(aggrecat)</span></span>
+<span></span>
+<span><span class="co"># Make sure select is always the dplyr version</span></span>
+<span><span class="va">select</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span> </span>
+<span></span>
+<span><span class="co"># options</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>knitr.duplicate.label <span class="op">=</span> <span class="st">"allow"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note on data input (10-Aug-23)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators’ reports. As PubPub builds (target: end of Sept.&nbsp;2023), this will allow us to include the ratings and predictions as structured data objects. We then plan to access and input this data <em>directly</em> from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details><summary>input from airtable</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_id</span> <span class="op">&lt;-</span> <span class="st">"appbPYEw9nURln7Qg"</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Set your Airtable API key </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>AIRTABLE_API_KEY <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"AIRTABLE_API_KEY"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#this should be set in my .Renviron file</span></span>
+<span></span>
+<span><span class="co"># Read data from a specific view</span></span>
+<span></span>
+<span><span class="va">evals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/airtabler/man/air_get.html">air_get</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_id</span>, <span class="st">"output_eval"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">all_pub_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">pub_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/airtabler/man/air_select.html">air_select</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_id</span>, table <span class="op">=</span> <span class="st">"crucial_research"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Append the records to the list</span></span>
+<span><span class="va">all_pub_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">all_pub_records</span>, <span class="va">pub_records</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># While the length of the records list is 100 (the maximum), fetch more records</span></span>
+<span><span class="kw">while</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pub_records</span><span class="op">)</span> <span class="op">==</span> <span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Get the ID of the last record in the list</span></span>
+<span>  <span class="va">offset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/airtabler/man/get_offset.html">get_offset</a></span><span class="op">(</span><span class="va">pub_records</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Fetch the next 100 records, starting after the last ID</span></span>
+<span>  <span class="va">pub_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/airtabler/man/air_select.html">air_select</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_id</span>, table <span class="op">=</span> <span class="st">"crucial_research"</span>, offset <span class="op">=</span>  <span class="va">offset</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Append the records to the df</span></span>
+<span>  <span class="va">all_pub_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">all_pub_records</span>, <span class="va">pub_records</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details><summary>just the useful and publish-able data, clean a bit</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># clean evals names to snakecase</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">evals</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">snakecase</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/snakecase/man/caseconverter.html">to_snake_case</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">evals</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">evals_pub</span> <span class="op">&lt;-</span> <span class="va">evals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>stage_of_process <span class="op">=</span> <span class="va">stage_of_process_todo_from_crucial_research_2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>stage_of_process <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">stage_of_process</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">stage_of_process</span> <span class="op">==</span> <span class="st">"published"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, </span>
+<span>           <span class="va">crucial_research</span>, </span>
+<span>           <span class="va">paper_abbrev</span>, </span>
+<span>           <span class="va">evaluator_name</span>, </span>
+<span>           <span class="va">category</span>, </span>
+<span>           <span class="va">source_main</span>, </span>
+<span>           <span class="va">author_agreement</span>, </span>
+<span>           <span class="va">overall</span>, </span>
+<span>           <span class="va">lb_overall</span>, </span>
+<span>           <span class="va">ub_overall</span>, </span>
+<span>           <span class="va">conf_index_overall</span>, </span>
+<span>           <span class="va">advancing_knowledge_and_practice</span>, </span>
+<span>           <span class="va">lb_advancing_knowledge_and_practice</span>, </span>
+<span>           <span class="va">ub_advancing_knowledge_and_practice</span>, </span>
+<span>           <span class="va">conf_index_advancing_knowledge_and_practice</span>,</span>
+<span>           <span class="va">methods_justification_reasonableness_validity_robustness</span>,</span>
+<span>           <span class="va">lb_methods_justification_reasonableness_validity_robustness</span>,</span>
+<span>           <span class="va">ub_methods_justification_reasonableness_validity_robustness</span>,</span>
+<span>           <span class="va">conf_index_methods_justification_reasonableness_validity_robustness</span>, </span>
+<span>           <span class="va">logic_communication</span>, <span class="va">lb_logic_communication</span>, <span class="va">ub_logic_communication</span>, </span>
+<span>           <span class="va">conf_index_logic_communication</span>,</span>
+<span>           <span class="va">engaging_with_real_world_impact_quantification_practice_realism_and_relevance</span>,</span>
+<span>           <span class="va">lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance</span>,</span>
+<span>           <span class="va">ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance</span>,</span>
+<span>           <span class="va">conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance</span>,</span>
+<span>           <span class="va">relevance_to_global_priorities</span>, </span>
+<span>           <span class="va">lb_relevance_to_global_priorities</span>, </span>
+<span>           <span class="va">ub_relevance_to_global_priorities</span>, </span>
+<span>           <span class="va">conf_index_relevance_to_global_priorities</span>, </span>
+<span>           <span class="va">journal_quality_predict</span>, </span>
+<span>           <span class="va">lb_journal_quality_predict</span>, </span>
+<span>           <span class="va">ub_journal_quality_predict</span>,</span>
+<span>           <span class="va">conf_index_journal_quality_predict</span>, </span>
+<span>           <span class="va">open_collaborative_replicable</span>, </span>
+<span>           <span class="va">conf_index_open_collaborative_replicable</span>, </span>
+<span>           <span class="va">lb_open_collaborative_replicable</span>, </span>
+<span>           <span class="va">ub_open_collaborative_replicable</span>, </span>
+<span>           <span class="va">merits_journal</span>, </span>
+<span>           <span class="va">lb_merits_journal</span>, </span>
+<span>           <span class="va">ub_merits_journal</span>, </span>
+<span>           <span class="va">conf_index_merits_journal</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># shorten names (before you expand into columns)</span></span>
+<span><span class="va">new_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"eval_name"</span> <span class="op">=</span> <span class="st">"evaluator_name"</span>,</span>
+<span>  <span class="st">"cat"</span> <span class="op">=</span> <span class="st">"category"</span>,</span>
+<span>  <span class="st">"crucial_rsx"</span> <span class="op">=</span> <span class="st">"crucial_research"</span>,</span>
+<span>  <span class="st">"conf_overall"</span> <span class="op">=</span> <span class="st">"conf_index_overall"</span>,</span>
+<span>  <span class="st">"adv_knowledge"</span> <span class="op">=</span> <span class="st">"advancing_knowledge_and_practice"</span>,</span>
+<span>  <span class="st">"lb_adv_knowledge"</span> <span class="op">=</span> <span class="st">"lb_advancing_knowledge_and_practice"</span>,</span>
+<span>  <span class="st">"ub_adv_knowledge"</span> <span class="op">=</span> <span class="st">"ub_advancing_knowledge_and_practice"</span>,</span>
+<span>  <span class="st">"conf_adv_knowledge"</span> <span class="op">=</span> <span class="st">"conf_index_advancing_knowledge_and_practice"</span>,</span>
+<span>  <span class="st">"methods"</span> <span class="op">=</span> <span class="st">"methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span>  <span class="st">"lb_methods"</span> <span class="op">=</span> <span class="st">"lb_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span>  <span class="st">"ub_methods"</span> <span class="op">=</span> <span class="st">"ub_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span>  <span class="st">"conf_methods"</span> <span class="op">=</span> <span class="st">"conf_index_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span>  <span class="st">"logic_comms"</span> <span class="op">=</span> <span class="st">"logic_communication"</span>,</span>
+<span>  <span class="st">"lb_logic_comms"</span> <span class="op">=</span> <span class="st">"lb_logic_communication"</span>,</span>
+<span>  <span class="st">"ub_logic_comms"</span> <span class="op">=</span> <span class="st">"ub_logic_communication"</span>,</span>
+<span>  <span class="st">"conf_logic_comms"</span> <span class="op">=</span> <span class="st">"conf_index_logic_communication"</span>,</span>
+<span>  <span class="st">"real_world"</span> <span class="op">=</span> <span class="st">"engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span>  <span class="st">"lb_real_world"</span> <span class="op">=</span> <span class="st">"lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span>  <span class="st">"ub_real_world"</span> <span class="op">=</span> <span class="st">"ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span>  <span class="st">"conf_real_world"</span> <span class="op">=</span> <span class="st">"conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span>  <span class="st">"gp_relevance"</span> <span class="op">=</span> <span class="st">"relevance_to_global_priorities"</span>,</span>
+<span>  <span class="st">"lb_gp_relevance"</span> <span class="op">=</span> <span class="st">"lb_relevance_to_global_priorities"</span>,</span>
+<span>  <span class="st">"ub_gp_relevance"</span> <span class="op">=</span> <span class="st">"ub_relevance_to_global_priorities"</span>,</span>
+<span>  <span class="st">"conf_gp_relevance"</span> <span class="op">=</span> <span class="st">"conf_index_relevance_to_global_priorities"</span>,</span>
+<span>  <span class="st">"journal_predict"</span> <span class="op">=</span> <span class="st">"journal_quality_predict"</span>,</span>
+<span>  <span class="st">"lb_journal_predict"</span> <span class="op">=</span> <span class="st">"lb_journal_quality_predict"</span>,</span>
+<span>  <span class="st">"ub_journal_predict"</span> <span class="op">=</span> <span class="st">"ub_journal_quality_predict"</span>,</span>
+<span>  <span class="st">"conf_journal_predict"</span> <span class="op">=</span> <span class="st">"conf_index_journal_quality_predict"</span>,</span>
+<span>  <span class="st">"open_sci"</span> <span class="op">=</span> <span class="st">"open_collaborative_replicable"</span>,</span>
+<span>  <span class="st">"conf_open_sci"</span> <span class="op">=</span> <span class="st">"conf_index_open_collaborative_replicable"</span>,</span>
+<span>  <span class="st">"lb_open_sci"</span> <span class="op">=</span> <span class="st">"lb_open_collaborative_replicable"</span>,</span>
+<span>  <span class="st">"ub_open_sci"</span> <span class="op">=</span> <span class="st">"ub_open_collaborative_replicable"</span>,</span>
+<span>  <span class="st">"conf_merits_journal"</span> <span class="op">=</span> <span class="st">"conf_index_merits_journal"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">evals_pub</span> <span class="op">&lt;-</span> <span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">new_names</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#  Create a list of labels with the old, longer names</span></span>
+<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">new_names</span>, <span class="st">"_"</span>, <span class="st">" "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Assign labels to the dataframe / tibble</span></span>
+<span><span class="co"># (maybe this can be done as an attribute, not currently working)</span></span>
+<span><span class="co"># for(i in seq_along(labels)) {</span></span>
+<span><span class="co">#    col_name &lt;- new_names[names(new_names)[i]]</span></span>
+<span><span class="co">#    label &lt;- labels[i]</span></span>
+<span><span class="co">#    attr(evals_pub[[col_name]], "label") &lt;- label</span></span>
+<span><span class="co">#  }</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># expand categories into columns, unlist everything</span></span>
+<span><span class="va">evals_pub</span> <span class="op">%&lt;&gt;%</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest_wider.html">unnest_wider</a></span><span class="op">(</span><span class="va">cat</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># give each of these its own col</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">unlist</span><span class="op">)</span><span class="op">)</span>  <span class="co"># maybe check why some of these are lists in the first place</span></span>
+<span>  </span>
+<span></span>
+<span><span class="co"># clean the Anonymous names</span></span>
+<span><span class="va">evals_pub</span><span class="op">$</span><span class="va">eval_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^\\b\\w+\\b$|\\bAnonymous\\b"</span>, <span class="va">evals_pub</span><span class="op">$</span><span class="va">eval_name</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Anonymous_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">evals_pub</span><span class="op">$</span><span class="va">eval_name</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="va">evals_pub</span><span class="op">$</span><span class="va">eval_name</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#Todo -- check the unlist is not propagating the entry</span></span>
+<span><span class="co">#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+<!-- need airtable API stuff -->
+<section id="reconcile-uncertainty-ratings-and-cis" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="reconcile-uncertainty-ratings-and-cis">Reconcile uncertainty ratings and CIs</h3>
+<p>Where people gave only confidence level ‘dots’, we impute CIs (confidence/credible intervals). We follow the correspondence described <a href="https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis">here</a>. (Otherwise, where they gave actual CIs, we use these.)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Dots to interval choices
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)</p>
+</blockquote>
+<p>For 0-100 ratings, code the LB as <span class="math inline">\(min(R - 4\times \frac{R}{100},0)\)</span> and the UB as <span class="math inline">\(max(R + 4\times \frac{R}{100},0)\)</span>, where R is the stated (middle) rating. This ‘scales’ the CI, as interpreted, to be proportional to the rating, with a maximum ‘interval’ of about 8, with the rating is about 96.</p>
+<blockquote class="blockquote">
+<p>4 = Very*confident: 90% confidence interval +/- 8 points or less</p>
+</blockquote>
+<p>For 0-100 ratings, code the LB as <span class="math inline">\(min(R - 8\times \frac{R}{100},0)\)</span> and the UB as <span class="math inline">\(max(R + 8\times \frac{R}{100},0)\)</span>, where R is the stated (middle) rating.</p>
+<blockquote class="blockquote">
+<p>3 = Somewhat** confident: 90% confidence interval +/- 15 points or less </p>
+</blockquote>
+<blockquote class="blockquote">
+<p>2 = Not very** confident: 90% confidence interval, +/- 25 points or less</p>
+</blockquote>
+<p>Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.</p>
+<blockquote class="blockquote">
+<p>1 = Not** confident: (90% confidence interval +/- more than 25 points)</p>
+</blockquote>
+<p>Code LB as <span class="math inline">\(min(R - 37.5\times \frac{R}{100},0)\)</span> and the UB as <span class="math inline">\(max(R + 37.5\times \frac{R}{100},0)\)</span>.</p>
+<p>This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings altogether.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details><summary>reconcile explicit bounds and stated confidence level</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Define the baseline widths for each confidence rating</span></span>
+<span><span class="va">baseline_widths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">8</span>, <span class="fl">15</span>, <span class="fl">25</span>, <span class="fl">37.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define a function to calculate the lower and upper bounds, where given only an index</span></span>
+<span><span class="va">calc_bounds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rating</span>, <span class="va">confidence</span>, <span class="va">lb_explicit</span>, <span class="va">ub_explicit</span>, <span class="va">scale</span><span class="op">=</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Check if confidence is NA</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">confidence</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lb_explicit</span>, <span class="va">ub_explicit</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Return explicit bounds if confidence is NA</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="va">baseline_width</span> <span class="op">&lt;-</span> <span class="va">baseline_widths</span><span class="op">[</span><span class="va">confidence</span><span class="op">]</span></span>
+<span>    <span class="va">lb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">-</span> <span class="va">baseline_width</span> <span class="op">*</span> <span class="va">rating</span> <span class="op">/</span> <span class="va">scale</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="va">ub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">+</span> <span class="va">baseline_width</span> <span class="op">*</span> <span class="va">rating</span> <span class="op">/</span> <span class="va">scale</span>, <span class="va">scale</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lb</span>, <span class="va">ub</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Function to calculate bounds for a single category</span></span>
+<span><span class="va">calc_category_bounds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">category</span>, <span class="va">scale</span><span class="op">=</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Calculate bounds</span></span>
+<span>  <span class="va">bounds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="va">calc_bounds</span>, <span class="va">df</span><span class="op">[[</span><span class="va">category</span><span class="op">]</span><span class="op">]</span>, <span class="va">df</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"conf_"</span>, <span class="va">category</span><span class="op">)</span><span class="op">]</span><span class="op">]</span>, <span class="va">df</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"lb_"</span>, <span class="va">category</span><span class="op">)</span><span class="op">]</span><span class="op">]</span>, <span class="va">df</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"ub_"</span>, <span class="va">category</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Convert to data frame and ensure it has the same number of rows as the input</span></span>
+<span>  <span class="va">bounds_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">bounds</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bounds_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  </span>
+<span>  <span class="co"># Add bounds to original data frame</span></span>
+<span>  <span class="va">df</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">category</span>, <span class="st">"_lb_imp"</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">bounds_df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">df</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">category</span>, <span class="st">"_ub_imp"</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">bounds_df</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Lists of categories</span></span>
+<span><span class="va">rating_cats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"overall"</span>, <span class="st">"adv_knowledge"</span>, <span class="st">"methods"</span>, <span class="st">"logic_comms"</span>, <span class="st">"real_world"</span>, <span class="st">"gp_relevance"</span>, <span class="st">"open_sci"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#... 'predictions' are currently 1-5 (0-5?)</span></span>
+<span><span class="va">pred_cats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"journal_predict"</span>, <span class="st">"merits_journal"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#DR: Note that I use these objects in future chapters, but they are not connected to the data frame. Either one saves and reinputs the whole environment (messy, replicability issue), or you save this somewhere and re-input it or connect it to the data frame that gets saved (not sure how to do it), or you hard-code reinput it in the next chapter. </span></span>
+<span></span>
+<span><span class="co">#I do the latter for now, but I'm not happy about it, because the idea is 'input definitions in a single place to use later'</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Apply the function to each category</span></span>
+<span><span class="co"># DR: I don't love this looping 'edit in place' code approach, but whatever</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">cat</span> <span class="kw">in</span> <span class="va">rating_cats</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">evals_pub</span> <span class="op">&lt;-</span> <span class="fu">calc_category_bounds</span><span class="op">(</span><span class="va">evals_pub</span>, <span class="va">cat</span>, scale<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">cat</span> <span class="kw">in</span> <span class="va">pred_cats</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">evals_pub</span> <span class="op">&lt;-</span> <span class="fu">calc_category_bounds</span><span class="op">(</span><span class="va">evals_pub</span>, <span class="va">cat</span>, scale<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We cannot publicly share the ‘papers under consideration’, but we can share some of the statistics on these papers. Let’s generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_papers_p</span> <span class="op">&lt;-</span> <span class="va">all_pub_records</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">id</span>,</span>
+<span>    <span class="va">category</span>,</span>
+<span>    <span class="va">cfdc_DR</span>,</span>
+<span>     <span class="st">'confidence -- user entered'</span>,</span>
+<span>    <span class="va">cfdc_assessor</span>,</span>
+<span>    <span class="va">avg_cfdc</span>,</span>
+<span>    <span class="va">category</span>,</span>
+<span>    <span class="va">cause_cat_1_text</span>,</span>
+<span>    <span class="va">cause_cat_2_text</span>,</span>
+<span>    <span class="va">topic_subfield_text</span>,</span>
+<span>    <span class="va">eval_manager_text</span>,</span>
+<span>    <span class="st">'publication status'</span>,</span>
+<span>    <span class="st">'Contacted author?'</span>,</span>
+<span>    <span class="st">'stage of process/todo'</span>,</span>
+<span>    <span class="st">'source_main'</span>,  </span>
+<span>    <span class="st">'author permission?'</span>,</span>
+<span><span class="st">'Direct Kotahi Prize Submission?'</span>,</span>
+<span>    <span class="st">'createdTime'</span>         </span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details><summary>save data for others’ use</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">all_papers_p</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"all_papers_p.Rdata"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">all_papers_p</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"all_papers_p.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"evals.Rdata"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"evals.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#evals_pub %&gt;% readRDS(file = here("data", "evals.Rdata"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
+<!-- -->
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Note this is only a first-pass; a more sophisticated approach may be warranted in future.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/evaluation_data_analysis.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Evaluation data: input/features</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, warning=FALSE}</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "load packages"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># data acquisition ----</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#devtools::install_github("bergant/airtabler")</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(airtabler)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># data cleaning &amp; shaping ----</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># data analysis ----</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># library(lme4)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># library(lmtest) # Testing Linear Regression Models</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># markdown et al. ----</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bookdown)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(formattable) <span class="co"># Create 'Formattable' Data Structures</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># others ----</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co"># A Simpler Way to Find Your Files</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#devtools::install_github("metamelb-repliCATS/aggreCAT")</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#library(aggrecat)</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure select is always the dplyr version</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># options</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.duplicate.label =</span> <span class="st">"allow"</span>)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note on data input (10-Aug-23)</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators' reports. As PubPub builds (target: end of Sept. 2023), this will allow us to  include the ratings and predictions as structured data objects. We then plan to access and input this data *directly* from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: input_at</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "input from airtable"</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>base_id <span class="ot">&lt;-</span> <span class="st">"appbPYEw9nURln7Qg"</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your Airtable API key </span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AIRTABLE_API_KEY =</span> <span class="fu">Sys.getenv</span>(<span class="st">"AIRTABLE_API_KEY"</span>))</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co">#this should be set in my .Renviron file</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data from a specific view</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>evals <span class="ot">&lt;-</span> <span class="fu">air_get</span>(<span class="at">base =</span> base_id, <span class="st">"output_eval"</span>) </span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>all_pub_records <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>pub_records <span class="ot">&lt;-</span> <span class="fu">air_select</span>(<span class="at">base =</span> base_id, <span class="at">table =</span> <span class="st">"crucial_research"</span>)</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Append the records to the list</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>all_pub_records <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_pub_records, pub_records)</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="co"># While the length of the records list is 100 (the maximum), fetch more records</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(<span class="fu">nrow</span>(pub_records) <span class="sc">==</span> <span class="dv">100</span>) {</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the ID of the last record in the list</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  offset <span class="ot">&lt;-</span> <span class="fu">get_offset</span>(pub_records)</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fetch the next 100 records, starting after the last ID</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>  pub_records <span class="ot">&lt;-</span> <span class="fu">air_select</span>(<span class="at">base =</span> base_id, <span class="at">table =</span> <span class="st">"crucial_research"</span>, <span class="at">offset =</span>  offset)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Append the records to the df</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  all_pub_records <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_pub_records, pub_records)</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: extract &amp; clean</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "just the useful and publish-able data, clean a bit"</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="co"># clean evals names to snakecase</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(evals) <span class="ot">&lt;-</span> snakecase<span class="sc">::</span><span class="fu">to_snake_case</span>(<span class="fu">colnames</span>(evals))</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="ot">&lt;-</span> evals <span class="sc">%&gt;%</span> </span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">stage_of_process =</span> stage_of_process_todo_from_crucial_research_2) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stage_of_process =</span> <span class="fu">unlist</span>(stage_of_process)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(stage_of_process <span class="sc">==</span> <span class="st">"published"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, </span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>           crucial_research, </span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>           paper_abbrev, </span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>           evaluator_name, </span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>           category, </span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>           source_main, </span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>           author_agreement, </span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>           overall, </span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>           lb_overall, </span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>           ub_overall, </span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>           conf_index_overall, </span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>           advancing_knowledge_and_practice, </span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>           lb_advancing_knowledge_and_practice, </span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>           ub_advancing_knowledge_and_practice, </span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>           conf_index_advancing_knowledge_and_practice,</span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>           methods_justification_reasonableness_validity_robustness,</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>           lb_methods_justification_reasonableness_validity_robustness,</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>           ub_methods_justification_reasonableness_validity_robustness,</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>           conf_index_methods_justification_reasonableness_validity_robustness, </span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>           logic_communication, lb_logic_communication, ub_logic_communication, </span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>           conf_index_logic_communication,</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>           engaging_with_real_world_impact_quantification_practice_realism_and_relevance,</span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>           lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>           ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>           conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,</span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>           relevance_to_global_priorities, </span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>           lb_relevance_to_global_priorities, </span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>           ub_relevance_to_global_priorities, </span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>           conf_index_relevance_to_global_priorities, </span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>           journal_quality_predict, </span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>           lb_journal_quality_predict, </span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>           ub_journal_quality_predict,</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>           conf_index_journal_quality_predict, </span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>           open_collaborative_replicable, </span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>           conf_index_open_collaborative_replicable, </span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>           lb_open_collaborative_replicable, </span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>           ub_open_collaborative_replicable, </span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>           merits_journal, </span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>           lb_merits_journal, </span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>           ub_merits_journal, </span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>           conf_index_merits_journal)</span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="co"># shorten names (before you expand into columns)</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>  <span class="st">"eval_name"</span> <span class="ot">=</span> <span class="st">"evaluator_name"</span>,</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cat"</span> <span class="ot">=</span> <span class="st">"category"</span>,</span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>  <span class="st">"crucial_rsx"</span> <span class="ot">=</span> <span class="st">"crucial_research"</span>,</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_overall"</span> <span class="ot">=</span> <span class="st">"conf_index_overall"</span>,</span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>  <span class="st">"adv_knowledge"</span> <span class="ot">=</span> <span class="st">"advancing_knowledge_and_practice"</span>,</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_adv_knowledge"</span> <span class="ot">=</span> <span class="st">"lb_advancing_knowledge_and_practice"</span>,</span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_adv_knowledge"</span> <span class="ot">=</span> <span class="st">"ub_advancing_knowledge_and_practice"</span>,</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_adv_knowledge"</span> <span class="ot">=</span> <span class="st">"conf_index_advancing_knowledge_and_practice"</span>,</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>  <span class="st">"methods"</span> <span class="ot">=</span> <span class="st">"methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_methods"</span> <span class="ot">=</span> <span class="st">"lb_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_methods"</span> <span class="ot">=</span> <span class="st">"ub_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_methods"</span> <span class="ot">=</span> <span class="st">"conf_index_methods_justification_reasonableness_validity_robustness"</span>,</span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>  <span class="st">"logic_comms"</span> <span class="ot">=</span> <span class="st">"logic_communication"</span>,</span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_logic_comms"</span> <span class="ot">=</span> <span class="st">"lb_logic_communication"</span>,</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_logic_comms"</span> <span class="ot">=</span> <span class="st">"ub_logic_communication"</span>,</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_logic_comms"</span> <span class="ot">=</span> <span class="st">"conf_index_logic_communication"</span>,</span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>  <span class="st">"real_world"</span> <span class="ot">=</span> <span class="st">"engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_real_world"</span> <span class="ot">=</span> <span class="st">"lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_real_world"</span> <span class="ot">=</span> <span class="st">"ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_real_world"</span> <span class="ot">=</span> <span class="st">"conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance"</span>,</span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gp_relevance"</span> <span class="ot">=</span> <span class="st">"relevance_to_global_priorities"</span>,</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_gp_relevance"</span> <span class="ot">=</span> <span class="st">"lb_relevance_to_global_priorities"</span>,</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_gp_relevance"</span> <span class="ot">=</span> <span class="st">"ub_relevance_to_global_priorities"</span>,</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_gp_relevance"</span> <span class="ot">=</span> <span class="st">"conf_index_relevance_to_global_priorities"</span>,</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>  <span class="st">"journal_predict"</span> <span class="ot">=</span> <span class="st">"journal_quality_predict"</span>,</span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_journal_predict"</span> <span class="ot">=</span> <span class="st">"lb_journal_quality_predict"</span>,</span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_journal_predict"</span> <span class="ot">=</span> <span class="st">"ub_journal_quality_predict"</span>,</span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_journal_predict"</span> <span class="ot">=</span> <span class="st">"conf_index_journal_quality_predict"</span>,</span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>  <span class="st">"open_sci"</span> <span class="ot">=</span> <span class="st">"open_collaborative_replicable"</span>,</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_open_sci"</span> <span class="ot">=</span> <span class="st">"conf_index_open_collaborative_replicable"</span>,</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lb_open_sci"</span> <span class="ot">=</span> <span class="st">"lb_open_collaborative_replicable"</span>,</span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ub_open_sci"</span> <span class="ot">=</span> <span class="st">"ub_open_collaborative_replicable"</span>,</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>  <span class="st">"conf_merits_journal"</span> <span class="ot">=</span> <span class="st">"conf_index_merits_journal"</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="sc">!!!</span>new_names)</span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="co">#  Create a list of labels with the old, longer names</span></span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(new_names, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span> <span class="fu">str_to_title</span>()</span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign labels to the dataframe / tibble</span></span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="co"># (maybe this can be done as an attribute, not currently working)</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a><span class="co"># for(i in seq_along(labels)) {</span></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a><span class="co">#    col_name &lt;- new_names[names(new_names)[i]]</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="co">#    label &lt;- labels[i]</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="co">#    attr(evals_pub[[col_name]], "label") &lt;- label</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="co">#  }</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="co"># expand categories into columns, unlist everything</span></span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest_wider</span>(cat, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span> <span class="co"># give each of these its own col</span></span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), unlist))  <span class="co"># maybe check why some of these are lists in the first place</span></span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="co"># clean the Anonymous names</span></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a>evals_pub<span class="sc">$</span>eval_name <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"^</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b$|</span><span class="sc">\\</span><span class="st">bAnonymous</span><span class="sc">\\</span><span class="st">b"</span>, evals_pub<span class="sc">$</span>eval_name),</span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"Anonymous_"</span>, <span class="fu">seq_along</span>(evals_pub<span class="sc">$</span>eval_name)),</span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a>  evals_pub<span class="sc">$</span>eval_name</span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="co">#Todo -- check the unlist is not propagating the entry</span></span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a><span class="co">#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  </span></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span>                   </span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- need airtable API stuff --&gt;</span></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reconcile uncertainty ratings and CIs {-}</span></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>Where people gave only confidence level 'dots', we impute CIs (confidence/credible intervals). We follow the correspondence described <span class="co">[</span><span class="ot">here</span><span class="co">](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis)</span>. (Otherwise, where they gave actual CIs, we use these.)^<span class="co">[</span><span class="ot">Note this is only a first-pass; a more sophisticated approach may be warranted in future.</span><span class="co">]</span></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dots to interval choices</span></span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>For 0-100 ratings, code the LB as $min(R - 4\times \frac{R}{100},0)$ and the UB as $max(R + 4\times \frac{R}{100},0)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 4 = Very*confident: 90% confidence interval +/- 8 points or less</span></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a>For 0-100 ratings, code the LB as $min(R - 8\times \frac{R}{100},0)$ and the UB as $max(R + 8\times \frac{R}{100},0)$, where R is the stated (middle) rating. </span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 3 = Somewhat** confident: 90% confidence interval +/- 15 points or less</span><span class="dv">&amp;#x20;</span></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 2 = Not very** confident: 90% confidence interval, +/- 25 points or less</span></span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.</span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 1 = Not** confident: (90% confidence interval +/- more than 25 points)</span></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>Code LB as $min(R - 37.5\times \frac{R}{100},0)$ and the UB as $max(R + 37.5\times \frac{R}{100},0)$. </span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings altogether.</span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: reconcile_bounds</span></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "reconcile explicit bounds and stated confidence level"</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the baseline widths for each confidence rating</span></span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a>baseline_widths <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="fl">37.5</span>)</span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to calculate the lower and upper bounds, where given only an index</span></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>calc_bounds <span class="ot">&lt;-</span> <span class="cf">function</span>(rating, confidence, lb_explicit, ub_explicit, <span class="at">scale=</span><span class="dv">100</span>) {</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if confidence is NA</span></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(confidence)) {</span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(lb_explicit, ub_explicit))  <span class="co"># Return explicit bounds if confidence is NA</span></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a>    baseline_width <span class="ot">&lt;-</span> baseline_widths[confidence]</span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a>    lb <span class="ot">&lt;-</span> <span class="fu">pmax</span>(rating <span class="sc">-</span> baseline_width <span class="sc">*</span> rating <span class="sc">/</span> scale, <span class="dv">0</span>)</span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a>    ub <span class="ot">&lt;-</span> <span class="fu">pmin</span>(rating <span class="sc">+</span> baseline_width <span class="sc">*</span> rating <span class="sc">/</span> scale, scale)</span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">c</span>(lb, ub))</span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate bounds for a single category</span></span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a>calc_category_bounds <span class="ot">&lt;-</span> <span class="cf">function</span>(df, category, <span class="at">scale=</span><span class="dv">100</span>) {</span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate bounds</span></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>  bounds <span class="ot">&lt;-</span> <span class="fu">mapply</span>(calc_bounds, df[[category]], df[[<span class="fu">paste0</span>(<span class="st">"conf_"</span>, category)]], df[[<span class="fu">paste0</span>(<span class="st">"lb_"</span>, category)]], df[[<span class="fu">paste0</span>(<span class="st">"ub_"</span>, category)]])</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to data frame and ensure it has the same number of rows as the input</span></span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a>  bounds_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(bounds))</span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(bounds_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add bounds to original data frame</span></span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a>  df[[<span class="fu">paste0</span>(category, <span class="st">"_lb_imp"</span>)]] <span class="ot">&lt;-</span> bounds_df[, <span class="dv">1</span>]</span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a>  df[[<span class="fu">paste0</span>(category, <span class="st">"_ub_imp"</span>)]] <span class="ot">&lt;-</span> bounds_df[, <span class="dv">2</span>]</span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Lists of categories</span></span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>rating_cats <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"overall"</span>, <span class="st">"adv_knowledge"</span>, <span class="st">"methods"</span>, <span class="st">"logic_comms"</span>, <span class="st">"real_world"</span>, <span class="st">"gp_relevance"</span>, <span class="st">"open_sci"</span>)</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="co">#... 'predictions' are currently 1-5 (0-5?)</span></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a>pred_cats <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"journal_predict"</span>, <span class="st">"merits_journal"</span>)</span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a><span class="co">#DR: Note that I use these objects in future chapters, but they are not connected to the data frame. Either one saves and reinputs the whole environment (messy, replicability issue), or you save this somewhere and re-input it or connect it to the data frame that gets saved (not sure how to do it), or you hard-code reinput it in the next chapter. </span></span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a><span class="co">#I do the latter for now, but I'm not happy about it, because the idea is 'input definitions in a single place to use later'</span></span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to each category</span></span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a><span class="co"># DR: I don't love this looping 'edit in place' code approach, but whatever</span></span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (cat <span class="cf">in</span> rating_cats) {</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a>  evals_pub <span class="ot">&lt;-</span> <span class="fu">calc_category_bounds</span>(evals_pub, cat, <span class="at">scale=</span><span class="dv">100</span>)</span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (cat <span class="cf">in</span> pred_cats) {</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a>  evals_pub <span class="ot">&lt;-</span> <span class="fu">calc_category_bounds</span>(evals_pub, cat, <span class="at">scale=</span><span class="dv">5</span>)</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a>We cannot publicly share the 'papers under consideration', but we can share some of the statistics on these papers. Let's generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest</span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="ot">&lt;-</span> all_pub_records <span class="sc">%&gt;%</span> </span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a>    id,</span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>    category,</span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a>    cfdc_DR,</span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a>     <span class="st">'confidence -- user entered'</span>,</span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>    cfdc_assessor,</span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a>    avg_cfdc,</span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a>    category,</span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a>    cause_cat_1_text,</span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a>    cause_cat_2_text,</span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a>    topic_subfield_text,</span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a>    eval_manager_text,</span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a>    <span class="st">'publication status'</span>,</span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Contacted author?'</span>,</span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a>    <span class="st">'stage of process/todo'</span>,</span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a>    <span class="st">'source_main'</span>,  </span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a>    <span class="st">'author permission?'</span>,</span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a><span class="st">'Direct Kotahi Prize Submission?'</span>,</span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a>    <span class="st">'createdTime'</span>         </span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-339"><a href="#cb7-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-340"><a href="#cb7-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-343"><a href="#cb7-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-344"><a href="#cb7-344" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: savedata</span></span>
+<span id="cb7-345"><a href="#cb7-345" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "save data for others' use"</span></span>
+<span id="cb7-346"><a href="#cb7-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-347"><a href="#cb7-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-348"><a href="#cb7-348" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.Rdata"</span>))</span>
+<span id="cb7-349"><a href="#cb7-349" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.csv"</span>))</span>
+<span id="cb7-350"><a href="#cb7-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-351"><a href="#cb7-351" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.Rdata"</span>))</span>
+<span id="cb7-352"><a href="#cb7-352" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.csv"</span>))</span>
+<span id="cb7-353"><a href="#cb7-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-354"><a href="#cb7-354" aria-hidden="true" tabindex="-1"></a><span class="co">#evals_pub %&gt;% readRDS(file = here("data", "evals.Rdata"))</span></span>
+<span id="cb7-355"><a href="#cb7-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-356"><a href="#cb7-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

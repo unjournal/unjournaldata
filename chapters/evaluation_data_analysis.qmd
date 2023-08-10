@@ -8,16 +8,6 @@
 
 library(tidyverse) 
 
-# data acquisition ----
-#devtools::install_github("bergant/airtabler")
-library(airtabler)
-
-# data cleaning & shaping ----
-
-# data analysis ----
-# library(lme4)
-# library(lmtest) # Testing Linear Regression Models
-
 # markdown et al. ----
 library(knitr)
 library(bookdown)
@@ -44,275 +34,41 @@ options(mc.cores = parallel::detectCores())
 ```
 
 
-
-```{r}
-#| label: input_at
-#| code-summary: "input from airtable"
-   
-base_id <- "appbPYEw9nURln7Qg"
-
-
-# Set your Airtable API key 
-Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_API_KEY"))
-#this should be set in my .Renviron file
-
-# Read data from a specific view
-
-evals <- air_get(base = base_id, "output_eval") 
-
-all_pub_records <- data.frame()
-pub_records <- air_select(base = base_id, table = "crucial_research")
-
-# Append the records to the list
-all_pub_records <- bind_rows(all_pub_records, pub_records)
-
-# While the length of the records list is 100 (the maximum), fetch more records
-while(nrow(pub_records) == 100) {
-  # Get the ID of the last record in the list
-  offset <- get_offset(pub_records)
-  
-  # Fetch the next 100 records, starting after the last ID
-  pub_records <- air_select(base = base_id, table = "crucial_research", offset =  offset)
-  
-  # Append the records to the df
-  all_pub_records <- bind_rows(all_pub_records, pub_records)
-}
-
-
-```
-
-```{r}
-#| label: extract & clean
-#| code-summary: "just the useful and publish-able data, clean a bit"
-
-# clean evals names to snakecase
-colnames(evals) <- snakecase::to_snake_case(colnames(evals))
-
-evals_pub <- evals %>% 
-  dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
-  mutate(stage_of_process = unlist(stage_of_process)) %>% 
-  dplyr::filter(stage_of_process == "published") %>% 
-    select(id, 
-           crucial_research, 
-           paper_abbrev, 
-           evaluator_name, 
-           category, 
-           source_main, 
-           author_agreement, 
-           overall, 
-           lb_overall, 
-           ub_overall, 
-           conf_index_overall, 
-           advancing_knowledge_and_practice, 
-           lb_advancing_knowledge_and_practice, 
-           ub_advancing_knowledge_and_practice, 
-           conf_index_advancing_knowledge_and_practice,
-           methods_justification_reasonableness_validity_robustness,
-           lb_methods_justification_reasonableness_validity_robustness,
-           ub_methods_justification_reasonableness_validity_robustness,
-           conf_index_methods_justification_reasonableness_validity_robustness, 
-           logic_communication, lb_logic_communication, ub_logic_communication, 
-           conf_index_logic_communication,
-           engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           relevance_to_global_priorities, 
-           lb_relevance_to_global_priorities, 
-           ub_relevance_to_global_priorities, 
-           conf_index_relevance_to_global_priorities, 
-           journal_quality_predict, 
-           lb_journal_quality_predict, 
-           ub_journal_quality_predict,
-           conf_index_journal_quality_predict, 
-           open_collaborative_replicable, 
-           conf_index_open_collaborative_replicable, 
-           lb_open_collaborative_replicable, 
-           ub_open_collaborative_replicable, 
-           merits_journal, 
-           lb_merits_journal, 
-           ub_merits_journal, 
-           conf_index_merits_journal)
-
-# shorten names (before you expand into columns)
-new_names <- c(
-  "eval_name" = "evaluator_name",
-  "cat" = "category",
-  "crucial_rsx" = "crucial_research",
-  "conf_overall" = "conf_index_overall",
-  "adv_knowledge" = "advancing_knowledge_and_practice",
-  "lb_adv_knowledge" = "lb_advancing_knowledge_and_practice",
-  "ub_adv_knowledge" = "ub_advancing_knowledge_and_practice",
-  "conf_adv_knowledge" = "conf_index_advancing_knowledge_and_practice",
-  "methods" = "methods_justification_reasonableness_validity_robustness",
-  "lb_methods" = "lb_methods_justification_reasonableness_validity_robustness",
-  "ub_methods" = "ub_methods_justification_reasonableness_validity_robustness",
-  "conf_methods" = "conf_index_methods_justification_reasonableness_validity_robustness",
-  "logic_comms" = "logic_communication",
-  "lb_logic_comms" = "lb_logic_communication",
-  "ub_logic_comms" = "ub_logic_communication",
-  "conf_logic_comms" = "conf_index_logic_communication",
-  "real_world" = "engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "lb_real_world" = "lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "ub_real_world" = "ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "conf_real_world" = "conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "gp_relevance" = "relevance_to_global_priorities",
-  "lb_gp_relevance" = "lb_relevance_to_global_priorities",
-  "ub_gp_relevance" = "ub_relevance_to_global_priorities",
-  "conf_gp_relevance" = "conf_index_relevance_to_global_priorities",
-  "journal_predict" = "journal_quality_predict",
-  "lb_journal_predict" = "lb_journal_quality_predict",
-  "ub_journal_predict" = "ub_journal_quality_predict",
-  "conf_journal_predict" = "conf_index_journal_quality_predict",
-  "open_sci" = "open_collaborative_replicable",
-  "conf_open_sci" = "conf_index_open_collaborative_replicable",
-  "lb_open_sci" = "lb_open_collaborative_replicable",
-  "ub_open_sci" = "ub_open_collaborative_replicable",
-  "conf_merits_journal" = "conf_index_merits_journal"
-)
-
-evals_pub <- evals_pub %>%
-  rename(!!!new_names)
-
-#  Create a list of labels with the old, longer names
-labels <- str_replace_all(new_names, "_", " ") %>% str_to_title()
-
-# Assign labels to the dataframe / tibble
-# (maybe this can be done as an attribute, not currently working)
-# for(i in seq_along(labels)) {
-#    col_name <- new_names[names(new_names)[i]]
-#    label <- labels[i]
-#    attr(evals_pub[[col_name]], "label") <- label
-#  }
-
-
-# expand categories into columns, unlist everything
-evals_pub %<>%
-  tidyr::unnest_wider(cat, names_sep = "_") %>% # give each of these its own col
-  mutate(across(everything(), unlist))  # maybe check why some of these are lists in the first place
-  
-
-# clean the Anonymous names
-evals_pub$eval_name <- ifelse(
-  grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$eval_name),
-  paste0("Anonymous_", seq_along(evals_pub$eval_name)),
-  evals_pub$eval_name
-)
-
-
-#Todo -- check the unlist is not propagating the entry
-#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
-
-```                   
-
-
-
-
-<!-- need airtable API stuff -->
-
-### Reconcile uncertainty ratings and CIs {-}
-
-Where people gave only confidence level 'dots', we impute CIs (confidence/credible intervals). We follow the correspondence described [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis). (Otherwise, where they gave actual CIs, we use these.)^[Note this is only a first-pass; a more sophisticated approach may be warranted in future.]
-
 ::: {.callout-note collapse="true"}
-## Dots to interval choices
+## Note on data input (10-Aug-23)
 
-> 5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)
-
-For 0-100 ratings, code the LB as $min(R - 4\times \frac{R}{100},0)$ and the UB as $max(R + 4\times \frac{R}{100},0)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.
-
-> 4 = Very*confident: 90% confidence interval +/- 8 points or less
-
-For 0-100 ratings, code the LB as $min(R - 8\times \frac{R}{100},0)$ and the UB as $max(R + 8\times \frac{R}{100},0)$, where R is the stated (middle) rating. 
-
-> 3 = Somewhat** confident: 90% confidence interval +/- 15 points or less&#x20;
-
-> 2 = Not very** confident: 90% confidence interval, +/- 25 points or less
-
-Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.
-
-> 1 = Not** confident: (90% confidence interval +/- more than 25 points)
-    
-Code LB as $min(R - 37.5\times \frac{R}{100},0)$ and the UB as $max(R + 37.5\times \frac{R}{100},0)$. 
-    
-This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings altogether.
+Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators' reports. As PubPub builds (target: end of Sept. 2023), this will allow us to  include the ratings and predictions as structured data objects. We then plan to access and input this data *directly* from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.
 
 ::: 
 
+```{r}
+#| label: input_eval_data
+#| code-summary: "Input evaluation data"
+ 
+evals_pub <- readRDS(file = here("data", "evals.Rdata"))
+all_papers_p <- readRDS(file = here("data", "all_papers_p.Rdata"))
+
+```
+
+
 
 ```{r}
-#| label: reconcile_bounds
-#| code-summary: "reconcile explicit bounds and stated confidence level"
-
-# Define the baseline widths for each confidence rating
-baseline_widths <- c(4, 8, 15, 25, 37.5)
-
-# Define a function to calculate the lower and upper bounds, where given only an index
-calc_bounds <- function(rating, confidence, lb_explicit, ub_explicit, scale=100) {
-  # Check if confidence is NA
-  if (is.na(confidence)) {
-    return(c(lb_explicit, ub_explicit))  # Return explicit bounds if confidence is NA
-  } else {
-    baseline_width <- baseline_widths[confidence]
-    lb <- pmax(rating - baseline_width * rating / scale, 0)
-    ub <- pmin(rating + baseline_width * rating / scale, scale)
-    return(c(lb, ub))
-  }
-}
-
-# Function to calculate bounds for a single category
-calc_category_bounds <- function(df, category, scale=100) {
-  # Calculate bounds
-  bounds <- mapply(calc_bounds, df[[category]], df[[paste0("conf_", category)]], df[[paste0("lb_", category)]], df[[paste0("ub_", category)]])
-  
-  # Convert to data frame and ensure it has the same number of rows as the input
-  bounds_df <- as.data.frame(t(bounds))
-  rownames(bounds_df) <- NULL
-  
-  # Add bounds to original data frame
-  df[[paste0(category, "_lb_imp")]] <- bounds_df[, 1]
-  df[[paste0(category, "_ub_imp")]] <- bounds_df[, 2]
-  
-  return(df)
-}
-
+#| label: list_of_columns
+#| code-summary: "Define lists of columns to use later"
 
 # Lists of categories
-
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
 
 #... 'predictions' are currently 1-5 (0-5?)
 pred_cats <- c("journal_predict", "merits_journal")
 
-# Apply the function to each category
-# DR: I don't love this looping 'edit in place' code approach, but whatever
-for (cat in rating_cats) {
-  evals_pub <- calc_category_bounds(evals_pub, cat, scale=100)
-}
-
-for (cat in pred_cats) {
-  evals_pub <- calc_category_bounds(evals_pub, cat, scale=5)
-}
-
 ```
 
-
-
-```{r}
-#| label: savedata
-#| code-summary: "save data for others' use"
-
-evals_pub %>% saveRDS(file = here("data", "evals.Rdata"))
-evals_pub %>% write_csv(file = here("data", "evals.csv"))
-
-#evals_pub %>% readRDS(file = here("data", "evals.Rdata"))
-
-```
 
     
 ## Basic presentation
 
-### What sorts of papers/projects are we considering and evaluating? 
+### What sorts of papers/projects are we considering and evaluating? {-}
 
 In this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal's coverage. 
 
@@ -374,7 +130,7 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 (
   all_evals_dt_ci <- evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, eval_name, conf_overall, rating_cats, matches("ub_imp|lb_imp")) %>%
+  dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %>%
   DT::datatable(
     caption = "Evaluations and (imputed*) confidence bounds)", 
     filter = 'top',
@@ -407,26 +163,26 @@ The funnel plot below starts with the papers we prioritized for likely *Unjourna
 #Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
 
-papers_considered <- all_pub_records %>% 
+papers_considered <- all_papers_p %>% 
   nrow()
 
-papers_deprio <- all_pub_records %>% 
+papers_deprio <- all_papers_p %>% 
   filter(`stage of process/todo` ==  "de-prioritized") %>% 
   nrow()
 
-papers_evaluated <- all_pub_records %>% 
+papers_evaluated <- all_papers_p %>% 
   filter(`stage of process/todo` %in% c("published",
                                         "contacting/awaiting_authors_response_to_evaluation",
                                         "awaiting_publication_ME_comments","awaiting_evaluations")) %>% 
   nrow()
 
-papers_complete <- all_pub_records %>% 
+papers_complete <- all_papers_p %>% 
   filter(`stage of process/todo` ==  "published") %>%
   nrow()
 
 papers_in_progress <-  papers_evaluated - papers_complete
 
-papers_still_in_consideration <-  all_pub_records %>% filter(`stage of process/todo` ==  "considering") %>% nrow()
+papers_still_in_consideration <-  all_papers_p %>% filter(`stage of process/todo` ==  "considering") %>% nrow()
 
 
 #todo: adjust wording of hover notes ('source, target...etc')
@@ -517,18 +273,18 @@ evals_pub %>%
 ```
 
 ```{r}
-all_pub_records$is_evaluated = all_pub_records$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
+all_papers_p$is_evaluated = all_papers_p$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
 
-all_pub_records$source_main[all_pub_records$source_main == "NA"] <- "Not applicable"  
-all_pub_records$source_main[all_pub_records$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
-all_pub_records$source_main = tidyr::replace_na(all_pub_records$source_main, "Unknown")
+all_papers_p$source_main[all_papers_p$source_main == "NA"] <- "Not applicable"  
+all_papers_p$source_main[all_papers_p$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
+all_papers_p$source_main = tidyr::replace_na(all_papers_p$source_main, "Unknown")
 
-all_pub_records %>% 
+all_papers_p %>% 
 ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
-  labs(title = "Prioritized and evaluated research by source") +
+  labs(title = "Evaluations by source of the paper") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
   scale_fill_brewer(palette = "Set1") +
@@ -621,7 +377,6 @@ out = formattable(
   )
 )
 out
-
 
 
 ```
