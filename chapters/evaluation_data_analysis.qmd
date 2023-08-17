@@ -79,7 +79,7 @@ In the interactive table below we give some key attributes of the papers and the
 
 <!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
 
-#### Data Tables
+#### Data Tables {-}
 
 ```{r }
 #| label: datatable0
@@ -117,6 +117,7 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 
 # we didn't seem to be using all_evals_dt so I removed it to increase readability
 
+
 evals_pub %>%
   arrange(paper_abbrev, eval_name, overall) %>%
   dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
@@ -134,8 +135,8 @@ evals_pub %>%
 
 ```{r eval=FALSE}
 
-(
-  all_evals_dt_ci <- evals_pub %>%
+# we did not seem to be using all_evals_dt_ci so I removed it to improve readability
+evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
   dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %>%
   DT::datatable(
@@ -144,7 +145,7 @@ evals_pub %>%
     rownames= FALSE,
     options = list(pageLength = 5)
     )
-)
+
 
 ```
 :::
@@ -166,11 +167,11 @@ evals_pub %>%
 
 :::
 
-#### Paper selection
+#### Paper selection {-}
 
-The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
+The Sankey diagram below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
 
-```{r}
+```{r sankey plot}
 
 #Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
@@ -200,37 +201,37 @@ papers_still_in_consideration <-  all_papers_p %>% filter(`stage of process/todo
 #todo: adjust wording of hover notes ('source, target...etc')
 
 fig <- plot_ly(
-    type = "sankey",
-    orientation = "h",
-
-    node = list(
-      label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
-      color = c("orange", "green", "green", "orange", "orange", "red"),
-#Todo: adjust 'location' to group these left to right
-      pad = 15,
-      thickness = 20,
-      line = list(
-        color = "black",
-        width = 0.5
-      )
-    ),
-
-    link = list(
-      source = c(0,1,1,0,0),
-      target = c(1,2,3,4,5),
-      value =  c(
-        papers_evaluated,
-        papers_complete,
-        papers_in_progress,
-        papers_still_in_consideration,
-        papers_deprio
-    ))
-  )
-fig <- fig %>% layout(
-    title = "Unjournal paper funnel",
-    font = list(
-      size = 10
+  type = "sankey",
+  orientation = "h",
+  
+  node = list(
+    label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
+    color = c("orange", "green", "green", "orange", "orange", "red"),
+    #Todo: adjust 'location' to group these left to right
+    pad = 15,
+    thickness = 20,
+    line = list(
+      color = "black",
+      width = 0.5
     )
+  ),
+  
+  link = list(
+    source = c(0,1,1,0,0),
+    target = c(1,2,3,4,5),
+    value =  c(
+      papers_evaluated,
+      papers_complete,
+      papers_in_progress,
+      papers_still_in_consideration,
+      papers_deprio
+    ))
+)
+fig <- fig %>% layout(
+  title = "Unjournal paper funnel",
+  font = list(
+    size = 10
+  )
 )
 
 fig 
@@ -240,7 +241,7 @@ fig
 
 Todo: ^[Make interactive/dashboards of the elements below]
 
-#### Paper categories
+#### Paper categories {-}
 
 
 ```{r all_categories}
@@ -265,7 +266,7 @@ evals_pub %>%
   
 ```
 
-#### Paper source 
+#### Paper source {-}
 
 ```{r paper_source}
 
@@ -285,12 +286,25 @@ evals_pub %>%
 
 ```
 
-```{r}
-all_papers_p$is_evaluated = all_papers_p$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
+```{r data_clean_}
+# JB: Most of these should probably be cleaned in data storage
 
-all_papers_p$source_main[all_papers_p$source_main == "NA"] <- "Not applicable"  
-all_papers_p$source_main[all_papers_p$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
-all_papers_p$source_main = tidyr::replace_na(all_papers_p$source_main, "Unknown")
+# paper statuses that are considered "being evaluated"
+eval_true = c("published", 
+              "contacting/awaiting_authors_response_to_evaluation",
+              "awaiting_publication_ME_comments",
+              "awaiting_evaluations")
+
+# Is the paper being evaluated? 
+all_papers_p <- all_papers_p %>% 
+  mutate(is_evaluated = if_else(`stage of process/todo` %in% eval_true, TRUE, FALSE))
+
+# main source
+all_papers_p <- all_papers_p %>% 
+  mutate(source_main = case_when(source_main == "NA" ~ "Not applicable",
+                                 source_main == "internal-from-syllabus-agenda-policy-database" ~ "Internal: syllabus, agenda, etc.",
+                                 is.na(source_main) ~ "Unknown",
+                                 TRUE ~ source_main))
 
 all_papers_p %>% 
 ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
@@ -305,7 +319,7 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 ```
 
 
-### The distribution of ratings and predictions {-}
+# The distribution of ratings and predictions {-}
 
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
