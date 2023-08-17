@@ -79,24 +79,31 @@ In the interactive table below we give some key attributes of the papers and the
 
 <!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
 
+#### Data Tables
+
 ```{r }
 #| label: datatable0
+# Need to find a way to control column width but it seems to be a problem with DT
+# https://github.com/rstudio/DT/issues/29
 
-(
-  all_evals_dt <- evals_pub %>%
+# we didn't seem to be using all_evals_dt so I removed it to increase readability
+
+evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
   dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
-    dplyr::select(-matches("ub_|lb_|conf")) %>% 
-    #rename_all(~ gsub("_", " ", .)) %>% 
-    rename("Research  _____________________" = "crucial_rsx" 
-      ) %>%
+  dplyr::select(-matches("ub_|lb_|conf")) %>% 
+  rename("==========Research==========" = "crucial_rsx") %>% 
   DT::datatable(
     caption = "Evaluations (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(
+      #scrollX=TRUE,
+      #autoWidth = TRUE,
+      #columnDefs = list(list(list(targets = 2, visible = T, width = '300px'))),
+      pageLength = 5
     )
-)
+  )
 ```
 
 
@@ -108,17 +115,17 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 #| label: datatable
 #| code-summary: "Data datable (all shareable relevant data)"
 
-(
-  all_evals_dt <- evals_pub %>%
+# we didn't seem to be using all_evals_dt so I removed it to increase readability
+
+evals_pub %>%
   arrange(paper_abbrev, eval_name, overall) %>%
   dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
   DT::datatable(
     caption = "Evaluations and predictions (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(pageLength = 5)
     )
-)
 
 ```
 \
@@ -135,12 +142,15 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
     caption = "Evaluations and (imputed*) confidence bounds)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(pageLength = 5)
     )
 )
 
 ```
 :::
+
+
+
 
 
 ::: {.callout-note collapse="true"}
@@ -155,6 +165,8 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 - Timing of intake and evaluation^[Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves]
 
 :::
+
+#### Paper selection
 
 The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
 
@@ -228,33 +240,34 @@ fig
 
 Todo: ^[Make interactive/dashboards of the elements below]
 
-```{r}
+#### Paper categories
 
-summary_df <- evals_pub %>%
-  distinct(crucial_rsx, .keep_all = T) %>% 
-  group_by(cat_1) %>%
-  summarise(count = n()) 
 
-summary_df$cat_1[is.na(summary_df$cat_1)] <- "Unknown"
-
-summary_df <- summary_df %>%
-  arrange(-desc(count)) %>%
-  mutate(cat_1 = factor(cat_1, levels = unique(cat_1)))
-
-# Create stacked bar chart
-ggplot(summary_df, aes(x = cat_1, y = count)) +
-  geom_bar(stat = "identity", color = "grey30", fill = "grey80") + 
-  theme_minimal() +
-  labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papers by primary category") +
-  theme_bw()
-
+```{r all_categories}
+evals_pub %>% 
+  select(paper_abbrev, starts_with("cat_")) %>% 
+  pivot_longer(cols = starts_with("cat_"), names_to = "CatNum", values_to = "Category") %>% 
+  group_by(CatNum, Category) %>% 
+  count() %>% 
+  filter(!is.na(Category)) %>% 
+  mutate(Category = str_to_title(Category),
+         CatNum = ordered(CatNum, 
+                          levels = c("cat_1", "cat_2", "cat_3"),
+                          labels = c("Primary", "Secondary", "Tertiary"))) %>%
+  ggplot(aes(x = reorder(Category, -n), y = n)) +
+  geom_bar(aes(fill = CatNum), stat = "identity", color = "grey30") + 
+  labs(x = "Paper category", y = "Count", fill = "Cat Level",
+       title = "Paper categories represented in pilot data") +
+  theme_bw() +
+  facet_grid(~CatNum, scales="free_x", space="free_x") +
+  theme(axis.text.x=element_text(angle=45,hjust=1)) +
+  theme(legend.position = "none")
+  
 ```
 
+#### Paper source 
 
-
-```{r}
-
+```{r paper_source}
 
 # Bar plot
 evals_pub %>% 
