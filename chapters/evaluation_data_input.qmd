@@ -76,7 +76,8 @@ while(nrow(pub_records) == 100) {
   all_pub_records <- bind_rows(all_pub_records, pub_records)
 }
 
-
+# housekeeping
+rm(pub_records)
 ```
 
 ```{r}
@@ -197,6 +198,8 @@ evals_pub$eval_name <- ifelse(
   evals_pub$eval_name
 )
 
+#housekeeping
+rm(evals)
 
 #Todo -- check the unlist is not propagating the entry
 #Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
@@ -238,7 +241,7 @@ This is just a first-pass. There might be a more information-theoretic way of do
 ::: 
 
 
-```{r}
+```{r reconcile_bounds}
 #| label: reconcile_bounds
 #| code-summary: "reconcile explicit bounds and stated confidence level"
 
@@ -285,6 +288,7 @@ pred_cats <- c("journal_predict", "merits_journal")
 
 #I do the latter for now, but I'm not happy about it, because the idea is 'input definitions in a single place to use later'
 
+#JB: I don't really understand why not just hard code it in the next chapter. These are very short strings. Do you expect them to change often? If so, we can derive them from a dataframe somewhere in the future or save as a separate object. 
 
 # Apply the function to each category
 # DR: I don't love this looping 'edit in place' code approach, but whatever
