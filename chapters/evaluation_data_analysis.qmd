@@ -155,7 +155,7 @@ evals_pub %>%
 
 
 ::: {.callout-note collapse="true"}
-## Next consider...
+##### Next consider...
 
 - Composition of research evaluated
      - By field (economics, psychology, etc.)
@@ -299,7 +299,7 @@ eval_true = c("published",
 all_papers_p <- all_papers_p %>% 
   mutate(is_evaluated = if_else(`stage of process/todo` %in% eval_true, TRUE, FALSE))
 
-# main source
+# main source clean
 all_papers_p <- all_papers_p %>% 
   mutate(source_main = case_when(source_main == "NA" ~ "Not applicable",
                                  source_main == "internal-from-syllabus-agenda-policy-database" ~ "Internal: syllabus, agenda, etc.",
@@ -319,38 +319,40 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 ```
 
 
-# The distribution of ratings and predictions {-}
+## The distribution of ratings and predictions {-}
 
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
 - For each category and prediction (overall and by paper)
+```{r CI_bounds}
+
+evals_pub %>% 
+  select(matches("overall")) %>% 
+  view()
+
+```
 
 
 ::: column-body-outset
 
 
 ```{r}
-#| fig-height: 7
-wrap_text <- function(text, width) {
-  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
-}
-
-evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
-
+#| fig-height: 9
 
 #todo -- sort by average overall, use color and vertical spacing more
-#todo: introduce a carriage return into the paper names (workaround) to wrap these and save horizontal space
 
+pd = position_dodge(width = 0.8)
 
 # Dot plot
 g1 <- evals_pub %>% 
-  ggplot(aes(x = paper_abbrev, y = overall)) +
-  geom_point(aes(color = eval_name), stat = "identity", size = 3, shape = 1, stroke = 2) +
-  # geom_text_repel(aes(label = eval_name), 
-  #                 size = 3, 
-  #                 box.padding = unit(0.35, "lines"),
-  #                 point.padding = unit(0.3, "lines")) +
+  ggplot(aes(x = paper_abbrev, y = overall, 
+             text = paste0('Evaluator: ', eval_name,   # tooltip data
+                           '<br>Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
+  geom_point(aes(color = eval_name), 
+             stat = "identity", size = 2, shape = 18, stroke = 1, 
+             position = pd) +
+  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = eval_name), position = pd) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   labs(x = "Paper", y = "Overall score",
        title = "Overall scores of evaluated papers") +
@@ -358,9 +360,9 @@ g1 <- evals_pub %>%
   theme(text = element_text(size = 15)) +
   theme(legend.position = "none") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
-#todo -- add more vertical space between papers
 
-ggplotly(g1, tooltip = c("eval_name", "overall"))
+
+ggplotly(g1, tooltip = c("text"))
 ```
 :::
 
