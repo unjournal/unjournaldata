@@ -1,0 +1,88 @@
+# Preface {.unnumbered}
+
+
+[The Unjournal](www.unjournal.org) coordinates the public evaluation of hosted papers and dynamically-presented research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim: to make rigorous research more impactful, and impactful research more rigorous.
+
+Our main web site, [unjournal.org](https://www.unjournal.org), explains and presents our vision, procedures, and our progress. The 'output' evaluations and author (including feedback and discussion) can be found on our [PubPub page](https://unjournal.pubpub.org/), and are indexed in scholarly archives.
+
+The current 'book' (see all chapters) aims to present an updated *data-driven* account of our progress, our evaluations, our plans, and (in future) the research environment. We will also do substantial *analysis* of our evaluations and evaluation process here, to help benchmark and calibrate our work, aggregate expert opinion, and more. 
+
+In large part:
+
+1. Keeping track of what we are covering, when and how
+
+2. Presenting the quantitative evaluation content in useful ways
+
+3. Benchmarking, checking, and aggregating the expert judgment of our evaluators (as reflected in their ratings and predictions) 
+
+\
+
+This book aims to be:
+
+1. Dynamic: Updating to reflect the latest data/our latest work. We avoid 'hard coding' results or discussion.
+
+2. Reproduceable: All code is given, and sufficient data is shared to allow others to recreate our work or 'fork' it.
+
+3. Interactive: We aim at dashboard-style approaches to allow readers/users to choose the visualizations and analyses they want to see, in their preferred formats.
+
+\
+
+
+::: {.callout-note collapse="true"}
+## We may expand this analysis further in the future, e.g., to include 
+
+
+- Further analysis of the relevant research contexts (e.g., 'how many papers are coming out by field')
+- Connections to replications and prediction initiatives
+- Comparing and benchmarking our evaluations against 'traditional publication outcomes' for this work (such as journal tiers and citations) 
+
+::: 
+
+
+
+\
+
+
+10 Aug 2023: Most of the work here has been done by David Reinstein and Julia Bottesini.
+
+
+
+## Collophon 
+
+This is a Quarto book. To learn more about Quarto books visit <https://quarto.org/docs/books>.
+
++This book is hosted on our [GitHub repo](https://github.com/unjournal/unjournaldata). All code is made available.
+
+
+
+\
+
+
+
+
+This resource aims to be:
+
+1. Dynamic: Regularly updated to reflect our progress
+2. Transparent and replicable: sharing data and code to permit checking and 'forked' analyses
+3. Interactive: presenting a dashboard-style interface, allowing readers to choose their analyses of interest
+
+\
+
+
+10 Aug 2023: David Reinstein and Julia Bottesini have done most of the analysis here. 
+
+
+
+
+## Collophon
+
+This is a Quarto book.
+
+To learn more about Quarto books visit <https://quarto.org/docs/books>.
+
+```{r}
+options(knitr.duplicate.label = "allow")
+
+```
+
+
