@@ -79,24 +79,31 @@ In the interactive table below we give some key attributes of the papers and the
 
 <!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
 
+#### Data Tables {-}
+
 ```{r }
 #| label: datatable0
+# Need to find a way to control column width but it seems to be a problem with DT
+# https://github.com/rstudio/DT/issues/29
 
-(
-  all_evals_dt <- evals_pub %>%
+# we didn't seem to be using all_evals_dt so I removed it to increase readability
+
+evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
   dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
-    dplyr::select(-matches("ub_|lb_|conf")) %>% 
-    #rename_all(~ gsub("_", " ", .)) %>% 
-    rename("Research  _____________________" = "crucial_rsx" 
-      ) %>%
+  dplyr::select(-matches("ub_|lb_|conf")) %>% 
+  rename("==========Research==========" = "crucial_rsx") %>% 
   DT::datatable(
     caption = "Evaluations (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(
+      #scrollX=TRUE,
+      #autoWidth = TRUE,
+      #columnDefs = list(list(list(targets = 2, visible = T, width = '300px'))),
+      pageLength = 5
     )
-)
+  )
 ```
 
 
@@ -108,17 +115,18 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 #| label: datatable
 #| code-summary: "Data datable (all shareable relevant data)"
 
-(
-  all_evals_dt <- evals_pub %>%
+# we didn't seem to be using all_evals_dt so I removed it to increase readability
+
+
+evals_pub %>%
   arrange(paper_abbrev, eval_name, overall) %>%
   dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
   DT::datatable(
     caption = "Evaluations and predictions (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(pageLength = 5)
     )
-)
 
 ```
 \
@@ -127,24 +135,27 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 
 ```{r eval=FALSE}
 
-(
-  all_evals_dt_ci <- evals_pub %>%
+# we did not seem to be using all_evals_dt_ci so I removed it to improve readability
+evals_pub %>%
   arrange(paper_abbrev, eval_name) %>%
   dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %>%
   DT::datatable(
     caption = "Evaluations and (imputed*) confidence bounds)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 7)
+    options = list(pageLength = 5)
     )
-)
+
 
 ```
 :::
 
 
+
+
+
 ::: {.callout-note collapse="true"}
-## Next consider...
+##### Next consider...
 
 - Composition of research evaluated
      - By field (economics, psychology, etc.)
@@ -156,9 +167,11 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 
 :::
 
-The funnel plot below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
+#### Paper selection {-}
 
-```{r}
+The Sankey diagram below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
+
+```{r sankey plot}
 
 #Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
@@ -188,37 +201,37 @@ papers_still_in_consideration <-  all_papers_p %>% filter(`stage of process/todo
 #todo: adjust wording of hover notes ('source, target...etc')
 
 fig <- plot_ly(
-    type = "sankey",
-    orientation = "h",
-
-    node = list(
-      label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
-      color = c("orange", "green", "green", "orange", "orange", "red"),
-#Todo: adjust 'location' to group these left to right
-      pad = 15,
-      thickness = 20,
-      line = list(
-        color = "black",
-        width = 0.5
-      )
-    ),
-
-    link = list(
-      source = c(0,1,1,0,0),
-      target = c(1,2,3,4,5),
-      value =  c(
-        papers_evaluated,
-        papers_complete,
-        papers_in_progress,
-        papers_still_in_consideration,
-        papers_deprio
-    ))
-  )
-fig <- fig %>% layout(
-    title = "Unjournal paper funnel",
-    font = list(
-      size = 10
+  type = "sankey",
+  orientation = "h",
+  
+  node = list(
+    label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
+    color = c("orange", "green", "green", "orange", "orange", "red"),
+    #Todo: adjust 'location' to group these left to right
+    pad = 15,
+    thickness = 20,
+    line = list(
+      color = "black",
+      width = 0.5
     )
+  ),
+  
+  link = list(
+    source = c(0,1,1,0,0),
+    target = c(1,2,3,4,5),
+    value =  c(
+      papers_evaluated,
+      papers_complete,
+      papers_in_progress,
+      papers_still_in_consideration,
+      papers_deprio
+    ))
+)
+fig <- fig %>% layout(
+  title = "Unjournal paper funnel",
+  font = list(
+    size = 10
+  )
 )
 
 fig 
@@ -228,33 +241,34 @@ fig
 
 Todo: ^[Make interactive/dashboards of the elements below]
 
-```{r}
+#### Paper categories {-}
 
-summary_df <- evals_pub %>%
-  distinct(crucial_rsx, .keep_all = T) %>% 
-  group_by(cat_1) %>%
-  summarise(count = n()) 
 
-summary_df$cat_1[is.na(summary_df$cat_1)] <- "Unknown"
-
-summary_df <- summary_df %>%
-  arrange(-desc(count)) %>%
-  mutate(cat_1 = factor(cat_1, levels = unique(cat_1)))
-
-# Create stacked bar chart
-ggplot(summary_df, aes(x = cat_1, y = count)) +
-  geom_bar(stat = "identity", color = "grey30", fill = "grey80") + 
-  theme_minimal() +
-  labs(x = "Paper category", y = "Count", 
-       title = "Count of evaluated papers by primary category") +
-  theme_bw()
-
+```{r all_categories}
+evals_pub %>% 
+  select(paper_abbrev, starts_with("cat_")) %>% 
+  pivot_longer(cols = starts_with("cat_"), names_to = "CatNum", values_to = "Category") %>% 
+  group_by(CatNum, Category) %>% 
+  count() %>% 
+  filter(!is.na(Category)) %>% 
+  mutate(Category = str_to_title(Category),
+         CatNum = ordered(CatNum, 
+                          levels = c("cat_1", "cat_2", "cat_3"),
+                          labels = c("Primary", "Secondary", "Tertiary"))) %>%
+  ggplot(aes(x = reorder(Category, -n), y = n)) +
+  geom_bar(aes(fill = CatNum), stat = "identity", color = "grey30") + 
+  labs(x = "Paper category", y = "Count", fill = "Cat Level",
+       title = "Paper categories represented in pilot data") +
+  theme_bw() +
+  facet_grid(~CatNum, scales="free_x", space="free_x") +
+  theme(axis.text.x=element_text(angle=45,hjust=1)) +
+  theme(legend.position = "none")
+  
 ```
 
+#### Paper source {-}
 
-
-```{r}
-
+```{r paper_source}
 
 # Bar plot
 evals_pub %>% 
@@ -272,12 +286,25 @@ evals_pub %>%
 
 ```
 
-```{r}
-all_papers_p$is_evaluated = all_papers_p$`stage of process/todo` %in% c("published","contacting/awaiting_authors_response_to_evaluation","awaiting_publication_ME_comments","awaiting_evaluations") 
+```{r data_clean_}
+# JB: Most of these should probably be cleaned in data storage
 
-all_papers_p$source_main[all_papers_p$source_main == "NA"] <- "Not applicable"  
-all_papers_p$source_main[all_papers_p$source_main == "internal-from-syllabus-agenda-policy-database"] <- "Internal: syllabus, agenda, etc."  
-all_papers_p$source_main = tidyr::replace_na(all_papers_p$source_main, "Unknown")
+# paper statuses that are considered "being evaluated"
+eval_true = c("published", 
+              "contacting/awaiting_authors_response_to_evaluation",
+              "awaiting_publication_ME_comments",
+              "awaiting_evaluations")
+
+# Is the paper being evaluated? 
+all_papers_p <- all_papers_p %>% 
+  mutate(is_evaluated = if_else(`stage of process/todo` %in% eval_true, TRUE, FALSE))
+
+# main source clean
+all_papers_p <- all_papers_p %>% 
+  mutate(source_main = case_when(source_main == "NA" ~ "Not applicable",
+                                 source_main == "internal-from-syllabus-agenda-policy-database" ~ "Internal: syllabus, agenda, etc.",
+                                 is.na(source_main) ~ "Unknown",
+                                 TRUE ~ source_main))
 
 all_papers_p %>% 
 ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
@@ -292,38 +319,40 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 ```
 
 
-### The distribution of ratings and predictions {-}
+## The distribution of ratings and predictions {-}
 
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
 - For each category and prediction (overall and by paper)
+```{r CI_bounds}
+
+evals_pub %>% 
+  select(matches("overall")) %>% 
+  view()
+
+```
 
 
 ::: column-body-outset
 
 
 ```{r}
-#| fig-height: 7
-wrap_text <- function(text, width) {
-  sapply(strwrap(text, width = width, simplify = FALSE), paste, collapse = "\n")
-}
-
-evals_pub$wrapped_pub_names <- wrap_text(evals_pub$paper_abbrev, width = 15)
-
+#| fig-height: 9
 
 #todo -- sort by average overall, use color and vertical spacing more
-#todo: introduce a carriage return into the paper names (workaround) to wrap these and save horizontal space
 
+pd = position_dodge(width = 0.8)
 
 # Dot plot
 g1 <- evals_pub %>% 
-  ggplot(aes(x = paper_abbrev, y = overall)) +
-  geom_point(aes(color = eval_name), stat = "identity", size = 3, shape = 1, stroke = 2) +
-  # geom_text_repel(aes(label = eval_name), 
-  #                 size = 3, 
-  #                 box.padding = unit(0.35, "lines"),
-  #                 point.padding = unit(0.3, "lines")) +
+  ggplot(aes(x = paper_abbrev, y = overall, 
+             text = paste0('Evaluator: ', eval_name,   # tooltip data
+                           '<br>Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
+  geom_point(aes(color = eval_name), 
+             stat = "identity", size = 2, shape = 18, stroke = 1, 
+             position = pd) +
+  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = eval_name), position = pd) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   labs(x = "Paper", y = "Overall score",
        title = "Overall scores of evaluated papers") +
@@ -331,9 +360,9 @@ g1 <- evals_pub %>%
   theme(text = element_text(size = 15)) +
   theme(legend.position = "none") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
-#todo -- add more vertical space between papers
 
-ggplotly(g1, tooltip = c("eval_name", "overall"))
+
+ggplotly(g1, tooltip = c("text"))
 ```
 :::
 
