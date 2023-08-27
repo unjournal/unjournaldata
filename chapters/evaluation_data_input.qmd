@@ -251,37 +251,6 @@ This is just a first-pass. There might be a more information-theoretic way of do
 
 # baseline_widths <- c(4, 8, 15, 25, 37.5)
 
-
-# # Define a function to calculate the lower and upper bounds, where given only an index
-# calc_bounds <- function(rating, confidence, lb_explicit, ub_explicit, scale=100) {
-#   # Check if confidence is NA
-#   if (is.na(confidence)) {
-#     return(c(lb_explicit, ub_explicit))  # Return explicit bounds if confidence is NA
-#   } else {
-#     baseline_width <- baseline_widths[confidence]
-#     lb <- max(rating - baseline_width, 0)
-#     ub <- min(rating + baseline_width, scale)
-#     return(c(lb, ub))
-#   }
-# }
-# 
-# # Function to calculate bounds for a single category
-# calc_category_bounds <- function(df, category, scale=100) {
-#   # Calculate bounds
-#   bounds <- mapply(calc_bounds, df[[category]], df[[paste0("conf_", category)]], df[[paste0("lb_", category)]], df[[paste0("ub_", category)]])
-#   
-#   # Convert to data frame and ensure it has the same number of rows as the input
-#   bounds_df <- as.data.frame(t(bounds))
-#   rownames(bounds_df) <- NULL
-#   
-#   # Add bounds to original data frame
-#   df[[paste0(category, "_lb_imp")]] <- bounds_df[, 1]
-#   df[[paste0(category, "_ub_imp")]] <- bounds_df[, 2]
-#   
-#   return(df)
-# }
-
-
 # Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
 
@@ -294,18 +263,8 @@ pred_cats <- c("journal_predict", "merits_journal")
 
 #JB: I don't really understand why not just hard code it in the next chapter. These are very short strings. Do you expect them to change often? If so, we can derive them from a dataframe somewhere in the future or save as a separate object. 
 
-# # Apply the function to each category
-# # DR: I don't love this looping 'edit in place' code approach, but whatever
-# for (cat in rating_cats) {
-#   evals_pub <- calc_category_bounds(evals_pub, cat, scale=100)
-# }
-# 
-# for (cat in pred_cats) {
-#   evals_pub <- calc_category_bounds(evals_pub, cat, scale=5)
-# }
 
-
-# Rewritten functions
+# JB: Rewritten functions for adding imputed ub and lb
 
 # calculate the lower and upper bounds, 
 # rating: given a rating, 
