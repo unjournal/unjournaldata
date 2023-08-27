@@ -220,11 +220,11 @@ Where people gave only confidence level 'dots', we impute CIs (confidence/credib
 
 > 5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)
 
-For 0-100 ratings, code the LB as $min(R - 4\times \frac{R}{100},0)$ and the UB as $max(R + 4\times \frac{R}{100},0)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.
+For 0-100 ratings, code the LB as $max(R - 4,0)$ and the UB as $min(R + 4,100)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.
 
 > 4 = Very*confident: 90% confidence interval +/- 8 points or less
 
-For 0-100 ratings, code the LB as $min(R - 8\times \frac{R}{100},0)$ and the UB as $max(R + 8\times \frac{R}{100},0)$, where R is the stated (middle) rating. 
+For 0-100 ratings, code the LB as $max(R - 8,0)$ and the UB as $min(R + 8,100)$, where R is the stated (middle) rating. 
 
 > 3 = Somewhat** confident: 90% confidence interval +/- 15 points or less&#x20;
 
@@ -234,7 +234,7 @@ Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.
 
 > 1 = Not** confident: (90% confidence interval +/- more than 25 points)
     
-Code LB as $min(R - 37.5\times \frac{R}{100},0)$ and the UB as $max(R + 37.5\times \frac{R}{100},0)$. 
+Code LB as $max(R - 37.5,0)$ and the UB as $min(R + 37.5,100)$. 
     
 This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings altogether.
 
@@ -246,36 +246,40 @@ This is just a first-pass. There might be a more information-theoretic way of do
 #| code-summary: "reconcile explicit bounds and stated confidence level"
 
 # Define the baseline widths for each confidence rating
-baseline_widths <- c(4, 8, 15, 25, 37.5)
+# JB: it would be good to have some more backing of whether this
+# is a valid way to translate these confidence levels into CIs
 
-# Define a function to calculate the lower and upper bounds, where given only an index
-calc_bounds <- function(rating, confidence, lb_explicit, ub_explicit, scale=100) {
-  # Check if confidence is NA
-  if (is.na(confidence)) {
-    return(c(lb_explicit, ub_explicit))  # Return explicit bounds if confidence is NA
-  } else {
-    baseline_width <- baseline_widths[confidence]
-    lb <- pmax(rating - baseline_width * rating / scale, 0)
-    ub <- pmin(rating + baseline_width * rating / scale, scale)
-    return(c(lb, ub))
-  }
-}
+# baseline_widths <- c(4, 8, 15, 25, 37.5)
 
-# Function to calculate bounds for a single category
-calc_category_bounds <- function(df, category, scale=100) {
-  # Calculate bounds
-  bounds <- mapply(calc_bounds, df[[category]], df[[paste0("conf_", category)]], df[[paste0("lb_", category)]], df[[paste0("ub_", category)]])
-  
-  # Convert to data frame and ensure it has the same number of rows as the input
-  bounds_df <- as.data.frame(t(bounds))
-  rownames(bounds_df) <- NULL
-  
-  # Add bounds to original data frame
-  df[[paste0(category, "_lb_imp")]] <- bounds_df[, 1]
-  df[[paste0(category, "_ub_imp")]] <- bounds_df[, 2]
-  
-  return(df)
-}
+
+# # Define a function to calculate the lower and upper bounds, where given only an index
+# calc_bounds <- function(rating, confidence, lb_explicit, ub_explicit, scale=100) {
+#   # Check if confidence is NA
+#   if (is.na(confidence)) {
+#     return(c(lb_explicit, ub_explicit))  # Return explicit bounds if confidence is NA
+#   } else {
+#     baseline_width <- baseline_widths[confidence]
+#     lb <- max(rating - baseline_width, 0)
+#     ub <- min(rating + baseline_width, scale)
+#     return(c(lb, ub))
+#   }
+# }
+# 
+# # Function to calculate bounds for a single category
+# calc_category_bounds <- function(df, category, scale=100) {
+#   # Calculate bounds
+#   bounds <- mapply(calc_bounds, df[[category]], df[[paste0("conf_", category)]], df[[paste0("lb_", category)]], df[[paste0("ub_", category)]])
+#   
+#   # Convert to data frame and ensure it has the same number of rows as the input
+#   bounds_df <- as.data.frame(t(bounds))
+#   rownames(bounds_df) <- NULL
+#   
+#   # Add bounds to original data frame
+#   df[[paste0(category, "_lb_imp")]] <- bounds_df[, 1]
+#   df[[paste0(category, "_ub_imp")]] <- bounds_df[, 2]
+#   
+#   return(df)
+# }
 
 
 # Lists of categories
@@ -290,15 +294,121 @@ pred_cats <- c("journal_predict", "merits_journal")
 
 #JB: I don't really understand why not just hard code it in the next chapter. These are very short strings. Do you expect them to change often? If so, we can derive them from a dataframe somewhere in the future or save as a separate object. 
 
-# Apply the function to each category
-# DR: I don't love this looping 'edit in place' code approach, but whatever
-for (cat in rating_cats) {
-  evals_pub <- calc_category_bounds(evals_pub, cat, scale=100)
+# # Apply the function to each category
+# # DR: I don't love this looping 'edit in place' code approach, but whatever
+# for (cat in rating_cats) {
+#   evals_pub <- calc_category_bounds(evals_pub, cat, scale=100)
+# }
+# 
+# for (cat in pred_cats) {
+#   evals_pub <- calc_category_bounds(evals_pub, cat, scale=5)
+# }
+
+
+# Rewritten functions
+
+# calculate the lower and upper bounds, 
+# rating: given a rating, 
+# conf: a confidence (1-5) score,
+# type: a bound type (lower, upper),
+# scale: a scale (100 is 0-100, 5 is 1-5)
+# This function is not vectorized
+calc_bounds <- function(rating, conf, type, scale) {
+  
+  if(scale == 5){
+    baseline_width = case_match(conf, 
+                                5 ~ .2, #4*5/100
+                                4 ~ .4, #8*5/100
+                                3 ~ .75, #15*5/100
+                                2 ~ 1.25, #25*5/100
+                                1 ~ 1.875, #37.5*5/100
+                                .default = NA_real_) 
+
+    upper = min(rating + baseline_width, 5)
+    lower = max(rating - baseline_width, 1)
+  }#/if(scale == 5)
+  
+  if(scale == 100){
+    
+    baseline_width = case_match(conf, 
+                                5 ~ 4, 
+                                4 ~ 8, 
+                                3 ~ 15, 
+                                2 ~ 25, 
+                                1 ~ 37.5,
+                                .default = NA_real_)
+    
+    upper = min(rating + baseline_width, 100)
+    lower = max(rating - baseline_width, 0)
+  } #/if(scale == 100)
+  
+  if(type == "lower") return(lower)
+  if(type == "upper") return(upper)
 }
 
-for (cat in pred_cats) {
-  evals_pub <- calc_category_bounds(evals_pub, cat, scale=5)
+
+# calculate or find correct lower or upper bound
+# based on rating type, and lb, ub, and conf values
+impute_bounds <- function(var_name, est, lb, ub, conf, bound_type) {
+  
+  # get scale of each variable
+  scale = if_else(var_name %in% c("journal_predict", "merits_journal"), # if variable is a prediction
+                  5, 100) #scale is 5, else scale is 100
+  # if calculating lower bound variable
+  if(bound_type == "lower") { #we are calculating a lower bound imputation
+    # 
+    calculated_bound = map_dbl(.x = est, .f = calc_bounds, conf = conf, type = bound_type, scale = scale)
+    
+    imp_bound = if_else(is.na(lb), calculated_bound, lb)
+  }
+  
+  # if calculating upper bound variable
+  if(bound_type == "upper") { #we are calculating an upper bound imputation
+    # 
+    calculated_bound = map_dbl(.x = est, .f = calc_bounds, conf = conf, type = bound_type, scale = scale)
+    imp_bound = if_else(is.na(ub), calculated_bound, ub)
+  }
+  
+  return(imp_bound)
 }
+
+# apply functions to evals_pub
+# JB: I had to do a lot of gymnastics to make this data frame
+# right for applying the functions, then turn it back into
+# the data structure we are currently using I didn't want to deal
+# with how changing the data input would break the rest of the
+# code But we should prioritize saving this data frame in a long format
+# so there isn't data in the variable names (i.e., each row should at least 
+# be one type of rating, not one article). 
+
+evals_pub %>% 
+  pivot_longer(cols = -c(id, crucial_rsx, paper_abbrev, eval_name, 
+                         cat_1,cat_2, cat_3,source_main,author_agreement),
+               names_pattern = "(lb_|ub_|conf_)?(.+)",
+               names_to = c("value_type", "rating_type")) %>% # one line per rating type
+  mutate(value_type = if_else(value_type == "", "est_", value_type)) %>% #add main rating id
+  pivot_wider(names_from = value_type, 
+              values_from = value) %>%
+  rowwise() %>% # apply function to each row
+  mutate(lb_imp_ = impute_bounds(var_name = rating_type,
+                                   est = est_,
+                                   lb = lb_, ub = ub_, conf = conf_,
+                                   bound_type = "lower")) %>% 
+  mutate(ub_imp_ = impute_bounds(var_name = rating_type,
+                                   est = est_,
+                                   lb = lb_, ub = ub_, conf = conf_,
+                                   bound_type = "upper")) %>% 
+  pivot_wider(names_from = rating_type, # take the dataframe back to old format
+              values_from = c(est_, ub_, lb_, conf_, lb_imp_, ub_imp_),
+              names_sep = "") %>% 
+  dplyr::rename_with(.cols = matches("^[ul]b_imp"),
+                     .fn = gsub,
+                     pattern = "(ub_imp|lb_imp)_(.+)", 
+                     replacement = "\\2_\\1") %>% 
+  dplyr::rename_with(.cols = starts_with("est_"),
+                     .fn = gsub,
+                     pattern = "est_(.+)",
+                     replacement = "\\1") -> evals_pub
 
 ```
 
