@@ -11,6 +11,7 @@ book:
     - index.qmd
     - chapters/evaluation_data_input.qmd
     - chapters/evaluation_data_analysis.qmd
+    #- chapters/aggregation.qmd
       #- references.qmd
   reader-mode: true
   page-navigation: true
