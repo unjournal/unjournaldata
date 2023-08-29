@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.1.113">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>The Unjournal evaluations: data and analysis - 2&nbsp; Evaluation data: description, exploration, checks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.column{flex: 1;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -189,21 +189,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li>
 <a href="#the-distribution-of-ratings-and-predictions" id="toc-the-distribution-of-ratings-and-predictions" class="nav-link" data-scroll-target="#the-distribution-of-ratings-and-predictions">The distribution of ratings and predictions</a>
   <ul class="collapse">
-<li><a href="#simple-rating-aggregation" id="toc-simple-rating-aggregation" class="nav-link" data-scroll-target="#simple-rating-aggregation"><span class="toc-section-number">2.2.1</span>  Simple rating aggregation</a></li>
+<li><a href="#simple-rating-aggregation" id="toc-simple-rating-aggregation" class="nav-link" data-scroll-target="#simple-rating-aggregation">Simple rating aggregation</a></li>
+  <li><a href="#sources-of-variation" id="toc-sources-of-variation" class="nav-link" data-scroll-target="#sources-of-variation">Sources of variation</a></li>
   <li><a href="#relationship-among-the-ratings-and-predictions" id="toc-relationship-among-the-ratings-and-predictions" class="nav-link" data-scroll-target="#relationship-among-the-ratings-and-predictions">Relationship among the ratings (and predictions)</a></li>
   </ul>
 </li>
-  <li><a href="#aggregation-of-expert-opinion-modeling" id="toc-aggregation-of-expert-opinion-modeling" class="nav-link" data-scroll-target="#aggregation-of-expert-opinion-modeling"><span class="toc-section-number">2.3</span>  Aggregation of expert opinion (modeling)</a></li>
-  <li>
-<a href="#notes-on-sources-and-approaches" id="toc-notes-on-sources-and-approaches" class="nav-link" data-scroll-target="#notes-on-sources-and-approaches"><span class="toc-section-number">2.4</span>  Notes on sources and approaches</a>
-  <ul class="collapse">
-<li><a href="#explicit-modeling-of-research-quality-for-use-in-prizes-etc." id="toc-explicit-modeling-of-research-quality-for-use-in-prizes-etc." class="nav-link" data-scroll-target="#explicit-modeling-of-research-quality-for-use-in-prizes-etc.">Explicit modeling of ‘research quality’ (for use in prizes, etc.)</a></li>
-  </ul>
-</li>
-  <li><a href="#inter-rater-reliability" id="toc-inter-rater-reliability" class="nav-link" data-scroll-target="#inter-rater-reliability"><span class="toc-section-number">2.5</span>  Inter-rater reliability</a></li>
-  <li><a href="#decomposing-variation-dimension-reduction-simple-linear-models" id="toc-decomposing-variation-dimension-reduction-simple-linear-models" class="nav-link" data-scroll-target="#decomposing-variation-dimension-reduction-simple-linear-models"><span class="toc-section-number">2.6</span>  Decomposing variation, dimension reduction, simple linear models</a></li>
-  <li><a href="#later-possiblities" id="toc-later-possiblities" class="nav-link" data-scroll-target="#later-possiblities"><span class="toc-section-number">2.7</span>  Later possiblities</a></li>
-  <li><a href="#scoping-our-future-coverage" id="toc-scoping-our-future-coverage" class="nav-link" data-scroll-target="#scoping-our-future-coverage"><span class="toc-section-number">2.8</span>  Scoping our future coverage</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/daaronr/unjournaldata/edit/main/chapters/evaluation_data_analysis.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/daaronr/unjournaldata/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -241,7 +231,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="co"># others ----</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span> <span class="co"># A Simpler Way to Find Your Files</span></span>
 <span><span class="co"># renv::install(packages = "metamelb-repliCATS/aggreCAT")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://replicats.research.unimelb.edu.au/">aggreCAT</a></span><span class="op">)</span></span>
+<span><span class="co">#library(aggreCAT)</span></span>
 <span></span>
 <span><span class="co"># Make sure select is always the dplyr version</span></span>
 <span><span class="va">select</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span> </span>
@@ -286,64 +276,131 @@ Note on data input (10-Aug-23)
 <p>In this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal’s coverage.</p>
 <p>In the interactive table below we give some key attributes of the papers and the evaluators.</p>
 <div class="column-body-outset">
-<!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
-<section id="data-tables" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="data-tables">Data Tables</h4>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Need to find a way to control column width but it seems to be a problem with DT</span></span>
-<span><span class="co"># https://github.com/rstudio/DT/issues/29</span></span>
-<span></span>
-<span><span class="co"># we didn't seem to be using all_evals_dt so I removed it to increase readability</span></span>
-<span></span>
-<span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub_df_overview</span> <span class="op">&lt;-</span> <span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">crucial_rsx</span>, <span class="va">eval_name</span>, <span class="va">cat_1</span>, <span class="va">cat_2</span>, <span class="va">source_main</span>, <span class="va">author_agreement</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"ub_|lb_|conf"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"==========Research=========="</span> <span class="op">=</span> <span class="st">"crucial_rsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"ub_|lb_|conf"</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">evals_pub_df_overview</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Paper Abbreviation"</span> <span class="op">=</span> <span class="va">paper_abbrev</span>,</span>
+<span>    <span class="st">"Paper name"</span> <span class="op">=</span> <span class="va">crucial_rsx</span>,</span>
+<span>    <span class="st">"Evaluator Name"</span> <span class="op">=</span> <span class="va">eval_name</span>,</span>
+<span>    <span class="st">"Main category"</span> <span class="op">=</span> <span class="va">cat_1</span>,</span>
+<span>    <span class="st">"Category 2"</span> <span class="op">=</span> <span class="va">cat_2</span>,</span>
+<span>    <span class="st">"Main source"</span> <span class="op">=</span> <span class="va">source_main</span>,</span>
+<span>    <span class="st">"Author contact"</span> <span class="op">=</span> <span class="va">author_agreement</span>,</span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span></span>
 <span>    caption <span class="op">=</span> <span class="st">"Evaluations (confidence bounds not shown)"</span>, </span>
 <span>    filter <span class="op">=</span> <span class="st">'top'</span>,</span>
 <span>    rownames<span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>      <span class="co">#scrollX=TRUE,</span></span>
-<span>      <span class="co">#autoWidth = TRUE,</span></span>
-<span>      <span class="co">#columnDefs = list(list(list(targets = 2, visible = T, width = '300px'))),</span></span>
-<span>      pageLength <span class="op">=</span> <span class="fl">5</span></span>
-<span>    <span class="op">)</span></span>
+<span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>      columnDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">'150px'</span>, targets <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/DT/man/formatCurrency.html">formatStyle</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">evals_pub_df_overview</span><span class="op">)</span>, </span>
+<span>              textAlign <span class="op">=</span> <span class="st">'center'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/formatCurrency.html">formatStyle</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Paper name"</span>,</span>
+<span>    fontSize <span class="op">=</span> <span class="st">'10px'</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-008b57a74b9dc2f2a9cf" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-008b57a74b9dc2f2a9cf">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Evaluations (confidence bounds not shown)<\/caption>","data":[["AI and econ. growth","AI and econ. growth","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Banning wildlife trade can boost demand","Banning wildlife trade can boost demand","CBT Human K, Ghana","CBT Human K, Ghana","Celeb. Twitter promo, Indonesia vacc.","Celeb. Twitter promo, Indonesia vacc.","Citizen participation in envt. gov. China","Citizen participation in envt. gov. China","Env. fx of prod.: ecological obs","Env. fx of prod.: ecological obs","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","Nonprofit Govc.: Randomized healthcare DRC","Well-being: Cash vs. psychotherapy","Well-being: Cash vs. psychotherapy"],["Aghion, P., Jones, B.F.,   and Jones, C.I., 2017.  Artificial Intelligence and Economic Growth ","Aghion, P., Jones, B.F.,   and Jones, C.I., 2017.  Artificial Intelligence and Economic Growth","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Banning wildlife trade can boost demand for unregulated threatened species","Banning wildlife trade can boost demand for unregulated threatened species","Mental Health Therapy as a Core Strategy for Increasing Human Capital: Evidence from Ghana (renamed \"Cognitive Behavioral Therapy among Ghana's Rural Poor Is Effective Regardless of Baseline Mental Distress\")","Mental Health Therapy as a Core Strategy for Increasing Human Capital: Evidence from Ghana (renamed \"Cognitive Behavioral Therapy among Ghana's Rural Poor Is Effective Regardless of Baseline Mental Distress\")","When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia (Alatas et al, 2019/2021)","When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia (Alatas et al, 2019/2021)","Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China, The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China, The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","\"The Environmental Effects of Economic Production: Evidence from Ecological Observations\n (previous title: Economic Production and Biodiversity in the United States)\"`","\"The Environmental Effects of Economic Production: Evidence from Ecological Observations\n (previous title: Economic Production and Biodiversity in the United States)\"","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC","The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being"],["Phil Trammel","Seth Benzell","Dan Tortorice","David Manheim","Joel Tan","Anonymous_5","Liew Jia Huan","Anonymous_14","Anonymous_20","Anirugh Tagat","Anonymous_1","Anonymous_7","Robert Kubinec","Anonymous_16","Elias Cisneros","Alex Bates","Anca Hanea","Scott Janzwood","Wayne Aaron Sandholtz","Anonymous_17","Hannah Metzler"],["macroeconomics","macroeconomics","policy","policy","policy","conservation","conservation","GH&amp;D","GH&amp;D","GH&amp;D","GH&amp;D","Environment","Environment","Environment","Environment","long-term-relevant ","long-term-relevant ","long-term-relevant ","GH&amp;D","GH&amp;D","GH&amp;D"],["Artificial intelligence","Artificial intelligence","economics","economics","economics","biodiversity","biodiversity",null,null,"biorisk","biorisk",null,null,null,null,"quantitative","quantitative","quantitative",null,null,null],["internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","submitted","submitted","internal-NBER","internal-NBER","internal-NBER","internal-NBER","suggested - externally","suggested - externally","internal-NBER","internal-NBER","submitted","submitted","submitted","internal-NBER","internal-NBER","internal-NBER"],["Agreed","Agreed","Agreed","Agreed","Agreed","Agreed","Agreed","Emailed","Emailed","Emailed","Emailed","Emailed","Emailed","Agreed","Agreed","Agreed","Agreed","Agreed","Follow-up email sent","Acknowledged","Acknowledged"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>paper_abbrev<\/th>\n      <th>==========Research==========<\/th>\n      <th>eval_name<\/th>\n      <th>cat_1<\/th>\n      <th>cat_2<\/th>\n      <th>source_main<\/th>\n      <th>author_agreement<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-33b4ec17ec173acbf13d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-33b4ec17ec173acbf13d">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Evaluations (confidence bounds not shown)<\/caption>","data":[["AI and econ. growth","AI and econ. growth","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Banning wildlife trade can boost demand","Banning wildlife trade can boost demand","CBT Human K, Ghana","CBT Human K, Ghana","Celeb. Twitter promo, Indonesia vacc.","Celeb. Twitter promo, Indonesia vacc.","Citizen participation in envt. gov. China","Citizen participation in envt. gov. China","Env. fx of prod.: ecological obs","Env. fx of prod.: ecological obs","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","Nonprofit Govc.: Randomized healthcare DRC","Well-being: Cash vs. psychotherapy","Well-being: Cash vs. psychotherapy"],["Aghion, P., Jones, B.F.,   and Jones, C.I., 2017.  Artificial Intelligence and Economic Growth ","Aghion, P., Jones, B.F.,   and Jones, C.I., 2017.  Artificial Intelligence and Economic Growth","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Kremer, M., Levin, J. and Snyder, C.M., 2020, May. Advance Market Commitments: Insights from Theory and Experience. In AEA Papers and Proceedings (Vol. 110, pp. 269-73).","Banning wildlife trade can boost demand for unregulated threatened species","Banning wildlife trade can boost demand for unregulated threatened species","Mental Health Therapy as a Core Strategy for Increasing Human Capital: Evidence from Ghana (renamed \"Cognitive Behavioral Therapy among Ghana's Rural Poor Is Effective Regardless of Baseline Mental Distress\")","Mental Health Therapy as a Core Strategy for Increasing Human Capital: Evidence from Ghana (renamed \"Cognitive Behavioral Therapy among Ghana's Rural Poor Is Effective Regardless of Baseline Mental Distress\")","When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia (Alatas et al, 2019/2021)","When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia (Alatas et al, 2019/2021)","Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China, The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China, The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","\"The Environmental Effects of Economic Production: Evidence from Ecological Observations\n (previous title: Economic Production and Biodiversity in the United States)\"`","\"The Environmental Effects of Economic Production: Evidence from Ecological Observations\n (previous title: Economic Production and Biodiversity in the United States)\"","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety (Denkenberger et al)","The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC","The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being","The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being"],["Phil Trammel","Seth Benzell","Dan Tortorice","David Manheim","Joel Tan","Anonymous_5","Liew Jia Huan","Anonymous_14","Anonymous_20","Anirugh Tagat","Anonymous_1","Anonymous_7","Robert Kubinec","Anonymous_16","Elias Cisneros","Alex Bates","Anca Hanea","Scott Janzwood","Wayne Aaron Sandholtz","Anonymous_17","Hannah Metzler"],["macroeconomics","macroeconomics","policy","policy","policy","conservation","conservation","GH&amp;D","GH&amp;D","GH&amp;D","GH&amp;D","Environment","Environment","Environment","Environment","long-term-relevant ","long-term-relevant ","long-term-relevant ","GH&amp;D","GH&amp;D","GH&amp;D"],["Artificial intelligence","Artificial intelligence","economics","economics","economics","biodiversity","biodiversity",null,null,"biorisk","biorisk",null,null,null,null,"quantitative","quantitative","quantitative",null,null,null],["internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","internal-from-syllabus-agenda-policy-database","submitted","submitted","internal-NBER","internal-NBER","internal-NBER","internal-NBER","suggested - externally","suggested - externally","internal-NBER","internal-NBER","submitted","submitted","submitted","internal-NBER","internal-NBER","internal-NBER"],["Agreed","Agreed","Agreed","Agreed","Agreed","Agreed","Agreed","Emailed","Emailed","Emailed","Emailed","Acknowledged","Acknowledged","Agreed","Agreed","Agreed","Agreed","Agreed","Emailed","Acknowledged","Acknowledged"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Paper Abbreviation<\/th>\n      <th>Paper name<\/th>\n      <th>Evaluator Name<\/th>\n      <th>Main category<\/th>\n      <th>Category 2<\/th>\n      <th>Main source<\/th>\n      <th>Author contact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"width":"150px","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100],"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'text-align':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'text-align':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'text-align':'center'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'text-align':'center'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'10px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">evals_pub_df_overview</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
+<section id="evaluation-metrics-ratings" class="level4 unnumbered page-columns page-full"><h4 class="unnumbered anchored" data-anchor-id="evaluation-metrics-ratings">Evaluation metrics (ratings)</h4>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rename_dtstuff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Paper Abbreviation"</span> <span class="op">=</span> <span class="va">paper_abbrev</span>,</span>
+<span>    <span class="st">"Evaluator Name"</span> <span class="op">=</span> <span class="va">eval_name</span>,</span>
+<span>    <span class="st">"Advancing knowledge"</span> <span class="op">=</span> <span class="va">adv_knowledge</span>,</span>
+<span>    <span class="st">"Methods"</span> <span class="op">=</span> <span class="va">methods</span>,</span>
+<span>    <span class="st">"Logic &amp; comm."</span> <span class="op">=</span> <span class="va">logic_comms</span>,</span>
+<span>    <span class="st">"Real world engagement"</span> <span class="op">=</span> <span class="va">real_world</span>,</span>
+<span>    <span class="st">"Global priorities relevance"</span> <span class="op">=</span> <span class="va">gp_relevance</span>,</span>
+<span>    <span class="st">"Open Science"</span> <span class="op">=</span> <span class="va">open_sci</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="column-body-outset">
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Need to find a way to control column width but it seems to be a problem with DT</span></span>
+<span><span class="co"># https://github.com/rstudio/DT/issues/29</span></span>
+<span></span>
+<span><span class="co"># we didn't seem to be using all_evals_dt so I removed it to increase readability</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">evals_pub_df</span> <span class="op">&lt;-</span> <span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="co"># Arrange data</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="va">overall</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  </span>
+<span>  <span class="co"># Select and rename columns</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">rating_cats</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span> <span class="va">rename_dtstuff</span> </span>
+<span></span>
+<span></span>
+<span><span class="op">(</span></span>
+<span> <span class="va">evals_pub_dt</span> <span class="op">&lt;-</span> <span class="va">evals_pub_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  </span>
+<span>  <span class="co"># Convert to a datatable and apply styling</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span></span>
+<span>    caption <span class="op">=</span> <span class="st">"Evaluations and predictions (confidence bounds not shown)"</span>, </span>
+<span>    filter <span class="op">=</span> <span class="st">'top'</span>,</span>
+<span>    rownames <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>            columnDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">'150px'</span>, targets <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/DT/man/formatCurrency.html">formatStyle</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">evals_pub_df</span><span class="op">)</span>, </span>
+<span>              textAlign <span class="op">=</span> <span class="st">'center'</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-830f1315d7924c8ffe7e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-830f1315d7924c8ffe7e">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"40\" data-max=\"92\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"25\" data-max=\"97\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"85\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Evaluations and predictions (confidence bounds not shown)<\/caption>","data":[["AI and econ. growth","AI and econ. growth","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Banning wildlife trade can boost demand","Banning wildlife trade can boost demand","CBT Human K, Ghana","CBT Human K, Ghana","Celeb. Twitter promo, Indonesia vacc.","Celeb. Twitter promo, Indonesia vacc.","Citizen participation in envt. gov. China","Citizen participation in envt. gov. China","Env. fx of prod.: ecological obs","Env. fx of prod.: ecological obs","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","Nonprofit Govc.: Randomized healthcare DRC","Well-being: Cash vs. psychotherapy","Well-being: Cash vs. psychotherapy"],["Phil Trammel","Seth Benzell","Dan Tortorice","David Manheim","Joel Tan","Anonymous_5","Liew Jia Huan","Anonymous_14","Anonymous_20","Anirugh Tagat","Anonymous_1","Anonymous_7","Robert Kubinec","Anonymous_16","Elias Cisneros","Alex Bates","Anca Hanea","Scott Janzwood","Wayne Aaron Sandholtz","Anonymous_17","Hannah Metzler"],[92,80,80,80,79,75,75,75,75,85,62,80,90,70,88,40,80,65,65,90,75],[97,75,90,25,90,70,80,60,65,90,55,76,90,70,90,30,80,70,70,90,70],[70,80,80,95,70,80,50,90,60,80,55,72,80,70,75,50,70,null,60,90,90],[45,70,80,75,70,70,70,70,75,85,70,67,80,75,80,60,85,80,55,80,75],[null,null,null,null,90,90,90,50,75,100,55,91,90,60,95,null,null,null,55,100,75],[92,90,95,60,90,80,65,50,75,100,70,92,90,80,95,90,85,80,80,100,90],[80,95,90,null,50,70,50,90,50,80,45,48,70,65,90,70,73,null,45,70,50]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Paper Abbreviation<\/th>\n      <th>Evaluator Name<\/th>\n      <th>overall<\/th>\n      <th>Advancing knowledge<\/th>\n      <th>Methods<\/th>\n      <th>Logic &amp; comm.<\/th>\n      <th>Real world engagement<\/th>\n      <th>Global priorities relevance<\/th>\n      <th>Open Science<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"width":"150px","targets":0},{"className":"dt-right","targets":[2,3,4,5,6,7,8]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100],"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'text-align':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'text-align':'center'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'text-align':'center'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'text-align':'center'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'text-align':'center'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'text-align':'center'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'text-align':'center'});\nvar value=data[8]; $(this.api().cell(row, 8).node()).css({'text-align':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+</div>
 </div>
 </div>
 <p><br></p>
 <p>Next, a preview of the evaluations, focusing on the ‘middle ratings and predictions’:</p>
+<div class="column-body-outset">
 <div class="cell">
-<details><summary>Data datable (all shareable relevant data)</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># we didn't seem to be using all_evals_dt so I removed it to increase readability</span></span>
+<details><summary>Data datable (all shareable relevant data)</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># we didn't seem to be using all_evals_dt so I removed it to increase readability</span></span>
 <span></span>
 <span></span>
 <span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="va">overall</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">rating_cats</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">rename_dtstuff</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  </span>
 <span>  <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span></span>
 <span>    caption <span class="op">=</span> <span class="st">"Evaluations and predictions (confidence bounds not shown)"</span>, </span>
 <span>    filter <span class="op">=</span> <span class="st">'top'</span>,</span>
 <span>    rownames<span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>                  columnDefs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">'150px'</span>, targets <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2c9003b2cab3b3fbe0f2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2c9003b2cab3b3fbe0f2">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"40\" data-max=\"92\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"25\" data-max=\"97\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"85\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Evaluations and predictions (confidence bounds not shown)<\/caption>","data":[["AI and econ. growth","AI and econ. growth","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Banning wildlife trade can boost demand","Banning wildlife trade can boost demand","CBT Human K, Ghana","CBT Human K, Ghana","Celeb. Twitter promo, Indonesia vacc.","Celeb. Twitter promo, Indonesia vacc.","Citizen participation in envt. gov. China","Citizen participation in envt. gov. China","Env. fx of prod.: ecological obs","Env. fx of prod.: ecological obs","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","Nonprofit Govc.: Randomized healthcare DRC","Well-being: Cash vs. psychotherapy","Well-being: Cash vs. psychotherapy"],["Phil Trammel","Seth Benzell","Dan Tortorice","David Manheim","Joel Tan","Anonymous_5","Liew Jia Huan","Anonymous_14","Anonymous_20","Anirugh Tagat","Anonymous_1","Anonymous_7","Robert Kubinec","Anonymous_16","Elias Cisneros","Alex Bates","Anca Hanea","Scott Janzwood","Wayne Aaron Sandholtz","Anonymous_17","Hannah Metzler"],[92,80,80,80,79,75,75,75,75,85,62,80,90,70,88,40,80,65,65,90,75],[97,75,90,25,90,70,80,60,65,90,55,76,90,70,90,30,80,70,70,90,70],[70,80,80,95,70,80,50,90,60,80,55,72,80,70,75,50,70,null,60,90,90],[45,70,80,75,70,70,70,70,75,85,70,67,80,75,80,60,85,80,55,80,75],[null,null,null,null,90,90,90,50,75,100,55,91,90,60,95,null,null,null,55,100,75],[92,90,95,60,90,80,65,50,75,100,70,92,90,80,95,90,85,80,80,100,90],[80,95,90,null,50,70,50,90,50,80,45,48,70,65,90,70,73,null,45,70,50]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>paper_abbrev<\/th>\n      <th>eval_name<\/th>\n      <th>overall<\/th>\n      <th>adv_knowledge<\/th>\n      <th>methods<\/th>\n      <th>logic_comms<\/th>\n      <th>real_world<\/th>\n      <th>gp_relevance<\/th>\n      <th>open_sci<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-baa94619eeb29db6354c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-baa94619eeb29db6354c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"40\" data-max=\"92\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"25\" data-max=\"97\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"85\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"50\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"45\" data-max=\"95\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Evaluations and predictions (confidence bounds not shown)<\/caption>","data":[["AI and econ. growth","AI and econ. growth","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Advance market commit. (vaccines)","Banning wildlife trade can boost demand","Banning wildlife trade can boost demand","CBT Human K, Ghana","CBT Human K, Ghana","Celeb. Twitter promo, Indonesia vacc.","Celeb. Twitter promo, Indonesia vacc.","Citizen participation in envt. gov. China","Citizen participation in envt. gov. China","Env. fx of prod.: ecological obs","Env. fx of prod.: ecological obs","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","LT CEA: Resilient foods vs. AGI safety","Nonprofit Govc.: Randomized healthcare DRC","Well-being: Cash vs. psychotherapy","Well-being: Cash vs. psychotherapy"],["Phil Trammel","Seth Benzell","Dan Tortorice","David Manheim","Joel Tan","Anonymous_5","Liew Jia Huan","Anonymous_14","Anonymous_20","Anirugh Tagat","Anonymous_1","Anonymous_7","Robert Kubinec","Anonymous_16","Elias Cisneros","Alex Bates","Anca Hanea","Scott Janzwood","Wayne Aaron Sandholtz","Anonymous_17","Hannah Metzler"],[92,80,80,80,79,75,75,75,75,85,62,80,90,70,88,40,80,65,65,90,75],[97,75,90,25,90,70,80,60,65,90,55,76,90,70,90,30,80,70,70,90,70],[70,80,80,95,70,80,50,90,60,80,55,72,80,70,75,50,70,null,60,90,90],[45,70,80,75,70,70,70,70,75,85,70,67,80,75,80,60,85,80,55,80,75],[null,null,null,null,90,90,90,50,75,100,55,91,90,60,95,null,null,null,55,100,75],[92,90,95,60,90,80,65,50,75,100,70,92,90,80,95,90,85,80,80,100,90],[80,95,90,null,50,70,50,90,50,80,45,48,70,65,90,70,73,null,45,70,50]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Paper Abbreviation<\/th>\n      <th>Evaluator Name<\/th>\n      <th>overall<\/th>\n      <th>Advancing knowledge<\/th>\n      <th>Methods<\/th>\n      <th>Logic &amp; comm.<\/th>\n      <th>Real world engagement<\/th>\n      <th>Global priorities relevance<\/th>\n      <th>Open Science<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"width":"150px","targets":0},{"className":"dt-right","targets":[2,3,4,5,6,7,8]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p><br></p>
+</div>
+<p>&nbsp;</p>
 <!-- Todo -- Present these, including bounds, in a useful way -->
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># we did not seem to be using all_evals_dt_ci so I removed it to improve readability</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># we did not seem to be using all_evals_dt_ci so I removed it to improve readability</span></span>
 <span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="va">conf_overall</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">rating_cats</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"ub_imp|lb_imp"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">rename_dtstuff</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span></span>
 <span>    caption <span class="op">=</span> <span class="st">"Evaluations and (imputed*) confidence bounds)"</span>, </span>
 <span>    filter <span class="op">=</span> <span class="st">'top'</span>,</span>
@@ -352,8 +409,7 @@ Note on data input (10-Aug-23)
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-</div>
+<p>:::</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -381,10 +437,10 @@ Next consider…
 </div>
 </div>
 </div>
-<section id="paper-selection" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="paper-selection">Paper selection</h4>
+</section><section id="paper-selection" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="paper-selection">Paper selection</h4>
 <p>The Sankey diagram below starts with the papers we prioritized for likely <em>Unjournal</em> evaluation:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#Add in the 3 different evaluation input sources</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#Add in the 3 different evaluation input sources</span></span>
 <span><span class="co">#update to be automated rather than hard-coded - to look at David's work here</span></span>
 <span></span>
 <span><span class="va">papers_considered</span> <span class="op">&lt;-</span> <span class="va">all_papers_p</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -447,14 +503,14 @@ Next consider…
 <span></span>
 <span><span class="va">fig</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2f796daebc6117494aa3" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-2f796daebc6117494aa3">{"x":{"visdat":{"139721abc5c4a":["function () ","plotlyVisDat"]},"cur_data":"139721abc5c4a","attrs":{"139721abc5c4a":{"orientation":"h","node":{"label":["Prioritized","Evaluating","Complete","In progress","Still in consideration","De-prioritized"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[11,10,1,22,1]},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sankey"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Unjournal paper funnel","font":{"size":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"orientation":"h","node":{"label":["Prioritized","Evaluating","Complete","In progress","Still in consideration","De-prioritized"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[11,10,1,22,1]},"type":"sankey","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-081ca1c293ccc690f6a5" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-081ca1c293ccc690f6a5">{"x":{"visdat":{"fdeb2f1ca90f":["function () ","plotlyVisDat"]},"cur_data":"fdeb2f1ca90f","attrs":{"fdeb2f1ca90f":{"orientation":"h","node":{"label":["Prioritized","Evaluating","Complete","In progress","Still in consideration","De-prioritized"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[11,10,1,22,1]},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sankey"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Unjournal paper funnel","font":{"size":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"orientation":"h","node":{"label":["Prioritized","Evaluating","Complete","In progress","Still in consideration","De-prioritized"],"color":["orange","green","green","orange","orange","red"],"pad":15,"thickness":20,"line":{"color":"black","width":0.5}},"link":{"source":[0,1,1,0,0],"target":[1,2,3,4,5],"value":[11,10,1,22,1]},"type":"sankey","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Todo: <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 </section><section id="paper-categories" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="paper-categories">Paper categories</h4>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"cat_"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"cat_"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"CatNum"</span>, values_to <span class="op">=</span> <span class="st">"Category"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">CatNum</span>, <span class="va">Category</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -478,7 +534,7 @@ Next consider…
 </div>
 </section><section id="paper-source" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="paper-source">Paper source</h4>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Bar plot</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Bar plot</span></span>
 <span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>source_main <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">source_main</span>, </span>
@@ -496,7 +552,9 @@ Next consider…
 </div>
 </div>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># JB: Most of these should probably be cleaned in data storage</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># JB: Most of these should probably be cleaned in data storage</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>  <span class="co"># for color palettes</span></span>
 <span></span>
 <span><span class="co"># paper statuses that are considered "being evaluated"</span></span>
 <span><span class="va">eval_true</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"published"</span>, </span>
@@ -535,44 +593,57 @@ Next consider…
 <li>For each category and prediction (overall and by paper)</li>
 </ul>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"overall"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/view.html">view</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="column-body-outset">
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#todo -- sort by average overall, use color and vertical spacing more</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#todo -- sort by average overall, use color and vertical spacing more</span></span>
 <span></span>
 <span><span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Dot plot</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate a color palette with more colors</span></span>
+<span><span class="va">color_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">evals_pub</span><span class="op">$</span><span class="va">paper_abbrev</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">color_palette</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">brewer.pal</a></span><span class="op">(</span><span class="fl">8</span>, <span class="st">"Set1"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="va">color_count</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Dot plot</span></span>
 <span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">paper_abbrev</span>, y <span class="op">=</span> <span class="va">overall</span>, </span>
 <span>             text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'Evaluator: '</span>, <span class="va">eval_name</span>,   <span class="co"># tooltip data</span></span>
 <span>                           <span class="st">'&lt;br&gt;Rating [CI]: '</span>, <span class="va">overall</span>, <span class="st">" ["</span>, <span class="va">overall_lb_imp</span>, <span class="st">", "</span>, <span class="va">overall_ub_imp</span>, <span class="st">"]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">eval_name</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">paper_abbrev</span><span class="op">)</span>, </span>
 <span>             stat <span class="op">=</span> <span class="st">"identity"</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">18</span>, stroke <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>             position <span class="op">=</span> <span class="va">pd</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_linerange</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">overall_lb_imp</span>, ymax <span class="op">=</span> <span class="va">overall_ub_imp</span>, color <span class="op">=</span> <span class="va">eval_name</span><span class="op">)</span>, position <span class="op">=</span> <span class="va">pd</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_linerange</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">overall_lb_imp</span>, ymax <span class="op">=</span> <span class="va">overall_ub_imp</span>, color <span class="op">=</span> <span class="va">paper_abbrev</span><span class="op">)</span>, </span>
+<span>                 position <span class="op">=</span> <span class="va">pd</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">evals_pub</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">eval_name</span>, <span class="st">"Anonymous"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"anon."</span><span class="op">)</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># flipping the coordinates to have categories on y-axis (on the left)</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Paper"</span>, y <span class="op">=</span> <span class="st">"Overall score"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Overall scores of evaluated papers"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">color_palette</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="va">g1</span>, tooltip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"text"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0ef138f7777925a805c0" style="width:100%;height:835px;"></div>
-<script type="application/json" data-for="htmlwidget-0ef138f7777925a805c0">{"x":{"data":[{"x":[40],"y":[7.7333333333333334],"text":"Evaluator: Alex Bates<br>Rating [CI]: 40 [20, 60]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"Alex Bates","legendgroup":"Alex Bates","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[20],"arrayminus":[20],"type":"data","width":0,"symmetric":false,"color":"rgba(248,118,109,1)"},"frame":null},{"x":[80],"y":[8],"text":"Evaluator: Anca Hanea<br>Rating [CI]: 80 [60, 90]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(235,131,53,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(235,131,53,1)"}},"hoveron":"points","name":"Anca Hanea","legendgroup":"Anca Hanea","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10],"arrayminus":[20],"type":"data","width":0,"symmetric":false,"color":"rgba(235,131,53,1)"},"frame":null},{"x":[85],"y":[4.7999999999999998],"text":"Evaluator: Anirugh Tagat<br>Rating [CI]: 85 [77, 93]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(218,143,0,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(218,143,0,1)"}},"hoveron":"points","name":"Anirugh Tagat","legendgroup":"Anirugh Tagat","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[8],"arrayminus":[8],"type":"data","width":0,"symmetric":false,"color":"rgba(218,143,0,1)"},"frame":null},{"x":[62],"y":[5.2000000000000002],"text":"Evaluator: Anonymous_1<br>Rating [CI]: 62 [47, 77]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(196,154,0,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(196,154,0,1)"}},"hoveron":"points","name":"Anonymous_1","legendgroup":"Anonymous_1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15],"arrayminus":[15],"type":"data","width":0,"symmetric":false,"color":"rgba(196,154,0,1)"},"frame":null},{"x":[75],"y":[3.7999999999999998],"text":"Evaluator: Anonymous_14<br>Rating [CI]: 75 [70, 84]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(169,164,0,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(169,164,0,1)"}},"hoveron":"points","name":"Anonymous_14","legendgroup":"Anonymous_14","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[9],"arrayminus":[5],"type":"data","width":0,"symmetric":false,"color":"rgba(169,164,0,1)"},"frame":null},{"x":[70],"y":[6.7999999999999998],"text":"Evaluator: Anonymous_16<br>Rating [CI]: 70 [55, 85]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(134,172,0,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(134,172,0,1)"}},"hoveron":"points","name":"Anonymous_16","legendgroup":"Anonymous_16","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15],"arrayminus":[15],"type":"data","width":0,"symmetric":false,"color":"rgba(134,172,0,1)"},"frame":null},{"x":[90],"y":[9.8000000000000007],"text":"Evaluator: Anonymous_17<br>Rating [CI]: 90 [75, 100]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(83,180,0,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(83,180,0,1)"}},"hoveron":"points","name":"Anonymous_17","legendgroup":"Anonymous_17","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10],"arrayminus":[15],"type":"data","width":0,"symmetric":false,"color":"rgba(83,180,0,1)"},"frame":null},{"x":[75],"y":[4.2000000000000002],"text":"Evaluator: Anonymous_20<br>Rating [CI]: 75 [67, 83]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"Anonymous_20","legendgroup":"Anonymous_20","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[8],"arrayminus":[8],"type":"data","width":0,"symmetric":false,"color":"rgba(0,186,56,1)"},"frame":null},{"x":[75],"y":[2.7999999999999998],"text":"Evaluator: Anonymous_5<br>Rating [CI]: 75 [NA, NA]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,190,109,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,190,109,1)"}},"hoveron":"points","name":"Anonymous_5","legendgroup":"Anonymous_5","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[null],"arrayminus":[null],"type":"data","width":0,"symmetric":false,"color":"rgba(0,190,109,1)"},"frame":null},{"x":[80],"y":[5.7999999999999998],"text":"Evaluator: Anonymous_7<br>Rating [CI]: 80 [71, 86]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,192,148,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,192,148,1)"}},"hoveron":"points","name":"Anonymous_7","legendgroup":"Anonymous_7","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[6],"arrayminus":[9],"type":"data","width":0,"symmetric":false,"color":"rgba(0,192,148,1)"},"frame":null},{"x":[80],"y":[0.73333333333333328],"text":"Evaluator: Dan Tortorice<br>Rating [CI]: 80 [72, 88]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,192,181,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,192,181,1)"}},"hoveron":"points","name":"Dan Tortorice","legendgroup":"Dan Tortorice","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[8],"arrayminus":[8],"type":"data","width":0,"symmetric":false,"color":"rgba(0,192,181,1)"},"frame":null},{"x":[80],"y":[1],"text":"Evaluator: David Manheim<br>Rating [CI]: 80 [70, 90]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,189,210,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,189,210,1)"}},"hoveron":"points","name":"David Manheim","legendgroup":"David Manheim","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10],"arrayminus":[10],"type":"data","width":0,"symmetric":false,"color":"rgba(0,189,210,1)"},"frame":null},{"x":[88],"y":[7.2000000000000002],"text":"Evaluator: Elias Cisneros<br>Rating [CI]: 88 [84, 92]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,182,235,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,182,235,1)"}},"hoveron":"points","name":"Elias Cisneros","legendgroup":"Elias Cisneros","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[4],"arrayminus":[4],"type":"data","width":0,"symmetric":false,"color":"rgba(0,182,235,1)"},"frame":null},{"x":[75],"y":[10.199999999999999],"text":"Evaluator: Hannah Metzler<br>Rating [CI]: 75 [65, 85]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(0,171,253,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(0,171,253,1)"}},"hoveron":"points","name":"Hannah Metzler","legendgroup":"Hannah Metzler","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10],"arrayminus":[10],"type":"data","width":0,"symmetric":false,"color":"rgba(0,171,253,1)"},"frame":null},{"x":[79],"y":[1.2666666666666666],"text":"Evaluator: Joel Tan<br>Rating [CI]: 79 [59, 94]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"Joel Tan","legendgroup":"Joel Tan","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15],"arrayminus":[20],"type":"data","width":0,"symmetric":false,"color":"rgba(97,156,255,1)"},"frame":null},{"x":[75],"y":[3.2000000000000002],"text":"Evaluator: Liew Jia Huan<br>Rating [CI]: 75 [67, 83]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(165,138,255,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(165,138,255,1)"}},"hoveron":"points","name":"Liew Jia Huan","legendgroup":"Liew Jia Huan","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[8],"arrayminus":[8],"type":"data","width":0,"symmetric":false,"color":"rgba(165,138,255,1)"},"frame":null},{"x":[92],"y":[1.8],"text":"Evaluator: Phil Trammel<br>Rating [CI]: 92 [80, 100]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(208,120,255,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(208,120,255,1)"}},"hoveron":"points","name":"Phil Trammel","legendgroup":"Phil Trammel","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[8],"arrayminus":[12],"type":"data","width":0,"symmetric":false,"color":"rgba(208,120,255,1)"},"frame":null},{"x":[90],"y":[6.2000000000000002],"text":"Evaluator: Robert Kubinec<br>Rating [CI]: 90 [85, 95]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(236,105,239,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(236,105,239,1)"}},"hoveron":"points","name":"Robert Kubinec","legendgroup":"Robert Kubinec","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[5],"arrayminus":[5],"type":"data","width":0,"symmetric":false,"color":"rgba(236,105,239,1)"},"frame":null},{"x":[65],"y":[8.2666666666666675],"text":"Evaluator: Scott Janzwood<br>Rating [CI]: 65 [50, 80]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(251,97,215,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(251,97,215,1)"}},"hoveron":"points","name":"Scott Janzwood","legendgroup":"Scott Janzwood","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15],"arrayminus":[15],"type":"data","width":0,"symmetric":false,"color":"rgba(251,97,215,1)"},"frame":null},{"x":[80],"y":[2.2000000000000002],"text":"Evaluator: Seth Benzell<br>Rating [CI]: 80 [70, 90]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(255,99,185,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(255,99,185,1)"}},"hoveron":"points","name":"Seth Benzell","legendgroup":"Seth Benzell","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10],"arrayminus":[10],"type":"data","width":0,"symmetric":false,"color":"rgba(255,99,185,1)"},"frame":null},{"x":[65],"y":[9],"text":"Evaluator: Wayne Aaron Sandholtz<br>Rating [CI]: 65 [55, 74]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(255,107,150,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(255,107,150,1)"}},"hoveron":"points","name":"Wayne Aaron Sandholtz","legendgroup":"Wayne Aaron Sandholtz","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[9],"arrayminus":[10],"type":"data","width":0,"symmetric":false,"color":"rgba(255,107,150,1)"},"frame":null}],"layout":{"margin":{"t":45.592730962593976,"r":7.3059360730593621,"b":45.200867118675333,"l":190.28642590286427},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528},"title":{"text":"Overall scores of evaluated papers","font":{"color":"rgba(0,0,0,1)","family":"","size":23.910336239103366},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[16,104],"tickmode":"array","ticktext":["20","40","60","80","100"],"tickvals":[20,40,60,80,100],"categoryorder":"array","categoryarray":["20","40","60","80","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.940224159402241},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Overall score","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,10.6],"tickmode":"array","ticktext":["Advance market<br />commit. (vaccines)","AI and econ. growth","Banning wildlife<br />trade can boost<br />demand","CBT Human K, Ghana","Celeb. Twitter<br />promo, Indonesia<br />vacc.","Citizen<br />participation in<br />envt. gov. China","Env. fx of prod.:<br />ecological obs","LT CEA: Resilient<br />foods vs. AGI safety","Nonprofit Govc.:<br />Randomized<br />healthcare DRC","Well-being: Cash vs.<br />psychotherapy"],"tickvals":[1,2,3,4,5,6.0000000000000009,7,8,9,10],"categoryorder":"array","categoryarray":["Advance market<br />commit. (vaccines)","AI and econ. growth","Banning wildlife<br />trade can boost<br />demand","CBT Human K, Ghana","Celeb. Twitter<br />promo, Indonesia<br />vacc.","Citizen<br />participation in<br />envt. gov. China","Env. fx of prod.:<br />ecological obs","LT CEA: Resilient<br />foods vs. AGI safety","Nonprofit Govc.:<br />Randomized<br />healthcare DRC","Well-being: Cash vs.<br />psychotherapy"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.940224159402243},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Paper","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"139721ca516d6":{"x":{},"y":{},"text":{},"colour":{},"type":"scatter"},"139721a7e4a4b":{"x":{},"y":{},"text":{},"ymin":{},"ymax":{},"colour":{}}},"cur_data":"139721ca516d6","visdat":{"139721ca516d6":["function (y) ","x"],"139721a7e4a4b":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-506a92d76b8d4659903d" style="width:100%;height:835px;"></div>
+<script type="application/json" data-for="htmlwidget-506a92d76b8d4659903d">{"x":{"data":[{"x":[80,79,80],"y":[1,1.2666666666666666,0.73333333333333328],"text":["Evaluator: David Manheim<br>Rating [CI]: 80 [70, 90]","Evaluator: Joel Tan<br>Rating [CI]: 79 [59, 94]","Evaluator: Dan Tortorice<br>Rating [CI]: 80 [72, 88]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(228,26,28,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(228,26,28,1)"}},"hoveron":"points","name":"Advance market commit. (vaccines)","legendgroup":"Advance market commit. (vaccines)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10,15,8],"arrayminus":[10,20,8],"type":"data","width":0,"symmetric":false,"color":"rgba(228,26,28,1)"},"frame":null},{"x":[80,92],"y":[2.2000000000000002,1.8],"text":["Evaluator: Seth Benzell<br>Rating [CI]: 80 [70, 90]","Evaluator: Phil Trammel<br>Rating [CI]: 92 [80, 100]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(93,103,149,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(93,103,149,1)"}},"hoveron":"points","name":"AI and econ. growth","legendgroup":"AI and econ. growth","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10,8],"arrayminus":[10,12],"type":"data","width":0,"symmetric":false,"color":"rgba(93,103,149,1)"},"frame":null},{"x":[75,75],"y":[2.7999999999999998,3.2000000000000002],"text":["Evaluator: Anonymous_5<br>Rating [CI]: 75 [NA, NA]","Evaluator: Liew Jia Huan<br>Rating [CI]: 75 [67, 83]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(67,153,122,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(67,153,122,1)"}},"hoveron":"points","name":"Banning wildlife trade can boost demand","legendgroup":"Banning wildlife trade can boost demand","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[null,8],"arrayminus":[null,8],"type":"data","width":0,"symmetric":false,"color":"rgba(67,153,122,1)"},"frame":null},{"x":[75,75],"y":[3.7999999999999998,4.2000000000000002],"text":["Evaluator: Anonymous_14<br>Rating [CI]: 75 [70, 84]","Evaluator: Anonymous_20<br>Rating [CI]: 75 [67, 83]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(101,142,103,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(101,142,103,1)"}},"hoveron":"points","name":"CBT Human K, Ghana","legendgroup":"CBT Human K, Ghana","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[9,8],"arrayminus":[5,8],"type":"data","width":0,"symmetric":false,"color":"rgba(101,142,103,1)"},"frame":null},{"x":[62,85],"y":[5.2000000000000002,4.7999999999999998],"text":["Evaluator: Anonymous_1<br>Rating [CI]: 62 [47, 77]","Evaluator: Anirugh Tagat<br>Rating [CI]: 85 [77, 93]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(163,83,144,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(163,83,144,1)"}},"hoveron":"points","name":"Celeb. Twitter promo, Indonesia vacc.","legendgroup":"Celeb. Twitter promo, Indonesia vacc.","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15,8],"arrayminus":[15,8],"type":"data","width":0,"symmetric":false,"color":"rgba(163,83,144,1)"},"frame":null},{"x":[90,80],"y":[6.2000000000000002,5.7999999999999998],"text":["Evaluator: Robert Kubinec<br>Rating [CI]: 90 [85, 95]","Evaluator: Anonymous_7<br>Rating [CI]: 80 [71, 86]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(243,121,18,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(243,121,18,1)"}},"hoveron":"points","name":"Citizen participation in envt. gov. China","legendgroup":"Citizen participation in envt. gov. China","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[5,6],"arrayminus":[5,9],"type":"data","width":0,"symmetric":false,"color":"rgba(243,121,18,1)"},"frame":null},{"x":[88,70],"y":[7.2000000000000002,6.7999999999999998],"text":["Evaluator: Elias Cisneros<br>Rating [CI]: 88 [84, 92]","Evaluator: Anonymous_16<br>Rating [CI]: 70 [55, 85]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(255,212,34,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(255,212,34,1)"}},"hoveron":"points","name":"Env. fx of prod.: ecological obs","legendgroup":"Env. fx of prod.: ecological obs","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[4,15],"arrayminus":[4,15],"type":"data","width":0,"symmetric":false,"color":"rgba(255,212,34,1)"},"frame":null},{"x":[65,80,40],"y":[8.2666666666666675,8,7.7333333333333334],"text":["Evaluator: Scott Janzwood<br>Rating [CI]: 65 [50, 80]","Evaluator: Anca Hanea<br>Rating [CI]: 80 [60, 90]","Evaluator: Alex Bates<br>Rating [CI]: 40 [20, 60]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(215,179,46,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(215,179,46,1)"}},"hoveron":"points","name":"LT CEA: Resilient foods vs. AGI safety","legendgroup":"LT CEA: Resilient foods vs. AGI safety","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[15,10,20],"arrayminus":[15,20,20],"type":"data","width":0,"symmetric":false,"color":"rgba(215,179,46,1)"},"frame":null},{"x":[65],"y":[9],"text":"Evaluator: Wayne Aaron Sandholtz<br>Rating [CI]: 65 [55, 74]","type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(184,95,73,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(184,95,73,1)"}},"hoveron":"points","name":"Nonprofit Govc.: Randomized healthcare DRC","legendgroup":"Nonprofit Govc.: Randomized healthcare DRC","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[9],"arrayminus":[10],"type":"data","width":0,"symmetric":false,"color":"rgba(184,95,73,1)"},"frame":null},{"x":[90,75],"y":[9.8000000000000007,10.199999999999999],"text":["Evaluator: Anonymous_17<br>Rating [CI]: 90 [75, 100]","Evaluator: Hannah Metzler<br>Rating [CI]: 75 [65, 85]"],"type":"scatter","mode":"markers+lines","marker":{"autocolorscale":false,"color":"rgba(247,129,191,1)","opacity":1,"size":7.559055118110237,"symbol":"diamond","line":{"width":3.7795275590551185,"color":"rgba(247,129,191,1)"}},"hoveron":"points","name":"Well-being: Cash vs. psychotherapy","legendgroup":"Well-being: Cash vs. psychotherapy","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","opacity":1,"line":{"color":"transparent"},"error_x":{"array":[10,10],"arrayminus":[15,10],"type":"data","width":0,"symmetric":false,"color":"rgba(247,129,191,1)"},"frame":null},{"x":[62,75,80,75,70,90,75],"y":[5,3,6,4,7,10,4],"text":["anon.","anon.","anon.","anon.","anon.","anon.","anon."],"hovertext":["Evaluator: Anonymous_1<br>Rating [CI]: 62 [47, 77]","Evaluator: Anonymous_5<br>Rating [CI]: 75 [NA, NA]","Evaluator: Anonymous_7<br>Rating [CI]: 80 [71, 86]","Evaluator: Anonymous_14<br>Rating [CI]: 75 [70, 84]","Evaluator: Anonymous_16<br>Rating [CI]: 70 [55, 85]","Evaluator: Anonymous_17<br>Rating [CI]: 90 [75, 100]","Evaluator: Anonymous_20<br>Rating [CI]: 75 [67, 83]"],"textfont":{"size":11.338582677165356,"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.592730962593976,"r":7.3059360730593621,"b":45.200867118675333,"l":190.28642590286427},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528},"title":{"text":"Overall scores of evaluated papers","font":{"color":"rgba(0,0,0,1)","family":"","size":23.910336239103366},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[16,104],"tickmode":"array","ticktext":["20","40","60","80","100"],"tickvals":[20,40,60,80,100],"categoryorder":"array","categoryarray":["20","40","60","80","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.940224159402241},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Overall score","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,10.6],"tickmode":"array","ticktext":["Advance market<br />commit. (vaccines)","AI and econ. growth","Banning wildlife<br />trade can boost<br />demand","CBT Human K, Ghana","Celeb. Twitter<br />promo, Indonesia<br />vacc.","Citizen<br />participation in<br />envt. gov. China","Env. fx of prod.:<br />ecological obs","LT CEA: Resilient<br />foods vs. AGI safety","Nonprofit Govc.:<br />Randomized<br />healthcare DRC","Well-being: Cash vs.<br />psychotherapy"],"tickvals":[1,2,3,4,5,6.0000000000000009,7,8,9,10],"categoryorder":"array","categoryarray":["Advance market<br />commit. (vaccines)","AI and econ. growth","Banning wildlife<br />trade can boost<br />demand","CBT Human K, Ghana","Celeb. Twitter<br />promo, Indonesia<br />vacc.","Citizen<br />participation in<br />envt. gov. China","Env. fx of prod.:<br />ecological obs","LT CEA: Resilient<br />foods vs. AGI safety","Nonprofit Govc.:<br />Randomized<br />healthcare DRC","Well-being: Cash vs.<br />psychotherapy"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.940224159402243},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Paper","font":{"color":"rgba(0,0,0,1)","family":"","size":19.9252801992528}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"fdeb10e818fd":{"x":{},"y":{},"text":{},"colour":{},"type":"scatter"},"fdeb75c092b6":{"x":{},"y":{},"text":{},"ymin":{},"ymax":{},"colour":{}},"fdeb35e0271f":{"x":{},"y":{},"text":{},"label":{}}},"cur_data":"fdeb10e818fd","visdat":{"fdeb10e818fd":["function (y) ","x"],"fdeb75c092b6":["function (y) ","x"],"fdeb35e0271f":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
-<p>In future (todo), we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)</p>
-<p><em>The below should be fixed – the column widths below are misleading</em></p>
+<p>In future, we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -595,7 +666,7 @@ Future vis
 </div>
 <div class="column-body-outset">
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># JB: what is the purpose of this table? It's very large and I'm not totally</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># JB: what is the purpose of this table? It's very large and I'm not totally</span></span>
 <span><span class="co"># sure what it's doing so I'm just turning it off for now</span></span>
 <span><span class="va">unit.scale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fl">100</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -616,10 +687,11 @@ Future vis
 </details>
 </div>
 </div>
-<section id="simple-rating-aggregation" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="simple-rating-aggregation">
-<span class="header-section-number">2.2.1</span> Simple rating aggregation</h3>
+<section id="simple-rating-aggregation" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="simple-rating-aggregation">Simple rating aggregation</h3>
+<p>Below, we are preparing the data for the aggreCATS package.</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#--&gt; paper_ratings: one row per rating category and 'type' (score, upper, lower bound.)</span></span>
+<span><span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">eval_name</span>, <span class="va">paper_abbrev</span>, </span>
 <span>         <span class="va">overall</span>, <span class="va">overall_lb_imp</span>, <span class="va">overall_ub_imp</span>,</span>
 <span>         <span class="va">adv_knowledge</span>, <span class="va">adv_knowledge_lb_imp</span>, <span class="va">adv_knowledge_ub_imp</span>,</span>
@@ -641,6 +713,7 @@ Future vis
 <span>         element <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span><span class="va">element</span> <span class="op">==</span> <span class="st">"lb_imp"</span> <span class="op">~</span> <span class="st">"three_point_lower"</span>,</span>
 <span>                             <span class="va">element</span> <span class="op">==</span> <span class="st">"ub_imp"</span> <span class="op">~</span> <span class="st">"three_point_upper"</span>,</span>
 <span>                             <span class="va">element</span> <span class="op">==</span> <span class="st">"score"</span> <span class="op">~</span> <span class="st">"three_point_best"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#renaming to conform with aggreCATS?</span></span>
 <span></span>
 <span><span class="va">paper_ratings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">criterion</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -649,11 +722,11 @@ Future vis
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">temp</span></span>
 <span>  </span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/aggreCAT/man/AverageWAgg.html">AverageWAgg</a></span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"ArMean"</span><span class="op">)</span></span>
+<span><span class="fu">AverageWAgg</span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"ArMean"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/aggreCAT/man/IntervalWAgg.html">IntervalWAgg</a></span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"IntWAgg"</span><span class="op">)</span></span>
+<span><span class="fu">IntervalWAgg</span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"IntWAgg"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">aggreCAT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/aggreCAT/man/DistributionWAgg.html">DistributionWAgg</a></span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"DistribArMean"</span>, percent_toggle <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu">aggreCAT</span><span class="fu">::</span><span class="fu">DistributionWAgg</span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">temp</span>, round_2_filter <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"DistribArMean"</span>, percent_toggle <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># EXAMPLE CODE ===============================</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">data_ratings</span><span class="op">)</span></span>
@@ -670,19 +743,32 @@ Future vis
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">element</span>, pattern <span class="op">=</span> <span class="st">"three_.+"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">group</span>, <span class="op">-</span><span class="va">participant_name</span>, <span class="op">-</span><span class="va">question</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/aggreCAT/man/DistributionWAgg.html">DistributionWAgg</a></span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">single_claim</span>,</span>
+<span><span class="fu">DistributionWAgg</span><span class="op">(</span>expert_judgements <span class="op">=</span> <span class="va">single_claim</span>,</span>
 <span>            type <span class="op">=</span> <span class="st">"DistribArMean"</span>, percent_toggle <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Next, look for systematic variation</p>
+</section><section id="sources-of-variation" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="sources-of-variation">Sources of variation</h3>
+<p>Next, look for systematic variation in the ratings</p>
 <ul>
 <li><p>By field and topic area of paper</p></li>
 <li><p>By submission/selection route</p></li>
-<li><p>By evaluation manager</p></li>
+<li><p>By evaluation manager (or their seniority, or whether they are US/Commonwealth/Other)<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p></li>
 </ul>
 <p>… perhaps building a model of this. We are looking for systematic ‘biases and trends’, loosely speaking, to help us better understand how our evaluation system is working.</p>
 <p><br></p>
 </section><section id="relationship-among-the-ratings-and-predictions" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="relationship-among-the-ratings-and-predictions">Relationship among the ratings (and predictions)</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Next steps (suggested analyses)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
 <li><p>Correlation matrix</p></li>
 <li><p>ANOVA</p></li>
@@ -694,95 +780,23 @@ Future vis
 <li>CF ‘our suggested weighting’</li>
 </ul>
 </li>
-</ul></section></section><section id="aggregation-of-expert-opinion-modeling" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="aggregation-of-expert-opinion-modeling">
-<span class="header-section-number">2.3</span> Aggregation of expert opinion (modeling)</h2>
-</section><section id="notes-on-sources-and-approaches" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="notes-on-sources-and-approaches">
-<span class="header-section-number">2.4</span> Notes on sources and approaches</h2>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Hanea et al
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)</p>
-<p><code>aggrecat</code> package</p>
-<blockquote class="blockquote">
-<p>Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.</p>
-</blockquote>
-<p><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256919#sec007">Hanea et al, 2021</a></p>
-<p>However, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a ‘lower bound’ and ‘upper bound’ for that probability. We could roughly compare that to our continuous metrics with 90% CI’s (or imputations for these).</p>
-<p>Furthermore, many (all their successful measures?) use ‘performance-based weights’, accessing metrics from prior prediction performance of the same forecasters We do not have these, nor do we have a sensible proxy for this.</p>
+</ul>
 </div>
 </div>
 </div>
+<p>Next chapter (analysis): <em>aggregation of evaluator judgment</em></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-D Veen et al (2017)
+Scoping our future coverage
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><a href="https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf">link</a></p>
-<p>… we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover.</p>
-<p>Be sure to consult the <a href="https://www.semanticscholar.org/paper/Correction%3A-Veen%2C-D.%3B-Stoel%2C-D.%3B-Schalken%2C-N.%3B-K.%3B-Veen-Stoel/a2882e0e8606ef876133f25a901771259e7033b1">correction made here</a></p>
-</div>
-</div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Also seems relevant:
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>See <a href="https://docs.google.com/spreadsheets/d/14japw6eLGpGjEWy1MjHNJXU1skZY_GAIc2uC2HIUalM/edit#gid=0">Gsheet HERE</a>, generated from an Elicit.org inquiry.</p>
-</div>
-</div>
-</div>
-<p>In spite of the caveats in the fold above, we construct some measures of aggregate beliefs using the <code>aggrecat</code> package. We will make (and explain) some ad-hoc choices here. We present these:</p>
-<ol type="1">
-<li>For each paper</li>
-<li>For categories of papers and cross-paper categories of evaluations</li>
-<li>For the overall set of papers and evaluations</li>
-</ol>
-<p>We can also hold onto these aggregated metrics for later use in modeling.</p>
-<ul>
-<li><p>Simple averaging</p></li>
-<li><p>Bayesian approaches</p></li>
-<li><p>Best-performing approaches from elsewhere</p></li>
-<li><p>Assumptions over unit-level random terms</p></li>
-</ul>
-<section id="explicit-modeling-of-research-quality-for-use-in-prizes-etc." class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="explicit-modeling-of-research-quality-for-use-in-prizes-etc.">Explicit modeling of ‘research quality’ (for use in prizes, etc.)</h3>
-<ul>
-<li><p>Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?</p></li>
-<li><p>Model with controls – look for greatest positive residual?</p></li>
-</ul></section></section><section id="inter-rater-reliability" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="inter-rater-reliability">
-<span class="header-section-number">2.5</span> Inter-rater reliability</h2>
-</section><section id="decomposing-variation-dimension-reduction-simple-linear-models" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="decomposing-variation-dimension-reduction-simple-linear-models">
-<span class="header-section-number">2.6</span> Decomposing variation, dimension reduction, simple linear models</h2>
-</section><section id="later-possiblities" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="later-possiblities">
-<span class="header-section-number">2.7</span> Later possiblities</h2>
-<ul>
-<li><p>Relation to evaluation text content (NLP?)</p></li>
-<li><p>Relation/prediction of later outcomes (traditional publication, citations, replication)</p></li>
-</ul></section><section id="scoping-our-future-coverage" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="scoping-our-future-coverage">
-<span class="header-section-number">2.8</span> Scoping our future coverage</h2>
 <p>We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.</p>
 <p>Consider:</p>
 <ul>
@@ -790,17 +804,21 @@ Also seems relevant:
 <li><p>How much relevant work in other prestige archives?</p></li>
 <li><p>What quotas do we want (by cause, etc.) and how feasible are these?</p></li>
 </ul>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
-</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
 <li id="fn1"><p>Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Those marked as ‘considering’ in the Airtable<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Make interactive/dashboards of the elements below<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>We use “ub imp” (and “lb imp”) to denote the upper and lower bounds given by evaluators.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>More or less, the ones who report a level for ‘conf overall’, although some people did this for some but not others<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>DR: My theory is that people in commonwealth countries target a 70+ as ‘strong’ (because of their marking system) and that may drive a bias.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -981,7 +999,7 @@ library(plotly) # Create Interactive Web Graphics via 'plotly.js'
 # others ----
 library(here) # A Simpler Way to Find Your Files
 # renv::install(packages = "metamelb-repliCATS/aggreCAT")
-library(aggreCAT)
+#library(aggreCAT)
 
 # Make sure select is always the dplyr version
 select &lt;- dplyr::select 
@@ -1038,11 +1056,71 @@ In this section, we give some simple data summaries and visualizations, for a br
 In the interactive table below we give some key attributes of the papers and the evaluators.
 
 
-::: column-body-outset
+::: column-body-outset    
+
+quarto-executable-code-5450563D
+
+```r
+evals_pub_df_overview &lt;- evals_pub %&gt;%
+  arrange(paper_abbrev, eval_name) %&gt;%
+  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %&gt;%
+  dplyr::select(-matches("ub_|lb_|conf")) 
+
+evals_pub_df_overview %&gt;%   
+   rename(
+    "Paper Abbreviation" = paper_abbrev,
+    "Paper name" = crucial_rsx,
+    "Evaluator Name" = eval_name,
+    "Main category" = cat_1,
+    "Category 2" = cat_2,
+    "Main source" = source_main,
+    "Author contact" = author_agreement,
+  ) %&gt;% 
+  DT::datatable(
+    caption = "Evaluations (confidence bounds not shown)", 
+    filter = 'top',
+    rownames= FALSE,
+    options = list(pageLength = 5,
+      columnDefs = list(list(width = '150px', targets = 1)))) %&gt;% 
+  formatStyle(columns = 2:ncol(evals_pub_df_overview), 
+              textAlign = 'center') %&gt;% 
+formatStyle(
+    "Paper name",
+    fontSize = '10px'
+  )
+
+rm(evals_pub_df_overview)
+
+
+```
+
+:::
 
 &lt;!-- Todo: make this smaller, get it to fit on the page better, more user-friendly --&gt;
 
-#### Data Tables {-}
+#### Evaluation metrics (ratings) {-}
+
+
+quarto-executable-code-5450563D
+
+```r
+rename_dtstuff &lt;- function(df){
+  df %&gt;%  
+  rename(
+    "Paper Abbreviation" = paper_abbrev,
+    "Evaluator Name" = eval_name,
+    "Advancing knowledge" = adv_knowledge,
+    "Methods" = methods,
+    "Logic &amp; comm." = logic_comms,
+    "Real world engagement" = real_world,
+    "Global priorities relevance" = gp_relevance,
+    "Open Science" = open_sci
+  )
+}
+```
+
+
+::: column-body-outset    
 
 ```{r }
 #| label: datatable0
@@ -1051,28 +1129,40 @@ In the interactive table below we give some key attributes of the papers and the
 
 # we didn't seem to be using all_evals_dt so I removed it to increase readability
 
-evals_pub %&gt;%
-  arrange(paper_abbrev, eval_name) %&gt;%
-  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %&gt;%
-  dplyr::select(-matches("ub_|lb_|conf")) %&gt;% 
-  rename("==========Research==========" = "crucial_rsx") %&gt;% 
-  DT::datatable(
-    caption = "Evaluations (confidence bounds not shown)", 
-    filter = 'top',
-    rownames= FALSE,
-    options = list(
-      #scrollX=TRUE,
-      #autoWidth = TRUE,
-      #columnDefs = list(list(list(targets = 2, visible = T, width = '300px'))),
-      pageLength = 5
-    )
-  )
-```
 
+
+evals_pub_df &lt;- evals_pub %&gt;%
+  # Arrange data
+  arrange(paper_abbrev, eval_name, overall) %&gt;%
+  
+  # Select and rename columns
+  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats)) %&gt;%
+ rename_dtstuff 
+
+
+(
+ evals_pub_dt &lt;- evals_pub_df %&gt;%  
+  # Convert to a datatable and apply styling
+  datatable(
+    caption = "Evaluations and predictions (confidence bounds not shown)", 
+    filter = 'top',
+    rownames = FALSE,
+    options = list(pageLength = 5, 
+            columnDefs = list(list(width = '150px', targets = 0)))) %&gt;% 
+  formatStyle(columns = 2:ncol(evals_pub_df), 
+              textAlign = 'center')
+)
+
+
+
+```
+:::
 
 \
 
 Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
+
+::: column-body-outset    
 
 ```{r }
 #| label: datatable
@@ -1084,15 +1174,19 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 evals_pub %&gt;%
   arrange(paper_abbrev, eval_name, overall) %&gt;%
   dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %&gt;%
+  rename_dtstuff %&gt;%  
   DT::datatable(
     caption = "Evaluations and predictions (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 5)
+    options = list(pageLength = 5,
+                  columnDefs = list(list(width = '150px', targets = 0))) 
     )
 
 ```
-\
+:::
+
+\ 
 
 &lt;!-- Todo -- Present these, including bounds, in a useful way --&gt;
 
@@ -1102,6 +1196,7 @@ evals_pub %&gt;%
 evals_pub %&gt;%
   arrange(paper_abbrev, eval_name) %&gt;%
   dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %&gt;%
+  rename_dtstuff %&gt;% 
   DT::datatable(
     caption = "Evaluations and (imputed*) confidence bounds)", 
     filter = 'top',
@@ -1252,6 +1347,8 @@ evals_pub %&gt;%
 ```{r data_clean_}
 # JB: Most of these should probably be cleaned in data storage
 
+library(RColorBrewer)  # for color palettes
+
 # paper statuses that are considered "being evaluated"
 eval_true = c("published", 
               "contacting/awaiting_authors_response_to_evaluation",
@@ -1310,21 +1407,35 @@ quarto-executable-code-5450563D
 pd = position_dodge(width = 0.8)
 
 # Dot plot
+library(stringr)
+
+pd = position_dodge(width = 0.8)
+
+# Generate a color palette with more colors
+color_count &lt;- length(unique(evals_pub$paper_abbrev))
+color_palette &lt;- colorRampPalette(brewer.pal(8, "Set1"))(color_count)
+
+# Dot plot
 g1 &lt;- evals_pub %&gt;% 
   ggplot(aes(x = paper_abbrev, y = overall, 
              text = paste0('Evaluator: ', eval_name,   # tooltip data
                            '&lt;br&gt;Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
-  geom_point(aes(color = eval_name), 
+  geom_point(aes(color = paper_abbrev), 
              stat = "identity", size = 2, shape = 18, stroke = 1, 
              position = pd) +
-  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = eval_name), position = pd) +
+  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = paper_abbrev), 
+                 position = pd) +
+  geom_text(data = subset(evals_pub, str_detect(eval_name, "Anonymous")),
+            aes(label = "anon."), size=3) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   labs(x = "Paper", y = "Overall score",
        title = "Overall scores of evaluated papers") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
   theme(legend.position = "none") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) + 
+    scale_color_manual(values = color_palette)
+
 
 
 ggplotly(g1, tooltip = c("text"))
@@ -1332,9 +1443,8 @@ ggplotly(g1, tooltip = c("text"))
 :::
 
 
-In future (todo), we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)
+In future, we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)
 
-*The below should be fixed -- the column widths below are misleading*
 
 ::: {.callout-note collapse="true"}
 ## Future vis
@@ -1379,10 +1489,13 @@ formattable(
 ```
 :::
 
-### Simple rating aggregation
+### Simple rating aggregation {-}
+
+Below, we are preparing the data for the aggreCATS package.
 
 ```{r babys_first_ratings_agg, eval=FALSE}
 
+#--&gt; paper_ratings: one row per rating category and 'type' (score, upper, lower bound.)
 evals_pub %&gt;% 
   select(id, eval_name, paper_abbrev, 
          overall, overall_lb_imp, overall_ub_imp,
@@ -1405,6 +1518,7 @@ paper_ratings &lt;- paper_ratings %&gt;%
          element = case_when(element == "lb_imp" ~ "three_point_lower",
                              element == "ub_imp" ~ "three_point_upper",
                              element == "score" ~ "three_point_best"))
+#renaming to conform with aggreCATS?
 
 paper_ratings %&gt;% 
   filter(criterion == "overall") %&gt;% 
@@ -1441,13 +1555,15 @@ DistributionWAgg(expert_judgements = single_claim,
 
 ```
 
-Next, look for systematic variation 
+### Sources of variation {-}
+
+Next, look for systematic variation in the ratings 
 
 - By field and topic area of paper
 
 - By submission/selection route
 
-- By evaluation manager
+- By evaluation manager (or their seniority, or whether they are US/Commonwealth/Other)^[DR: My theory is that people in commonwealth countries target a 70+ as 'strong' (because of their marking system) and that may drive a bias.]
 
 ... perhaps building a model of this. We are looking for systematic 'biases and trends', loosely speaking, to help us better understand how our evaluation system is working.
 
@@ -1457,6 +1573,9 @@ Next, look for systematic variation
 
 
 ### Relationship among the ratings (and predictions) {-} 
+
+::: {.callout-note collapse="true"}
+## Next steps (suggested analyses)
 
 - Correlation matrix
 
@@ -1469,89 +1588,13 @@ Next, look for systematic variation
 - How do the specific measures predict the aggregate ones (overall rating, merited publication)
     - CF 'our suggested weighting'
 
-
-## Aggregation of expert opinion (modeling)
-
-
-## Notes on sources and approaches
-
-
-::: {.callout-note collapse="true"}
-
-## Hanea et al {-}
-(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
-
-`aggrecat` package
-
-&gt; Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.
-
-[Hanea et al, 2021](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256919#sec007)
-
- However, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a 'lower bound' and 'upper bound' for that probability. We could roughly compare that to our continuous metrics with 90% CI's (or imputations for these).
-
-Furthermore, many (all their successful measures?) use 'performance-based weights', accessing metrics from prior prediction performance of the same forecasters We do not have these, nor do we have a sensible proxy for this. 
-:::
-
-
-::: {.callout-note collapse="true"}
-## D Veen et al (2017)
-
-[link](https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf)
-
-... we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover. 
-
-Be sure to consult the [correction made here](https://www.semanticscholar.org/paper/Correction%3A-Veen%2C-D.%3B-Stoel%2C-D.%3B-Schalken%2C-N.%3B-K.%3B-Veen-Stoel/a2882e0e8606ef876133f25a901771259e7033b1)
-
-:::   
-
-
-::: {.callout-note collapse="true"}
-## Also seems relevant:
-
-See [Gsheet HERE](https://docs.google.com/spreadsheets/d/14japw6eLGpGjEWy1MjHNJXU1skZY_GAIc2uC2HIUalM/edit#gid=0), generated from an Elicit.org inquiry.
-
-
 ::: 
 
 
-
-In spite of the caveats in the fold above, we construct some  measures of aggregate beliefs  using the `aggrecat` package. We will make (and explain) some ad-hoc choices here. We present these:
-
-1. For each paper
-2. For categories of papers and cross-paper categories of evaluations
-3. For the overall set of papers and evaluations
-
-We can also hold onto these aggregated metrics for later use in modeling.
+Next chapter (analysis): *aggregation of evaluator judgment*
 
 
-- Simple averaging
-
-- Bayesian approaches 
-
-- Best-performing approaches from elsewhere   
-
-- Assumptions over unit-level random terms 
-
-### Explicit modeling of 'research quality' (for use in prizes, etc.) {-}
-
-- Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?
-
-- Model with controls -- look for greatest positive residual?   
-
-
-## Inter-rater reliability
-
-## Decomposing variation, dimension reduction, simple linear models
-
-
-## Later possiblities
-
-- Relation to evaluation text content (NLP?)
-
-- Relation/prediction of later outcomes (traditional publication, citations, replication)
-
-
-
+::: {.callout-note collapse="true"}
 ## Scoping our future coverage
 
 We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.
@@ -1563,6 +1606,8 @@ Consider:
 - How much relevant work in other prestige archives?
 
 - What quotas do we want (by cause, etc.) and how feasible are these?
+
+::: 
 </code></pre>
 </div></div></div></div></div>
 </div> <!-- /content -->
