@@ -274,7 +274,7 @@ pred_cats <- c("journal_predict", "merits_journal")
 # This function is not vectorized
 calc_bounds <- function(rating, conf, type, scale) {
   
-  if(scale == 5){
+  if(scale == 5){ #for the 'journal tier prediction case'
     baseline_width = case_match(conf, 
                                 5 ~ .2, #4*5/100
                                 4 ~ .4, #8*5/100
@@ -287,7 +287,7 @@ calc_bounds <- function(rating, conf, type, scale) {
     lower = max(rating - baseline_width, 1)
   }#/if(scale == 5)
   
-  if(scale == 100){
+  if(scale == 100){ #for the 'ratings case'
     
     baseline_width = case_match(conf, 
                                 5 ~ 4, 
