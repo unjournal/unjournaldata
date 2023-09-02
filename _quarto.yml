@@ -11,7 +11,7 @@ book:
     - index.qmd
     - chapters/evaluation_data_input.qmd
     - chapters/evaluation_data_analysis.qmd
-    #- chapters/aggregation.qmd
+    - chapters/aggregation.qmd
       #- references.qmd
   reader-mode: true
   page-navigation: true
@@ -27,6 +27,7 @@ comments:
     hypothesis: true
 
       #bibliography: references.bib
+server: shiny
 
 format:
   html:
@@ -46,5 +47,5 @@ format:
   #
 
 
-#editor: visual
+
 
