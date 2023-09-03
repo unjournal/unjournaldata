@@ -33,3 +33,5 @@ rsconnect/
 quarto-cli
 # Local folder and documents
 /local
+# rsconnect info
+/shinyapp/DataExplorer/rsconnect/.
