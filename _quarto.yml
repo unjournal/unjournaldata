@@ -25,9 +25,7 @@ execute:
 
 comments:
     hypothesis: true
-
-      #bibliography: references.bib
-server: shiny
+   #bibliography: references.bib
 
 format:
   html:
@@ -45,7 +43,6 @@ format:
  # pdf:
   #  documentclass: scrreprt
   #
-
 
 
 
