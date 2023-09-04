@@ -11,6 +11,8 @@ library(tidyverse)
 # markdown et al. ----
 library(knitr)
 library(bookdown)
+library(rmarkdown)
+library(shiny)
 library(quarto)
 library(formattable) # Create 'Formattable' Data Structures
 library(DT) # R interface to DataTables library (JavaScript)
@@ -197,6 +199,7 @@ evals_pub %>%
     rownames= FALSE,
     options = list(pageLength = 5,
                   columnDefs = list(list(width = '150px', targets = 0))) 
+
     )
 
 ```
@@ -403,9 +406,9 @@ Next, we present the ratings and predictions along with 'uncertainty measures'.^
 - For each category and prediction (overall and by paper)
 ```{r CI_bounds}
 
-evals_pub %>% 
-  select(matches("overall")) %>% 
-  view()
+# evals_pub %>% 
+#   select(matches("overall")) %>% 
+#   view()
 
 ```
 
@@ -415,19 +418,13 @@ evals_pub %>%
 
 ```{r}
 #| fig-height: 9
-
-#todo -- sort by average overall, use color and vertical spacing more
-
-pd = position_dodge(width = 0.8)
-
-# Dot plot
-library(stringr)
-
-pd = position_dodge(width = 0.8)
-
+#| 
 # Generate a color palette with more colors
 color_count <- length(unique(evals_pub$paper_abbrev))
 color_palette <- colorRampPalette(brewer.pal(8, "Set1"))(color_count)
+
+# set one "set" of dodge width values across layers
+pd = position_dodge(width = 0.8)
 
 # Dot plot
 g1 <- evals_pub %>% 
@@ -451,14 +448,23 @@ g1 <- evals_pub %>%
     scale_color_manual(values = color_palette)
 
 
-
 ggplotly(g1, tooltip = c("text"))
 ```
 :::
 
-
 In future, we aim to build a dashboard allowing people to use the complete set of ratings and predictions, and choose their own weightings. (Also incorporating the evaluator uncertainty in reasonable ways.)
 
+### Shiny dashboard {-}
+
+::: column-body-outset
+
+```{=html}
+<!-- Currently this is a random Shiny app -->
+<iframe height="800" width="120%" frameborder="no" src="https://juliagb.shinyapps.io/DataExplorer/"> </iframe>
+
+```
+
+:::
 
 ::: {.callout-note collapse="true"}
 ## Future vis
@@ -503,71 +509,6 @@ formattable(
 ```
 :::
 
-### Simple rating aggregation {-}
-
-Below, we are preparing the data for the aggreCATS package.
-
-```{r babys_first_ratings_agg, eval=FALSE}
-
-#--> paper_ratings: one row per rating category and 'type' (score, upper, lower bound.)
-evals_pub %>% 
-  select(id, eval_name, paper_abbrev, 
-         overall, overall_lb_imp, overall_ub_imp,
-         adv_knowledge, adv_knowledge_lb_imp, adv_knowledge_ub_imp,
-         methods, methods_lb_imp, methods_ub_imp,
-         logic_comms, logic_comms_lb_imp, logic_comms_ub_imp,
-         real_world, real_world_lb_imp, real_world_ub_imp,
-         gp_relevance, gp_relevance_lb_imp, gp_relevance_ub_imp,
-         open_sci, open_sci_lb_imp, open_sci_ub_imp) %>% 
-  rename_with(function(x) paste0(x,"_score"), all_of(rating_cats)) %>%
-  pivot_longer(cols = c(-id, -eval_name, -paper_abbrev),
-              names_pattern = "(.+)_(score|[ul]b_imp)",
-              names_to = c("criterion","element"),
-              values_to = "value") -> paper_ratings
-
-paper_ratings <- paper_ratings %>% 
-  rename(paper_id = paper_abbrev,
-         user_name = eval_name) %>% 
-  mutate(round = "round_1",
-         element = case_when(element == "lb_imp" ~ "three_point_lower",
-                             element == "ub_imp" ~ "three_point_upper",
-                             element == "score" ~ "three_point_best"))
-#renaming to conform with aggreCATS?
-
-paper_ratings %>% 
-  filter(criterion == "overall") %>% 
-  group_by(user_name, paper_id) %>% 
-  filter(sum(is.na(value))==0) %>% 
-  ungroup() -> temp
-  
-
-AverageWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "ArMean")
-
-IntervalWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "IntWAgg")
-
-aggreCAT::DistributionWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
-
-# EXAMPLE CODE ===============================
-data(data_ratings)
-set.seed(1234)
-
-participant_subset <- data_ratings %>%
-  distinct(user_name) %>%
-  sample_n(5) %>%
-  mutate(participant_name = paste("participant", rep(1:n())))
-
-single_claim <- data_ratings %>%
-  filter(paper_id == "28") %>%
-  right_join(participant_subset, by = "user_name") %>%
-  filter(grepl(x = element, pattern = "three_.+")) %>%
-  select(-group, -participant_name, -question)
-
-DistributionWAgg(expert_judgements = single_claim,
-            type = "DistribArMean", percent_toggle = T)
-
-
-
-```
 
 ### Sources of variation {-}
 

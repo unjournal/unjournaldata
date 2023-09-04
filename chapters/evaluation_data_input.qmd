@@ -400,8 +400,24 @@ all_papers_p <- all_pub_records %>%
 
 ```
 
+```{r shiny_data_explorer}
+# Create a dataset to be used as the input to a shiny app
 
+#| include: false
+#| 
+paper_ratings <- evals_pub %>% 
+  select(paper_abbrev, eval_name, one_of(rating_cats), one_of(pred_cats), ends_with("_imp")) %>% # rating vars
+  dplyr::rename_with(.cols = c(one_of(rating_cats), one_of(pred_cats)),
+                     .fn = gsub,
+                     pattern = "(.+)", 
+                     replacement = "\\1_best") %>% 
+  pivot_longer(cols = -c(paper_abbrev, eval_name),
+               names_pattern = "(overall|adv_knowledge|methods|logic_comms|real_world|gp_relevance|open_sci|journal_predict|merits_journal)_(.+)",
+               names_to = c("rating_type", ".value"))# one line per rating type
 
+write_rds(paper_ratings, file = here("shinyapp/DataExplorer", "shiny_explorer.rds"))
+ 
+```
 
 
 ```{r}
