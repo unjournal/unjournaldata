@@ -460,7 +460,7 @@ In future, we aim to build a dashboard allowing people to use the complete set o
 
 ```{=html}
 <!-- Currently this is a random Shiny app -->
-<iframe height="800" width="120%" frameborder="no" src="https://juliagb.shinyapps.io/DataExplorer/"> </iframe>
+<iframe height="800" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
 
 ```
 

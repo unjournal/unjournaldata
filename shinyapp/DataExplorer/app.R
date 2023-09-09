@@ -73,8 +73,6 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
       
 
-      
-      
       # Dot plot
       df %>% 
         filter(rating_type == input$RatingType) %>% 

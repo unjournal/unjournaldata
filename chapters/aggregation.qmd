@@ -8,8 +8,13 @@
 library(tidyverse)
 library(aggreCAT)
 library(here)
+library(irr)
  
 evals_pub <- read_rds(file = here("data", "evals.Rdata"))
+
+# Lists of categories
+rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
+pred_cats <- c("journal_predict", "merits_journal")
 
 ```
 
@@ -153,6 +158,52 @@ aggreCAT::DistributionWAgg(expert_judgements = temp, round_2_filter = FALSE, typ
 
 
 ## Inter-rater reliability
+
+```{r}
+#| echo: false
+#| fig-height: 8
+
+# function that returns kripp.alpha
+# value. It checks if there is more than
+# one rater first to avoid errors
+# and converts the nested data into
+# a matrix to allow 
+mod_kripp_alpha <- function(dat) {
+  dat = as.matrix.POSIXlt(dat)
+  if(nrow(dat)>1) {
+    a = kripp.alpha(dat, method = "ratio")
+    res = a$value
+  } else {
+    res = NA_integer_
+  }
+  return(res)
+}
+
+# plot
+evals_pub %>% 
+  group_by(paper_abbrev) %>% 
+  select(paper_abbrev, all_of(rating_cats)) %>%
+  nest(data = -paper_abbrev) %>%
+  mutate(KrippAlpha = map_dbl(.x = data, .f = mod_kripp_alpha)) %>% 
+  unnest(data) %>% 
+  group_by(KrippAlpha, add = T) %>% 
+  summarize(Raters = n()) %>%
+  ungroup() %>% 
+  ggplot(aes(x = reorder(paper_abbrev, KrippAlpha), y = KrippAlpha)) +
+  geom_point(aes(color = paper_abbrev, size = Raters), 
+             stat = "identity", shape = 16, stroke = 1) +
+  coord_flip() +
+  labs(x = "Paper", y = "Krippendorf's Alpha") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  scale_size(breaks = c(2,3)) +
+  scale_y_continuous(limits = c(-1,1)) +
+  guides(color=F)
+
+```
+
+
 
 ## Decomposing variation, dimension reduction, simple linear models
 
