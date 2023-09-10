@@ -323,7 +323,8 @@ Todo: ^[Make interactive/dashboards of the elements below]
 
 ```{r all_categories}
 evals_pub %>% 
-  select(paper_abbrev, starts_with("cat_")) %>% 
+  select(paper_abbrev, starts_with("cat_")) %>%
+  distinct() %>% 
   pivot_longer(cols = starts_with("cat_"), names_to = "CatNum", values_to = "Category") %>% 
   group_by(CatNum, Category) %>% 
   count() %>% 
@@ -352,7 +353,9 @@ evals_pub %>%
   rowwise() %>% 
   mutate(source_main = str_replace_all(string = source_main, 
                                        pattern = "-", 
-                                       replace = " ") %>% str_to_title()) %>% 
+                                       replace = " ") %>% str_to_title()) %>%
+  select(paper_abbrev, source_main) %>% 
+  distinct() %>%
   ggplot(aes(x = source_main)) + 
   geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
   labs(x = "Source", y = "Count") +
@@ -363,7 +366,7 @@ evals_pub %>%
 
 ```
 
-```{r data_clean_}
+```{r data clean}
 # JB: Most of these should probably be cleaned in data storage
 
 library(RColorBrewer)  # for color palettes
@@ -523,8 +526,6 @@ Next, look for systematic variation in the ratings
 ... perhaps building a model of this. We are looking for systematic 'biases and trends', loosely speaking, to help us better understand how our evaluation system is working.
 
 \
-
-
 
 
 ### Relationship among the ratings (and predictions) {-} 
