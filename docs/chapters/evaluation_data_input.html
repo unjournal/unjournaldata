@@ -583,17 +583,8 @@ Dots to interval choices
 <span></span>
 <span><span class="co">#| include: false</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="va">paper_ratings</span> <span class="op">&lt;-</span> <span class="va">evals_pub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/one_of.html">one_of</a></span><span class="op">(</span><span class="va">rating_cats</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/one_of.html">one_of</a></span><span class="op">(</span><span class="va">pred_cats</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"_imp"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># rating vars</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename_with</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/one_of.html">one_of</a></span><span class="op">(</span><span class="va">rating_cats</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/one_of.html">one_of</a></span><span class="op">(</span><span class="va">pred_cats</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                     .fn <span class="op">=</span> <span class="va">gsub</span>,</span>
-<span>                     pattern <span class="op">=</span> <span class="st">"(.+)"</span>, </span>
-<span>                     replacement <span class="op">=</span> <span class="st">"\\1_best"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">paper_abbrev</span>, <span class="va">eval_name</span><span class="op">)</span>,</span>
-<span>               names_pattern <span class="op">=</span> <span class="st">"(overall|adv_knowledge|methods|logic_comms|real_world|gp_relevance|open_sci|journal_predict|merits_journal)_(.+)"</span>,</span>
-<span>               names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rating_type"</span>, <span class="st">".value"</span><span class="op">)</span><span class="op">)</span><span class="co"># one line per rating type</span></span>
-<span></span>
-<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="va">paper_ratings</span>, file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"shinyapp/DataExplorer"</span>, <span class="st">"shiny_explorer.rds"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">evals_pub_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"shinyapp/DataExplorer"</span>, <span class="st">"shiny_explorer.rds"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -1322,38 +1313,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-416"><a href="#cb9-416" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-417"><a href="#cb9-417" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb9-418"><a href="#cb9-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| </span></span>
-<span id="cb9-419"><a href="#cb9-419" aria-hidden="true" tabindex="-1"></a>paper_ratings <span class="ot">&lt;-</span> evals_pub <span class="sc">%&gt;%</span> </span>
-<span id="cb9-420"><a href="#cb9-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(paper_abbrev, eval_name, <span class="fu">one_of</span>(rating_cats), <span class="fu">one_of</span>(pred_cats), <span class="fu">ends_with</span>(<span class="st">"_imp"</span>)) <span class="sc">%&gt;%</span> <span class="co"># rating vars</span></span>
-<span id="cb9-421"><a href="#cb9-421" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>(<span class="at">.cols =</span> <span class="fu">c</span>(<span class="fu">one_of</span>(rating_cats), <span class="fu">one_of</span>(pred_cats)),</span>
-<span id="cb9-422"><a href="#cb9-422" aria-hidden="true" tabindex="-1"></a>                     <span class="at">.fn =</span> gsub,</span>
-<span id="cb9-423"><a href="#cb9-423" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pattern =</span> <span class="st">"(.+)"</span>, </span>
-<span id="cb9-424"><a href="#cb9-424" aria-hidden="true" tabindex="-1"></a>                     <span class="at">replacement =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">1_best"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-425"><a href="#cb9-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(paper_abbrev, eval_name),</span>
-<span id="cb9-426"><a href="#cb9-426" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(overall|adv_knowledge|methods|logic_comms|real_world|gp_relevance|open_sci|journal_predict|merits_journal)_(.+)"</span>,</span>
-<span id="cb9-427"><a href="#cb9-427" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"rating_type"</span>, <span class="st">".value"</span>))<span class="co"># one line per rating type</span></span>
+<span id="cb9-419"><a href="#cb9-419" aria-hidden="true" tabindex="-1"></a>evals_pub_long <span class="sc">%&gt;%</span> </span>
+<span id="cb9-420"><a href="#cb9-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"shinyapp/DataExplorer"</span>, <span class="st">"shiny_explorer.rds"</span>))</span>
+<span id="cb9-421"><a href="#cb9-421" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb9-422"><a href="#cb9-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-423"><a href="#cb9-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-424"><a href="#cb9-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-425"><a href="#cb9-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save data}</span></span>
+<span id="cb9-426"><a href="#cb9-426" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: savedata</span></span>
+<span id="cb9-427"><a href="#cb9-427" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "save data for others' use"</span></span>
 <span id="cb9-428"><a href="#cb9-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-429"><a href="#cb9-429" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(paper_ratings, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"shinyapp/DataExplorer"</span>, <span class="st">"shiny_explorer.rds"</span>))</span>
-<span id="cb9-430"><a href="#cb9-430" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb9-431"><a href="#cb9-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-429"><a href="#cb9-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-430"><a href="#cb9-430" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.Rdata"</span>))</span>
+<span id="cb9-431"><a href="#cb9-431" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.csv"</span>))</span>
 <span id="cb9-432"><a href="#cb9-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-433"><a href="#cb9-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-434"><a href="#cb9-434" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save data}</span></span>
-<span id="cb9-435"><a href="#cb9-435" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: savedata</span></span>
-<span id="cb9-436"><a href="#cb9-436" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "save data for others' use"</span></span>
-<span id="cb9-437"><a href="#cb9-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-433"><a href="#cb9-433" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.Rdata"</span>))</span>
+<span id="cb9-434"><a href="#cb9-434" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.csv"</span>))</span>
+<span id="cb9-435"><a href="#cb9-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-436"><a href="#cb9-436" aria-hidden="true" tabindex="-1"></a>evals_pub_long <span class="sc">%&gt;%</span> <span class="fu">write_rds</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals_long.rds"</span>))</span>
+<span id="cb9-437"><a href="#cb9-437" aria-hidden="true" tabindex="-1"></a>evals_pub_long <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals_long.csv"</span>))</span>
 <span id="cb9-438"><a href="#cb9-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-439"><a href="#cb9-439" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.Rdata"</span>))</span>
-<span id="cb9-440"><a href="#cb9-440" aria-hidden="true" tabindex="-1"></a>all_papers_p <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"all_papers_p.csv"</span>))</span>
-<span id="cb9-441"><a href="#cb9-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-442"><a href="#cb9-442" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.Rdata"</span>))</span>
-<span id="cb9-443"><a href="#cb9-443" aria-hidden="true" tabindex="-1"></a>evals_pub <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals.csv"</span>))</span>
-<span id="cb9-444"><a href="#cb9-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-445"><a href="#cb9-445" aria-hidden="true" tabindex="-1"></a>evals_pub_long <span class="sc">%&gt;%</span> <span class="fu">write_rds</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals_long.rds"</span>))</span>
-<span id="cb9-446"><a href="#cb9-446" aria-hidden="true" tabindex="-1"></a>evals_pub_long <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"evals_long.csv"</span>))</span>
-<span id="cb9-447"><a href="#cb9-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-448"><a href="#cb9-448" aria-hidden="true" tabindex="-1"></a><span class="co">#evals_pub %&gt;% readRDS(file = here("data", "evals.Rdata"))</span></span>
-<span id="cb9-449"><a href="#cb9-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-450"><a href="#cb9-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-439"><a href="#cb9-439" aria-hidden="true" tabindex="-1"></a><span class="co">#evals_pub %&gt;% readRDS(file = here("data", "evals.Rdata"))</span></span>
+<span id="cb9-440"><a href="#cb9-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-441"><a href="#cb9-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -145,9 +145,6 @@ rename_dtstuff <- function(df){
 # Need to find a way to control column width but it seems to be a problem with DT
 # https://github.com/rstudio/DT/issues/29
 
-# we didn't seem to be using all_evals_dt so I removed it to increase readability
-
-
 
 evals_pub_df <- evals_pub %>%
   # Arrange data
