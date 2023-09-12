@@ -1436,6 +1436,17 @@
       ],
       "Hash": "b25a108cbf4834be7c1b1f46ff30f888"
     },
+    "irr": {
+      "Package": "irr",
+      "Version": "0.84.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lpSolve"
+      ],
+      "Hash": "c059ff4d347eb2b6b799cc0e7b982fe6"
+    },
     "isoband": {
       "Package": "isoband",
       "Version": "0.2.7",
@@ -1668,6 +1679,13 @@
         "R"
       ],
       "Hash": "4fbd3679ec8ee169ba28d4b1ea7d0e8f"
+    },
+    "lpSolve": {
+      "Package": "lpSolve",
+      "Version": "5.6.18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "12c7a918599d5700e4265dd8a21f684f"
     },
     "lubridate": {
       "Package": "lubridate",

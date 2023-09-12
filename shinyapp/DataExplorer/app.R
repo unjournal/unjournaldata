@@ -19,7 +19,7 @@ my_pal = colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 df <- df %>% 
   group_by(paper_abbrev, rating_type) %>% 
   mutate(n_evals = n(), # number of evaluators for each paper
-         rating_mean = mean(best, na.rm = T)) %>%  # replace with aggreCAT functions later
+         rating_mean = mean(est, na.rm = T)) %>%  # replace with aggreCAT functions later
   ungroup() %>%
   nest(.by = paper_abbrev) %>% 
   mutate(paper_color = my_pal) %>% # give each paper its own color
@@ -35,7 +35,7 @@ ui <- fluidPage(
     # Application title
     titlePanel("Unjournal Evaluation Data"),
 
-    # Sidebar with a slider input for number of bins 
+    # Sidebar with plot options
     sidebarLayout(
         sidebarPanel(
             selectInput(inputId = "RatingType",
@@ -50,13 +50,14 @@ ui <- fluidPage(
               choices = unique(df$paper_abbrev),
               selected = unique(df$paper_abbrev),
               inline = FALSE,
-              width = NULL,
+              width = "200px",
               choiceNames = NULL,
               choiceValues = NULL
-            )
-        ),
+            ),
+            width = 3
+        ), fluid = F, position = "right",
 
-        # Show a plot of the generated distribution
+        # Show the plot with selected info
         mainPanel(
            plotOutput(outputId = "distPlot",
                       width = "100%")
@@ -64,7 +65,7 @@ ui <- fluidPage(
     )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw plot
 server <- function(input, output) {
 
     output$distPlot <- renderPlot({
@@ -73,15 +74,13 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
       
 
-      
-      
       # Dot plot
       df %>% 
         filter(rating_type == input$RatingType) %>% 
         filter(paper_abbrev %in% input$IncludedPapers) %>% 
         filter(!is.na(rating_mean)) %>% 
         mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) %>% 
-        ggplot(aes(x = paper_abbrev, y = best, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
+        ggplot(aes(x = paper_abbrev, y = est, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
         geom_point(aes(color = paper_color),
                    stat = "identity", size = 2, shape = 18, stroke = 1,
                    position = pd) +
@@ -98,7 +97,7 @@ server <- function(input, output) {
         scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
         scale_color_identity() # to use paper_color as colors
 
-    }, height = 600, width = 600)
+    }, height = 600, width = 700)
 }
 
 # Run the application 
