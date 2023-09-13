@@ -6,7 +6,7 @@
 #| include: false
 
 library(tidyverse)
-library(aggreCAT)
+#library(aggreCAT)
 library(here)
 library(irr)
  
@@ -203,6 +203,14 @@ evals_pub %>%
 
 ```
 
+
+<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?
+Also, wouldn’t there be some other ways of aggregating for this:
+for each metric, across all papers (comparing the relative IRRs of these)
+for all metrics across all papers 
+
+https://unjournalfriends.slack.com/archives/D05JMD2KQMP/p1694561973337029
+-->
 
 
 ## Decomposing variation, dimension reduction, simple linear models
