@@ -11,7 +11,6 @@ df <- read_rds("shiny_explorer.rds")
 
 # create a palette with a color for each paper
 color_count = df$paper_abbrev %>% unique() %>% length()
-#my_pal = distinctColorPalette(color_count)
 my_pal = colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 
 
@@ -25,44 +24,73 @@ df <- df %>%
   mutate(paper_color = my_pal) %>% # give each paper its own color
   unnest(cols = c(data))
 
-# categories
-rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
-pred_cats <- c("journal_predict", "merits_journal")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
-    # Application title
-    titlePanel("Unjournal Evaluation Data"),
-
+  
+  # Application title
+  titlePanel("Unjournal Evaluation Data"),
+  
+  tabsetPanel(
+    tabPanel(title = "Across Papers",
     # Sidebar with plot options
     sidebarLayout(
-        sidebarPanel(
-            selectInput(inputId = "RatingType",
-                        label = "Rating Type:",
-                        choices = c(rating_cats, pred_cats), 
-                        selected = "overall",
-                        multiple = F),
-            
-            checkboxGroupInput(
-              inputId = "IncludedPapers",
-              label = "Which Papers?",
-              choices = unique(df$paper_abbrev),
-              selected = unique(df$paper_abbrev),
-              inline = FALSE,
-              width = "200px",
-              choiceNames = NULL,
-              choiceValues = NULL
-            ),
-            width = 3
-        ), fluid = F, position = "right",
+      sidebarPanel(
 
+                 
+                 selectInput(inputId = "RatingType",
+                             label = "Rating Type:",
+                             choices = unique(df$rating_type), 
+                             selected = "Overall assessment",
+                             multiple = F),
+                 
+                 checkboxGroupInput(
+                   inputId = "IncludedPapers",
+                   label = "Which Papers?",
+                   choices = unique(df$paper_abbrev),
+                   selected = unique(df$paper_abbrev),
+                   inline = FALSE,
+                   width = "200px",
+                   choiceNames = NULL,
+                   choiceValues = NULL
+                 ),
+                 width = 3
+        ), fluid = F, position = "right",
+        
         # Show the plot with selected info
         mainPanel(
-           plotOutput(outputId = "distPlot",
-                      width = "100%")
-        )
-    )
+          plotOutput(outputId = "distPlot",
+                     width = "100%")
+        )#/mainPanel
+      )#/sideLayout
+    
+    
+    ),#/tabPanel
+    
+    tabPanel(title = "Individual Papers",
+             # insert shiny app here
+             # Sidebar with plot options
+             sidebarLayout(
+               sidebarPanel(
+                 
+                 selectInput(inputId = "PaperName",
+                             label = "Which paper?",
+                             choices = unique(df$paper_abbrev), 
+                             selected = "Celeb. Twitter promo, Indonesia vacc.",
+                             multiple = F, width = "300px"),
+                 
+                 width = 3
+               ), fluid = F, position = "right",
+               
+               # Show the plot with selected info
+               mainPanel(
+                 plotOutput(outputId = "paperPlot",
+                            width = "100%")
+               )#/mainPanel
+             )#/sideLayout
+             
+             )
+  )
 )
 
 # Define server logic required to draw plot
@@ -74,7 +102,7 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
       
 
-      # Dot plot
+      # All papers, one rating dot plot
       df %>% 
         filter(rating_type == input$RatingType) %>% 
         filter(paper_abbrev %in% input$IncludedPapers) %>% 
@@ -90,14 +118,43 @@ server <- function(input, output) {
                        shape = 5, size = 2, stroke = 2) +
         coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
         labs(x = "Paper", y = "Rating score",
-             title = "Scores of evaluated papers") +
+             title = "Evaluated paper scores") +
         theme_bw() +
         theme(text = element_text(size = 15)) +
         theme(legend.position = "none") +
         scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
-        scale_color_identity() # to use paper_color as colors
+        scale_color_identity() + # to use paper_color as colors
+        ylim(0,100)
 
     }, height = 600, width = 700)
+    
+    output$paperPlot <- renderPlot({
+      
+      # set one "set" of dodge width values across layers
+      pd = position_dodge(width = 0.8)
+
+      # 1 paper, all ratings dot plot
+      df %>% 
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
+        mutate(rating_type = fct_drop(rating_type)) %>% #drop unused levels
+        filter(paper_abbrev == input$PaperName) %>% 
+        ggplot(aes(x = fct_rev(rating_type), y = est, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
+        geom_point(aes(color = rating_type),
+                   stat = "identity", size = 2, shape = 18, stroke = 1,
+                   position = pd) +
+        geom_linerange(aes(ymin = lb_imp, ymax = ub_imp, color = rating_type),
+                       position = pd) +
+        coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+        labs(x = "Rating Type", y = "Rating score",
+             title = "Evaluated paper scores") +
+        theme_bw() +
+        theme(text = element_text(size = 15)) +
+        theme(legend.position = "none") +
+        scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
+        ylim(0,100)
+      
+    }, height = 600, width = 700)
+
 }
 
 # Run the application 

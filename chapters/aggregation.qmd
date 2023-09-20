@@ -159,6 +159,12 @@ aggreCAT::DistributionWAgg(expert_judgements = temp, round_2_filter = FALSE, typ
 
 ## Inter-rater reliability
 
+Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators.
+
+We use Krippendorff's alpha as a measure of interrater agreement. Krippendorff's alpha is a more flexible measure of agreement and can be used with different levels of data (categorical, ordinal, interval, and ratio) as well as different numbers of raters. The calculation of alpha in the function `kripp.alpha` was implemented by Jim Lemon in the package `irr` and is based on Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage.
+
+Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+
 ```{r}
 #| echo: false
 #| fig-height: 8
