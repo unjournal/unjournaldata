@@ -412,6 +412,16 @@ all_papers_p <- all_pub_records %>%
 #| include: false
 #| 
 evals_pub_long %>% 
+  mutate(rating_type = factor(rating_type, 
+                              levels = c(rating_cats, pred_cats),
+                              labels = c("Overall assessment",
+                                         "Advances our knowledge & practice",  
+                                         "Methods: justification, reasonableness, validity, robustness", 
+                                         "Logic and communication", 
+                                         "Engages with real-world, impact quantification",
+                                         "Relevance to global priorities",
+                                         "Open, collaborative, replicable science and methods",
+                                         "Predicted Journal", "Merits Journal"))) %>% 
   write_rds(file = here("shinyapp/DataExplorer", "shiny_explorer.rds"))
  
 ```
