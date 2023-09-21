@@ -1526,10 +1526,10 @@
     },
     "lpSolve": {
       "Package": "lpSolve",
-      "Version": "5.6.18",
+      "Version": "5.6.19",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "12c7a918599d5700e4265dd8a21f684f"
+      "Hash": "1dde7a359a18e255a35e0ae09d034be9"
     },
     "lubridate": {
       "Package": "lubridate",
