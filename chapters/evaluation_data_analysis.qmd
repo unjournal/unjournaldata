@@ -138,6 +138,8 @@ rename_dtstuff <- function(df){
 ```
 
 
+Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
+
 ::: column-body-outset    
 
 ```{r }
@@ -173,34 +175,7 @@ evals_pub_df <- evals_pub %>%
 ```
 :::
 
-\
 
-Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
-
-::: column-body-outset    
-
-```{r }
-#| label: datatable
-#| code-summary: "Data datable (all shareable relevant data)"
-
-# we didn't seem to be using all_evals_dt so I removed it to increase readability
-
-
-evals_pub %>%
-  arrange(paper_abbrev, eval_name, overall) %>%
-  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
-  rename_dtstuff %>%  
-  DT::datatable(
-    caption = "Evaluations and predictions (confidence bounds not shown)", 
-    filter = 'top',
-    rownames= FALSE,
-    options = list(pageLength = 5,
-                  columnDefs = list(list(width = '150px', targets = 0))) 
-
-    )
-
-```
-:::
 
 \ 
 
