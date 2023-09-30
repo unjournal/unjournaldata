@@ -10,7 +10,11 @@ library(tidyverse)
 library(here)
 library(irr)
  
+# add the modified DistributionWAgg function to aggregate our ratings
+source(here("code", "DistAggModified.R"))
+
 evals_pub <- read_rds(file = here("data", "evals.Rdata"))
+evals_pub_long <-read_rds(file = here("data", "evals_long.rds"))
 
 # Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
@@ -86,64 +90,44 @@ Below, we are preparing the data for the aggreCATS package.
 ```{r babys_first_ratings_agg, eval=FALSE}
 # JB: This section is a work in progress, please do not edit
 
-# paper_ratings: one row per rating category and 'type' (score, upper, lower bound.)
-evals_pub %>% 
-  select(id, eval_name, paper_abbrev, 
-         overall, overall_lb_imp, overall_ub_imp,
-         adv_knowledge, adv_knowledge_lb_imp, adv_knowledge_ub_imp,
-         methods, methods_lb_imp, methods_ub_imp,
-         logic_comms, logic_comms_lb_imp, logic_comms_ub_imp,
-         real_world, real_world_lb_imp, real_world_ub_imp,
-         gp_relevance, gp_relevance_lb_imp, gp_relevance_ub_imp,
-         open_sci, open_sci_lb_imp, open_sci_ub_imp) %>% 
-  rename_with(function(x) paste0(x,"_score"), all_of(rating_cats)) %>%
-  pivot_longer(cols = c(-id, -eval_name, -paper_abbrev),
-              names_pattern = "(.+)_(score|[ul]b_imp)",
-              names_to = c("criterion","element"),
-              values_to = "value") -> paper_ratings
+# paper_ratings: even longer dataframe (ie tidy)
+# renamed to conform to aggreCAT nomenclature
 
-# renaming to conform with aggreCATS expectations
-paper_ratings <- paper_ratings %>% 
+paper_ratings <- evals_pub_long %>% 
+  select(id, eval_name, paper_abbrev, rating_type, est, lb_imp, ub_imp) %>% 
+  filter(rating_type %in% rating_cats) %>%
   rename(paper_id = paper_abbrev,
-         user_name = eval_name) %>% 
-  mutate(round = "round_1",
-         element = case_when(element == "lb_imp" ~ "three_point_lower",
-                             element == "ub_imp" ~ "three_point_upper",
-                             element == "score" ~ "three_point_best"))
+         user_name = eval_name,
+         three_point_lower = lb_imp,
+         three_point_upper = ub_imp,
+         three_point_best = est) %>%
+  mutate(round = "round_1") %>% 
+  pivot_longer(cols = starts_with("three_point"),
+               names_to = "element",
+               values_to = "value")
 
 # filter only overall for now
+# paper_ratings %>% 
+#   filter(rating_type == "real_world") %>% 
+#   group_by(user_name, paper_id) %>% 
+#   filter(sum(is.na(value))==0) %>% 
+#   ungroup() -> temp
+
+# DistributionWAggMOD(expert_judgements = temp, round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
+
+
 paper_ratings %>% 
-  filter(criterion == "overall") %>% 
-  group_by(user_name, paper_id) %>% 
-  filter(sum(is.na(value))==0) %>% 
-  ungroup() -> temp
-  
+  group_by(rating_type, user_name, paper_id) %>% 
+  filter(sum(is.na(value))==0) %>% #remove ratings (best, ub, lb) that have NA values
+  ungroup() %>% 
+  group_by(rating_type) %>%
+  nest() -> temp
 
-AverageWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "ArMean")
+temp %>% 
+  mutate(results = map(.x = data, .f = DistributionWAggMOD))
 
-IntervalWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "IntWAgg")
 
-aggreCAT::DistributionWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
-
-# EXAMPLE CODE ===============================
-# data(data_ratings)
-# set.seed(1234)
-# 
-# participant_subset <- data_ratings %>%
-#   distinct(user_name) %>%
-#   sample_n(5) %>%
-#   mutate(participant_name = paste("participant", rep(1:n())))
-# 
-# single_claim <- data_ratings %>%
-#   filter(paper_id == "28") %>%
-#   right_join(participant_subset, by = "user_name") %>%
-#   filter(grepl(x = element, pattern = "three_.+")) %>%
-#   select(-group, -participant_name, -question)
-# 
-# DistributionWAgg(expert_judgements = single_claim,
-#             type = "DistribArMean", percent_toggle = T)
-# 
-
+DistributionWAggMOD(expert_judgements = temp$data[[5]], round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
 
 ```
 
@@ -169,7 +153,10 @@ We use Krippendorff's alpha as a measure of interrater agreement. Krippendorff's
 
 The calculation displayed below was done using the function `kripp.alpha` implemented by Jim Lemon in the package `irr` and is based on _Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage._
 
-Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+> Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+> Source: [Inter-Annotator Agreement: An Introduction to Krippendorff’s Alpha by Andrew Mauboussin](https://www.surgehq.ai/blog/inter-rater-reliability-metrics-an-introduction-to-krippendorffs-alpha)
+
+Despite the complexity of the calculations, Krippendorff’s alpha is fundamentally a Kappa-like metric. Its values range from -1 to 1, with 1 representing unanimous agreement between the raters, 0 indicating they’re guessing randomly, and negative values suggesting the raters are systematically disagreeing. (This can happen when raters value different things — for example, if rater A thinks a crowded store is a sign of success, but rater B thinks it proves understaffing and poor management). 
 
 More information about Krippendorff's alpha and links to further reading can be found [here](https://en.wikipedia.org/wiki/Krippendorff%27s_alpha).
 
@@ -216,27 +203,27 @@ evals_pub %>%
   group_by(KrippAlpha, add = T) %>% 
   summarize(Raters = n()) %>%
   ungroup() %>% 
+  filter(Raters > 1) %>% 
   ggplot(aes(x = reorder(paper_abbrev, KrippAlpha), y = KrippAlpha)) +
   geom_point(aes(color = paper_abbrev, size = Raters), 
              stat = "identity", shape = 16, stroke = 1) +
   coord_flip() +
-  labs(x = "Paper", y = "Krippendorf's Alpha") +
+  labs(x = "Paper", y = "Krippendorf's Alpha", caption = "Papers with < 2 raters no pictured") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  scale_size(breaks = c(2,3)) +
+  scale_size_identity(breaks = c(2,3), guide = "legend") +
   scale_y_continuous(limits = c(-1,1)) +
   guides(color=F)
 
 ```
 
-<!-- TODO:
-(Minor) remove the top row of the above (1 rater)
--->
 
 
-<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?
-Also, wouldn’t there be some other ways of aggregating for this:
+<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?-->
+
+
+<!-- TODO: Also, wouldn’t there be some other ways of aggregating for this:
 for each metric, across all papers (comparing the relative IRRs of these)
 for all metrics across all papers 
 
