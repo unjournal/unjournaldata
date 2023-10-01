@@ -31,7 +31,7 @@ pred_cats <- c("journal_predict", "merits_journal")
 ## Hanea et al {-}
 (Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
 
-`aggrecat` package
+`aggreCAT` package
 
 > Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.
 
@@ -85,49 +85,9 @@ We can also hold onto these aggregated metrics for later use in modeling.
 
 ### Simple rating aggregation {-}
 
-Below, we are preparing the data for the aggreCATS package.
 
-```{r babys_first_ratings_agg, eval=FALSE}
-# JB: This section is a work in progress, please do not edit
+```{r ratings_agg, eval=F, warning=FALSE}
 
-# paper_ratings: even longer dataframe (ie tidy)
-# renamed to conform to aggreCAT nomenclature
-
-paper_ratings <- evals_pub_long %>% 
-  select(id, eval_name, paper_abbrev, rating_type, est, lb_imp, ub_imp) %>% 
-  filter(rating_type %in% rating_cats) %>%
-  rename(paper_id = paper_abbrev,
-         user_name = eval_name,
-         three_point_lower = lb_imp,
-         three_point_upper = ub_imp,
-         three_point_best = est) %>%
-  mutate(round = "round_1") %>% 
-  pivot_longer(cols = starts_with("three_point"),
-               names_to = "element",
-               values_to = "value")
-
-# filter only overall for now
-# paper_ratings %>% 
-#   filter(rating_type == "real_world") %>% 
-#   group_by(user_name, paper_id) %>% 
-#   filter(sum(is.na(value))==0) %>% 
-#   ungroup() -> temp
-
-# DistributionWAggMOD(expert_judgements = temp, round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
-
-
-paper_ratings %>% 
-  group_by(rating_type, user_name, paper_id) %>% 
-  filter(sum(is.na(value))==0) %>% #remove ratings (best, ub, lb) that have NA values
-  ungroup() %>% 
-  group_by(rating_type) %>%
-  nest() -> temp
-
-temp %>% 
-  mutate(results = map(.x = data, .f = DistributionWAggMOD))
-
-
-DistributionWAggMOD(expert_judgements = temp$data[[5]], round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
 
 ```
 
