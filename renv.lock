@@ -1526,10 +1526,10 @@
     },
     "lpSolve": {
       "Package": "lpSolve",
-      "Version": "5.6.19",
+      "Version": "5.6.18",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "1dde7a359a18e255a35e0ae09d034be9"
+      "Hash": "12c7a918599d5700e4265dd8a21f684f"
     },
     "lubridate": {
       "Package": "lubridate",
@@ -2234,7 +2234,7 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.23",
+      "Version": "2.24",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2254,7 +2254,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "79f14e53725f28900d936f692bfdd69f"
+      "Hash": "3854c37590717c08c32ec8542a2e0a35"
     },
     "rnoodling": {
       "Package": "rnoodling",
@@ -2466,7 +2466,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.7.4.1",
+      "Version": "1.7.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2496,7 +2496,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "f7f201522eedbc95f10ef323b100ff29"
+      "Hash": "438b99792adbe82a8329ad8697d45afe"
     },
     "sjlabelled": {
       "Package": "sjlabelled",
