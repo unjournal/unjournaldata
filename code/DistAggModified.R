@@ -35,7 +35,7 @@ DistributionWAggMOD <- function(expert_judgements,
                             round_2_filter = {{round_2_filter}}) %>%
       dplyr::group_by(paper_id)
     
-    # create different Fx_fun and avdit_fun based on "type"
+    # create different Fx_fun and avdist_fun based on "type"
     switch(type,
            "DistribArMean" = {
              
@@ -118,7 +118,7 @@ DistributionWAggMOD <- function(expert_judgements,
              }
              
            })
-    
+
     agg_judge_df <- df  %>%
       tidyr::pivot_wider(names_from = element, values_from = value) %>%
       dplyr::mutate(
@@ -130,6 +130,16 @@ DistributionWAggMOD <- function(expert_judgements,
         three_point_lower = dplyr::if_else(
           three_point_lower == 0,
           three_point_lower + .Machine$double.eps,
+          three_point_lower
+        ),
+        three_point_best = dplyr::if_else(
+          three_point_lower == 1,
+          three_point_lower - 2*.Machine$double.eps,
+          three_point_lower
+        ),
+        three_point_best = dplyr::if_else(
+          three_point_lower == 0,
+          three_point_lower + 2*.Machine$double.eps,
           three_point_lower
         ),
         # ensure the values are in order
@@ -212,9 +222,9 @@ DistributionWAggMOD <- function(expert_judgements,
                     aggregated_judgement_90ci_ub,
                     n_experts) %>%
       dplyr::rename(
-        cs = aggregated_judgement,
-        cs_90ci_lb = aggregated_judgement_90ci_lb,
-        cs_90ci_ub = aggregated_judgement_90ci_ub
+        agg_est = aggregated_judgement,
+        agg_90ci_lb = aggregated_judgement_90ci_lb,
+        agg_90ci_ub = aggregated_judgement_90ci_ub
       )
   }
 }
