@@ -441,10 +441,12 @@ Below, we are building an interactive dashboard.^[We are working to enable a ran
 <!-- Currently this is a random Shiny app -->
 <iframe height="800" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
 
-# Todo: 
+<!-- # Todo: (@julia)
 - link the code used to generate the shiny app (or something allowing people to see how the data/statistics part iss constructed) 
-- 'merits journal' and 'predicted journal' need rescaling in the visualisation (or as a workaround, make them a separate Shiny)
-- 
+
+- 'merits journal' and 'predicted journal' need rescaling in the visualisation (or as a workaround, make them a separate Shiny) 
+
+-->
 
 
 ```
@@ -465,7 +467,7 @@ Each paper gets its own spider, with all others (or the average) in faded color 
 
 Ideally user can switch on/off 
 
-Beware -- people infer things from the shape's size
+Beware -- people may infer things from the shape's size
 
 ::: 
 
