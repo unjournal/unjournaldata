@@ -138,6 +138,8 @@ rename_dtstuff <- function(df){
 ```
 
 
+Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
+
 ::: column-body-outset    
 
 ```{r }
@@ -173,34 +175,7 @@ evals_pub_df <- evals_pub %>%
 ```
 :::
 
-\
 
-Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
-
-::: column-body-outset    
-
-```{r }
-#| label: datatable
-#| code-summary: "Data datable (all shareable relevant data)"
-
-# we didn't seem to be using all_evals_dt so I removed it to increase readability
-
-
-evals_pub %>%
-  arrange(paper_abbrev, eval_name, overall) %>%
-  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats))  %>%
-  rename_dtstuff %>%  
-  DT::datatable(
-    caption = "Evaluations and predictions (confidence bounds not shown)", 
-    filter = 'top',
-    rownames= FALSE,
-    options = list(pageLength = 5,
-                  columnDefs = list(list(width = '150px', targets = 0))) 
-
-    )
-
-```
-:::
 
 \ 
 
@@ -466,10 +441,12 @@ Below, we are building an interactive dashboard.^[We are working to enable a ran
 <!-- Currently this is a random Shiny app -->
 <iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
 
-# Todo: 
+<!-- # Todo: (@julia)
 - link the code used to generate the shiny app (or something allowing people to see how the data/statistics part iss constructed) 
-- 'merits journal' and 'predicted journal' need rescaling in the visualisation (or as a workaround, make them a separate Shiny)
-- 
+
+- 'merits journal' and 'predicted journal' need rescaling in the visualisation (or as a workaround, make them a separate Shiny) 
+
+-->
 
 
 ```
@@ -490,7 +467,7 @@ Each paper gets its own spider, with all others (or the average) in faded color 
 
 Ideally user can switch on/off 
 
-Beware -- people infer things from the shape's size
+Beware -- people may infer things from the shape's size
 
 ::: 
 
