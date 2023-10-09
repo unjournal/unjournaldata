@@ -50,7 +50,8 @@ Below, the evaluation data is input from an Airtable, which itself was largely h
 #| label: input_at
 #| code-summary: "input from airtable"
    
-base_id <- "appbPYEw9nURln7Qg"
+#base_id <- "appbPYEw9nURln7Qg"
+base_id <- "applDG6ifmUmeEJ7j" #new ID to cover "UJ - research & core members" base
 
 
 # Set your Airtable API key 
@@ -62,7 +63,7 @@ Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_API_KEY"))
 evals <- air_get(base = base_id, "output_eval") 
 
 all_pub_records <- data.frame()
-pub_records <- air_select(base = base_id, table = "crucial_research")
+pub_records <- air_select(base = base_id, table = "crucial_rsx")
 
 # Append the records to the list
 all_pub_records <- bind_rows(all_pub_records, pub_records)
@@ -73,7 +74,7 @@ while(nrow(pub_records) == 100) {
   offset <- get_offset(pub_records)
   
   # Fetch the next 100 records, starting after the last ID
-  pub_records <- air_select(base = base_id, table = "crucial_research", offset =  offset)
+  pub_records <- air_select(base = base_id, table = "crucial_rsx", offset =  offset)
   
   # Append the records to the df
   all_pub_records <- bind_rows(all_pub_records, pub_records)
