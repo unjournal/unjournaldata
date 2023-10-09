@@ -8,6 +8,7 @@ library(RColorBrewer)
 
 # Import data
 df <- read_rds("shiny_explorer.rds")
+# df <- read_rds("./shinyapp/DataExplorer/shiny_explorer.rds")
 
 # create a palette with a color for each paper
 color_count = df$paper_abbrev %>% unique() %>% length()
@@ -43,7 +44,14 @@ ui <- fluidPage(
                              choices = unique(df$rating_type), 
                              selected = "Overall assessment",
                              multiple = F),
-                 
+                 hr(),
+                 checkboxInput(inputId = "ToggleMean",
+                               label = "Show aggregated rating",
+                               value = FALSE),
+                 checkboxInput(inputId = "ToggleRange",
+                               label = "Show aggregated range",
+                               value = FALSE),
+                 hr(),
                  checkboxGroupInput(
                    inputId = "IncludedPapers",
                    label = "Which Papers?",
@@ -54,6 +62,7 @@ ui <- fluidPage(
                    choiceNames = NULL,
                    choiceValues = NULL
                  ),
+
                  width = 3
         ), fluid = F, position = "right",
         
@@ -78,6 +87,13 @@ ui <- fluidPage(
                              choices = unique(df$paper_abbrev), 
                              selected = "Celeb. Twitter promo, Indonesia vacc.",
                              multiple = F, width = "300px"),
+                 hr(),
+                 checkboxInput(inputId = "ToggleMean2",
+                               label = "Show aggregated rating",
+                               value = FALSE),
+                 checkboxInput(inputId = "ToggleRange2",
+                               label = "Show aggregated range",
+                               value = FALSE),
                  
                  width = 3
                ), fluid = F, position = "right",
@@ -102,8 +118,8 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
       
 
-      # All papers, one rating dot plot
-      df %>% 
+      # All papers, one rating dot plot ========================================
+      p <- df %>% 
         filter(rating_type == input$RatingType) %>% 
         filter(paper_abbrev %in% input$IncludedPapers) %>% 
         filter(!is.na(rating_mean)) %>% 
@@ -114,8 +130,6 @@ server <- function(input, output) {
                    position = pd) +
         geom_linerange(aes(ymin = lb_imp, ymax = ub_imp, color = paper_color),
                        position = pd) +
-        geom_point(aes(x = paper_abbrev, y = rating_mean),
-                       shape = 5, size = 2, stroke = 2) +
         coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
         labs(x = "Paper", y = "Rating score",
              title = "Evaluated paper scores") +
@@ -125,6 +139,11 @@ server <- function(input, output) {
         scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
         scale_color_identity() + # to use paper_color as colors
         ylim(0,100)
+      
+      if(input$ToggleMean){p = p + geom_point(aes(x = paper_abbrev, y = agg_est), shape = 5, size = 2, stroke = 2, alpha = .1)}
+      if(input$ToggleRange){p = p + geom_linerange(aes(ymin = agg_90ci_lb, ymax = agg_90ci_ub), size = 2, alpha = .1)}
+      
+      p
 
     }, height = 600, width = 700)
     
@@ -133,8 +152,8 @@ server <- function(input, output) {
       # set one "set" of dodge width values across layers
       pd = position_dodge(width = 0.8)
 
-      # 1 paper, all ratings dot plot
-      df %>% 
+      # 1 paper, all ratings dot plot ===================================
+      p <- df %>% 
         filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
         mutate(rating_type = fct_drop(rating_type)) %>% #drop unused levels
         filter(paper_abbrev == input$PaperName) %>% 
@@ -152,6 +171,11 @@ server <- function(input, output) {
         theme(legend.position = "none") +
         scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
         ylim(0,100)
+      
+      if(input$ToggleMean2){p = p + geom_point(aes(x = fct_rev(rating_type), y = agg_est), shape = 5, size = 2, stroke = 2, alpha = .1)}
+      if(input$ToggleRange2){p = p + geom_linerange(aes(ymin = agg_90ci_lb, ymax = agg_90ci_ub), size = 2, alpha = .1)}
+      
+      p
       
     }, height = 600, width = 700)
 
