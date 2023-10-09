@@ -169,12 +169,15 @@ We use Krippendorff's alpha as a measure of interrater agreement. Krippendorff's
 
 The calculation displayed below was done using the function `kripp.alpha` implemented by Jim Lemon in the package `irr` and is based on _Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage._
 
+<!-- Todo/note: DR - I don't care so much about the package -->
+
 Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+
+<!-- Todo/note: DR - So how does it differ from the Pearson correlation coefficient?  The explanation above says sort of obvious things. I was looking more for some mathematical intuition. What is the fundamental model behind this alpha? Is there any 'story' that explains a value of 0.25 vs 0.5 etc? Which levels are 'strong' in what sense? E.g., is 0.8 a good value... and in what sense?-->
 
 More information about Krippendorff's alpha and links to further reading can be found [here](https://en.wikipedia.org/wiki/Krippendorff%27s_alpha).
 
 :::
-
 
 
 <!-- Todo
