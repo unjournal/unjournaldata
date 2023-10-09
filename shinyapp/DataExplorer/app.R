@@ -41,7 +41,7 @@ ui <- fluidPage(
                  
                  selectInput(inputId = "RatingType",
                              label = "Rating Type:",
-                             choices = unique(df$rating_type), 
+                             choices = df$rating_type[!grepl(x = df$rating_type, pattern = "Journal$")] %>% unique() %>% as.character(), 
                              selected = "Overall assessment",
                              multiple = F),
                  hr(),
@@ -50,6 +50,10 @@ ui <- fluidPage(
                                value = FALSE),
                  checkboxInput(inputId = "ToggleRange",
                                label = "Show aggregated range",
+                               value = FALSE),
+                 hr(),
+                 checkboxInput(inputId = "ToggleNonAnonymous",
+                               label = "Show only evals by Anon",
                                value = FALSE),
                  hr(),
                  checkboxGroupInput(
@@ -105,7 +109,32 @@ ui <- fluidPage(
                )#/mainPanel
              )#/sideLayout
              
-             )
+             ),
+    tabPanel(title = "Journal Ratings",
+             
+             sidebarLayout(
+               sidebarPanel(
+                 
+                 checkboxGroupInput(
+                   inputId = "IncludedPapers2",
+                   label = "Which Papers?",
+                   choices = unique(df$paper_abbrev),
+                   selected = unique(df$paper_abbrev),
+                   inline = FALSE,
+                   width = "200px",
+                   choiceNames = NULL,
+                   choiceValues = NULL
+                 ),
+                 width = 3
+               ), fluid = F, position = "right",
+               
+               # Show the plot with selected info
+               mainPanel(
+                 plotOutput(outputId = "journalPlot",
+                            width = "100%")
+               )#/mainPanel
+             )#/sideLayout
+        )#/journal ratings
   )
 )
 
@@ -117,9 +146,13 @@ server <- function(input, output) {
       # set one "set" of dodge width values across layers
       pd = position_dodge(width = 0.8)
       
+      if(input$ToggleNonAnonymous){included_evals = df$eval_name[str_starts(df$eval_name, "Anon")]} 
+      else {included_evals = df$eval_name} 
+      
 
       # All papers, one rating dot plot ========================================
       p <- df %>% 
+        filter(eval_name %in% included_evals) %>% 
         filter(rating_type == input$RatingType) %>% 
         filter(paper_abbrev %in% input$IncludedPapers) %>% 
         filter(!is.na(rating_mean)) %>% 
@@ -176,6 +209,41 @@ server <- function(input, output) {
       if(input$ToggleRange2){p = p + geom_linerange(aes(ymin = agg_90ci_lb, ymax = agg_90ci_ub), size = 2, alpha = .1)}
       
       p
+      
+    }, height = 600, width = 700)
+    
+    output$journalPlot <- renderPlot({
+      
+      # set one "set" of dodge width values across layers
+      pd = position_dodge(width = 0.8)
+      
+      # All papers, journal information ========================================
+      df %>% 
+        filter(rating_type %in% c("Merits Journal", "Predicted Journal")) %>% 
+        filter(paper_abbrev %in% input$IncludedPapers2) %>% 
+        filter(!is.na(rating_mean)) %>% 
+        mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) %>% 
+        select(paper_abbrev, eval_name, rating_type, est, paper_color) %>% 
+        pivot_wider(names_from = rating_type, values_from = est) %>%
+        ggplot(aes(x = paper_abbrev, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
+        geom_point(aes(y = `Merits Journal`, color = paper_color, shape = "Merits Journal"),
+                   stat = "identity", size = 2, stroke = 2,
+                   position = pd) +
+        geom_point(aes(y = `Predicted Journal`, color = paper_color, shape = "Predicted Journal"),
+                   stat = "identity", size = 2, stroke = 2,
+                   position = pd) +
+        geom_linerange(aes(ymin = `Merits Journal`, ymax = `Predicted Journal`, color = paper_color), position = pd) +
+        coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+        labs(x = "Paper", y = "Rating score",
+             title = "Evaluated paper scores",
+             shape = "Rating") +
+        theme_bw() +
+        theme(text = element_text(size = 15)) +
+        theme(legend.position = "bottom") +
+        scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
+        scale_color_identity() + # to use paper_color as colors
+        scale_shape_manual(values = c("Merits Journal" = 3, "Predicted Journal" = 4)) +
+        ylim(1,5)
       
     }, height = 600, width = 700)
 
