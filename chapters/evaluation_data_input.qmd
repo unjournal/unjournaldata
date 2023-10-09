@@ -442,7 +442,7 @@ paper_agg_ratings <- paper_ratings %>%
   select(-data) %>% 
   select(paper_id, rating_type, everything()) %>%   
   arrange(paper_id) %>% 
-  mutate(across(.cols = starts_with("cs"), .fns = ~.x*100)) %>% 
+  mutate(across(.cols = c("agg_est", "agg_90ci_lb", "agg_90ci_ub"), .fns = ~.x*100)) %>% 
   rename(agg_method = method)
 
 rm(paper_ratings)
