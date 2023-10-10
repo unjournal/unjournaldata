@@ -439,7 +439,7 @@ Below, we are building an interactive dashboard.^[We are working to enable a ran
 
 ```{=html}
 <!-- Currently this is a random Shiny app -->
-<iframe height="800" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
+<iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
 
 <!-- # Todo: (@julia)
 - link the code used to generate the shiny app (or something allowing people to see how the data/statistics part iss constructed) 

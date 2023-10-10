@@ -10,7 +10,11 @@ library(tidyverse)
 library(here)
 library(irr)
  
+# add the modified DistributionWAgg function to aggregate our ratings
+source(here("code", "DistAggModified.R"))
+
 evals_pub <- read_rds(file = here("data", "evals.Rdata"))
+evals_pub_long <-read_rds(file = here("data", "evals_long.rds"))
 
 # Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
@@ -27,7 +31,7 @@ pred_cats <- c("journal_predict", "merits_journal")
 ## Hanea et al {-}
 (Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
 
-`aggrecat` package
+`aggreCAT` package
 
 > Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.
 
@@ -81,68 +85,8 @@ We can also hold onto these aggregated metrics for later use in modeling.
 
 ### Simple rating aggregation {-}
 
-Below, we are preparing the data for the aggreCATS package.
 
-```{r babys_first_ratings_agg, eval=FALSE}
-# JB: This section is a work in progress, please do not edit
-
-# paper_ratings: one row per rating category and 'type' (score, upper, lower bound.)
-evals_pub %>% 
-  select(id, eval_name, paper_abbrev, 
-         overall, overall_lb_imp, overall_ub_imp,
-         adv_knowledge, adv_knowledge_lb_imp, adv_knowledge_ub_imp,
-         methods, methods_lb_imp, methods_ub_imp,
-         logic_comms, logic_comms_lb_imp, logic_comms_ub_imp,
-         real_world, real_world_lb_imp, real_world_ub_imp,
-         gp_relevance, gp_relevance_lb_imp, gp_relevance_ub_imp,
-         open_sci, open_sci_lb_imp, open_sci_ub_imp) %>% 
-  rename_with(function(x) paste0(x,"_score"), all_of(rating_cats)) %>%
-  pivot_longer(cols = c(-id, -eval_name, -paper_abbrev),
-              names_pattern = "(.+)_(score|[ul]b_imp)",
-              names_to = c("criterion","element"),
-              values_to = "value") -> paper_ratings
-
-# renaming to conform with aggreCATS expectations
-paper_ratings <- paper_ratings %>% 
-  rename(paper_id = paper_abbrev,
-         user_name = eval_name) %>% 
-  mutate(round = "round_1",
-         element = case_when(element == "lb_imp" ~ "three_point_lower",
-                             element == "ub_imp" ~ "three_point_upper",
-                             element == "score" ~ "three_point_best"))
-
-# filter only overall for now
-paper_ratings %>% 
-  filter(criterion == "overall") %>% 
-  group_by(user_name, paper_id) %>% 
-  filter(sum(is.na(value))==0) %>% 
-  ungroup() -> temp
-  
-
-AverageWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "ArMean")
-
-IntervalWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "IntWAgg")
-
-aggreCAT::DistributionWAgg(expert_judgements = temp, round_2_filter = FALSE, type = "DistribArMean", percent_toggle = T)
-
-# EXAMPLE CODE ===============================
-# data(data_ratings)
-# set.seed(1234)
-# 
-# participant_subset <- data_ratings %>%
-#   distinct(user_name) %>%
-#   sample_n(5) %>%
-#   mutate(participant_name = paste("participant", rep(1:n())))
-# 
-# single_claim <- data_ratings %>%
-#   filter(paper_id == "28") %>%
-#   right_join(participant_subset, by = "user_name") %>%
-#   filter(grepl(x = element, pattern = "three_.+")) %>%
-#   select(-group, -participant_name, -question)
-# 
-# DistributionWAgg(expert_judgements = single_claim,
-#             type = "DistribArMean", percent_toggle = T)
-# 
+```{r ratings_agg, eval=F, warning=FALSE}
 
 
 ```
@@ -169,9 +113,12 @@ We use Krippendorff's alpha as a measure of interrater agreement. Krippendorff's
 
 The calculation displayed below was done using the function `kripp.alpha` implemented by Jim Lemon in the package `irr` and is based on _Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage._
 
-<!-- Todo/note: DR - I don't care so much about the package -->
+> Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+> Source: [Inter-Annotator Agreement: An Introduction to Krippendorff’s Alpha by Andrew Mauboussin](https://www.surgehq.ai/blog/inter-rater-reliability-metrics-an-introduction-to-krippendorffs-alpha)
 
-Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+Despite the complexity of the calculations, Krippendorff’s alpha is fundamentally a Kappa-like metric. Its values range from -1 to 1, with 1 representing unanimous agreement between the raters, 0 indicating they’re guessing randomly, and negative values suggesting the raters are systematically disagreeing. (This can happen when raters value different things — for example, if rater A thinks a crowded store is a sign of success, but rater B thinks it proves understaffing and poor management). 
+
+<!-- Todo/note: DR - I don't care so much about the package -->
 
 <!-- Todo/note: DR - So how does it differ from the Pearson correlation coefficient?  The explanation above says sort of obvious things. I was looking more for some mathematical intuition. What is the fundamental model behind this alpha? Is there any 'story' that explains a value of 0.25 vs 0.5 etc? Which levels are 'strong' in what sense? E.g., is 0.8 a good value... and in what sense?-->
 
@@ -219,27 +166,27 @@ evals_pub %>%
   group_by(KrippAlpha, add = T) %>% 
   summarize(Raters = n()) %>%
   ungroup() %>% 
+  filter(Raters > 1) %>% 
   ggplot(aes(x = reorder(paper_abbrev, KrippAlpha), y = KrippAlpha)) +
   geom_point(aes(color = paper_abbrev, size = Raters), 
              stat = "identity", shape = 16, stroke = 1) +
   coord_flip() +
-  labs(x = "Paper", y = "Krippendorf's Alpha") +
+  labs(x = "Paper", y = "Krippendorf's Alpha", caption = "Papers with < 2 raters no pictured") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  scale_size(breaks = c(2,3)) +
+  scale_size_identity(breaks = c(2,3), guide = "legend") +
   scale_y_continuous(limits = c(-1,1)) +
   guides(color=F)
 
 ```
 
-<!-- TODO:
-(Minor) remove the top row of the above (1 rater)
--->
 
 
-<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?
-Also, wouldn’t there be some other ways of aggregating for this:
+<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?-->
+
+
+<!-- TODO: Also, wouldn’t there be some other ways of aggregating for this:
 for each metric, across all papers (comparing the relative IRRs of these)
 for all metrics across all papers 
 
