@@ -36,6 +36,17 @@
       ],
       "Hash": "ab745834dfae7eaf71dd0b90f3b66759"
     },
+    "GoFKernel": {
+      "Package": "GoFKernel",
+      "Version": "2.1-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "KernSmooth",
+        "stats"
+      ],
+      "Hash": "fcfde62a0ba86bdb8fd6d2b900eb4713"
+    },
     "KernSmooth": {
       "Package": "KernSmooth",
       "Version": "2.23-22",
@@ -78,6 +89,41 @@
       ],
       "Hash": "38082d362d317745fb932e13956dccbb"
     },
+    "R2WinBUGS": {
+      "Package": "R2WinBUGS",
+      "Version": "2.1-21",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "boot",
+        "coda",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "2cbec2a33f7d007f5507b82eb21bbc01"
+    },
+    "R2jags": {
+      "Package": "R2jags",
+      "Version": "0.7-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R2WinBUGS",
+        "abind",
+        "coda",
+        "grDevices",
+        "graphics",
+        "methods",
+        "parallel",
+        "rjags",
+        "stats",
+        "utils"
+      ],
+      "Hash": "c60fd6e7f56556a7631804c8fa9b9180"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -118,6 +164,65 @@
         "R"
       ],
       "Hash": "0cf10dab0d023d5b46a5a14387556891"
+    },
+    "VGAM": {
+      "Package": "VGAM",
+      "Version": "1.1-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "splines",
+        "stats",
+        "stats4"
+      ],
+      "Hash": "71619ea0f73b03741c5bc1ed7195ce82"
+    },
+    "abind": {
+      "Package": "abind",
+      "Version": "1.4-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "4f57884290cc75ab22f4af9e9d4ca862"
+    },
+    "aggreCAT": {
+      "Package": "aggreCAT",
+      "Version": "0.0.0.9004",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "metamelb-repliCATS",
+      "RemoteRepo": "aggreCAT",
+      "RemoteRef": "master",
+      "RemoteSha": "773617e4543d7287b0fca4a507ba4c94ee8f5e60",
+      "Remotes": "softloud/neet",
+      "Requirements": [
+        "GoFKernel",
+        "R",
+        "R2jags",
+        "VGAM",
+        "cli",
+        "coda",
+        "crayon",
+        "dplyr",
+        "ggplot2",
+        "insight",
+        "magrittr",
+        "mathjaxr",
+        "precrec",
+        "purrr",
+        "rfUtilities",
+        "stringr",
+        "tibble",
+        "tidyr"
+      ],
+      "Hash": "11c162183f6e2871d23451cf43196916"
     },
     "airtabler": {
       "Package": "airtabler",
@@ -228,6 +333,18 @@
         "yaml"
       ],
       "Hash": "25e3e995e30c235ea6fcc76677efbe27"
+    },
+    "boot": {
+      "Package": "boot",
+      "Version": "1.3-28.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "graphics",
+        "stats"
+      ],
+      "Hash": "9a052fbcbe97a98ceb18dbfd30ebd96e"
     },
     "brew": {
       "Package": "brew",
@@ -369,6 +486,31 @@
         "vctrs"
       ],
       "Hash": "3d8a84cdf9f6f8564531c49b70f3833d"
+    },
+    "cluster": {
+      "Package": "cluster",
+      "Version": "2.1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "5edbbabab6ce0bf7900a74fd4358628e"
+    },
+    "coda": {
+      "Package": "coda",
+      "Version": "0.19-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice"
+      ],
+      "Hash": "24b6d006b8b2343876cf230687546932"
     },
     "codetools": {
       "Package": "codetools",
@@ -1021,6 +1163,20 @@
       "Repository": "CRAN",
       "Hash": "7a0051eef852c301b5efe2f7913dd45f"
     },
+    "gridExtra": {
+      "Package": "gridExtra",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "grDevices",
+        "graphics",
+        "grid",
+        "gtable",
+        "utils"
+      ],
+      "Hash": "7d7f283939f563670a697165b2cf5560"
+    },
     "gridtext": {
       "Package": "gridtext",
       "Version": "0.1.5",
@@ -1526,10 +1682,10 @@
     },
     "lpSolve": {
       "Package": "lpSolve",
-      "Version": "5.6.19",
+      "Version": "5.6.18",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "1dde7a359a18e255a35e0ae09d034be9"
+      "Hash": "12c7a918599d5700e4265dd8a21f684f"
     },
     "lubridate": {
       "Package": "lubridate",
@@ -1566,6 +1722,13 @@
         "xfun"
       ],
       "Hash": "0ffaea87c070a56d140ce00b0727b278"
+    },
+    "mathjaxr": {
+      "Package": "mathjaxr",
+      "Version": "1.6-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "87da6ccdcee6077a7d5719406bf3ae45"
     },
     "memoise": {
       "Package": "memoise",
@@ -1874,6 +2037,26 @@
       "Repository": "CRAN",
       "Hash": "a555924add98c99d2f411e37e7d25e9f"
     },
+    "precrec": {
+      "Package": "precrec",
+      "Version": "0.14.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "assertthat",
+        "data.table",
+        "ggplot2",
+        "graphics",
+        "grid",
+        "gridExtra",
+        "methods",
+        "rlang",
+        "withr"
+      ],
+      "Hash": "c76be31aa2d6d8a6cca9f6221bf57e5d"
+    },
     "prettyunits": {
       "Package": "prettyunits",
       "Version": "1.1.1",
@@ -2021,6 +2204,17 @@
         "textshaping"
       ],
       "Hash": "690bc058ea2b1b8a407d3cfe3dce3ef9"
+    },
+    "randomForest": {
+      "Package": "randomForest",
+      "Version": "4.7-1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "stats"
+      ],
+      "Hash": "b52825075358b1ebd159e262bf40649d"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -2221,6 +2415,29 @@
       ],
       "Hash": "5677ce017e5f2a9b540a1b15f9d2be13"
     },
+    "rfUtilities": {
+      "Package": "rfUtilities",
+      "Version": "2.1-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cluster",
+        "randomForest"
+      ],
+      "Hash": "05aefb3e9673edbe7fbcd0ddce3cbf04"
+    },
+    "rjags": {
+      "Package": "rjags",
+      "Version": "4-14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "coda"
+      ],
+      "Hash": "dc00e7bcbec8cd953930ec12fc9c8819"
+    },
     "rlang": {
       "Package": "rlang",
       "Version": "1.1.1",
@@ -2234,7 +2451,7 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.23",
+      "Version": "2.24",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2254,7 +2471,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "79f14e53725f28900d936f692bfdd69f"
+      "Hash": "3854c37590717c08c32ec8542a2e0a35"
     },
     "rnoodling": {
       "Package": "rnoodling",
@@ -2466,7 +2683,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.7.4.1",
+      "Version": "1.7.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2496,7 +2713,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "f7f201522eedbc95f10ef323b100ff29"
+      "Hash": "438b99792adbe82a8329ad8697d45afe"
     },
     "sjlabelled": {
       "Package": "sjlabelled",
