@@ -377,7 +377,8 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
-- For each category and prediction (overall and by paper)
+Below, for each category and prediction (overall and by paper):
+
 ```{r CI_bounds}
 
 # evals_pub %>% 
@@ -444,24 +445,35 @@ Below, we are building an interactive dashboard.^[We are working to enable a ran
 <!-- # Todo: (@julia)
 - link the code used to generate the shiny app (or something allowing people to see how the data/statistics part iss constructed) 
 
-- 'merits journal' and 'predicted journal' need rescaling in the visualisation (or as a workaround, make them a separate Shiny) 
 
 -->
 
 
 ```
 
+::: {.callout-note collapse="true"}
+## Notes, clarifications, and caveats on the above dashboard
+
+1. The aggregated ratings and ranges seem to not yet be computed properly
+
+2. In the 'journal ratings' view, the stars/asterisks are used when the 'predicted' and 'merited' ratings are the same
+
+::: 
+
+
 You can see this dashboard on it's own hosted [here](https://unjournal.shinyapps.io/DataExplorer/).
 
 :::
+
+<!-- todo (DR @julia) make the spider plots easier to compare across papers (see slack thread) -->
+
 
 ::: {.callout-note collapse="true"}
 ## Future vis
 
 Spider or radial chart 
 
-Each rating is a dimension or attribute (potentially normalized)
-potentially superimpose a 'circle' for the suggested weighting or overall. 
+Each rating is a dimension or attribute (potentially normalized) potentially superimpose a 'circle' for the suggested weighting or overall. 
 
 Each paper gets its own spider, with all others (or the average) in faded color behind it as a comparator. 
 
