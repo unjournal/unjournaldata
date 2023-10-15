@@ -868,6 +868,16 @@
       "Repository": "CRAN",
       "Hash": "38ec653c2613bed60052ba3787bd8a2c"
     },
+    "fmsb": {
+      "Package": "fmsb",
+      "Version": "0.7.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "c0b222e752e47b20c4fc2c026560e116"
+    },
     "fontawesome": {
       "Package": "fontawesome",
       "Version": "0.5.1",

@@ -20,6 +20,7 @@ library(DT) # R interface to DataTables library (JavaScript)
 # dataviz ----
 library(ggrepel)
 library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+library(RColorBrewer)  # for color palettes
 
 # others ----
 library(here) # A Simpler Way to Find Your Files
@@ -340,8 +341,6 @@ evals_pub %>%
 ```{r data clean}
 # JB: Most of these should probably be cleaned in data storage
 
-library(RColorBrewer)  # for color palettes
-
 # paper statuses that are considered "being evaluated"
 eval_true = c("published", 
               "contacting/awaiting_authors_response_to_evaluation",
@@ -377,15 +376,7 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
-Below, for each category and prediction (overall and by paper):
-
-```{r CI_bounds}
-
-# evals_pub %>% 
-#   select(matches("overall")) %>% 
-#   view()
-
-```
+Below, for each category and prediction (overall and by paper). Evaluations made by anonymous reviewers are marked with a black border around the rating.
 
 
 ::: column-body-outset
@@ -399,28 +390,33 @@ color_count <- length(unique(evals_pub$paper_abbrev))
 color_palette <- colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 
 # set one "set" of dodge width values across layers
-pd = position_dodge(width = 0.8)
+pd = position_dodge2(width = 0.8)
 
 # Dot plot
 g1 <- evals_pub %>% 
-  ggplot(aes(x = paper_abbrev, y = overall, 
+  mutate(AnonEval = str_detect(eval_name, "Anonymous")) %>%
+  ggplot(aes(x = paper_abbrev, y = overall, group = paper_abbrev, 
              text = paste0('Evaluator: ', eval_name,   # tooltip data
                            '<br>Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
   geom_point(aes(color = paper_abbrev), 
-             stat = "identity", size = 2, shape = 18, stroke = 1, 
-             position = pd) +
-  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = paper_abbrev), 
-                 position = pd) +
-  geom_text(data = subset(evals_pub, str_detect(eval_name, "Anonymous")),
-            aes(label = "anon."), size=3) +
+             stat = "identity", size = 2, shape = 18, stroke = 1, position = pd) +
+  geom_point(aes(alpha = AnonEval),
+             stat = "identity", size = 2.5, shape = 5, stroke = .5, position = pd, color = "black") +
+  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = paper_abbrev), position = pd) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   labs(x = "Paper", y = "Overall score",
        title = "Overall scores of evaluated papers") +
   theme_bw() +
   theme(text = element_text(size = 15)) +
-  theme(legend.position = "none") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) + 
-    scale_color_manual(values = color_palette)
+  scale_color_manual(values = c(color_palette)) +
+  scale_alpha_manual(name = "Anonymous evaluator?", guide = "legend", 
+                     values = c(.1,1), labels = c("No","Yes")) +
+  guides(color = F, alpha = guide_legend()) +
+  theme(legend.position = "none")
+
+
+
 
 
 ggplotly(g1, tooltip = c("text"))
