@@ -21,7 +21,7 @@ my_pal = colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 df <- df %>% 
   group_by(paper_abbrev, rating_type) %>% 
   mutate(n_evals = n(), # number of evaluators for each paper
-         rating_mean = mean(est, na.rm = T)) %>%  # replace with aggreCAT functions later
+         rating_mean = mean(est, na.rm = T)) %>%  # TODO: replace with aggreCAT functions later
   ungroup() %>%
   nest(.by = paper_abbrev) %>% 
   mutate(paper_color = my_pal) %>% # give each paper its own color

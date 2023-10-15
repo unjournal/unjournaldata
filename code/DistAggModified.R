@@ -133,14 +133,14 @@ DistributionWAggMOD <- function(expert_judgements,
           three_point_lower
         ),
         three_point_best = dplyr::if_else(
-          three_point_lower == 1,
-          three_point_lower - 2*.Machine$double.eps,
-          three_point_lower
+          three_point_best == 1,
+          three_point_best - 2*.Machine$double.eps,
+          three_point_best
         ),
         three_point_best = dplyr::if_else(
-          three_point_lower == 0,
-          three_point_lower + 2*.Machine$double.eps,
-          three_point_lower
+          three_point_best == 0,
+          three_point_best + 2*.Machine$double.eps,
+          three_point_best
         ),
         # ensure the values are in order
         three_point_upper = dplyr::if_else(
