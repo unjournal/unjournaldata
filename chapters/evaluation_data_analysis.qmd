@@ -376,7 +376,7 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
-Below, for each category and prediction (overall and by paper). Evaluations made by anonymous reviewers are marked with a black border around the rating.
+Below, for each category and prediction (overall and by paper). Evaluations made by anonymous reviewers are marked with a black border around the rating. Papers are arranged in descending order of average overall score.
 
 
 ::: column-body-outset
@@ -395,7 +395,10 @@ pd = position_dodge2(width = 0.8)
 # Dot plot
 g1 <- evals_pub %>% 
   mutate(AnonEval = str_detect(eval_name, "Anonymous")) %>%
-  ggplot(aes(x = paper_abbrev, y = overall, group = paper_abbrev, 
+  group_by(paper_abbrev) %>% 
+  mutate(AvgOverall = mean(overall)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = reorder(paper_abbrev, AvgOverall), y = overall, group = paper_abbrev, 
              text = paste0('Evaluator: ', eval_name,   # tooltip data
                            '<br>Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
   geom_point(aes(color = paper_abbrev), 
@@ -423,7 +426,12 @@ ggplotly(g1, tooltip = c("text"))
 
 #TODO: 
 # - Improve the 'anon' super/subscript on the bars (or do something else that allows us to quickly see which ones were anonymous)
-# - Sort by average evaluation score
+# JB: I edited it so the anonymous evaluations have a black outline. I think it looks better but the main problem
+# is that plotly breaks the legend and caption information from ggplot, so I can't find a way to convey that information,
+# either as a caption or as a legend. For the legend to show up, I would need to turn off the plotly elements,
+# which would remove the floaty hover-over labels with evaluator names and values+CIs. Happy to make the change if
+# you think that's better.
+
 
 ```
 :::
