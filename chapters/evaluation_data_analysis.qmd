@@ -376,7 +376,7 @@ ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) +
 Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
 
 
-Below, for each category and prediction (overall and by paper). Evaluations made by anonymous reviewers are marked with a black border around the rating. Papers are arranged in descending order of average overall score.
+Below we present these, for each category and prediction (overall and by paper). Papers are arranged in descending order of average overall score. *Note that evaluations made by anonymous reviewers are marked with a black border around the rating.*
 
 
 ::: column-body-outset
@@ -404,7 +404,7 @@ g1 <- evals_pub %>%
   geom_point(aes(color = paper_abbrev), 
              stat = "identity", size = 2, shape = 18, stroke = 1, position = pd) +
   geom_point(aes(alpha = AnonEval),
-             stat = "identity", size = 2.5, shape = 5, stroke = .5, position = pd, color = "black") +
+             stat = "identity", size = 3, shape = 5, stroke = .75, position = pd, color = "black") +
   geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = paper_abbrev), position = pd) +
   coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
   labs(x = "Paper", y = "Overall score",
