@@ -21,7 +21,7 @@ my_pal = colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 df <- df %>% 
   group_by(paper_abbrev, rating_type) %>% 
   mutate(n_evals = n(), # number of evaluators for each paper
-         rating_mean = mean(est, na.rm = T)) %>%  # replace with aggreCAT functions later
+         rating_mean = mean(est, na.rm = T)) %>%  # TODO: replace with aggreCAT functions later
   ungroup() %>%
   nest(.by = paper_abbrev) %>% 
   mutate(paper_color = my_pal) %>% # give each paper its own color
@@ -137,7 +137,7 @@ ui <- fluidPage(
              )#/sideLayout
         ),#/journal ratings
     
-    tabPanel(title = "Spider Plots",
+    tabPanel(title = "Side-by-side Spider Plots",
              
              fluidRow(
                column(6, 
@@ -166,7 +166,30 @@ ui <- fluidPage(
                )
              )#/fluidrow_plots
              
-             )#/TabPanel
+             ),#/TabPanel
+    
+    tabPanel(title = "Overlapping Spider Plot",
+             
+             fluidRow(
+               column(9,
+                      plotOutput(outputId = "spiderPlotOverlap")
+               ),
+               column(3, 
+                      checkboxGroupInput(
+                        inputId = "PaperNameSpiderOverlap",
+                        label = "Which Papers?",
+                        choices = unique(df$paper_abbrev),
+                        selected = unique(df$paper_abbrev)[1:2],
+                        inline = FALSE,
+                        width = "200px",
+                        choiceNames = NULL,
+                        choiceValues = NULL
+                      )
+                      
+               )
+             )
+             
+    )#/TabPanel
 
   )
 )
@@ -362,6 +385,51 @@ server <- function(input, output) {
       
     })
 
+    output$spiderPlotOverlap <- renderPlot({
+      par(mar = c(5, 1, 1, 15),
+          xpd = TRUE)
+      
+      
+      df %>% 
+        select(paper_abbrev, rating_type, rating_mean) %>%
+        filter(paper_abbrev %in% input$PaperNameSpiderOverlap) %>%
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
+        mutate(rating_short = case_match(rating_type,
+                                         "Overall assessment" ~ "Overall",
+                                         "Methods: justification, reasonableness, validity, robustness" ~ "Methods",
+                                         "Engages with real-world, impact quantification" ~ "Real World",
+                                         "Advances our knowledge & practice" ~ "Advances Knowledge",
+                                         "Logic and communication" ~ "Logic & Communication",
+                                         "Relevance to global priorities" ~ "Global Relevance",
+                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) %>% 
+        distinct() %>% 
+        pivot_wider(id_cols = c(paper_abbrev), names_from = rating_short, values_from = rating_mean) %>% 
+        column_to_rownames("paper_abbrev") -> dat_spider
+      
+      # Set graphic colors
+      coul <- brewer.pal(nrow(dat_spider), "Set1")
+      colors_border <- coul
+      colors_in <- scales::alpha(coul,0.3)
+      
+      dat_plot <- rbind(rep(100,7), rep(0,7), dat_spider)
+      
+      radarchart(dat_plot, axistype=0, 
+                 #custom polygon
+                 pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+                 #custom the grid
+                 cglcol="grey", cglty=2, axislabcol="grey", cglwd=0.8,
+                 
+      )
+      
+      legend(x=1.8, y=0,
+             legend = rownames(dat_plot[-c(1,2),]), 
+             pch=19, col=colors_in , text.col = "grey20", cex=0.9, pt.cex=2)
+      
+      
+    })
+    
+    
+    
 }
 
 # Run the application 
