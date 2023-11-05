@@ -198,7 +198,33 @@ evals_pub %>%
 
 
 ```
+#### Initial pool of papers: categories {-}
 
+Next, we present a plot of categories for all papers in the Unjournal's initial pool. One paper can belong to more than one category. 
+
+```{r all_paper_categories}
+#| fig-height: 9
+#| 
+# how many papers are in this dataset?
+n_papers <- select(all_papers_p, id) %>% distinct() %>% nrow()
+
+# plot
+all_papers_p %>% 
+  select(id, category) %>% 
+  unnest(category, keep_empty = T) %>%
+  distinct() %>% # just to make sure
+  replace_na(list(category = "unknown")) %>%
+  group_by(category) %>% 
+  count() %>%
+  mutate(category = str_to_title(category)) %>%
+  ggplot(aes(x = reorder(category, n), y = n)) +
+  geom_bar(aes(fill = category), stat = "identity", color = "grey30") + 
+  coord_flip() +
+  theme_bw() +
+  labs(y = "Paper category", x = "Count",
+       caption = paste0("Total number of papers = ", n_papers)) +
+  theme(legend.position = "none")
+```
 
 
 
@@ -215,6 +241,12 @@ evals_pub %>%
 - Timing of intake and evaluation^[Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves]
 
 :::
+
+
+
+
+
+
 
 #### Paper selection {-}
 
@@ -469,13 +501,11 @@ You can see this dashboard on it's own hosted [here](https://unjournal.shinyapps
 
 :::
 
-<!-- todo (DR @julia) make the spider plots easier to compare across papers (see slack thread) -->
 
 
 ::: {.callout-note collapse="true"}
 ## Future vis
 
-Spider or radial chart 
 
 Each rating is a dimension or attribute (potentially normalized) potentially superimpose a 'circle' for the suggested weighting or overall. 
 
