@@ -198,6 +198,34 @@ evals_pub %>%
 
 
 ```
+#### Initial pool of papers: categories {-}
+
+Next, we present a plot of categories for all papers in the Unjournal's initial pool. One paper can belong to more than one category. 
+
+```{r all_paper_categories}
+#| fig-height: 9
+#| 
+# how many papers are in this dataset?
+n_papers <- select(all_papers_p, id) %>% distinct() %>% nrow()
+
+# plot
+all_papers_p %>% 
+  select(id, category) %>% 
+  unnest(category, keep_empty = T) %>%
+  distinct() %>% # just to make sure
+  replace_na(list(category = "unknown")) %>%
+  group_by(category) %>% 
+  count() %>%
+  mutate(category = str_to_title(category)) %>%
+  ggplot(aes(x = reorder(category, n), y = n)) +
+  geom_bar(aes(fill = category), stat = "identity", color = "grey30") + 
+  coord_flip() +
+  theme_bw() +
+  labs(y = "Paper category", x = "Count",
+       caption = paste0("Total number of papers = ", n_papers)) +
+  theme(legend.position = "none")
+```
+
 
 
 
@@ -216,12 +244,18 @@ evals_pub %>%
 
 :::
 
+
+
+
+
+
+
 #### Paper selection {-}
 
 The Sankey diagram below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
 
 ```{r sankey plot}
-
+#| eval: false
 #Add in the 3 different evaluation input sources
 #update to be automated rather than hard-coded - to look at David's work here
 
@@ -286,6 +320,136 @@ fig <- fig %>% layout(
 fig 
 
 ```
+
+
+```{r new sankey plot}
+
+all_papers_p %>% 
+  select(id, source_main, `stage of process/todo`) %>% 
+  rename(stage = `stage of process/todo`) %>% 
+  mutate(source_main = if_else(source_main == "NA", NA_character_, source_main)) %>% 
+  replace_na(list(source_main = "unknown", stage = "unknown")) %>%
+  mutate(stage0 = "Paper Pool",
+         stage1 = case_match(stage,
+                             "contacting/awaiting_authors_response_to_evaluation" ~ "Selected",
+                             "seeking_(more)_evaluators" ~ "Selected",
+                             "published" ~ "Selected",
+                             .default = NA_character_),
+         stage2 = paste0("Stage: ", str_to_sentence(stage)),
+         source_main = str_replace_all(string = source_main, 
+                                  pattern = "-", 
+                                  replace = " ") %>% 
+           # str_to_title() %>% 
+           str_replace_all(pattern = "\\s+",
+                       replacement = " "),
+         source = paste0("Source: ", source_main)) -> temp
+
+temp %>% 
+  select(source, stage0, stage1, stage2) %>%
+  pivot_longer(cols = everything()) %>% 
+  arrange(name) %>% 
+  select(value) %>% 
+  distinct() %>% drop_na() -> nodes
+
+
+nodes = tibble(index =  seq(0,nrow(nodes)-1, by = 1),
+               label = nodes$value,
+               color = c(brewer.pal(n = length(unique(temp$source)), "Pastel2"), # Sources
+                         "#984EA3",# all papers
+                         "#4DAF4A",# selected
+                         "#4DAF9A","#FF7F00","#FFFF33", "#A65628", "#999999","#377288", "#F781BF","#999999")) #outcomes
+
+
+# link = tibble(source = c(),
+#               target = c(),
+#               value = c())
+
+# source -> paper pool (stage0) -> stage1 -> stage2
+
+# add source > paper pool (stage0)
+link = temp %>% 
+  group_by(source, stage0) %>% 
+  count() %>%
+  rename(target = stage0, value = n) 
+
+# add paper pool > stage1 (selected)
+temp %>% 
+  group_by(stage0, stage1) %>% 
+  count() %>%
+  rename(source = stage0, target = stage1, value = n) %>% 
+  filter(!is.na(target)) -> temp2
+
+link = bind_rows(link, temp2)
+
+# add paper pool > stage2 (not selected)
+temp %>% 
+  group_by(stage0, stage1, stage2) %>% 
+  count() %>% 
+  ungroup() %>%
+  filter(is.na(stage1)) %>%
+  rename(source = stage0, target = stage2, value = n) %>%
+  select(-stage1) -> temp2
+
+link = bind_rows(link, temp2) 
+
+# add selected (stage1) to stage 2
+temp %>% 
+  group_by(stage0, stage1, stage2) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(stage1 == "Selected") %>% 
+  rename(source = stage1, target = stage2, value = n) %>%
+  select(-stage0) -> temp2
+
+link = bind_rows(link, temp2) 
+
+# add node index to link
+link %>% 
+  ungroup() %>% 
+  left_join(nodes, by = c("source" = "label")) %>%
+  rename(source_index = index) %>% 
+  left_join(nodes, by = c("target" = "label")) %>%
+  rename(target_index = index) %>% 
+  select(source_index, target_index, value) %>%
+  rename(source = source_index,
+         target = target_index) -> link
+
+
+
+fig <- plot_ly(type = "sankey", orientation = "h", 
+
+  node = list(
+    label = nodes$label,
+    color = nodes$color,
+    pad = 15,
+    thickness = 20,
+    line = list(color = "black", width = 0.5),
+    hovertemplate = "%{label}: %{value:.0f} papers<extra></extra>"
+    ),
+  
+  link = list(
+    source = link$source,
+    target = link$target,
+    value =  as.integer(link$value),
+    hovertemplate = "%{value:.0f} papers<extra></extra>"
+  ))
+
+fig <- fig %>% layout(
+  title = "Unjournal Paper Flow Diagram",
+  font = list(size = 10)
+)
+
+fig
+
+
+
+
+
+
+```
+
+
+
 
 
 Todo: ^[Make interactive/dashboards of the elements below]
@@ -469,13 +633,11 @@ You can see this dashboard on it's own hosted [here](https://unjournal.shinyapps
 
 :::
 
-<!-- todo (DR @julia) make the spider plots easier to compare across papers (see slack thread) -->
 
 
 ::: {.callout-note collapse="true"}
 ## Future vis
 
-Spider or radial chart 
 
 Each rating is a dimension or attribute (potentially normalized) potentially superimpose a 'circle' for the suggested weighting or overall. 
 
