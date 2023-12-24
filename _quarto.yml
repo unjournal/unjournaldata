@@ -10,6 +10,7 @@ book:
   chapters:
     - index.qmd
     - chapters/evaluation_data_input.qmd
+    - chapters/research_prioritization_pipeline.qmd
     - chapters/evaluation_data_analysis.qmd
     - chapters/aggregation.qmd
       #- references.qmd

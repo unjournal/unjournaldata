@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>The Unjournal evaluations: data and analysis - 3&nbsp; Aggregation of evaluators judgments (modeling)</title>
+<title>The Unjournal evaluations: data and analysis - 4&nbsp; Aggregation of evaluators judgments (modeling)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,7 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/aggregation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/aggregation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,14 +139,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/research_prioritization_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Research Prioritization Pipeline &amp; Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/evaluation_data_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/aggregation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></span></a>
   </div>
 </li>
     </ul>
@@ -158,21 +164,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#notes-on-sources-and-approaches" id="toc-notes-on-sources-and-approaches" class="nav-link active" data-scroll-target="#notes-on-sources-and-approaches"><span class="header-section-number">3.1</span> Notes on sources and approaches</a>
+<a href="#notes-on-sources-and-approaches" id="toc-notes-on-sources-and-approaches" class="nav-link active" data-scroll-target="#notes-on-sources-and-approaches"><span class="header-section-number">4.1</span> Notes on sources and approaches</a>
   <ul class="collapse">
 <li><a href="#simple-rating-aggregation" id="toc-simple-rating-aggregation" class="nav-link" data-scroll-target="#simple-rating-aggregation">Simple rating aggregation</a></li>
   <li><a href="#explicit-modeling-of-research-quality-for-use-in-prizes-etc." id="toc-explicit-modeling-of-research-quality-for-use-in-prizes-etc." class="nav-link" data-scroll-target="#explicit-modeling-of-research-quality-for-use-in-prizes-etc.">Explicit modeling of ‘research quality’ (for use in prizes, etc.)</a></li>
   </ul>
 </li>
-  <li><a href="#inter-rater-reliability" id="toc-inter-rater-reliability" class="nav-link" data-scroll-target="#inter-rater-reliability"><span class="header-section-number">3.2</span> Inter-rater reliability</a></li>
-  <li><a href="#decomposing-variation-dimension-reduction-simple-linear-models" id="toc-decomposing-variation-dimension-reduction-simple-linear-models" class="nav-link" data-scroll-target="#decomposing-variation-dimension-reduction-simple-linear-models"><span class="header-section-number">3.3</span> Decomposing variation, dimension reduction, simple linear models</a></li>
-  <li><a href="#later-possiblities" id="toc-later-possiblities" class="nav-link" data-scroll-target="#later-possiblities"><span class="header-section-number">3.4</span> Later possiblities</a></li>
+  <li><a href="#inter-rater-reliability" id="toc-inter-rater-reliability" class="nav-link" data-scroll-target="#inter-rater-reliability"><span class="header-section-number">4.2</span> Inter-rater reliability</a></li>
+  <li><a href="#decomposing-variation-dimension-reduction-simple-linear-models" id="toc-decomposing-variation-dimension-reduction-simple-linear-models" class="nav-link" data-scroll-target="#decomposing-variation-dimension-reduction-simple-linear-models"><span class="header-section-number">4.3</span> Decomposing variation, dimension reduction, simple linear models</a></li>
+  <li><a href="#later-possiblities" id="toc-later-possiblities" class="nav-link" data-scroll-target="#later-possiblities"><span class="header-section-number">4.4</span> Later possiblities</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/daaronr/unjournaldata/edit/main/chapters/aggregation.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/daaronr/unjournaldata/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span>
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -186,8 +192,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><section id="notes-on-sources-and-approaches" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="notes-on-sources-and-approaches">
-<span class="header-section-number">3.1</span> Notes on sources and approaches</h2>
+</header><section id="notes-on-sources-and-approaches" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="notes-on-sources-and-approaches">
+<span class="header-section-number">4.1</span> Notes on sources and approaches</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -263,8 +269,8 @@ Also seems relevant:
 <ul>
 <li><p>Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?</p></li>
 <li><p>Model with controls – look for greatest positive residual?</p></li>
-</ul></section></section><section id="inter-rater-reliability" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="inter-rater-reliability">
-<span class="header-section-number">3.2</span> Inter-rater reliability</h2>
+</ul></section></section><section id="inter-rater-reliability" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="inter-rater-reliability">
+<span class="header-section-number">4.2</span> Inter-rater reliability</h2>
 <p>Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -310,10 +316,10 @@ for all metrics across all papers
 
 https://unjournalfriends.slack.com/archives/D05JMD2KQMP/p1694561973337029
 -->
-</section><section id="decomposing-variation-dimension-reduction-simple-linear-models" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="decomposing-variation-dimension-reduction-simple-linear-models">
-<span class="header-section-number">3.3</span> Decomposing variation, dimension reduction, simple linear models</h2>
-</section><section id="later-possiblities" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="later-possiblities">
-<span class="header-section-number">3.4</span> Later possiblities</h2>
+</section><section id="decomposing-variation-dimension-reduction-simple-linear-models" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="decomposing-variation-dimension-reduction-simple-linear-models">
+<span class="header-section-number">4.3</span> Decomposing variation, dimension reduction, simple linear models</h2>
+</section><section id="later-possiblities" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="later-possiblities">
+<span class="header-section-number">4.4</span> Later possiblities</h2>
 <ul>
 <li><p>Relation to evaluation text content (NLP?)</p></li>
 <li><p>Relation/prediction of later outcomes (traditional publication, citations, replication)</p></li>
@@ -607,7 +613,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../chapters/evaluation_data_analysis.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -49,8 +49,7 @@ Below, the evaluation data is input from an Airtable, which itself was largely h
 ```{r}
 #| label: input_at
 #| code-summary: "input from airtable"
-   
-#base_id <- "appbPYEw9nURln7Qg"
+
 base_id <- "applDG6ifmUmeEJ7j" #new ID to cover "UJ - research & core members" base
 
 
@@ -93,8 +92,8 @@ colnames(evals) <- snakecase::to_snake_case(colnames(evals))
 
 evals_pub <- evals %>% 
   dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
-  mutate(stage_of_process = unlist(stage_of_process)) %>% 
-  dplyr::filter(stage_of_process == "published") %>% 
+  mutate(stage_of_process = unlist(stage_of_process)) %>%
+  dplyr::filter(stage_of_process == "published evaluations (on PubPub, by Unjournal)") %>%
     select(id, 
            crucial_research, 
            paper_abbrev, 
@@ -386,15 +385,20 @@ We cannot publicly share the 'papers under consideration', but we can share some
 
 ```{r}
 #| code-summary: "keep shareable variables from all papers"
+
+
+# JB NOTE: I had to remove some of the columns that get selected here.
+# It looks like the names have been changed in Airtable but this data cleaning
+# script has not been updated accordingly, so the new data was not getting processed.
+# If anything is missing, feel free to add it back with the correct name.
 all_papers_p <- all_pub_records %>% 
   dplyr::select(
     id,
     category,
-    cfdc_DR,
-     'confidence -- user entered',
-    cfdc_assessor,
-    avg_cfdc,
-    category,
+    main_cause_category,
+    secondary_cause_category,
+    # cfdc_assessor,
+    # avg_cfdc,
     cause_cat_1_text,
     cause_cat_2_text,
     topic_subfield_text,
@@ -404,7 +408,7 @@ all_papers_p <- all_pub_records %>%
     'stage of process/todo',
     'source_main',  
     'author permission?',
-'Direct Kotahi Prize Submission?',
+    'Direct Kotahi Prize Submission?',
     'createdTime'         
   )
 
