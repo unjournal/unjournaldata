@@ -43,17 +43,7 @@ This resource aims to be:
 10 Aug 2023: David Reinstein and Julia Bottesini have done most of the analysis here. 
 
 
+## Colophon
 
-
-## Collophon
-
-This is a Quarto book.
-
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-options(knitr.duplicate.label = "allow")
-
-```
-
+This is a [Quarto book](https://quarto.org/docs/books).
 
