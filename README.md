@@ -3,7 +3,8 @@
 This is the repository for 
 [Unjournal](https://www.unjournal.org) evaluations, meta-analysis, and meta-science. 
 
-Our current reports are available at <https://unjournal.github.io>.
+Outputs and reports from here are published at <https://unjournal.github.io>.
+
 
 # How it works
 
@@ -15,7 +16,13 @@ a [Shiny](https://shiny.posit.co) app at
 
 The site can be re-rendered by running `quarto render` from the command line,
 or `quarto::quarto_render()` from within R, and pushing changes to the `main` branch.
+The rendered HTML is then automatically deployed via github pages.
 
 The shiny app can be deployed by running 
 `rsconnect::deployApp("shinyapp/DataExplorer")`, or from within RStudio by
 opening `shinyapp/DataExplorer/app.R` and clicking the 'publish' button.
+
+
+# TODO
+
+TODO.md has a list of planned changes. 
