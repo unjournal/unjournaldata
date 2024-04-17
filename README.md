@@ -1,22 +1,21 @@
 # unjournaldata
-Unjournal evaluations, meta-analysis, and meta-science: data analysis and presentation
 
+This is the repository for 
+[Unjournal](https://www.unjournal.org) evaluations, meta-analysis, and meta-science. 
 
-Some goals below 
+Our current reports are available at <https://unjournal.github.io>.
 
-## Todo: Evaluation and prediction metrics
+# How it works
 
-Some things to do:
+Data is currently imported manually from airtable. We hope to automate this soon.
 
-- DONE: Import evaluation rating/predictions data
+The github site is created as a [Quarto](https://quarto.org) book. There is also
+a [Shiny](https://shiny.posit.co) app at
+<https://unjournal.shinyapps.io/DataExplorer/>. 
 
-- DONE for now: Clean and reconcile missing data, different metrics
-- [ ] Aggregations of ratings under stated uncertainty
-- [ ] Assess inter-rater reliability, etc.
+The site can be re-rendered by running `quarto render` from the command line,
+or `quarto::quarto_render()` from within R, and pushing changes to the `main` branch.
 
-## Later: Track and benchmark against later outcomes
-
-## Possible: 'Claim extraction', link with predictions and replication work
-
-## House, support, link: Data and code from papers, evaluators calculations and investigations
-
+The shiny app can be deployed by running 
+`rsconnect::deployApp("shinyapp/DataExplorer")`, or from within RStudio by
+opening `shinyapp/DataExplorer/app.R` and clicking the 'publish' button.

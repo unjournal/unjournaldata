@@ -18,10 +18,11 @@ book:
   date: today
 
 execute:
-  freeze: auto # re-render only when source changes
+  freeze: false # re-render only when source changes
   warning: false
   message: false
   error: true
+  echo: false
 
 comments:
     hypothesis: true
@@ -29,9 +30,9 @@ comments:
 
 format:
   html:
-    code-fold: true
-    code-link: true #note: this isn't working for me
-    code-tools: true
+    code-fold: false
+    code-link: false #note: this isn't working for me
+    code-tools: false
     theme: cosmo
     citations-hover: true
     footnotes-hover: true
