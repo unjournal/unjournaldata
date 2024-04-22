@@ -26,7 +26,7 @@ library(formattable) # Create 'Formattable' Data Structures
 library(here) # A Simpler Way to Find Your Files
 #devtools::install_github("metamelb-repliCATS/aggreCAT")
 library(aggreCAT)
-
+library(DescTools)
 # Make sure select is always the dplyr version
 select <- dplyr::select 
 
