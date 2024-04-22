@@ -56,7 +56,8 @@ jobs:
       #     CONNECT_SERVER: enter-the-server-url-here
       #     CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }} 
 
-      NOTE: If Publishing to GitHub Pages, set the permissions correctly (see top of this yaml)
+      # NOTE: If Publishing to GitHub Pages, 
+      # set the permissions correctly (see top of this yaml)
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
