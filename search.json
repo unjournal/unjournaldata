@@ -1,0 +1,142 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Unjournal evaluations: data and analysis",
+    "section": "",
+    "text": "Preface\nThe Unjournal coordinates the public evaluation of hosted papers and dynamically-presented research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim: to make rigorous research more impactful, and impactful research more rigorous.\nOur main web site, unjournal.org, explains and presents our vision, procedures, and our progress. The ‘output’ evaluations and author (including feedback and discussion) can be found on our PubPub page, and are indexed in scholarly archives.\nThe present site presents data and analysis on The Unjournal’s pipeline and evaluation output\nIn large part:\nWe may expand this analysis further in the future, e.g., to include\nThis resource aims to be:\n10 Aug 2023: David Reinstein and Julia Bottesini have done most of the analysis here.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#colophon",
+    "href": "index.html#colophon",
+    "title": "The Unjournal evaluations: data and analysis",
+    "section": "Colophon",
+    "text": "Colophon\nThis is a Quarto book.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_input.html",
+    "href": "chapters/evaluation_data_input.html",
+    "title": "1  Evaluation data: input/features",
+    "section": "",
+    "text": "Reconcile uncertainty ratings and CIs\nWhere people gave only confidence level ‘dots’, we impute CIs (confidence/credible intervals). We follow the correspondence described here. (Otherwise, where they gave actual CIs, we use these.)1\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\nWe cannot publicly share the ‘papers under consideration’, but we can share some of the statistics on these papers. Let’s generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest\nError in `dplyr::select()`:\n! Can't select columns that don't exist.\n✖ Column `id` doesn't exist.\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\n\n\nError in eval(expr, envir, enclos): object 'paper_ratings' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\nError in eval(expr, envir, enclos): object 'all_papers_p' not found\n\n\nError in eval(expr, envir, enclos): object 'all_papers_p' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found\n\n\nError in eval(expr, envir, enclos): object 'evals_pub_long' not found",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evaluation data: input/features</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_input.html#footnotes",
+    "href": "chapters/evaluation_data_input.html#footnotes",
+    "title": "1  Evaluation data: input/features",
+    "section": "",
+    "text": "Note this is only a first-pass; a more sophisticated approach may be warranted in future.↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evaluation data: input/features</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_analysis.html",
+    "href": "chapters/evaluation_data_analysis.html",
+    "title": "2  Evaluation data: description, exploration, checks",
+    "section": "",
+    "text": "2.1 Data input, cleaning, feature construction and imputation",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Evaluation data: description, exploration, checks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_analysis.html#data-input-cleaning-feature-construction-and-imputation",
+    "href": "chapters/evaluation_data_analysis.html#data-input-cleaning-feature-construction-and-imputation",
+    "title": "2  Evaluation data: description, exploration, checks",
+    "section": "",
+    "text": "Note on data input (10-Aug-23)\n\n\n\n\n\nBelow, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators’ reports. As PubPub builds (target: end of Sept. 2023), this will allow us to include the ratings and predictions as structured data objects. We then plan to access and input this data directly from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Evaluation data: description, exploration, checks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_analysis.html#basic-presentation",
+    "href": "chapters/evaluation_data_analysis.html#basic-presentation",
+    "title": "2  Evaluation data: description, exploration, checks",
+    "section": "2.2 Basic presentation",
+    "text": "2.2 Basic presentation\n\nWhat sorts of papers/projects are we considering and evaluating?\nIn this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal’s coverage.\nIn the interactive table below we give some key attributes of the papers and the evaluators.\n\n\n\n\n\n\n\n\n\n\nEvaluation metrics (ratings)\nNext, a preview of the evaluations, focusing on the ‘middle ratings and predictions’:\n\n\n\n\n\n\n\n\n \n\n\n\nInitial pool of papers: categories\nNext, we present a plot of categories for all papers in the Unjournal’s initial pool. One paper can belong to more than one category.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNext consider…\n\n\n\n\n\n\nComposition of research evaluated\n\nBy field (economics, psychology, etc.)\nBy subfield of economics\nBy topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc. )\nBy source (submitted, identified with author permission, direct evaluation)\n\nTiming of intake and evaluation1\n\n\n\n\n\n\nPaper selection\nThe Sankey diagram below starts with the papers we prioritized for likely Unjournal evaluation:2.\n\n\n\n\n\n\nTodo: 3\n\n\nPaper categories\n\n\n\n\n\n\n\n\n\n\n\nPaper source",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Evaluation data: description, exploration, checks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_analysis.html#the-distribution-of-ratings-and-predictions",
+    "href": "chapters/evaluation_data_analysis.html#the-distribution-of-ratings-and-predictions",
+    "title": "2  Evaluation data: description, exploration, checks",
+    "section": "The distribution of ratings and predictions",
+    "text": "The distribution of ratings and predictions\nNext, we present the ratings and predictions along with ‘uncertainty measures’.4 Where evaluators gave only a 1-5 confidence level5, we use the imputations discussed and coded above.\nBelow we present these, for each category and prediction (overall and by paper). Papers are arranged in descending order of average overall score. Note that evaluations made by anonymous reviewers are marked with a black border around the rating.\n\n\n\n\n\n\n\n\nBelow, we are building an interactive dashboard.6\n\nShiny dashboard\n\n\n \n\n\n\n\n\n\n\n\n\n\nNotes, clarifications, and caveats on the above dashboard\n\n\n\n\n\n\nThe aggregated ratings and ranges seem to not yet be computed properly\nIn the ‘journal ratings’ view, the stars/asterisks are used when the ‘predicted’ and ‘merited’ ratings are the same\n\n\n\n\nYou can see this dashboard on it’s own hosted here.\n\n\n\n\n\n\n\nFuture vis\n\n\n\n\n\nEach rating is a dimension or attribute (potentially normalized) potentially superimpose a ‘circle’ for the suggested weighting or overall.\nEach paper gets its own spider, with all others (or the average) in faded color behind it as a comparator.\nIdeally user can switch on/off\nBeware – people may infer things from the shape’s size\n\n\n\n\n\n\n\n\nSources of variation\nNext, look for systematic variation in the ratings\n\nBy field and topic area of paper\nBy submission/selection route\nBy evaluation manager (or their seniority, or whether they are US/Commonwealth/Other)7\n\n… perhaps building a model of this. We are looking for systematic ‘biases and trends’, loosely speaking, to help us better understand how our evaluation system is working.\n\n\n\n\nRelationship among the ratings (and predictions)\n\n\n\n\n\n\nNext steps (suggested analyses)\n\n\n\n\n\n\nCorrelation matrix\nANOVA\nPCA (Principle components)\nWith other ‘control’ factors?\nHow do the specific measures predict the aggregate ones (overall rating, merited publication)\n\nCF ‘our suggested weighting’\n\n\n\n\n\nNext chapter (analysis): aggregation of evaluator judgment\n\n\n\n\n\n\nScoping our future coverage\n\n\n\n\n\nWe have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.\nConsider:\n\nHow many relevant NBER papers come out per year?\nHow much relevant work in other prestige archives?\nWhat quotas do we want (by cause, etc.) and how feasible are these?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Evaluation data: description, exploration, checks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/evaluation_data_analysis.html#footnotes",
+    "href": "chapters/evaluation_data_analysis.html#footnotes",
+    "title": "2  Evaluation data: description, exploration, checks",
+    "section": "",
+    "text": "Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves↩︎\nThose marked as ‘considering’ in the Airtable↩︎\nMake interactive/dashboards of the elements below↩︎\nWe use “ub imp” (and “lb imp”) to denote the upper and lower bounds given by evaluators.↩︎\nMore or less, the ones who report a level for ‘conf overall’, although some people did this for some but not others↩︎\nWe are working to enable a range of presentations, aggregations, and analyses (your suggestions are welcome), including reasonable approaches to incorporating evaluator uncertainty↩︎\nDR: My theory is that people in commonwealth countries target a 70+ as ‘strong’ (because of their marking system) and that may drive a bias.↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Evaluation data: description, exploration, checks</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/aggregation.html",
+    "href": "chapters/aggregation.html",
+    "title": "3  Aggregation of evaluators judgments (modeling)",
+    "section": "",
+    "text": "3.1 Notes on sources and approaches\nIn spite of the caveats in the fold above, we construct some measures of aggregate beliefs using the aggrecat package. We will make (and explain) some ad-hoc choices here. We present these:\nWe can also hold onto these aggregated metrics for later use in modeling.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/aggregation.html#notes-on-sources-and-approaches",
+    "href": "chapters/aggregation.html#notes-on-sources-and-approaches",
+    "title": "3  Aggregation of evaluators judgments (modeling)",
+    "section": "",
+    "text": "Hanea et al\n\n\n\n\n\n(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)\naggreCAT package\n\nAlthough the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.\n\nHanea et al, 2021\nHowever, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a ‘lower bound’ and ‘upper bound’ for that probability. We could roughly compare that to our continuous metrics with 90% CI’s (or imputations for these).\nFurthermore, many (all their successful measures?) use ‘performance-based weights’, accessing metrics from prior prediction performance of the same forecasters. We do not have these, nor do we have a sensible proxy for this. (But we might consider ways to develop these.)\n\n\n\n\n\n\n\n\n\nD Veen et al (2017)\n\n\n\n\n\nlink\n… we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover.\nBe sure to consult the correction made here\n\n\n\n\n\n\n\n\n\nAlso seems relevant:\n\n\n\n\n\nSee Gsheet HERE, generated from an Elicit.org inquiry.\n\n\n\n\n\nFor each paper\nFor categories of papers and cross-paper categories of evaluations\nFor the overall set of papers and evaluations\n\n\n\nSimple averaging\nBayesian approaches\nBest-performing approaches from elsewhere\nAssumptions over unit-level random terms\n\n\nSimple rating aggregation\n\n\nExplicit modeling of ‘research quality’ (for use in prizes, etc.)\n\nUse the above aggregation as the outcome of interest, or weight towards categories of greater interest?\nModel with controls – look for greatest positive residual?",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/aggregation.html#inter-rater-reliability",
+    "href": "chapters/aggregation.html#inter-rater-reliability",
+    "title": "3  Aggregation of evaluators judgments (modeling)",
+    "section": "3.2 Inter-rater reliability",
+    "text": "3.2 Inter-rater reliability\nInter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.\n\n\n\n\n\n\nExpand to learn more about why we used Krippendorf’s alpha, and how to interpret it\n\n\n\n\n\nWe use Krippendorff’s alpha as a measure of interrater agreement. Krippendorff’s alpha is a more flexible measure of agreement and can be used with different levels of data (categorical, ordinal, interval, and ratio) as well as different numbers of raters. It automatically accounts for small samples, and allows its coefficient to be compared across sample sizes.\nThe calculation displayed below was done using the function kripp.alpha implemented by Jim Lemon in the package irr and is based on Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage.\n\nKrippendorff’s alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed – where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa. Source: Inter-Annotator Agreement: An Introduction to Krippendorff’s Alpha by Andrew Mauboussin\n\nDespite the complexity of the calculations, Krippendorff’s alpha is fundamentally a Kappa-like metric. Its values range from -1 to 1, with 1 representing unanimous agreement between the raters, 0 indicating they’re guessing randomly, and negative values suggesting the raters are systematically disagreeing. (This can happen when raters value different things — for example, if rater A thinks a crowded store is a sign of success, but rater B thinks it proves understaffing and poor management).\n\n\nMore information about Krippendorff’s alpha and links to further reading can be found here.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/aggregation.html#decomposing-variation-dimension-reduction-simple-linear-models",
+    "href": "chapters/aggregation.html#decomposing-variation-dimension-reduction-simple-linear-models",
+    "title": "3  Aggregation of evaluators judgments (modeling)",
+    "section": "3.3 Decomposing variation, dimension reduction, simple linear models",
+    "text": "3.3 Decomposing variation, dimension reduction, simple linear models",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/aggregation.html#later-possiblities",
+    "href": "chapters/aggregation.html#later-possiblities",
+    "title": "3  Aggregation of evaluators judgments (modeling)",
+    "section": "3.4 Later possiblities",
+    "text": "3.4 Later possiblities\n\nRelation to evaluation text content (NLP?)\nRelation/prediction of later outcomes (traditional publication, citations, replication)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
+    ]
+  }
+]
