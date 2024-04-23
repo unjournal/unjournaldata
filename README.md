@@ -8,15 +8,15 @@ Outputs and reports from here are published at <https://unjournal.github.io>.
 
 # How it works
 
-Data is currently imported manually from airtable. We hope to automate this soon.
+Data is currently imported from airtable. We hope to directly import from
+<https://unjournal.pubpub.org> soon.
 
 The github site is created as a [Quarto](https://quarto.org) book. There is also
 a [Shiny](https://shiny.posit.co) app at
 <https://unjournal.shinyapps.io/DataExplorer/>. 
 
-The site can be re-rendered by running `quarto render` from the command line,
-or `quarto::quarto_render()` from within R, and pushing changes to the `main` branch.
-The rendered HTML is then automatically deployed via github pages.
+The github site is automatically rendered on github when you push to the 
+`main` branch.
 
 The shiny app can be deployed by running 
 `rsconnect::deployApp("shinyapp/DataExplorer")`, or from within RStudio by
