@@ -34,7 +34,7 @@ jobs:
       - name: Install system dependencies on Linux
         run: |
           sudo apt-get install jags libcurl4-openssl-dev \
-            libharfbuzz-dev libfribidi-dev 
+            libharfbuzz-dev libfribidi-dev libsodium-dev
 
       # From https://github.com/r-lib/actions/tree/v2/setup-renv
       - name: Setup dependencies with renv
