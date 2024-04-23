@@ -18,11 +18,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         
-      - name: Import unjournal data
-        run: Rscript code/import-unjournal-data.R
-        env: # Or as an environment variable
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-        
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
           # uncomment below and fill to pin a version
@@ -41,40 +36,15 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 1
-       
-      # See more at https://github.com/quarto-dev/quarto-actions/blob/main/examples/example-03-dependencies.md
 
-      # To publish to Netlify, RStudio Connect, or GitHub Pages, uncomment
-      # the appropriate block below
-      
-      # - name: Publish to Netlify (and render)
-      #   uses: quarto-dev/quarto-actions/publish@v2
-      #   with:
-      #     target: netlify
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        
-      # - name: Publish to RStudio Connect (and render)
-      #   uses: quarto-dev/quarto-actions/publish@v2
-      #   with:
-      #     target: connect
-      #     CONNECT_SERVER: enter-the-server-url-here
-      #     CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }} 
+      - name: Import Unjournal data
+        run: Rscript code/import-unjournal-data.R
+        env: 
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
 
-      # NOTE: If Publishing to GitHub Pages, 
-      # set the permissions correctly (see top of this yaml)
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
-
-      # - name: Publish to confluence
-      #   uses: quarto-dev/quarto-actions/publish@v2
-      #   with:
-      #     target: confluence
-      #   env: 
-      #     CONFLUENCE_USER_EMAIL: ${{ secrets.CONFLUENCE_USER_EMAIL }}
-      #     CONFLUENCE_AUTH_TOKEN: ${{ secrets.CONFLUENCE_AUTH_TOKEN }}
-      #     CONFLUENCE_DOMAIN: ${{ secrets.CONFLUENCE_DOMAIN }}
-      
