@@ -5,7 +5,7 @@ project:
 book:
   title: "The Unjournal evaluations: data and analysis"
   author: "David Reinstein, Julia Bottesini, and the Unjournal team"
-  repo-url: https://github.com/daaronr/unjournaldata/
+  repo-url: https://github.com/unjournal/unjournaldata/
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
