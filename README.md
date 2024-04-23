@@ -3,7 +3,7 @@
 This is the repository for 
 [Unjournal](https://www.unjournal.org) evaluations, meta-analysis, and meta-science. 
 
-Outputs and reports from here are published at <unjournal.github.io/unjournaldata/>.
+Outputs and reports from here are published at <https://unjournal.github.io/unjournaldata>.
 
 
 # How it works
