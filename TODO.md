@@ -5,7 +5,8 @@ This is a place for planned or desirable technical changes.
 Higher-level plans are discussed on
 the [Unjournal coda.io project management website](https://coda.io/d/Project-Management-UJ_dOyXJoZ6imx/Projects_subw9#Projects_tuA9I/r30&view=full).
 
-[ ] Render the quarto docs remotely via github actions.
+[x] Render the quarto docs remotely via github actions.
+[ ] Reimport from airtable *or* use pubpub API
 
 # Evaluating publication predictions
 
