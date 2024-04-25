@@ -36,3 +36,4 @@ quarto-cli
 # rsconnect info
 /shinyapp/DataExplorer/rsconnect/.
 passwords.txt
+\.DS_Store
