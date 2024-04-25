@@ -145,6 +145,41 @@
       ],
       "Hash": "999d7960fe5a5fd98267d0b68fd10065"
     },
+    "R2WinBUGS": {
+      "Package": "R2WinBUGS",
+      "Version": "2.1-22.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "boot",
+        "coda",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "5f50ae507977ff05af153a3b76a775a7"
+    },
+    "R2jags": {
+      "Package": "R2jags",
+      "Version": "0.7-1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R2WinBUGS",
+        "abind",
+        "coda",
+        "grDevices",
+        "graphics",
+        "methods",
+        "parallel",
+        "rjags",
+        "stats",
+        "utils"
+      ],
+      "Hash": "dbc15a56e6d8f727af48cf60d01cb507"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -199,6 +234,18 @@
         "stats4"
       ],
       "Hash": "6754eb5b34d10c9b403d1840b58b5064"
+    },
+    "abind": {
+      "Package": "abind",
+      "Version": "1.4-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "4f57884290cc75ab22f4af9e9d4ca862"
     },
     "aggreCAT": {
       "Package": "aggreCAT",
@@ -2528,6 +2575,17 @@
       ],
       "Hash": "df86ae872f405a7d0bd54c2791a730d3"
     },
+    "rjags": {
+      "Package": "rjags",
+      "Version": "4-15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "coda"
+      ],
+      "Hash": "dedea2fb969477a705de3b1a04e1aa25"
+    },
     "rlang": {
       "Package": "rlang",
       "Version": "1.1.3",
@@ -2738,6 +2796,21 @@
         "viridisLite"
       ],
       "Hash": "c19df082ba346b0ffa6f833e92de34d1"
+    },
+    "secretbase": {
+      "Package": "secretbase",
+      "Version": "0.4.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "shikokuchuo",
+      "RemoteRepo": "secretbase",
+      "RemoteRef": "main",
+      "RemoteSha": "7fa0f365cef1eeb11f71daeabdfff7456a1183d6",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "03c964cb58b1a9bec1c6cf9326ba8761"
     },
     "selectr": {
       "Package": "selectr",

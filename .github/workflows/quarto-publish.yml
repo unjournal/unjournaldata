@@ -41,6 +41,7 @@ jobs:
         run: Rscript code/import-unjournal-data.R
         env: 
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          PUBPUB_PASSWORD:  ${{ secrets.PUBPUB_PASSWORD }}
 
       - name: Upload Unjournal data
         uses: actions/upload-artifact@v4
