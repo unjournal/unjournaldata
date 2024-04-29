@@ -6,6 +6,10 @@
 # Personal Access Token; these function the same way as the old API keys.
 # Your PAT needs only read access to tables and table structure.
 
+# Beginnings of work for pubpub are now in the import-from-pubpub branch
+# (but it only tries v6 for now)
+
+
 library(dplyr)
 library(airtabler)   
 library(snakecase)
@@ -158,44 +162,16 @@ all_papers_p <- all_pub_records %>%
   )
 
 
-saveRDS(all_papers_p, file = here("data", "all_papers_p.Rdata"))
-write_csv(all_papers_p, file = here("data", "all_papers_p.csv"))
+#' Saves data created by the script to the data/ subfolder
+#'
+#' @return NULL
+save_data <- function () {
+  saveRDS(all_papers_p, file = here("data", "all_papers_p.Rdata"))
+  write_csv(all_papers_p, file = here("data", "all_papers_p.csv"))
+  
+  saveRDS(evals_pub, file = here("data", "evals.Rdata"))
+  write_csv(evals_pub, file = here("data", "evals.csv"))
+  
+  invisible(NULL)
+}
 
-saveRDS(evals_pub, file = here("data", "evals.Rdata"))
-write_csv(evals_pub, file = here("data", "evals.csv"))
-
-# Beginnings of work for pubpub:
-# 
-# simple access to pubpub v6 API
-# function to get a collection of pubpubs
-# function to get details of each pub
-# 
-# 
-# library(httr)
-# library(secretbase)
-# 
-# url <- "https://unjournal.pubpub.org/api/login"
-# 
-# password_hash <- secretbase::sha3("", bits = 512L)
-# payload <- sprintf('{
-# "email": "contact@unjournal.org",
-# "password": "%s"
-# }', password_hash)
-# 
-# response <- VERB("POST", url, 
-#                  body = payload, 
-#                  content_type("application/json"), 
-#                  accept("application/json"), 
-#                  encode = "json")
-# 
-# content(response, "text")
-# 
-# 
-# url <- "https://www.pubpub.org/api/pubs/cashtransfersmetrics"
-# 
-# response <- VERB("GET", 
-#                  url, 
-#                  content_type("application/octet-stream"), 
-#                  accept("application/json"))
-# 
-# content(response, "text")
