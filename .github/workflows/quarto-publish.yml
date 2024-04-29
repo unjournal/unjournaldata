@@ -38,7 +38,7 @@ jobs:
           cache-version: 1
 
       - name: Import Unjournal data
-        run: Rscript code/import-unjournal-data.R
+        run: Rscript -e 'source("code/import-unjournal-data.R"); save_data()'
         env: 
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
 
