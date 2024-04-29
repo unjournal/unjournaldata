@@ -6,6 +6,14 @@ Higher-level plans are discussed on
 the [Unjournal coda.io project management website](https://coda.io/d/Project-Management-UJ_dOyXJoZ6imx/Projects_subw9#Projects_tuA9I/r30&view=full).
 
 [ ] Rewrite import-unjournal-data to use pubpub API
+  - probably wait until v7 is usable
+[ ] Deploy shiny app using a github action, for consistency
+
+# Descriptive work
+
+[ ] What are we evaluating? How many papers in total? In what subfields? What does our “funnel” (selection process of candidate papers) look like?
+[ ] How’s our process? How many papers per month? Turnaround times? Numbers of evaluators per paper?
+[ ] Basic averages e.g. ratings for each question; or averages per subfield.
 
 # Evaluating publication predictions
 
