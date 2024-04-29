@@ -2,6 +2,12 @@
 # standalone script to create data frame of unjournal reviews
 # currently uses airtable. In future could use pubpub API.
 
+# Currently creates 4 variables:
+# - evals_pub: data frame of our evaluations
+# - all_papers_p: data frame of all papers considered: shareable data
+# - all_pub_records: all papers considered, raw data. *Use with care!*
+# - labels: column labels and original descriptions for evals_pub
+
 # Environment variable AIRTABLE_API_KEY should be set to your 
 # Personal Access Token; these function the same way as the old API keys.
 # Your PAT needs only read access to tables and table structure.
@@ -9,7 +15,7 @@
 # Beginnings of work for pubpub are now in the import-from-pubpub branch
 # (but it only tries v6 for now)
 
-
+library(tidyr)
 library(dplyr)
 library(airtabler)   
 library(snakecase)
@@ -41,6 +47,7 @@ evals_pub <- evals_pub %>%
   dplyr::filter(grepl("published", stage_of_process)) %>% 
     select(id, 
            crucial_research, 
+           crucial_research_2,
            paper_abbrev, 
            evaluator_name, 
            category, 
@@ -86,6 +93,7 @@ new_names <- c(
   "eval_name" = "evaluator_name",
   "cat" = "category",
   "crucial_rsx" = "crucial_research",
+  "crucial_rsx_id" = "crucial_research_2",
   "conf_overall" = "conf_index_overall",
   "adv_knowledge" = "advancing_knowledge_and_practice",
   "lb_adv_knowledge" = "lb_advancing_knowledge_and_practice",
@@ -141,12 +149,7 @@ evals_pub$eval_name <- ifelse(
 all_papers_p <- all_pub_records %>% 
   dplyr::select(
     id,
-    category,
-   # these columns seem no longer to exist:
-   # cfdc_DR,
-   # 'confidence -- user entered',
-   # cfdc_assessor,
-   # avg_cfdc,
+    output_eval,
     category,
     cause_cat_1_text,
     cause_cat_2_text,
@@ -157,7 +160,7 @@ all_papers_p <- all_pub_records %>%
     'stage of process/todo',
     'source_main',  
     'author permission?',
-'Direct Kotahi Prize Submission?',
+    'Direct Kotahi Prize Submission?',
     'createdTime'         
   )
 

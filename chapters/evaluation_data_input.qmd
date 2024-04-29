@@ -1,39 +1,26 @@
 # Evaluation data: input/features
 
-```{r setup, warning=FALSE}
+```{r}
+#| warning: false
 #| label: load-packages
 #| code-summary: "load packages"
 
 library(tidyverse) 
 
-# data acquisition ----
-#devtools::install_github("bergant/airtabler")
-library(airtabler)
-
-# data cleaning & shaping ----
-
-# data analysis ----
-# library(lme4)
-# library(lmtest) # Testing Linear Regression Models
-
 # markdown et al. ----
 library(knitr)
 library(bookdown)
 library(quarto)
-library(formattable) # Create 'Formattable' Data Structures
+library(formattable)
 
 # others ----
-library(here) # A Simpler Way to Find Your Files
-#devtools::install_github("metamelb-repliCATS/aggreCAT")
+library(here)
 library(aggreCAT)
 library(DescTools)
-# Make sure select is always the dplyr version
 select <- dplyr::select 
 
-# source DistributionWAggMOD
 source(here("code", "DistAggModified.R"))
 
-# options
 options(knitr.duplicate.label = "allow")
 
 ```

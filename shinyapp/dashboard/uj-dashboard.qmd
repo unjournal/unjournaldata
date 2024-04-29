@@ -1,0 +1,74 @@
+---
+title: "Unjournal dashboard"
+server: shiny
+format: 
+  html:
+    page-layout: custom
+---
+
+```{r}
+#| context: setup
+#| include: false
+
+library(dplyr)
+library(lubridate)
+library(here)
+
+# names are display periods; values are relevant starting dates for data
+periods <- c(
+  "Ever"      = as.Date("1900-01-01"),
+  "12 months" = today() - period(12, "months"),
+  "6 months"  = today() - period(6, "months"),
+  "1 month"   = today() - period(1, "months")
+)
+
+```
+
+```{r}
+#| panel: input
+
+selectInput("period", "Period", names(periods))
+```
+
+
+```{r}
+#| panel: fill
+textOutput("papers_evaluated")
+```
+
+
+
+```{r}
+#| context: server
+
+output$papers_evaluated <- renderText({
+  period_cutoff <- periods[[input$period]]
+
+  evals <- evals_pub |> 
+    filter(createdTime >= period_cutoff) 
+    
+  n_evals <- nrow(evals)
+  n_papers <- n_distinct(evals$paper_abbrev)
+  glue::glue("We ran {n_evals} evaluations of {n_papers} papers.")  
+})
+  
+```
+
+```{r}
+#| context: data
+#| include: false
+
+source(here("code/import-unjournal-data.R"))
+# we now have evals_pub, all_papers_p, all_pub_records, and labels 
+
+all_pub_dates <- all_pub_records |> select(id, createdTime)
+rm(all_pub_records)
+
+evals_pub <- left_join(evals_pub, all_pub_dates, 
+                       by = join_by(crucial_rsx_id == id),
+                       relationship = "many-to-one")
+
+evals_pub <- evals_pub |> mutate(
+  createdTime = as.POSIXct(createdTime)
+)
+```
