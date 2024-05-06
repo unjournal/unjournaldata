@@ -11,8 +11,10 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 # Descriptive work
 
-[ ] What are we evaluating? How many papers in total? In what subfields? What does our “funnel” (selection process of candidate papers) look like?
-[ ] How’s our process? How many papers per month? Turnaround times? Numbers of evaluators per paper?
+[ ] What are we evaluating? How many papers in total? In what subfields? What 
+  does our “funnel” (selection process of candidate papers) look like?
+[ ] How’s our process? How many papers per month? Turnaround times? 
+  Numbers of evaluators per paper?
 [ ] Basic averages e.g. ratings for each question; or averages per subfield.
 
 # Evaluating publication predictions

@@ -11,7 +11,7 @@ devtools::install_github("rethinkpriorities/rp-r-package")
 library(rethinkpriorities)
 
 devtools::install_github("rethinkpriorities/r-noodling-package")
-library(rnoodling)
+#library(rnoodling)
 
 options(knitr.duplicate.label = "allow")
 ```
