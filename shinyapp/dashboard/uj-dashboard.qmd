@@ -41,15 +41,28 @@ textOutput("papers_evaluated")
 ```{r}
 #| context: server
 
-output$papers_evaluated <- renderText({
-  period_cutoff <- periods[[input$period]]
+descriptives <- reactiveValues(
+  n_evals = 0L,
+  n_papers = 0L,
+  n_subfields = 0L
+)
 
-  evals <- evals_pub |> 
+evals <- reactive({
+  period_cutoff <- periods[[input$period]]
+  evals_pub |> 
     filter(createdTime >= period_cutoff) 
-    
-  n_evals <- nrow(evals)
-  n_papers <- n_distinct(evals$paper_abbrev)
-  glue::glue("We ran {n_evals} evaluations of {n_papers} papers.")  
+})
+
+n_evals <- reactive(nrow(evals()))
+n_papers <- reactive(n_distinct(evals()$paper_abbrev))
+n_subfields <- reactive({
+  all_cats <- c(evals()$cat_1, evals()$cat_2, evals()$cat_3)
+  n_distinct(all_cats)
+})
+
+output$papers_evaluated <- renderText({
+  glue::glue("We ran {n_evals()} evaluations of {n_papers()} papers in
+              {n_subfields()} distinct subfields.")  
 })
   
 ```
