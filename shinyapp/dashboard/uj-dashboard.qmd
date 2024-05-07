@@ -1,18 +1,23 @@
 ---
-title: "Unjournal dashboard"
+title: "The Unjournal data dashboard"
 server: shiny
 format: 
-  html:
-    page-layout: custom
+  dashboard:
+    theme: simplex
 ---
 
 ```{r}
 #| context: setup
 #| include: false
 
+library(conflicted)
 library(dplyr)
-library(lubridate)
+conflicts_prefer(dplyr::filter)
+library(forcats)
+library(ggplot2)
 library(here)
+library(lubridate)
+library(stringr)
 
 # names are display periods; values are relevant starting dates for data
 periods <- c(
@@ -24,48 +29,44 @@ periods <- c(
 
 ```
 
-```{r}
-#| panel: input
 
+## Row {height=30%}
+
+```{r}
 selectInput("period", "Period", names(periods))
 ```
 
-
 ```{r}
-#| panel: fill
 textOutput("papers_evaluated")
 ```
 
 
+## Row {height=70% .tabset}
+
+
+### Sources
+
+Papers can come to be evaluated by different routes: chosen by Unjournal staff,
+submitted by the authors, or by another third party. One specific source is
+our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
 
 ```{r}
-#| context: server
-
-descriptives <- reactiveValues(
-  n_evals = 0L,
-  n_papers = 0L,
-  n_subfields = 0L
-)
-
-evals <- reactive({
-  period_cutoff <- periods[[input$period]]
-  evals_pub |> 
-    filter(createdTime >= period_cutoff) 
-})
-
-n_evals <- reactive(nrow(evals()))
-n_papers <- reactive(n_distinct(evals()$paper_abbrev))
-n_subfields <- reactive({
-  all_cats <- c(evals()$cat_1, evals()$cat_2, evals()$cat_3)
-  n_distinct(all_cats)
-})
-
-output$papers_evaluated <- renderText({
-  glue::glue("We ran {n_evals()} evaluations of {n_papers()} papers in
-              {n_subfields()} distinct subfields.")  
-})
-  
+plotOutput("barplot_sources")
 ```
+
+### Research areas
+
+The barplot shows the research areas of evaluated papers. Papers can belong to more 
+than one research area. See [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) for a discussion of the research areas we cover.
+
+```{r}
+plotOutput("barplot_areas")
+```
+
+
+
+
+
 
 ```{r}
 #| context: data
@@ -85,3 +86,95 @@ evals_pub <- evals_pub |> mutate(
   createdTime = as.POSIXct(createdTime)
 )
 ```
+
+
+```{r}
+#| context: server
+
+evals <- reactive({
+  period_cutoff <- periods[[input$period]]
+  evals_pub |> 
+    filter(createdTime >= period_cutoff) 
+})
+
+n_evals <- reactive(nrow(evals()))
+n_papers <- reactive(n_distinct(evals()$paper_abbrev))
+all_cats <- reactive(c(evals()$cat_1, evals()$cat_2, evals()$cat_3))
+n_areas <- reactive(n_distinct(all_cats()))
+
+output$papers_evaluated <- renderText({
+  glue::glue("In the selected period, we ran {n_evals()} evaluations of
+              {n_papers()} papers in {n_areas()} distinct research areas.")  
+})
+  
+
+# barplot of research areas
+
+output$barplot_areas <- renderPlot({
+  data.frame(cat = all_cats()) |> 
+    filter( ! is.na(cat)) |> 
+    mutate(
+      cat = stringr::str_to_title(cat),
+      cat = forcats::fct_recode(cat, "Global Health & Development" = "Gh&D"),
+      cat = forcats::fct_infreq(cat),
+      cat = forcats::fct_rev(cat),
+    ) |> 
+    ggplot() + 
+      geom_bar(aes(y = cat, fill = cat)) +
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.x = NULL,
+        panel.grid.minor.x = NULL
+      ) +      
+      labs(
+        title = "Research areas of evaluated papers", 
+        subtitle = "Papers may be in more than one area", 
+        x = NULL,
+        y = NULL
+      )
+})
+
+
+output$barplot_sources <- renderPlot({
+  evals() |> 
+    mutate(
+      Source = case_match(source_main,
+        "internal-NBER" ~ "Internal (NBER)",
+        "internal-from-syllabus-agenda-policy-database" ~ "Internal",
+        "submitted (by author(s))" ~ "Author",
+        "suggested - externally" ~ "Third party"
+      ),
+      Source = forcats::fct_infreq(Source),
+      Source = forcats::fct_rev(Source)
+    ) |> 
+    ggplot() +
+      geom_bar(aes(y = Source, fill = Source)) + 
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.x = NULL,
+        panel.grid.minor.x = NULL
+      ) +
+      labs(
+        title = "Sources of evaluated papers", 
+        x = NULL,
+        y = NULL
+      )
+    
+})
+```
+
+
+```{r}
+#| context: server
+
+# Process. 
+# 1. Number of evaluations per month?
+# 2. The pipeline:
+#   - start with all papers
+#   - then see which reached which stage. 
+
+```
+
+
