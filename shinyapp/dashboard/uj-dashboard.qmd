@@ -18,6 +18,7 @@ library(ggplot2)
 library(here)
 library(lubridate)
 library(stringr)
+library(tidyr)
 
 # names are display periods; values are relevant starting dates for data
 periods <- c(
@@ -82,6 +83,16 @@ are evaluators' overall assessments of research quality, on a 0-100 scale.
 plotOutput("plot_ratings")
 ```
 
+### Questions
+
+Below we show the distribution of evaluators' answers to detailed, quantitative
+questions about different aspects of the research. For more information
+on these questions, see [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
+
+
+```{r}
+plotOutput("plot_questions")
+```
 
 
 
@@ -269,5 +280,44 @@ output$plot_ratings <- renderPlot({
         x = NULL,
         y = NULL
       )
+})
+
+
+output$plot_questions <- renderPlot({
+  evals() |> 
+    select(id, overall, adv_knowledge, methods, logic_comms, real_world, 
+           gp_relevance, open_sci) |> 
+    tidyr::pivot_longer(-id, names_to = "question", values_to = "rating") |> 
+    mutate(
+      question = case_match(question,
+        "overall" ~ "Overall assessment",
+        "adv_knowledge" ~ "Advancing our knowledge and practice",
+        "methods" ~ "Methods: justification, reasonableness, validity, robustness",
+        "logic_comms" ~ "Logic and communication",
+        "real_world" ~ "Real world relevance",
+        "gp_relevance" ~ "Relevance to global priorities",
+        "open_sci" ~ "Open, collaborative, replicable science"
+      )
+    ) |> 
+    ggplot(aes(question, rating, color = question)) +
+      geom_point() + 
+      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) + 
+      scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()
+      ) +
+      labs(
+        title = "Answers to quantitative evaluation questions", 
+        subtitle = "Crosses show per-question averages",
+        x = NULL,
+        y = NULL
+      )
+      
+    
+    
 })
 ```
