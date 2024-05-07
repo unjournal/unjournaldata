@@ -30,7 +30,7 @@ periods <- c(
 ```
 
 
-## Row {height=30%}
+## {height=30%}
 
 ```{r}
 selectInput("period", "Period", names(periods))
@@ -41,7 +41,7 @@ textOutput("papers_evaluated")
 ```
 
 
-## Row {height=70% .tabset}
+## {height=70% .tabset}
 
 
 ### Sources
@@ -64,6 +64,13 @@ plotOutput("barplot_areas")
 ```
 
 
+### Proposals
+
+The plot below shows the status of all papers proposed for evaluation.
+
+```{r}
+plotOutput("barplot_proposals")
+```
 
 
 
@@ -74,6 +81,15 @@ plotOutput("barplot_areas")
 
 source(here("code/import-unjournal-data.R"))
 # we now have evals_pub, all_papers_p, all_pub_records, and labels 
+all_pub_records <- all_pub_records |> 
+  mutate(
+    createdTime = as.POSIXct(createdTime)
+  )
+
+all_papers_p <- all_papers_p |> 
+  mutate(
+    createdTime = as.POSIXct(createdTime)
+  )
 
 all_pub_dates <- all_pub_records |> select(id, createdTime)
 rm(all_pub_records)
@@ -82,9 +98,6 @@ evals_pub <- left_join(evals_pub, all_pub_dates,
                        by = join_by(crucial_rsx_id == id),
                        relationship = "many-to-one")
 
-evals_pub <- evals_pub |> mutate(
-  createdTime = as.POSIXct(createdTime)
-)
 ```
 
 
@@ -102,25 +115,35 @@ n_papers <- reactive(n_distinct(evals()$paper_abbrev))
 all_cats <- reactive(c(evals()$cat_1, evals()$cat_2, evals()$cat_3))
 n_areas <- reactive(n_distinct(all_cats()))
 
+proposals <- reactive({
+  period_cutoff <- periods[[input$period]]
+  all_papers_p |> 
+    filter(createdTime >= period_cutoff)
+})
+
+n_proposals <- reactive(nrow(proposals()))
+
+
 output$papers_evaluated <- renderText({
-  glue::glue("In the selected period, we ran {n_evals()} evaluations of
-              {n_papers()} papers in {n_areas()} distinct research areas.")  
+  glue::glue("In the selected period, we considered
+  {n_proposals()} papers for evaluation. We ran {n_evals()} evaluations of
+  {n_papers()} papers in {n_areas()} distinct research areas.")  
 })
   
 
 # barplot of research areas
 
 output$barplot_areas <- renderPlot({
-  data.frame(cat = all_cats()) |> 
-    filter( ! is.na(cat)) |> 
+  data.frame(area = all_cats()) |> 
+    filter( ! is.na(area)) |> 
     mutate(
-      cat = stringr::str_to_title(cat),
-      cat = forcats::fct_recode(cat, "Global Health & Development" = "Gh&D"),
-      cat = forcats::fct_infreq(cat),
-      cat = forcats::fct_rev(cat),
+      area = stringr::str_to_title(area),
+      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
+      area = forcats::fct_infreq(area),
+      area = forcats::fct_rev(area),
     ) |> 
     ggplot() + 
-      geom_bar(aes(y = cat, fill = cat)) +
+      geom_bar(aes(y = area, fill = area)) +
       theme_minimal() + 
       theme(
         legend.position = "none", 
@@ -161,20 +184,47 @@ output$barplot_sources <- renderPlot({
         x = NULL,
         y = NULL
       )
-    
+})
+
+
+output$barplot_proposals <- renderPlot({
+  proposals() |> 
+    mutate(
+      Status = case_match(`stage of process/todo`,
+        c("awaiting authors' consent (where needed) or imminent update", 
+          "final consideration needed",
+          "Needs prioritization/assessor rating")
+          ~ "Under consideration",
+        c("de-prioritized bc. of journal-publication status, authors permission, etc.", 
+          "Authors rejected/blocked us", 
+          "deprioritized -- low ratings",
+          "Not a paper/project") 
+          ~ "Rejected",
+        c("Applied and Policy Research Stream",
+          "awaiting_evaluations",
+          "contacting/awaiting_authors_response_to_evaluation",
+          "In interim evaluation",
+          "seeking_(more)_evaluators",
+          "selected_choose_evaluation_manager") 
+          ~ "Accepted and under evaluation",
+        c("published evaluations (on PubPub, by Unjournal)") 
+          ~ "Evaluation published"
+      ),
+      Status = forcats::fct_infreq(Status),
+      Status = forcats::fct_rev(Status)
+    ) |> 
+    ggplot() +
+      geom_bar(aes(y = Status, fill = Status)) +
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.x = NULL,
+        panel.grid.minor.x = NULL
+      ) +
+      labs(
+        title = "Status of papers proposed for evaluation", 
+        x = NULL,
+        y = NULL
+      )
 })
 ```
-
-
-```{r}
-#| context: server
-
-# Process. 
-# 1. Number of evaluations per month?
-# 2. The pipeline:
-#   - start with all papers
-#   - then see which reached which stage. 
-
-```
-
-
