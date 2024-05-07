@@ -73,6 +73,17 @@ plotOutput("barplot_proposals")
 ```
 
 
+### Ratings
+
+The plot below shows the distribution of ratings by research area. Ratings
+are evaluators' overall assessments of research quality, on a 0-100 scale.
+
+```{r}
+plotOutput("plot_ratings")
+```
+
+
+
 
 
 ```{r}
@@ -131,34 +142,6 @@ output$papers_evaluated <- renderText({
 })
   
 
-# barplot of research areas
-
-output$barplot_areas <- renderPlot({
-  data.frame(area = all_cats()) |> 
-    filter( ! is.na(area)) |> 
-    mutate(
-      area = stringr::str_to_title(area),
-      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
-      area = forcats::fct_infreq(area),
-      area = forcats::fct_rev(area),
-    ) |> 
-    ggplot() + 
-      geom_bar(aes(y = area, fill = area)) +
-      theme_minimal() + 
-      theme(
-        legend.position = "none", 
-        panel.grid.major.x = NULL,
-        panel.grid.minor.x = NULL
-      ) +      
-      labs(
-        title = "Research areas of evaluated papers", 
-        subtitle = "Papers may be in more than one area", 
-        x = NULL,
-        y = NULL
-      )
-})
-
-
 output$barplot_sources <- renderPlot({
   evals() |> 
     mutate(
@@ -173,14 +156,46 @@ output$barplot_sources <- renderPlot({
     ) |> 
     ggplot() +
       geom_bar(aes(y = Source, fill = Source)) + 
+      scale_x_continuous(
+        breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
+      ) +
       theme_minimal() + 
       theme(
         legend.position = "none", 
-        panel.grid.major.x = NULL,
-        panel.grid.minor.x = NULL
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank()
       ) +
       labs(
         title = "Sources of evaluated papers", 
+        x = NULL,
+        y = NULL
+      )
+})
+
+
+output$barplot_areas <- renderPlot({
+  data.frame(area = all_cats()) |> 
+    filter( ! is.na(area)) |> 
+    mutate(
+      area = stringr::str_to_title(area),
+      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
+      area = forcats::fct_infreq(area),
+      area = forcats::fct_rev(area),
+    ) |> 
+    ggplot() + 
+      geom_bar(aes(y = area, fill = area)) +
+      scale_x_continuous(
+        breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
+      ) +
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank()
+      ) +      
+      labs(
+        title = "Research areas of evaluated papers", 
+        subtitle = "Papers may be in more than one area", 
         x = NULL,
         y = NULL
       )
@@ -218,11 +233,39 @@ output$barplot_proposals <- renderPlot({
       theme_minimal() + 
       theme(
         legend.position = "none", 
-        panel.grid.major.x = NULL,
-        panel.grid.minor.x = NULL
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank()
       ) +
       labs(
         title = "Status of papers proposed for evaluation", 
+        x = NULL,
+        y = NULL
+      )
+})
+
+
+output$plot_ratings <- renderPlot({
+  evals() |> 
+    mutate(
+      area = stringr::str_to_title(cat_1),
+      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
+      area = forcats::fct_infreq(area),
+      area = forcats::fct_rev(area),
+    ) |> 
+    ggplot(aes(y = area, x = overall, color = area)) +
+      geom_point() + 
+      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) + 
+      scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+      theme_minimal() + 
+      theme(
+        legend.position = "none", 
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()
+      ) +
+      labs(
+        title = "Overall ratings of papers by research area", 
+        subtitle = "Crosses show per-area averages",
         x = NULL,
         y = NULL
       )
