@@ -54,6 +54,7 @@ jobs:
           RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
           RSCONNECT_TOKEN: ${{ secrets.RSCONNECT_TOKEN }}
           RSCONNECT_SECRET: ${{ secrets.RSCONNECT_SECRET }}
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
         run: |
           rsconnect::setAccountInfo(name = Sys.getenv("RSCONNECT_USER"), 
                                     token = Sys.getenv("RSCONNECT_TOKEN"),
