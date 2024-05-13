@@ -36,7 +36,7 @@ jobs:
       - name: Setup dependencies with renv
         uses: r-lib/actions/setup-renv@v2
         with:
-          cache-version: 1
+          cache-version: 1 # increment this to invalidate the renv cache
 
       - name: Import Unjournal data
         run: Rscript -e 'source("code/import-unjournal-data.R"); save_data()'
