@@ -37,6 +37,8 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 2 # increment this to invalidate the renv cache
+        env:
+          GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
 
       - name: Import Unjournal data
         run: Rscript -e 'source("code/import-unjournal-data.R"); save_data()'
