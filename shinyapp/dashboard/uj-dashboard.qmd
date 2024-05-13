@@ -87,7 +87,8 @@ plotOutput("plot_ratings")
 
 Below we show the distribution of evaluators' answers to detailed, quantitative
 questions about different aspects of the research. For more information
-on these questions, see [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
+on these questions, see 
+[here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
 
 
 ```{r}
@@ -318,8 +319,5 @@ output$plot_questions <- renderPlot({
         x = NULL,
         y = NULL
       )
-      
-    
-    
 })
 ```
