@@ -63,7 +63,8 @@ jobs:
                                     secret = Sys.getenv("RSCONNECT_SECRET"))
           quarto::quarto_publish_app(input = "shinyapp/dashboard", 
                                      account = "unjournal", 
-                                     server = "shinyapps.io")
+                                     server = "shinyapps.io",
+                                     forceUpdate = TRUE)
         shell: Rscript {0}
         
       - name: Publish to GitHub Pages (and render)
