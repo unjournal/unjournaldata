@@ -55,3 +55,17 @@ jobs:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+
+      - name: Publish dashboard to shinyapps.io
+        env:
+          RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
+          RSCONNECT_TOKEN: ${{ secrets.RSCONNECT_TOKEN }}
+          RSCONNECT_SECRET: ${{ secrets.RSCONNECT_SECRET }}
+        run: |
+          rsconnect::setAccountInfo(name = Sys.getenv("RSCONNECT_USER"), 
+                                    token = Sys.getenv("RSCONNECT_TOKEN"),
+                                    secret = Sys.getenv("RSCONNECT_SECRET"))
+          quarto::quarto_publish_app(input = "shinyapp/dashboard", 
+                                     account = "unjournal", 
+                                     server = "shinyapps.io")
+        shell: Rscript {0}
