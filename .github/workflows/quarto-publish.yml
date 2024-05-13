@@ -49,13 +49,6 @@ jobs:
           name: unjournal-data
           path: data
           
-      - name: Publish to GitHub Pages (and render)
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
-
       - name: Publish dashboard to shinyapps.io
         env:
           RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
@@ -69,3 +62,11 @@ jobs:
                                      account = "unjournal", 
                                      server = "shinyapps.io")
         shell: Rscript {0}
+        
+      - name: Publish to GitHub Pages (and render)
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+
