@@ -13,7 +13,7 @@ our PubPub page content (either V6 or V7).
 
 The github site is created as a [Quarto](https://quarto.org) book. There is also
 a [Shiny](https://shiny.posit.co) app at
-<https://unjournal.shinyapps.io/DataExplorer/> as well as another one David HJ built (see `uj-dashboard.qmd`) hosted (where?).
+<https://unjournal.shinyapps.io/DataExplorer/> as well as another one David HJ built (see `uj-dashboard.qmd`) hosted [here](https://unjournal.shinyapps.io/uj-dashboard)
 
 The github site is automatically rendered on github when you push to the `main` branch (this is done by Github Actions; see [.github/workflows
 /deploy.yml](https://github.com/unjournal/unjournaldata/blob/main/.github/workflows/deploy.yml)
