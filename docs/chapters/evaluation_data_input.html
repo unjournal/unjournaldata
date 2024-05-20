@@ -133,7 +133,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">The Unjournal evaluations: data and analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/daaronr/unjournaldata/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/unjournal/unjournaldata/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -185,7 +185,7 @@ window.Quarto = {
   <ul>
   <li><a href="#reconcile-uncertainty-ratings-and-cis" id="toc-reconcile-uncertainty-ratings-and-cis" class="nav-link active" data-scroll-target="#reconcile-uncertainty-ratings-and-cis">Reconcile uncertainty ratings and CIs</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/daaronr/unjournaldata/edit/main/chapters/evaluation_data_input.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/daaronr/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/unjournal/unjournaldata/edit/main/chapters/evaluation_data_input.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/unjournal/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -223,42 +223,6 @@ Note on data input (10-Aug-23)
 <div class="callout-body-container callout-body">
 <p>Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators’ reports. As PubPub builds (target: end of Sept.&nbsp;2023), this will allow us to include the ratings and predictions as structured data objects. We then plan to access and input this data <em>directly</em> from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.</p>
 </div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in air_api_key(): AIRTABLE_API_KEY environment variable is empty. See ?airtabler for help.</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in air_api_key(): AIRTABLE_API_KEY environment variable is empty. See ?airtabler for help.</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'pub_records' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'pub_records' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
 </div>
 </div>
 <!-- need airtable API stuff -->
@@ -300,61 +264,7 @@ Dots to interval choices
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
 <p>We cannot publicly share the ‘papers under consideration’, but we can share some of the statistics on these papers. Let’s generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest</p>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in `dplyr::select()`:
-! Can't select columns that don't exist.
-✖ Column `id` doesn't exist.</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'paper_ratings' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'all_papers_p' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'all_papers_p' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
 
 
 </section>
@@ -770,4 +680,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/daaronr/unjournaldata/edit/main/chapters/evaluation_data_input.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/daaronr/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/unjournal/unjournaldata/edit/main/chapters/evaluation_data_input.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/unjournal/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
