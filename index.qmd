@@ -2,10 +2,17 @@
 
 [The Unjournal](www.unjournal.org) coordinates the public evaluation of hosted papers and dynamically-presented research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim: to make rigorous research more impactful, and impactful research more rigorous.
 
-Our main web site, [unjournal.org](https://www.unjournal.org), explains and presents our vision, procedures, and our progress. The 'output' evaluations and author (including feedback and discussion) can be found on our [PubPub page](https://unjournal.pubpub.org/), and are indexed in scholarly archives.
+Our main web site, [unjournal.org](https://www.unjournal.org) as well as our [knowledge base](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space), explain and present our vision, procedures, and our progress. The 'output' evaluations and author (including feedback and discussion) can be found on our [PubPub page](https://unjournal.pubpub.org/), and are indexed in scholarly archives.
+
+Also see our interactive dashboards
+
+- [here](https://unjournal.shinyapps.io/DataExplorer/)
+
+- [and here](https://unjournal.shinyapps.io/uj-dashboard/)
 
 
-The present site presents data and analysis on The Unjournal's pipeline and evaluation output
+This site and the accompanying dashboards present data and analysis on The Unjournal's pipeline and evaluation output
+
 
 In large part:
 
@@ -40,7 +47,7 @@ This resource aims to be:
 \
 
 
-10 Aug 2023: David Reinstein and Julia Bottesini have done most of the analysis here. 
+20 May 2024: David Reinstein, Julia Bottesini, and David Hugh-Jones have done most of the analysis here and in the accompanying dashboards.
 
 
 ## Colophon
