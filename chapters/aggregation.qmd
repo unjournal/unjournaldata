@@ -1,0 +1,204 @@
+# Aggregation of evaluators judgments (modeling)
+
+```{r setup}
+#| label: input_eval_data
+#| code-summary: "Input evaluation data"
+#| include: false
+
+library(tidyverse)
+#library(aggreCAT)
+library(here)
+library(irr)
+ 
+# add the modified DistributionWAgg function to aggregate our ratings
+source(here("code", "DistAggModified.R"))
+
+evals_pub <- read_rds(file = here("data", "evals.Rdata"))
+evals_pub_long <-read_rds(file = here("data", "evals_long.rds"))
+
+# Lists of categories
+rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
+pred_cats <- c("journal_predict", "merits_journal")
+
+```
+
+
+## Notes on sources and approaches
+
+
+::: {.callout-note collapse="true"}
+
+## Hanea et al {-}
+(Consult, e.g., repliCATS/Hanea and others work; meta-science and meta-analysis approaches)
+
+`aggreCAT` package
+
+> Although the accuracy, calibration, and informativeness of the majority of methods are very similar, a couple of the aggregation methods consistently distinguish themselves as among the best or worst. Moreover, the majority of methods outperform the usual benchmarks provided by the simple average or the median of estimates.
+
+[Hanea et al, 2021](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256919#sec007)
+
+ However, these are in a different context. Most of those measures are designed to deal with probablistic forecasts for binary outcomes, where the predictor also gives a 'lower bound' and 'upper bound' for that probability. We could roughly compare that to our continuous metrics with 90% CI's (or imputations for these).
+
+Furthermore, many (all their successful measures?) use 'performance-based weights', accessing metrics from prior prediction performance of the same forecasters. We do not have these, nor do we have a sensible proxy for this.  (But we might consider ways to develop these.)
+:::
+
+
+::: {.callout-note collapse="true"}
+## D Veen et al (2017)
+
+[link](https://www.researchgate.net/profile/Duco-Veen/publication/319662351_Using_the_Data_Agreement_Criterion_to_Rank_Experts'_Beliefs/links/5b73e2dc299bf14c6da6c663/Using-the-Data-Agreement-Criterion-to-Rank-Experts-Beliefs.pdf)
+
+... we show how experts can be ranked based on their knowledge and their level of (un)certainty. By letting experts specify their knowledge in the form of a probability distribution, we can assess how accurately they can predict new data, and how appropriate their level of (un)certainty is. The expert’s specified probability distribution can be seen as a prior in a Bayesian statistical setting. We evaluate these priors by extending an existing prior-data (dis)agreement measure, the Data Agreement Criterion, and compare this approach to using Bayes factors to assess prior specification. We compare experts with each other and the data to evaluate their appropriateness. Using this method, new research questions can be asked and answered, for instance: Which expert predicts the new data best? Is there agreement between my experts and the data? Which experts’ representation is more valid or useful? Can we reach convergence between expert judgement and data? We provided an empirical example ranking (regional) directors of a large financial institution based on their predictions of turnover. 
+
+Be sure to consult the [correction made here](https://www.semanticscholar.org/paper/Correction%3A-Veen%2C-D.%3B-Stoel%2C-D.%3B-Schalken%2C-N.%3B-K.%3B-Veen-Stoel/a2882e0e8606ef876133f25a901771259e7033b1)
+
+:::   
+
+
+::: {.callout-note collapse="true"}
+## Also seems relevant:
+
+See [Gsheet HERE](https://docs.google.com/spreadsheets/d/14japw6eLGpGjEWy1MjHNJXU1skZY_GAIc2uC2HIUalM/edit#gid=0), generated from an Elicit.org inquiry.
+
+
+::: 
+
+
+
+In spite of the caveats in the fold above, we construct some  measures of aggregate beliefs  using the `aggrecat` package. We will make (and explain) some ad-hoc choices here. We present these:
+
+1. For each paper
+2. For categories of papers and cross-paper categories of evaluations
+3. For the overall set of papers and evaluations
+
+We can also hold onto these aggregated metrics for later use in modeling.
+
+
+- Simple averaging
+
+- Bayesian approaches 
+
+- Best-performing approaches from elsewhere   
+
+- Assumptions over unit-level random terms 
+
+
+### Simple rating aggregation {-}
+
+
+```{r ratings_agg, eval=F, warning=FALSE}
+
+
+```
+
+
+
+
+### Explicit modeling of 'research quality' (for use in prizes, etc.) {-}
+
+- Use the above aggregation as the outcome of interest, or weight towards categories of greater interest?
+
+- Model with controls -- look for greatest positive residual?   
+
+
+## Inter-rater reliability
+
+Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.
+
+
+::: {.callout-note collapse="true"}
+### Expand to learn more about why we used Krippendorf's alpha, and how to interpret it
+
+We use Krippendorff's alpha as a measure of interrater agreement. Krippendorff's alpha is a more flexible measure of agreement and can be used with different levels of data (categorical, ordinal, interval, and ratio) as well as different numbers of raters. It automatically accounts for small samples, and allows its coefficient to be compared across sample sizes. 
+
+The calculation displayed below was done using the function `kripp.alpha` implemented by Jim Lemon in the package `irr` and is based on _Krippendorff, K. (1980). Content analysis: An introduction to its methodology. Beverly Hills, CA: Sage._
+
+> Krippendorff's alpha can range from -1 to +1, and it can be interpreted similarly to a correlation: values closer to +1 indicate excellent agreement between evaluators; values closer to 0 indicate there is no agreement between evaluators; and negative values indicate that there is systematic disagreement between evaluators beyond what can be expected by chance alone, such that ratings are reversed -- where a given evaluator tends to rate something as high, the other(s) tend to rate it as low, and vice versa.
+> Source: [Inter-Annotator Agreement: An Introduction to Krippendorff’s Alpha by Andrew Mauboussin](https://www.surgehq.ai/blog/inter-rater-reliability-metrics-an-introduction-to-krippendorffs-alpha)
+
+Despite the complexity of the calculations, Krippendorff’s alpha is fundamentally a Kappa-like metric. Its values range from -1 to 1, with 1 representing unanimous agreement between the raters, 0 indicating they’re guessing randomly, and negative values suggesting the raters are systematically disagreeing. (This can happen when raters value different things — for example, if rater A thinks a crowded store is a sign of success, but rater B thinks it proves understaffing and poor management). 
+
+<!-- Todo/note: DR - I don't care so much about the package -->
+
+<!-- Todo/note: DR - So how does it differ from the Pearson correlation coefficient?  The explanation above says sort of obvious things. I was looking more for some mathematical intuition. What is the fundamental model behind this alpha? Is there any 'story' that explains a value of 0.25 vs 0.5 etc? Which levels are 'strong' in what sense? E.g., is 0.8 a good value... and in what sense?-->
+
+More information about Krippendorff's alpha and links to further reading can be found [here](https://en.wikipedia.org/wiki/Krippendorff%27s_alpha).
+
+:::
+
+
+<!-- Todo
+(DR suggestions)
+- Present the same measure for 
+- each outcome measure aggregated across raters and papers
+- all the outcome measures aggregatedx
+    - For GH&D papers vs the rest
+    - Overall
+-->
+
+```{r}
+#| echo: false
+#| fig-height: 8
+
+# function that returns kripp.alpha
+# value. It checks if there is more than
+# one rater first to avoid errors
+# and converts the nested data into
+# a matrix to allow 
+mod_kripp_alpha <- function(dat) {
+  dat = as.matrix.POSIXlt(dat)
+  if(nrow(dat)>1) {
+    a = kripp.alpha(dat, method = "ratio")
+    res = a$value
+  } else {
+    res = NA_integer_
+  }
+  return(res)
+}
+
+# plot
+evals_pub %>% 
+  group_by(paper_abbrev) %>% 
+  select(paper_abbrev, all_of(rating_cats)) %>%
+  nest(data = -paper_abbrev) %>%
+  mutate(KrippAlpha = map_dbl(.x = data, .f = mod_kripp_alpha)) %>% 
+  unnest(data) %>% 
+  group_by(KrippAlpha, add = T) %>% 
+  summarize(Raters = n()) %>%
+  ungroup() %>% 
+  filter(Raters > 1) %>% 
+  ggplot(aes(x = reorder(paper_abbrev, KrippAlpha), y = KrippAlpha)) +
+  geom_point(aes(color = paper_abbrev, size = Raters), 
+             stat = "identity", shape = 16, stroke = 1) +
+  coord_flip() +
+  labs(x = "Paper", y = "Krippendorf's Alpha", caption = "Papers with < 2 raters no pictured") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  scale_size_identity(breaks = c(2,3), guide = "legend") +
+  scale_y_continuous(limits = c(-1,1)) +
+  guides(color=F)
+
+```
+
+
+
+<!-- TODO: Could you do a bit more to interpret the Krippendorf’s alpha IRR measure?-->
+
+
+<!-- TODO: Also, wouldn’t there be some other ways of aggregating for this:
+for each metric, across all papers (comparing the relative IRRs of these)
+for all metrics across all papers 
+
+https://unjournalfriends.slack.com/archives/D05JMD2KQMP/p1694561973337029
+-->
+
+
+## Decomposing variation, dimension reduction, simple linear models
+
+
+## Later possiblities
+
+- Relation to evaluation text content (NLP?)
+
+- Relation/prediction of later outcomes (traditional publication, citations, replication)
