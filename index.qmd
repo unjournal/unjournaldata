@@ -1,0 +1,49 @@
+# Preface {.unnumbered}
+
+[The Unjournal](www.unjournal.org) coordinates the public evaluation of hosted papers and dynamically-presented research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim: to make rigorous research more impactful, and impactful research more rigorous.
+
+Our main web site, [unjournal.org](https://www.unjournal.org), explains and presents our vision, procedures, and our progress. The 'output' evaluations and author (including feedback and discussion) can be found on our [PubPub page](https://unjournal.pubpub.org/), and are indexed in scholarly archives.
+
+
+The present site presents data and analysis on The Unjournal's pipeline and evaluation output
+
+In large part:
+
+1. Keeping track of what we are covering, when and how
+
+2. Presenting the quantitative evaluation content in useful ways
+
+3. Benchmarking, checking, and aggregating the expert judgment of our evaluators (as reflected in their ratings and predictions) 
+
+\
+
+
+We may expand this analysis further in the future, e.g., to include 
+
+- Further analysis of the relevant research contexts (e.g., 'how many papers are coming out by field')
+
+- Connections to replications and prediction initiatives
+
+- Comparing and benchmarking our evaluations against 'traditional publication outcomes' for this work (such as journal tiers and citations) 
+
+\
+
+
+This resource aims to be:
+
+1. Dynamic: Regularly updated to reflect our progress
+
+2. Transparent and replicable: sharing data and code to permit checking and 'forked' analyses
+
+3. Interactive: presenting a dashboard-style interface, allowing readers to choose their analyses of interest
+
+\
+
+
+10 Aug 2023: David Reinstein and Julia Bottesini have done most of the analysis here. 
+
+
+## Colophon
+
+This is a [Quarto book](https://quarto.org/docs/books).
+
