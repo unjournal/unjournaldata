@@ -1,0 +1,42 @@
+# Summary
+
+You need to reload packages (and data) in every chapter, unlike in our previous Bookdown setups.
+
+```{r setup}
+
+library(pacman)
+p_load(downlit)
+
+devtools::install_github("rethinkpriorities/rp-r-package")
+library(rethinkpriorities)
+
+devtools::install_github("rethinkpriorities/r-noodling-package")
+#library(rnoodling)
+
+options(knitr.duplicate.label = "allow")
+```
+
+## Air Quality {#air-quality}
+
+@fig-airquality further explores the impact of temperature on ozone level.
+
+```{r}
+#| label: fig-airquality
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+
+library(pacman)
+p_load(ggplot2)
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) +
+  geom_point() +
+  geom_smooth(method = "loess"
+)
+```
+
+Is the object from the previous chapter still there? NO.
+
+```{r}
+xtest
+```

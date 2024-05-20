@@ -1,0 +1,731 @@
+# Evaluation data: description, exploration, checks
+
+## Data input, cleaning, feature construction and imputation  
+
+```{r setup, warning=FALSE}
+#| label: load-packages
+#| code-summary: "load packages"
+
+library(tidyverse) 
+
+# markdown et al. ----
+library(knitr)
+library(bookdown)
+library(rmarkdown)
+library(shiny)
+library(quarto)
+library(formattable) # Create 'Formattable' Data Structures
+library(DT) # R interface to DataTables library (JavaScript)
+
+# dataviz ----
+library(ggrepel)
+library(plotly) # Create Interactive Web Graphics via 'plotly.js'
+library(RColorBrewer)  # for color palettes
+
+# others ----
+library(here) # A Simpler Way to Find Your Files
+# renv::install(packages = "metamelb-repliCATS/aggreCAT")
+#library(aggreCAT)
+
+# Make sure select is always the dplyr version
+select <- dplyr::select 
+
+# options
+options(knitr.duplicate.label = "allow")
+options(mc.cores = parallel::detectCores())
+
+```
+
+
+::: {.callout-note collapse="true"}
+## Note on data input (10-Aug-23)
+
+Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators' reports. As PubPub builds (target: end of Sept. 2023), this will allow us to  include the ratings and predictions as structured data objects. We then plan to access and input this data *directly* from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.
+
+::: 
+
+```{r}
+#| label: input_eval_data
+#| code-summary: "Input evaluation data"
+ 
+evals_pub <- readRDS(file = here("data", "evals.Rdata"))
+all_papers_p <- readRDS(file = here("data", "all_papers_p.Rdata"))
+
+```
+
+
+
+```{r}
+#| label: list_of_columns
+#| code-summary: "Define lists of columns to use later"
+
+# Lists of categories
+rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
+
+#... 'predictions' are currently 1-5 (0-5?)
+pred_cats <- c("journal_predict", "merits_journal")
+
+```
+
+
+    
+## Basic presentation
+
+### What sorts of papers/projects are we considering and evaluating? {-}
+
+In this section, we give some simple data summaries and visualizations, for a broad description of The Unjournal's coverage. 
+
+In the interactive table below we give some key attributes of the papers and the evaluators.
+
+
+::: column-body-outset    
+
+```{r}
+
+evals_pub_df_overview <- evals_pub %>%
+  arrange(paper_abbrev, eval_name) %>%
+  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
+  dplyr::select(-matches("ub_|lb_|conf")) 
+
+evals_pub_df_overview %>%   
+   rename(
+    "Paper Abbreviation" = paper_abbrev,
+    "Paper name" = crucial_rsx,
+    "Evaluator Name" = eval_name,
+    "Main category" = cat_1,
+    "Category 2" = cat_2,
+    "Main source" = source_main,
+    "Author contact" = author_agreement,
+  ) %>% 
+  DT::datatable(
+    caption = "Evaluations (confidence bounds not shown)", 
+    filter = 'top',
+    rownames= FALSE,
+    options = list(pageLength = 5,
+      columnDefs = list(list(width = '150px', targets = 1)))) %>% 
+  formatStyle(columns = 2:ncol(evals_pub_df_overview), 
+              textAlign = 'center') %>% 
+formatStyle(
+    "Paper name",
+    fontSize = '10px'
+  )
+
+rm(evals_pub_df_overview)
+
+
+```
+
+:::
+
+<!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
+
+#### Evaluation metrics (ratings) {-}
+
+
+```{r}
+rename_dtstuff <- function(df){
+  df %>%  
+  rename(
+    "Paper Abbreviation" = paper_abbrev,
+    "Evaluator Name" = eval_name,
+    "Advancing knowledge" = adv_knowledge,
+    "Methods" = methods,
+    "Logic & comm." = logic_comms,
+    "Real world engagement" = real_world,
+    "Global priorities relevance" = gp_relevance,
+    "Open Science" = open_sci
+  )
+}
+```
+
+
+Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
+
+::: column-body-outset    
+
+```{r }
+#| label: datatable0
+# Need to find a way to control column width but it seems to be a problem with DT
+# https://github.com/rstudio/DT/issues/29
+
+
+evals_pub_df <- evals_pub %>%
+  # Arrange data
+  arrange(paper_abbrev, eval_name, overall) %>%
+  
+  # Select and rename columns
+  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats)) %>%
+ rename_dtstuff 
+
+
+(
+ evals_pub_dt <- evals_pub_df %>%  
+  # Convert to a datatable and apply styling
+  datatable(
+    caption = "Evaluations and predictions (confidence bounds not shown)", 
+    filter = 'top',
+    rownames = FALSE,
+    options = list(pageLength = 5, 
+            columnDefs = list(list(width = '150px', targets = 0)))) %>% 
+  formatStyle(columns = 2:ncol(evals_pub_df), 
+              textAlign = 'center')
+)
+
+
+
+```
+:::
+
+
+
+\ 
+
+<!-- Todo -- Present these, including bounds, in a useful way -->
+
+```{r eval=FALSE}
+
+# we did not seem to be using all_evals_dt_ci so I removed it to improve readability
+evals_pub %>%
+  arrange(paper_abbrev, eval_name) %>%
+  dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %>%
+  rename_dtstuff %>% 
+  DT::datatable(
+    caption = "Evaluations and (imputed*) confidence bounds)", 
+    filter = 'top',
+    rownames= FALSE,
+    options = list(pageLength = 5)
+    )
+
+
+```
+#### Initial pool of papers: categories {-}
+
+Next, we present a plot of categories for all papers in the Unjournal's initial pool. One paper can belong to more than one category. 
+
+```{r all_paper_categories}
+#| fig-height: 9
+#| 
+# how many papers are in this dataset?
+n_papers <- select(all_papers_p, id) %>% distinct() %>% nrow()
+
+# plot
+all_papers_p %>% 
+  select(id, category) %>% 
+  unnest(category, keep_empty = T) %>%
+  distinct() %>% # just to make sure
+  replace_na(list(category = "unknown")) %>%
+  group_by(category) %>% 
+  count() %>%
+  mutate(category = str_to_title(category)) %>%
+  ggplot(aes(x = reorder(category, n), y = n)) +
+  geom_bar(aes(fill = category), stat = "identity", color = "grey30") + 
+  coord_flip() +
+  theme_bw() +
+  labs(y = "Paper category", x = "Count",
+       caption = paste0("Total number of papers = ", n_papers)) +
+  theme(legend.position = "none")
+```
+
+
+
+
+
+
+::: {.callout-note collapse="true"}
+##### Next consider...
+
+- Composition of research evaluated
+     - By field (economics, psychology, etc.)
+     - By subfield of economics 
+     - By topic/cause area (Global health, economic development, impact of technology, global catastrophic risks, etc.    )
+     - By source (submitted, identified with author permission, direct evaluation)
+    
+- Timing of intake and evaluation^[Consider: timing might be its own section or chapter; this is a major thing journals track, and we want to keep track of ourselves]
+
+:::
+
+
+
+
+
+
+
+#### Paper selection {-}
+
+The Sankey diagram below starts with the papers we prioritized for likely *Unjournal* evaluation:^[Those marked as 'considering' in the Airtable].
+
+```{r sankey plot}
+#| eval: false
+#Add in the 3 different evaluation input sources
+#update to be automated rather than hard-coded - to look at David's work here
+
+papers_considered <- all_papers_p %>% 
+  nrow()
+
+papers_deprio <- all_papers_p %>% 
+  filter(`stage of process/todo` ==  "de-prioritized") %>% 
+  nrow()
+
+papers_evaluated <- all_papers_p %>% 
+  filter(`stage of process/todo` %in% c("published",
+                                        "contacting/awaiting_authors_response_to_evaluation",
+                                        "awaiting_publication_ME_comments","awaiting_evaluations")) %>% 
+  nrow()
+
+papers_complete <- all_papers_p %>% 
+  filter(`stage of process/todo` ==  "published") %>%
+  nrow()
+
+papers_in_progress <-  papers_evaluated - papers_complete
+
+papers_still_in_consideration <-  all_papers_p %>% filter(`stage of process/todo` ==  "considering") %>% nrow()
+
+
+#todo: adjust wording of hover notes ('source, target...etc')
+
+fig <- plot_ly(
+  type = "sankey",
+  orientation = "h",
+  
+  node = list(
+    label = c("Prioritized", "Evaluating", "Complete", "In progress", "Still in consideration", "De-prioritized"),
+    color = c("orange", "green", "green", "orange", "orange", "red"),
+    #Todo: adjust 'location' to group these left to right
+    pad = 15,
+    thickness = 20,
+    line = list(
+      color = "black",
+      width = 0.5
+    )
+  ),
+  
+  link = list(
+    source = c(0,1,1,0,0),
+    target = c(1,2,3,4,5),
+    value =  c(
+      papers_evaluated,
+      papers_complete,
+      papers_in_progress,
+      papers_still_in_consideration,
+      papers_deprio
+    ))
+)
+fig <- fig %>% layout(
+  title = "Unjournal paper funnel",
+  font = list(
+    size = 10
+  )
+)
+
+fig 
+
+```
+
+
+```{r new sankey plot}
+
+all_papers_p %>% 
+  select(id, source_main, `stage of process/todo`) %>% 
+  rename(stage = `stage of process/todo`) %>% 
+  mutate(source_main = if_else(source_main == "NA", NA_character_, source_main)) %>% 
+  replace_na(list(source_main = "unknown", stage = "unknown")) %>%
+  mutate(stage0 = "Paper Pool",
+         stage1 = case_match(stage,
+                             "contacting/awaiting_authors_response_to_evaluation" ~ "Selected",
+                             "seeking_(more)_evaluators" ~ "Selected",
+                             "published" ~ "Selected",
+                             .default = NA_character_),
+         stage2 = paste0("Stage: ", str_to_sentence(stage)),
+         source_main = str_replace_all(string = source_main, 
+                                  pattern = "-", 
+                                  replace = " ") %>% 
+           # str_to_title() %>% 
+           str_replace_all(pattern = "\\s+",
+                       replacement = " "),
+         source = paste0("Source: ", source_main)) -> temp
+
+temp %>% 
+  select(source, stage0, stage1, stage2) %>%
+  pivot_longer(cols = everything()) %>% 
+  arrange(name) %>% 
+  select(value) %>% 
+  distinct() %>% drop_na() -> nodes
+
+
+nodes = tibble(index =  seq(0,nrow(nodes)-1, by = 1),
+               label = nodes$value,
+               color = c(brewer.pal(n = length(unique(temp$source)), "Pastel2"), # Sources
+                         "#984EA3",# all papers
+                         "#4DAF4A",# selected
+                         "#4DAF9A","#FF7F00","#FFFF33", "#A65628", "#999999","#377288", "#F781BF","#999999")) #outcomes
+
+
+# link = tibble(source = c(),
+#               target = c(),
+#               value = c())
+
+# source -> paper pool (stage0) -> stage1 -> stage2
+
+# add source > paper pool (stage0)
+link = temp %>% 
+  group_by(source, stage0) %>% 
+  count() %>%
+  rename(target = stage0, value = n) 
+
+# add paper pool > stage1 (selected)
+temp %>% 
+  group_by(stage0, stage1) %>% 
+  count() %>%
+  rename(source = stage0, target = stage1, value = n) %>% 
+  filter(!is.na(target)) -> temp2
+
+link = bind_rows(link, temp2)
+
+# add paper pool > stage2 (not selected)
+temp %>% 
+  group_by(stage0, stage1, stage2) %>% 
+  count() %>% 
+  ungroup() %>%
+  filter(is.na(stage1)) %>%
+  rename(source = stage0, target = stage2, value = n) %>%
+  select(-stage1) -> temp2
+
+link = bind_rows(link, temp2) 
+
+# add selected (stage1) to stage 2
+temp %>% 
+  group_by(stage0, stage1, stage2) %>% 
+  count() %>% 
+  ungroup() %>% 
+  filter(stage1 == "Selected") %>% 
+  rename(source = stage1, target = stage2, value = n) %>%
+  select(-stage0) -> temp2
+
+link = bind_rows(link, temp2) 
+
+# add node index to link
+link %>% 
+  ungroup() %>% 
+  left_join(nodes, by = c("source" = "label")) %>%
+  rename(source_index = index) %>% 
+  left_join(nodes, by = c("target" = "label")) %>%
+  rename(target_index = index) %>% 
+  select(source_index, target_index, value) %>%
+  rename(source = source_index,
+         target = target_index) -> link
+
+
+
+fig <- plot_ly(type = "sankey", orientation = "h", 
+
+  node = list(
+    label = nodes$label,
+    color = nodes$color,
+    pad = 15,
+    thickness = 20,
+    line = list(color = "black", width = 0.5),
+    hovertemplate = "%{label}: %{value:.0f} papers<extra></extra>"
+    ),
+  
+  link = list(
+    source = link$source,
+    target = link$target,
+    value =  as.integer(link$value),
+    hovertemplate = "%{value:.0f} papers<extra></extra>"
+  ))
+
+fig <- fig %>% layout(
+  title = "Unjournal Paper Flow Diagram",
+  font = list(size = 10)
+)
+
+fig
+
+
+
+
+
+
+```
+
+
+
+
+
+Todo: ^[Make interactive/dashboards of the elements below]
+
+#### Paper categories {-}
+
+
+```{r all_categories}
+evals_pub %>% 
+  select(paper_abbrev, starts_with("cat_")) %>%
+  distinct() %>% 
+  pivot_longer(cols = starts_with("cat_"), names_to = "CatNum", values_to = "Category") %>% 
+  group_by(CatNum, Category) %>% 
+  count() %>% 
+  filter(!is.na(Category)) %>% 
+  mutate(Category = str_to_title(Category),
+         CatNum = ordered(CatNum, 
+                          levels = c("cat_1", "cat_2", "cat_3"),
+                          labels = c("Primary", "Secondary", "Tertiary"))) %>%
+  ggplot(aes(x = reorder(Category, -n), y = n)) +
+  geom_bar(aes(fill = CatNum), stat = "identity", color = "grey30") + 
+  labs(x = "Paper category", y = "Count", fill = "Cat Level",
+       title = "Paper categories represented in pilot data") +
+  theme_bw() +
+  facet_grid(~CatNum, scales="free_x", space="free_x") +
+  theme(axis.text.x=element_text(angle=45,hjust=1)) +
+  theme(legend.position = "none")
+  
+```
+
+#### Paper source {-}
+
+```{r paper_source}
+
+# Bar plot
+evals_pub %>% 
+  rowwise() %>% 
+  mutate(source_main = str_replace_all(string = source_main, 
+                                       pattern = "-", 
+                                       replace = " ") %>% str_to_title()) %>%
+  select(paper_abbrev, source_main) %>% 
+  distinct() %>%
+  ggplot(aes(x = source_main)) + 
+  geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
+  labs(x = "Source", y = "Count") +
+  labs(title = "Pool of research/evaluations by paper source") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
+
+```
+
+```{r data clean}
+# JB: Most of these should probably be cleaned in data storage
+
+# paper statuses that are considered "being evaluated"
+eval_true = c("published", 
+              "contacting/awaiting_authors_response_to_evaluation",
+              "awaiting_publication_ME_comments",
+              "awaiting_evaluations")
+
+# Is the paper being evaluated? 
+all_papers_p <- all_papers_p %>% 
+  mutate(is_evaluated = if_else(`stage of process/todo` %in% eval_true, TRUE, FALSE))
+
+# main source clean
+all_papers_p <- all_papers_p %>% 
+  mutate(source_main = case_when(source_main == "NA" ~ "Not applicable",
+                                 source_main == "internal-from-syllabus-agenda-policy-database" ~ "Internal: syllabus, agenda, etc.",
+                                 is.na(source_main) ~ "Unknown",
+                                 TRUE ~ source_main))
+
+all_papers_p %>% 
+ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
+  geom_bar(position = "stack", stat = "count") +
+  labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  labs(title = "Evaluations by source of the paper") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20))
+```
+
+
+## The distribution of ratings and predictions {-}
+
+Next, we present the ratings and predictions along with 'uncertainty measures'.^[We use "ub imp" (and "lb imp") to denote the upper and lower bounds given by evaluators.] Where evaluators gave only a 1-5 confidence level^[More or less, the ones who report a level for 'conf overall', although some people did this for some but not others], we use the imputations discussed and coded above. 
+
+
+Below we present these, for each category and prediction (overall and by paper). Papers are arranged in descending order of average overall score. *Note that evaluations made by anonymous reviewers are marked with a black border around the rating.*
+
+
+::: column-body-outset
+
+
+```{r}
+#| fig-height: 9
+#| 
+# Generate a color palette with more colors
+color_count <- length(unique(evals_pub$paper_abbrev))
+color_palette <- colorRampPalette(brewer.pal(8, "Set1"))(color_count)
+
+# set one "set" of dodge width values across layers
+pd = position_dodge2(width = 0.8)
+
+# Dot plot
+g1 <- evals_pub %>% 
+  mutate(AnonEval = str_detect(eval_name, "Anonymous")) %>%
+  group_by(paper_abbrev) %>% 
+  mutate(AvgOverall = mean(overall)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = reorder(paper_abbrev, AvgOverall), y = overall, group = paper_abbrev, 
+             text = paste0('Evaluator: ', eval_name,   # tooltip data
+                           '<br>Rating [CI]: ', overall, " [", overall_lb_imp, ", ", overall_ub_imp, "]"))) +
+  geom_point(aes(color = paper_abbrev), 
+             stat = "identity", size = 2, shape = 18, stroke = 1, position = pd) +
+  geom_point(aes(alpha = AnonEval),
+             stat = "identity", size = 3, shape = 5, stroke = .75, position = pd, color = "black") +
+  geom_linerange(aes(ymin = overall_lb_imp, ymax = overall_ub_imp, color = paper_abbrev), position = pd) +
+  coord_flip() + # flipping the coordinates to have categories on y-axis (on the left)
+  labs(x = "Paper", y = "Overall score",
+       title = "Overall scores of evaluated papers") +
+  theme_bw() +
+  theme(text = element_text(size = 15)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) + 
+  scale_color_manual(values = c(color_palette)) +
+  scale_alpha_manual(name = "Anonymous evaluator?", guide = "legend", 
+                     values = c(.1,1), labels = c("No","Yes")) +
+  guides(color = F, alpha = guide_legend()) +
+  theme(legend.position = "none")
+
+
+
+
+
+ggplotly(g1, tooltip = c("text"))
+
+#TODO: 
+# - Improve the 'anon' super/subscript on the bars (or do something else that allows us to quickly see which ones were anonymous)
+# JB: I edited it so the anonymous evaluations have a black outline. I think it looks better but the main problem
+# is that plotly breaks the legend and caption information from ggplot, so I can't find a way to convey that information,
+# either as a caption or as a legend. For the legend to show up, I would need to turn off the plotly elements,
+# which would remove the floaty hover-over labels with evaluator names and values+CIs. Happy to make the change if
+# you think that's better.
+
+
+```
+:::
+
+Below, we are building an interactive dashboard.^[We are working to enable a range of presentations, aggregations, and analyses (your suggestions are welcome), including reasonable approaches to incorporating evaluator uncertainty]
+
+### Shiny dashboard {-}
+
+::: column-body-outset
+
+```{=html}
+<!-- Currently this is a random Shiny app -->
+<iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
+
+<!-- # Todo: (@julia)
+- link the code used to generate the shiny app (or something allowing people to see how the data/statistics part iss constructed) 
+
+
+-->
+
+
+```
+
+::: {.callout-note collapse="true"}
+## Notes, clarifications, and caveats on the above dashboard
+
+1. The aggregated ratings and ranges seem to not yet be computed properly
+
+2. In the 'journal ratings' view, the stars/asterisks are used when the 'predicted' and 'merited' ratings are the same
+
+::: 
+
+
+You can see this dashboard on it's own hosted [here](https://unjournal.shinyapps.io/DataExplorer/).
+
+:::
+
+
+
+::: {.callout-note collapse="true"}
+## Future vis
+
+
+Each rating is a dimension or attribute (potentially normalized) potentially superimpose a 'circle' for the suggested weighting or overall. 
+
+Each paper gets its own spider, with all others (or the average) in faded color behind it as a comparator. 
+
+Ideally user can switch on/off 
+
+Beware -- people may infer things from the shape's size
+
+::: 
+
+
+::: column-body-outset
+
+```{r, eval=FALSE}
+# JB: what is the purpose of this table? It's very large and I'm not totally
+# sure what it's doing so I'm just turning it off for now
+unit.scale = function(x) (x*100 - min(x*100)) / (max(x*100) - min(x*100))
+
+evaluations_table <- evals_pub %>%
+  select(paper_abbrev, eval_name, cat_1, 
+         source_main, overall, adv_knowledge,
+         methods, logic_comms, journal_predict) %>%
+  arrange(desc(paper_abbrev))
+
+formattable(
+  evaluations_table,
+  list(
+    #area(col = 5:8) ~ function(x) percent(x / 100, digits = 0),
+    area(col = 5:8) ~ color_tile("#FA614B66","#3E7DCC"),
+    `journal_predict` = proportion_bar("#DeF7E9", unit.scale)
+  )
+)
+
+
+```
+:::
+
+
+### Sources of variation {-}
+
+Next, look for systematic variation in the ratings 
+
+- By field and topic area of paper
+
+- By submission/selection route
+
+- By evaluation manager (or their seniority, or whether they are US/Commonwealth/Other)^[DR: My theory is that people in commonwealth countries target a 70+ as 'strong' (because of their marking system) and that may drive a bias.]
+
+... perhaps building a model of this. We are looking for systematic 'biases and trends', loosely speaking, to help us better understand how our evaluation system is working.
+
+\
+
+
+### Relationship among the ratings (and predictions) {-} 
+
+::: {.callout-note collapse="true"}
+## Next steps (suggested analyses)
+
+- Correlation matrix
+
+- ANOVA
+
+- PCA (Principle components)
+
+- With other 'control' factors?
+
+- How do the specific measures predict the aggregate ones (overall rating, merited publication)
+    - CF 'our suggested weighting'
+
+::: 
+
+
+Next chapter (analysis): *aggregation of evaluator judgment*
+
+
+::: {.callout-note collapse="true"}
+## Scoping our future coverage
+
+We have funding to evaluate roughly 50-70 papers/projects per year, given our proposed incentives.
+
+Consider:
+
+- How many relevant NBER papers come out per year?
+
+- How much relevant work in other prestige archives?
+
+- What quotas do we want (by cause, etc.) and how feasible are these?
+
+::: 
+
