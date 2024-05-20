@@ -145,6 +145,42 @@
       ],
       "Hash": "999d7960fe5a5fd98267d0b68fd10065"
     },
+    "R2WinBUGS": {
+      "Package": "R2WinBUGS",
+      "Version": "2.1-22.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "boot",
+        "coda",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "5f50ae507977ff05af153a3b76a775a7"
+    },
+    "R2jags": {
+      "Package": "R2jags",
+      "Version": "0.8-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R2WinBUGS",
+        "abind",
+        "coda",
+        "grDevices",
+        "graphics",
+        "methods",
+        "parallel",
+        "rjags",
+        "stats",
+        "stringr",
+        "utils"
+      ],
+      "Hash": "1d783d1b22f80a173631a45b505f3eb8"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -185,6 +221,65 @@
         "R"
       ],
       "Hash": "0cf10dab0d023d5b46a5a14387556891"
+    },
+    "VGAM": {
+      "Package": "VGAM",
+      "Version": "1.1-11",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "splines",
+        "stats",
+        "stats4"
+      ],
+      "Hash": "0a347b0c06e87ad505699b7a6290abd2"
+    },
+    "abind": {
+      "Package": "abind",
+      "Version": "1.4-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "4f57884290cc75ab22f4af9e9d4ca862"
+    },
+    "aggreCAT": {
+      "Package": "aggreCAT",
+      "Version": "0.0.0.9004",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "unjournal",
+      "RemoteRepo": "aggreCAT",
+      "RemoteRef": "master",
+      "RemoteSha": "cd221069bfbc624c28dcc9ad040d61db2be76a0c",
+      "Remotes": "softloud/neet, unjournal/rfUtilities@f64894e",
+      "Requirements": [
+        "GoFKernel",
+        "R",
+        "R2jags",
+        "VGAM",
+        "cli",
+        "coda",
+        "crayon",
+        "dplyr",
+        "ggplot2",
+        "insight",
+        "magrittr",
+        "mathjaxr",
+        "precrec",
+        "purrr",
+        "rfUtilities",
+        "stringr",
+        "tibble",
+        "tidyr"
+      ],
+      "Hash": "8375c42308d4931b23a97b17cdcd00c2"
     },
     "airtabler": {
       "Package": "airtabler",
@@ -453,6 +548,31 @@
         "vctrs"
       ],
       "Hash": "3d8a84cdf9f6f8564531c49b70f3833d"
+    },
+    "cluster": {
+      "Package": "cluster",
+      "Version": "2.1.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "0aaa05204035dc43ea0004b9c76611dd"
+    },
+    "coda": {
+      "Package": "coda",
+      "Version": "0.19-4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice"
+      ],
+      "Hash": "af436915c590afc6fffc3ce3a5be1569"
     },
     "codetools": {
       "Package": "codetools",
@@ -1163,6 +1283,20 @@
       "Repository": "CRAN",
       "Hash": "7a0051eef852c301b5efe2f7913dd45f"
     },
+    "gridExtra": {
+      "Package": "gridExtra",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "grDevices",
+        "graphics",
+        "grid",
+        "gtable",
+        "utils"
+      ],
+      "Hash": "7d7f283939f563670a697165b2cf5560"
+    },
     "gridtext": {
       "Package": "gridtext",
       "Version": "0.1.5",
@@ -1722,6 +1856,13 @@
       ],
       "Hash": "765cf53992401b3b6c297b69e1edb8bd"
     },
+    "mathjaxr": {
+      "Package": "mathjaxr",
+      "Version": "1.6-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "87da6ccdcee6077a7d5719406bf3ae45"
+    },
     "memoise": {
       "Package": "memoise",
       "Version": "2.0.1",
@@ -2038,6 +2179,26 @@
       "Repository": "CRAN",
       "Hash": "a555924add98c99d2f411e37e7d25e9f"
     },
+    "precrec": {
+      "Package": "precrec",
+      "Version": "0.14.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "assertthat",
+        "data.table",
+        "ggplot2",
+        "graphics",
+        "grid",
+        "gridExtra",
+        "methods",
+        "rlang",
+        "withr"
+      ],
+      "Hash": "e5a70cbe83260613031dfdc9a91496e0"
+    },
     "prettyunits": {
       "Package": "prettyunits",
       "Version": "1.2.0",
@@ -2205,6 +2366,17 @@
         "textshaping"
       ],
       "Hash": "082e1a198e3329d571f4448ef0ede4bc"
+    },
+    "randomForest": {
+      "Package": "randomForest",
+      "Version": "4.7-1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "stats"
+      ],
+      "Hash": "b52825075358b1ebd159e262bf40649d"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -2404,6 +2576,35 @@
         "vtable"
       ],
       "Hash": "ea385c8e948d64b3105c692f54ee6da7"
+    },
+    "rfUtilities": {
+      "Package": "rfUtilities",
+      "Version": "2.1-4",
+      "Source": "GitHub",
+      "Repository": "CRAN",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "unjournal",
+      "RemoteRepo": "rfUtilities",
+      "RemoteRef": "f64894efe08d569cdb5cd74e625b72f09019caaa",
+      "RemoteSha": "f64894efe08d569cdb5cd74e625b72f09019caaa",
+      "Requirements": [
+        "R",
+        "cluster",
+        "randomForest"
+      ],
+      "Hash": "327e1ced41e7f356564d67d8379d6d48"
+    },
+    "rjags": {
+      "Package": "rjags",
+      "Version": "4-15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "coda"
+      ],
+      "Hash": "dedea2fb969477a705de3b1a04e1aa25"
     },
     "rlang": {
       "Package": "rlang",
