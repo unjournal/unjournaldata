@@ -9,7 +9,7 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 [ ] Rewrite import-unjournal-data to use pubpub API
   - probably wait until v7 is usable
-[ ] Deploy shiny app using a github action, for consistency
+[x] Deploy shiny app using a github action, for consistency
 
 # Descriptive work
 
