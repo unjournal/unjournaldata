@@ -8,8 +8,7 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 
 # How it works
 
-Data is currently imported from Airtable. 16 May 2024: We hope to directly import from our Coda database soon, which in turn, we hope to feed from
-our PubPub page content (either V6 or V7).
+Data is currently imported from Airtable. 16 May 2024: We hope to directly import from our Coda database soon, which in turn, we hope to feed from our PubPub page content (either V6 or V7).
 
 The github site is created as a [Quarto](https://quarto.org) book. There is also
 a [Shiny](https://shiny.posit.co) app at
