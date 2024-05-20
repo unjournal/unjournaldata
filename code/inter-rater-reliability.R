@@ -22,7 +22,8 @@ conflicts_prefer(dplyr::filter, dplyr::select)
 #   distance between different guesses. As we have many different
 #   coders (evaluators) we need a "one-way" estimate of ICC i.e. one which
 #   doesn't try to estimate any individual coder's bias
-
+# * Krippendorff and Hayes make the claim that only krippendorff's alpha
+#   is the "gold standard" for IRR
 
 #' Estimates intraclass correlation from a subset of Unjournal data
 #'
@@ -44,15 +45,16 @@ conflicts_prefer(dplyr::filter, dplyr::select)
 #'   estimate_icc(rating = methods)
 #'   
 estimate_icc <- function (data, rating) {
-  evals <- pivot_evals(data, enquo(rating))
+  evals <- pivot_evals(data, enquo(rating), exactly_two = TRUE)
   irr::icc(evals, model = "oneway")
 }
 
 
 #' @rdname estimate_icc
-#' @param method Passed to [irr::kripp.alpha()].
+#' @param method Passed to [irr::kripp.alpha()]. One of "nominal", 
+#'   "ordinal", "interval" or "ratio". 
 estimate_kripp_alpha <- function (data, rating, method = "interval") {
-  evals <- pivot_evals(data, enquo(rating))
+  evals <- pivot_evals(data, enquo(rating), exactly_two = FALSE)
   
   # kripp.alpha uses a different interface to the rest of the irr package :-/
   evals <- as.matrix(evals)
@@ -62,7 +64,6 @@ estimate_kripp_alpha <- function (data, rating, method = "interval") {
 }
 
 
-
 #' Prepare data for use by {irr} functions, via [tidyr::pivot_wider()]
 #'
 #' Private function, not part of the API!
@@ -70,22 +71,31 @@ estimate_kripp_alpha <- function (data, rating, method = "interval") {
 #' @param data A subset of `evals_pub`
 #' @param rating An unquoted column name, e.g. `overall`, `methods`,
 #'   corresponding to a quantitative rating given by evaluators
+#' @param exactly_two Logical. Include only papers with exactly two
+#'   raters? Necessary to avoid listwise deletion for many methods.
+#'   If FALSE, includes all papers with two raters or more.
 #'
 #' @return A wider dataset of ratings per paper
 #' @noRd
 #'
 #' @examples
-pivot_evals <- function (data, rating) {
-  data %>% 
+pivot_evals <- function (data, rating, exactly_two = FALSE) {
+  data <- data %>% 
     select(id, crucial_rsx, !!rating) %>% 
     mutate(
       .by = crucial_rsx,
       eval_number = seq_len(n())
-    ) %>% 
-    filter(
-      .by = crucial_rsx,
-      n() == 2L          # We only include papers with exactly two evaluations.
-    ) %>% 
+    ) 
+  
+  if (exactly_two) {
+    data <- filter(data, .by = crucial_rsx,
+                   n() == 2L)
+  } else {
+    data <- filter(data, .by = crucial_rsx,
+                   n() >= 2L)
+  }
+     
+  data <- data %>%
     tidyr::pivot_wider(
       id_cols = crucial_rsx,
       names_prefix = "eval_", 
@@ -93,4 +103,6 @@ pivot_evals <- function (data, rating) {
       values_from = !!rating
     ) %>% 
     select(starts_with("eval_"))
+  
+  data
 }
