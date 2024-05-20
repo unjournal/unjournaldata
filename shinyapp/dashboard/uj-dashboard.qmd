@@ -1,7 +1,7 @@
 ---
 title: "The Unjournal data dashboard"
 server: shiny
-format: 
+format:
   dashboard:
     theme: simplex
 ---
@@ -48,8 +48,7 @@ textOutput("papers_evaluated")
 ### Sources
 
 Papers can come to be evaluated by different routes: chosen by Unjournal staff,
-submitted by the authors, or by another third party. One specific source is
-our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
+submitted by the authors, or suggested by another third party. As of 16 May 2024, many/most come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
 
 ```{r}
 plotOutput("barplot_sources")
@@ -57,7 +56,7 @@ plotOutput("barplot_sources")
 
 ### Research areas
 
-The barplot shows the research areas of evaluated papers. Papers can belong to more 
+The barplot shows the research areas of evaluated papers. Papers can belong to more
 than one research area. See [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) for a discussion of the research areas we cover.
 
 ```{r}
@@ -87,7 +86,7 @@ plotOutput("plot_ratings")
 
 Below we show the distribution of evaluators' answers to detailed, quantitative
 questions about different aspects of the research. For more information
-on these questions, see 
+on these questions, see
 [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
 
 
@@ -103,13 +102,13 @@ plotOutput("plot_questions")
 #| include: false
 
 source(here("code/import-unjournal-data.R"))
-# we now have evals_pub, all_papers_p, all_pub_records, and labels 
-all_pub_records <- all_pub_records |> 
+# we now have evals_pub, all_papers_p, all_pub_records, and labels
+all_pub_records <- all_pub_records |>
   mutate(
     createdTime = as.POSIXct(createdTime)
   )
 
-all_papers_p <- all_papers_p |> 
+all_papers_p <- all_papers_p |>
   mutate(
     createdTime = as.POSIXct(createdTime)
   )
@@ -117,7 +116,7 @@ all_papers_p <- all_papers_p |>
 all_pub_dates <- all_pub_records |> select(id, createdTime)
 rm(all_pub_records)
 
-evals_pub <- left_join(evals_pub, all_pub_dates, 
+evals_pub <- left_join(evals_pub, all_pub_dates,
                        by = join_by(crucial_rsx_id == id),
                        relationship = "many-to-one")
 
@@ -129,8 +128,8 @@ evals_pub <- left_join(evals_pub, all_pub_dates,
 
 evals <- reactive({
   period_cutoff <- periods[[input$period]]
-  evals_pub |> 
-    filter(createdTime >= period_cutoff) 
+  evals_pub |>
+    filter(createdTime >= period_cutoff)
 })
 
 n_evals <- reactive(nrow(evals()))
@@ -140,7 +139,7 @@ n_areas <- reactive(n_distinct(all_cats()))
 
 proposals <- reactive({
   period_cutoff <- periods[[input$period]]
-  all_papers_p |> 
+  all_papers_p |>
     filter(createdTime >= period_cutoff)
 })
 
@@ -150,12 +149,12 @@ n_proposals <- reactive(nrow(proposals()))
 output$papers_evaluated <- renderText({
   glue::glue("In the selected period, we considered
   {n_proposals()} papers for evaluation. We ran {n_evals()} evaluations of
-  {n_papers()} papers in {n_areas()} distinct research areas.")  
+  {n_papers()} papers in {n_areas()} distinct research areas.")
 })
-  
+
 
 output$barplot_sources <- renderPlot({
-  evals() |> 
+  evals() |>
     mutate(
       Source = case_match(source_main,
         "internal-NBER" ~ "Internal (NBER)",
@@ -165,20 +164,20 @@ output$barplot_sources <- renderPlot({
       ),
       Source = forcats::fct_infreq(Source),
       Source = forcats::fct_rev(Source)
-    ) |> 
+    ) |>
     ggplot() +
-      geom_bar(aes(y = Source, fill = Source)) + 
+      geom_bar(aes(y = Source, fill = Source)) +
       scale_x_continuous(
         breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
       ) +
-      theme_minimal() + 
+      theme_minimal() +
       theme(
-        legend.position = "none", 
+        legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank()
       ) +
       labs(
-        title = "Sources of evaluated papers", 
+        title = "Sources of evaluated papers",
         x = NULL,
         y = NULL
       )
@@ -186,28 +185,28 @@ output$barplot_sources <- renderPlot({
 
 
 output$barplot_areas <- renderPlot({
-  data.frame(area = all_cats()) |> 
-    filter( ! is.na(area)) |> 
+  data.frame(area = all_cats()) |>
+    filter( ! is.na(area)) |>
     mutate(
       area = stringr::str_to_title(area),
       area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
-    ) |> 
-    ggplot() + 
+    ) |>
+    ggplot() +
       geom_bar(aes(y = area, fill = area)) +
       scale_x_continuous(
         breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
       ) +
-      theme_minimal() + 
+      theme_minimal() +
       theme(
-        legend.position = "none", 
+        legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank()
-      ) +      
+      ) +
       labs(
-        title = "Research areas of evaluated papers", 
-        subtitle = "Papers may be in more than one area", 
+        title = "Research areas of evaluated papers",
+        subtitle = "Papers may be in more than one area",
         x = NULL,
         y = NULL
       )
@@ -215,41 +214,41 @@ output$barplot_areas <- renderPlot({
 
 
 output$barplot_proposals <- renderPlot({
-  proposals() |> 
+  proposals() |>
     mutate(
       Status = case_match(`stage of process/todo`,
-        c("awaiting authors' consent (where needed) or imminent update", 
+        c("awaiting authors' consent (where needed) or imminent update",
           "final consideration needed",
           "Needs prioritization/assessor rating")
           ~ "Under consideration",
-        c("de-prioritized bc. of journal-publication status, authors permission, etc.", 
-          "Authors rejected/blocked us", 
+        c("de-prioritized bc. of journal-publication status, authors permission, etc.",
+          "Authors rejected/blocked us",
           "deprioritized -- low ratings",
-          "Not a paper/project") 
-          ~ "Rejected",
+          "Not a paper/project")
+          ~ "Deprioritized by UJ or lack of author permission",
         c("Applied and Policy Research Stream",
           "awaiting_evaluations",
           "contacting/awaiting_authors_response_to_evaluation",
           "In interim evaluation",
           "seeking_(more)_evaluators",
-          "selected_choose_evaluation_manager") 
+          "selected_choose_evaluation_manager")
           ~ "Accepted and under evaluation",
-        c("published evaluations (on PubPub, by Unjournal)") 
+        c("published evaluations (on PubPub, by Unjournal)")
           ~ "Evaluation published"
       ),
       Status = forcats::fct_infreq(Status),
       Status = forcats::fct_rev(Status)
-    ) |> 
+    ) |>
     ggplot() +
       geom_bar(aes(y = Status, fill = Status)) +
-      theme_minimal() + 
+      theme_minimal() +
       theme(
-        legend.position = "none", 
+        legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank()
       ) +
       labs(
-        title = "Status of papers proposed for evaluation", 
+        title = "Status of papers proposed for evaluation",
         x = NULL,
         y = NULL
       )
@@ -257,26 +256,26 @@ output$barplot_proposals <- renderPlot({
 
 
 output$plot_ratings <- renderPlot({
-  evals() |> 
+  evals() |>
     mutate(
       area = stringr::str_to_title(cat_1),
       area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
-    ) |> 
+    ) |>
     ggplot(aes(y = area, x = overall, color = area)) +
-      geom_point() + 
-      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) + 
+      geom_point() +
+      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme_minimal() + 
+      theme_minimal() +
       theme(
-        legend.position = "none", 
+        legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank()
       ) +
       labs(
-        title = "Overall ratings of papers by research area", 
+        title = "Overall ratings of papers by research area",
         subtitle = "Crosses show per-area averages",
         x = NULL,
         y = NULL
@@ -285,10 +284,10 @@ output$plot_ratings <- renderPlot({
 
 
 output$plot_questions <- renderPlot({
-  evals() |> 
-    select(id, overall, adv_knowledge, methods, logic_comms, real_world, 
-           gp_relevance, open_sci) |> 
-    tidyr::pivot_longer(-id, names_to = "question", values_to = "rating") |> 
+  evals() |>
+    select(id, overall, adv_knowledge, methods, logic_comms, real_world,
+           gp_relevance, open_sci) |>
+    tidyr::pivot_longer(-id, names_to = "question", values_to = "rating") |>
     mutate(
       question = case_match(question,
         "overall" ~ "Overall assessment",
@@ -301,20 +300,20 @@ output$plot_questions <- renderPlot({
       ),
       question = forcats::fct_relevel(question, "Overall assessment"),
       question = forcats::fct_rev(question)
-    ) |> 
+    ) |>
     ggplot(aes(y = question, x = rating, color = question)) +
-      geom_point() + 
-      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) + 
+      geom_point() +
+      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme_minimal() + 
+      theme_minimal() +
       theme(
-        legend.position = "none", 
+        legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank()
       ) +
       labs(
-        title = "Answers to quantitative evaluation questions", 
+        title = "Answers to quantitative evaluation questions",
         subtitle = "Crosses show per-question averages",
         x = NULL,
         y = NULL
