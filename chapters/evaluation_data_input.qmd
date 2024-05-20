@@ -15,7 +15,7 @@ library(formattable)
 
 # others ----
 library(here)
-#library(aggreCAT)
+library(aggreCAT)
 library(DescTools)
 select <- dplyr::select 
 
@@ -33,175 +33,19 @@ Below, the evaluation data is input from an Airtable, which itself was largely h
 
 ::: 
 
-```{r}
-#| label: input_at
-#| code-summary: "input from airtable"
-   
-#base_id <- "appbPYEw9nURln7Qg"
-base_id <- "applDG6ifmUmeEJ7j" #new ID to cover "UJ - research & core members" base
+```{r read-data}
 
+all_papers_p <- readRDS(here("data/all_papers_p.Rdata"))
+evals_pub <- readRDS(here("data/evals.Rdata"))
 
-# Set your Airtable API key 
-Sys.setenv(AIRTABLE_API_KEY = Sys.getenv("AIRTABLE_API_KEY"))
-#this should be set in my .Renviron file
-
-# Read data from a specific view
-
-evals <- air_get(base = base_id, "output_eval") 
-
-all_pub_records <- data.frame()
-pub_records <- air_select(base = base_id, table = "crucial_rsx")
-
-# Append the records to the list
-all_pub_records <- bind_rows(all_pub_records, pub_records)
-
-# While the length of the records list is 100 (the maximum), fetch more records
-while(nrow(pub_records) == 100) {
-  # Get the ID of the last record in the list
-  offset <- get_offset(pub_records)
-  
-  # Fetch the next 100 records, starting after the last ID
-  pub_records <- air_select(base = base_id, table = "crucial_rsx", offset =  offset)
-  
-  # Append the records to the df
-  all_pub_records <- bind_rows(all_pub_records, pub_records)
-}
-
-# housekeeping
-rm(pub_records)
 ```
-
-```{r}
-#| label: extract & clean
-#| code-summary: "just the useful and publish-able data, clean a bit"
-
-# clean evals names to snakecase
-colnames(evals) <- snakecase::to_snake_case(colnames(evals))
-
-evals_pub <- evals %>% 
-  dplyr::rename(stage_of_process = stage_of_process_todo_from_crucial_research_2) %>% 
-  mutate(stage_of_process = unlist(stage_of_process)) %>% 
-  dplyr::filter(stage_of_process == "published") %>% 
-    select(id, 
-           crucial_research, 
-           paper_abbrev, 
-           evaluator_name, 
-           category, 
-           source_main, 
-           author_agreement, 
-           overall, 
-           lb_overall, 
-           ub_overall, 
-           conf_index_overall, 
-           advancing_knowledge_and_practice, 
-           lb_advancing_knowledge_and_practice, 
-           ub_advancing_knowledge_and_practice, 
-           conf_index_advancing_knowledge_and_practice,
-           methods_justification_reasonableness_validity_robustness,
-           lb_methods_justification_reasonableness_validity_robustness,
-           ub_methods_justification_reasonableness_validity_robustness,
-           conf_index_methods_justification_reasonableness_validity_robustness, 
-           logic_communication, lb_logic_communication, ub_logic_communication, 
-           conf_index_logic_communication,
-           engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance,
-           relevance_to_global_priorities, 
-           lb_relevance_to_global_priorities, 
-           ub_relevance_to_global_priorities, 
-           conf_index_relevance_to_global_priorities, 
-           journal_quality_predict, 
-           lb_journal_quality_predict, 
-           ub_journal_quality_predict,
-           conf_index_journal_quality_predict, 
-           open_collaborative_replicable, 
-           conf_index_open_collaborative_replicable, 
-           lb_open_collaborative_replicable, 
-           ub_open_collaborative_replicable, 
-           merits_journal, 
-           lb_merits_journal, 
-           ub_merits_journal, 
-           conf_index_merits_journal)
-
-# shorten names (before you expand into columns)
-new_names <- c(
-  "eval_name" = "evaluator_name",
-  "cat" = "category",
-  "crucial_rsx" = "crucial_research",
-  "conf_overall" = "conf_index_overall",
-  "adv_knowledge" = "advancing_knowledge_and_practice",
-  "lb_adv_knowledge" = "lb_advancing_knowledge_and_practice",
-  "ub_adv_knowledge" = "ub_advancing_knowledge_and_practice",
-  "conf_adv_knowledge" = "conf_index_advancing_knowledge_and_practice",
-  "methods" = "methods_justification_reasonableness_validity_robustness",
-  "lb_methods" = "lb_methods_justification_reasonableness_validity_robustness",
-  "ub_methods" = "ub_methods_justification_reasonableness_validity_robustness",
-  "conf_methods" = "conf_index_methods_justification_reasonableness_validity_robustness",
-  "logic_comms" = "logic_communication",
-  "lb_logic_comms" = "lb_logic_communication",
-  "ub_logic_comms" = "ub_logic_communication",
-  "conf_logic_comms" = "conf_index_logic_communication",
-  "real_world" = "engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "lb_real_world" = "lb_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "ub_real_world" = "ub_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "conf_real_world" = "conf_index_engaging_with_real_world_impact_quantification_practice_realism_and_relevance",
-  "gp_relevance" = "relevance_to_global_priorities",
-  "lb_gp_relevance" = "lb_relevance_to_global_priorities",
-  "ub_gp_relevance" = "ub_relevance_to_global_priorities",
-  "conf_gp_relevance" = "conf_index_relevance_to_global_priorities",
-  "journal_predict" = "journal_quality_predict",
-  "lb_journal_predict" = "lb_journal_quality_predict",
-  "ub_journal_predict" = "ub_journal_quality_predict",
-  "conf_journal_predict" = "conf_index_journal_quality_predict",
-  "open_sci" = "open_collaborative_replicable",
-  "conf_open_sci" = "conf_index_open_collaborative_replicable",
-  "lb_open_sci" = "lb_open_collaborative_replicable",
-  "ub_open_sci" = "ub_open_collaborative_replicable",
-  "conf_merits_journal" = "conf_index_merits_journal"
-)
-
-evals_pub <- evals_pub %>%
-  rename(!!!new_names)
-
-#  Create a list of labels with the old, longer names
-labels <- str_replace_all(new_names, "_", " ") %>% str_to_title()
-
-# Assign labels to the dataframe / tibble
-# (maybe this can be done as an attribute, not currently working)
-# for(i in seq_along(labels)) {
-#    col_name <- new_names[names(new_names)[i]]
-#    label <- labels[i]
-#    attr(evals_pub[[col_name]], "label") <- label
-#  }
-
-
-# expand categories into columns, unlist everything
-evals_pub %<>%
-  tidyr::unnest_wider(cat, names_sep = "_") %>% # give each of these its own col
-  mutate(across(everything(), unlist))  # maybe check why some of these are lists in the first place
-  
-
-# clean the Anonymous names
-evals_pub$eval_name <- ifelse(
-  grepl("^\\b\\w+\\b$|\\bAnonymous\\b", evals_pub$eval_name),
-  paste0("Anonymous_", seq_along(evals_pub$eval_name)),
-  evals_pub$eval_name
-)
-
-#housekeeping
-rm(evals)
-
-#Todo -- check the unlist is not propagating the entry
-#Note: category,  topic_subfield, and source have multiple meaningful categories. These will need care  
-
-```                   
 
 
 ```{r evals_pub to longer format}
 evals_pub_long <- evals_pub %>% 
-  pivot_longer(cols = -c(id, crucial_rsx, paper_abbrev, eval_name, 
-                         cat_1,cat_2, cat_3,source_main,author_agreement),
+  pivot_longer(cols = -c(id, crucial_rsx, crucial_rsx_id, 
+                         paper_abbrev, eval_name, 
+                         cat_1,cat_2, cat_3, source_main, author_agreement),
                names_pattern = "(lb_|ub_|conf_)?(.+)",
                names_to = c("value_type", "rating_type")) %>% # one line per rating type
   mutate(value_type = if_else(value_type == "", "est_", value_type)) %>% #add main rating id
@@ -371,32 +215,6 @@ evals_pub_long <- evals_pub_long %>%
 
 We cannot publicly share the 'papers under consideration', but we can share some of the statistics on these papers. Let's generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest
 
-```{r}
-#| code-summary: "keep shareable variables from all papers"
-all_papers_p <- all_pub_records %>% 
-  dplyr::select(
-    id,
-    category,
-    cfdc_DR,
-     'confidence -- user entered',
-    cfdc_assessor,
-    avg_cfdc,
-    category,
-    cause_cat_1_text,
-    cause_cat_2_text,
-    topic_subfield_text,
-    eval_manager_text,
-    'publication status',
-    'Contacted author?',
-    'stage of process/todo',
-    'source_main',  
-    'author permission?',
-'Direct Kotahi Prize Submission?',
-    'createdTime'         
-  )
-
-```
-
 
 ```{r ratings_agg, warning=FALSE}
 #| code-summary: "Create and add aggregated ratings information to evals_pub_long"
@@ -441,8 +259,6 @@ evals_pub_long <- evals_pub_long %>%
 ```
 
 
-
-
 ```{r shiny_data_explorer}
 #| code-summary: "create a dataset to be used as the input to the shiny app"
 
@@ -460,23 +276,3 @@ evals_pub_long %>%
   write_rds(file = here("shinyapp/DataExplorer", "shiny_explorer.rds"))
  
 ```
-
-
-```{r save data}
-#| label: savedata
-#| code-summary: "save data for others' use"
-
-
-all_papers_p %>% saveRDS(file = here("data", "all_papers_p.Rdata"))
-all_papers_p %>% write_csv(file = here("data", "all_papers_p.csv"))
-
-evals_pub %>% saveRDS(file = here("data", "evals.Rdata"))
-evals_pub %>% write_csv(file = here("data", "evals.csv"))
-
-evals_pub_long %>% write_rds(file = here("data", "evals_long.rds"))
-evals_pub_long %>% write_csv(file = here("data", "evals_long.csv"))
-
-#evals_pub %>% readRDS(file = here("data", "evals.Rdata"))
-
-```
-
