@@ -9,21 +9,31 @@ library(conflicted)
 conflicts_prefer(dplyr::filter, dplyr::select)
 
 # Notes on choice of stat: 
-# * Hallgren, "Computing Inter-Rater Reliability for Observational Data: 
-#   An Overview and Tutorial" is a useful introduction.
-# * kappa2 is for nominal/ordinal data, fully crossed
-#   designs, and biased by prevalence/bias effects
-# * iota() is for "multivariate observations"
-# * Hallgren: "Fleiss (1971) provides formulas for a kappa-like coefficient
-#.  that is suitable for studies where any constant number of m coders is
-#   randomly sampled from a larger population of coders..." 
-#   - that sounds like us
-# * ICC is for ordinal/interval data, i.e. it takes account of
-#   distance between different guesses. As we have many different
-#   coders (evaluators) we need a "one-way" estimate of ICC i.e. one which
-#   doesn't try to estimate any individual coder's bias
-# * Krippendorff and Hayes make the claim that only krippendorff's alpha
-#   is the "gold standard" for IRR
+# * Hallgren, "Computing Inter-Rater Reliability for Observational Data:An Overview and Tutorial" is a useful introduction.
+# * kappa2 is for nominal/ordinal data, fully crossed designs, [each rater evaluates all the same items).]
+# and biased by prevalence/bias effects
+
+# prevalence --  "when the distribution of ratings is skewed, with one or more categories having a much higher or lower frequency than others"
+
+# bias effects:  something like 'where $X_{A_i} = (X_{B_i})/2 + 50 + e$ ...  A's uses the 50-100 scale while B uses the whole range"
+
+# DR -- for our purposes, if raters are using the scale like this, this would be a weakness of our measures that we would *want* to detect. 
+
+# DR -- also note that we have a 0-100 percentile scale; I don't think this is 'nominal'
+
+
+# * iota() is for "multivariate observations" [DR: So don't we want to use that instead?]
+
+# * Hallgren: "Fleiss (1971) provides formulas for a kappa-like coefficient that is suitable for studies where any constant number of m coders is randomly sampled from a larger population of coders..." 
+
+#   DHJ:  that sounds like us [DR: why? I agree we are multivariate, but I'm not sure about the 'random sample' assumption]
+
+# * ICC is for ordinal/interval data, i.e. it takes account of distance between different guesses. [DR: I guess we have ordinal data]
+
+#As we have many different  coders (evaluators) we need a "one-way" estimate of ICC i.e. one which doesn't try to estimate any individual coder's bias [DR: Why?]
+
+# * Krippendorff and Hayes make the claim that only Krippendorff's alpha is the "gold standard" for IRR 
+
 
 #' Estimates intraclass correlation from a subset of Unjournal data
 #'

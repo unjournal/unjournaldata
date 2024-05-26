@@ -103,7 +103,29 @@ We can also hold onto these aggregated metrics for later use in modeling.
 
 ## Inter-rater reliability
 
-Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.
+### What are we looking to measure and why? 
+
+In measuring and diagnosing our rating metrics, we want to answer a few distinct questions.
+
+1. *Construal validity*: Do evaluators perceive (and report) the ratings and scales similarly to one another? If they were presented research that had the same virtues *in their own minds* would they all give similar ratings for each category? We want to *maximize* the extent to which this is case. To the extent it is not the case, we need to improve our measures.
+
+2. *'Level of agreement'*: To what extent do evaluators *actually* agree about each characteristic of a paper? Assuming they all interpreted the ratings and scales in the same way, how much disagreement would there be? We want to *know* how this varies across the different categories. If there is a lot of agreement, this tells us we only need a small number of evaluators and we can be fairly confident that we understand how experts judge this work. If there is less agreement, we may need a lot of expert opinions to have any confidence. If there is very little agreement, this might mean expertise has little value here.
+
+We generally seek two types of statistical measures
+
+A. *Similarity* across raters (for particular papers and/or rating categories)
+
+B. Correlates of ratings, and systematic patterns of rating
+
+Low *similarity* (IRR etc) may be a sign of poor construal validity, or low *actual* agreement, or both. Distinguishing these is a challenge. 
+
+*Correlates* of ratings and systematic patterns may also reflect correlates of *actual* disagreements or of systematic biases and systematic ways that construal validity is failing. But insight and intuition may help us distinguish these; randomized trials could do even better.^[E.g., if people assigned to reveal their names gave systematically higher ratings, this would suggest a reporting bias that did not reflect actual disagreements. If US-based academics typically gave scores in the 90-100 range, while UK-based academics focused more on 70-80 ranges for papers they otherwise highly praised, this might reflect a bias stemming from their country's particular marking traditions. (In the UK, a 70 or above is a 'first', while in top US universities, most students get a 90 or above, representing an "A" grade.)]
+
+
+
+### Specific discussion
+
+Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the seven aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.
 
 
 ::: {.callout-note collapse="true"}
