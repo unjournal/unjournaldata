@@ -6,7 +6,8 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 # General
 
 [ ] Rewrite import-unjournal-data to use Coda.io 
-[x] Deploy shiny app using a github action, for consistency
+[ ] Maybe consider splitting the deploy action up
+
 
 # Descriptive work
 

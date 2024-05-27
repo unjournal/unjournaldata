@@ -13,7 +13,7 @@ Data is currently imported from Airtable.
 The github site is created as a [Quarto](https://quarto.org) book. There are also [Shiny](https://shiny.posit.co) apps at
 <https://unjournal.shinyapps.io/DataExplorer/> and <https://unjournal.shinyapps.io/uj-dashboard>.
 
-The github site and dashbaord are automatically rendered on github when you push to the `main` branch.
+The github site and dashboard are automatically rendered on github when you push to the `main` branch.
 
 Publicly available data is inside the `/data` folder. This is also auto-updated
 via github actions.
