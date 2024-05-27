@@ -27,14 +27,14 @@ base_id <- "applDG6ifmUmeEJ7j" # new ID to cover "UJ - research & core members" 
 
 pub_records <- air_select(base = base_id, table = "crucial_rsx")
 all_pub_records <- pub_records
-# 100 is the maximum length returned
-while(nrow(pub_records) == 100) {
-  # Get the ID of the last record in the list
-  offset <- get_offset(pub_records)
-  # Fetch the next records, starting after this ID
-  pub_records <- air_select(base = base_id, table = "crucial_rsx", offset =  offset)
-  # Append the records to the df
+offset <- get_offset(pub_records)
+
+# the offset is only returned while there are more records
+while(! is.null(offset)) {
+  pub_records <- air_select(base = base_id, table = "crucial_rsx", 
+                            offset = offset)
   all_pub_records <- bind_rows(all_pub_records, pub_records)
+  offset <- get_offset(pub_records)
 }
 rm(pub_records)
 
