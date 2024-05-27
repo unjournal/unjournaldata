@@ -8,7 +8,6 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 [ ] Rewrite import-unjournal-data to use Coda.io 
 [x] Deploy shiny app using a github action, for consistency
 
-
 # Descriptive work
 
 [x] What are we evaluating? How many papers in total? In what subfields? What does our “funnel” (selection process of candidate papers) look like?
