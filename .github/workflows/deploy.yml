@@ -42,10 +42,13 @@ jobs:
           GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
 
       - name: Import Unjournal data
-        run: Rscript -e 'source("code/import-unjournal-data.R"); save_data()'
+        run: |
+          source("code/import-unjournal-data.R")
+          save_data()
         env: 
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-
+        shell: Rscript {0}
+        
       - name: Upload Unjournal data as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -57,7 +60,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
           git add data/evals.csv data/all_papers_p.csv
-          git commit -m "Github actions: auto-update data"
+          git diff-index HEAD data/*.csv || git commit -m "Github actions: auto-update data"
           git push
       
       - name: Publish dashboard to shinyapps.io

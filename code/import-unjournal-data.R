@@ -8,6 +8,8 @@
 # - all_pub_records: all papers considered, raw data. *Use with care!*
 # - labels: column labels and original descriptions for evals_pub
 
+# Data isn't saved to disk unless you explicitly call the save_data() function.
+ 
 # Environment variable AIRTABLE_API_KEY should be set to your 
 # Personal Access Token; these function the same way as the old API keys.
 # Your PAT needs only read access to tables and table structure.
