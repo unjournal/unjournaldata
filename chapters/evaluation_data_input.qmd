@@ -15,7 +15,7 @@ library(formattable)
 
 # others ----
 library(here)
-library(aggreCAT)
+# library(aggreCAT)
 library(DescTools)
 select <- dplyr::select 
 
