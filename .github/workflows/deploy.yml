@@ -46,12 +46,19 @@ jobs:
         env: 
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
 
-      - name: Upload Unjournal data
+      - name: Upload Unjournal data as artifact
         uses: actions/upload-artifact@v4
         with:
           name: unjournal-data
           path: data
-          
+      
+      - name: Update data in repository
+        run: |
+          git add data/evals.Rdata data/evals.csv data/all_papers_p.Rdata \
+                  data/all_papers_p.csv
+          git commit -m "Github actions: auto-update data"
+          git push
+      
       - name: Publish dashboard to shinyapps.io
         env:
           RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
