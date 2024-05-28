@@ -5,8 +5,13 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 # General
 
-[ ] Rewrite import-unjournal-data to use Coda.io 
+[ ] Rewrite import-unjournal-data to use Coda.io (once the database schema is
+    nailed down)
+
 [ ] Maybe consider splitting the deploy action up
+
+[ ] Put the DataExplorer app deployment into deploy.yml and not in 
+    the quarto!
 
 
 # Descriptive work
