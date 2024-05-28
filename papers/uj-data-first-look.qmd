@@ -1,0 +1,275 @@
+---
+title: "A first look at Unjournal's data"
+author: "David Hugh-Jones"
+format: html
+execute:
+  echo: false
+editor_options: 
+  chunk_output_type: console
+---
+
+[Unjournal](https://www.unjournal.org) is an organization aiming to change how
+scientific research is evaluated. We carry out journal-independent evaluation
+of research papers.
+
+We capture data from our evaluations, including quantitative measures of paper
+quality on different dimensions. One of our goals is to use this data to 
+learn about the evaluation process. Right now, we have only a few evaluations 
+in the data, so this note just describes some things we *can* do in future, and
+shows the code as a proof of concept.
+
+# About the data
+
+Papers can be suggested for evaluation either by Unjournal insiders, or by
+outsiders. Unjournal then selects some papers for evaluation. I won't focus on
+the details of this process here. Just note that we have more suggested papers
+than actual evaluations.
+
+Each paper^[Actually we don't just evaluate academic papers, but I'll use "papers"
+as a shorthand.] is typically evaluated by two evaluators, though some have more
+or less than two. Getting two or more of every measure is useful, because it 
+will let us check evaluations against each other.
+
+We ask evaluators two kinds of quantitative questions. First, there are different measures of 
+*paper quality*. Here they are, along with some snippets from our [guidelines for evaluators](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#quantitative-metrics): 
+
+* *Overall assessment*: "Judge the quality of the research heuristically. Consider all 
+  aspects of quality, credibility, importance to knowledge production, and
+  importance to practice."
+* *Advancing our knowledge and practice*: "To what extent does the project
+  contribute to the field or to practice, particularly in ways that are relevant 
+  to global priorities and impactful interventions?..."
+* *Methods: Justification, reasonableness, validity, robustness*: "Are the 
+  methods used well-justified and explained; are they a reasonable approach to 
+  answering the question(s) in this context? Are the underlying assumptions
+  reasonable? Are the results and methods likely to be robust to reasonable 
+  changes in the underlying assumptions?..."
+* *Logic and communication*: "Are the goals and questions of the paper clearly
+  expressed? Are concepts clearly defined and referenced? Is the reasoning
+  'transparent'? Are assumptions made explicit? Are all logical steps clear and
+  correct? Does the writing make the argument easy to follow?"
+* *Open, collaborative, replicable science*: "This covers several considerations:
+  Replicability, reproducibility, data integrity... Consistency... 
+  Useful building blocks: Do the authors provide tools, resources, data, and
+  outputs that might enable or enhance future work and meta-analysis?"
+* *Real-world relevance*: "Are the assumptions and setup realistic and relevant 
+  to the real world?"
+* *Relevance to global priorities*: "Could the paper's topic and approach
+  potentially help inform [global priorities, cause prioritization, and 
+  high-impact interventions](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/the-field-and-ea-gp-research)? 
+  
+Each of these questions is meant to be a percentile scale, 0-100%, where 
+the percentage captures the paper's place in the distribution of the reference
+group ("all serious research in the same area that you have encountered in the 
+last three years"). So, for example, a score of 70% would mean the paper is 
+better than 70% of papers in the reference group. But note, the papers we 
+evaluate are not randomly sampled from their reference group, so we should not
+necessarily expect them to be uniformly distributed on 0-100%.
+
+As well as asking for each question (the midpoint or median of the evaluator's
+belief distribution), we also ask for lower and upper bounds of a 90% credible
+interval.
+
+Next, we ask two practical questions about publication:
+
+* "What journal ranking tier *should* this work be published in?"
+
+* "What journal ranking tier *will* this work be published in?"
+
+Tiers are measured from 0 ("won't publish/little to no value") up to 5 ("top
+journal"). Again, we ask for both an estimate and a 90% credible interval.
+We allow non-integer scores between 0 and 5.
+
+The last question is especially interesting, because unlike all the others,
+it has an observable ground truth. Eventually, papers do or do not get 
+published in specific journals, and there is often a consensus
+about which journals count as e.g. "top".
+
+
+# Questions to ask
+
+Here are some things we might hope to learn from our data.
+
+1. Are our quantitative measures *accurate*? Do they capture something "real" 
+  about the paper? Obviously, we don't have access to "ground truth" -- except
+  in one case. 
+  
+2. Are the different measures *related*? Is there a single underlying dimension
+   beneath the different numbers? Or more than one dimension?
+  
+3. How do quantitative measures relate to the written, qualitative evaluation? 
+   Does a "better" written evaluation also score higher on the numbers? Can you
+   predict the numbers from the evaluation?
+  
+4. Do evaluators understand the questions? Do they "grok" how our percentile
+   questions, upper bounds, and lower bounds work? 
+  
+5. Do evaluators *take the questions seriously*? Or do some of them treat them
+   as a nuisance compared to the "real", written review?
+  
+6. Do evaluators understand the questions *in the same way*? Are different 
+   evaluators of the same paper answering the "same questions" in their head?
+   What about evaluators of different papers in different fields?
+   
+7. Do papers score differently in *different fields*? This could be because
+   evaluators hold papers to different standards in those fields -- or because
+   some fields do genuinely better on some dimensions. We could ask the same
+   question about different categories: for example, do randomized controlled
+   trials score differently than other approaches?
+
+
+```{r}
+#| label: setup
+
+library(conflicted)
+conflicts_prefer(dplyr::select, dplyr::filter, .quiet = TRUE)
+suppressPackageStartupMessages({
+  library(here)
+  library(readr)
+  library(dplyr)
+  library(huxtable)
+  library(irr)
+  library(purrr)
+  library(glue)
+})
+evals <- readr::read_csv(here("data/evals.csv"), show_col_types = FALSE)
+
+qual_dimensions <- c("overall", "adv_knowledge", "methods", "logic_comms", 
+                     "real_world", "gp_relevance", "open_sci")
+journal_dimensions <- c("journal_predict", "merits_journal")
+all_dimensions <- c(qual_dimensions, journal_dimensions)
+
+evals_wide <- evals %>% 
+  mutate(.by = crucial_rsx_id,
+    eval_num = seq(1, n()) 
+  ) %>% 
+  select(crucial_rsx_id, eval_num, all_of(all_dimensions)) %>% 
+  tidyr::pivot_wider(
+    names_from = eval_num,
+    values_from = ends_with(all_dimensions)
+  )
+
+n_papers <- nrow(evals_wide)
+n_evals <- nrow(evals)
+
+```
+
+# Accuracy
+
+We have no ground truth of whether a given paper scores high or low on our
+7 dimensions. But because we usually have multiple evaluations per paper, we
+can take an indirect route. If two evaluators' scores are correlated with 
+reality, they will also correlate with each other. The converse does not 
+necessarily hold: evaluators' scores might be correlated because they both
+have similar prejudices or both misinterpret the paper in the same way. All
+the same, high "inter-rater reliability" (IRR) should increase our confidence
+that our scores are measuring something.
+
+IRR is complex. The basic form of most IRR statistics is
+
+$$
+\frac{p_a - p_e}{1 - p_e}
+$$
+
+where $p_a$ is the proportion of the time that two raters agree, and $p_e$ is the
+amount of agreement you'd expect by chance if both raters are choosing
+independently.
+
+Why not use $p_a$ directly? Well, for example, suppose our raters pick an expected
+journal tier at random, from 0 to 5 inclusive. Clearly there's no reliability:
+the data is just random noise. But one time in six, both raters will agree,
+simply by chance. So we need to adjust for the expected amount of agreement.
+To do this most measures use the marginal distributions of the ratings: in
+our example, a 1 in 6 chance of each number from 0 to 5, giving $p_e = 1/6$.
+
+However, adjusting for expected agreement may be complex when we have small
+amounts of data. Suppose that two raters give five ratings each: 
+$R1 = \{1, 2, 3, 3, 3\}$ and $R2 = \{0, 2, 4, 4, 5\}$. The distributions look
+rather different - in fact they only share one number (2), so $p_e$ would be 
+quite small. But are those really the marginal distributions? If we saw more 
+data, we might find that both raters are really using uniform distributions. 
+Krippendorff's alpha corrects for this problem by adjusting $p_e$ when the number of ratings is small.
+
+```{r}
+#| label: tab-kripp-alpha
+
+
+kr_alphas <- list()
+
+for (d in all_dimensions) {
+  eval_matrix <- evals_wide %>% select(starts_with(d))
+  eval_matrix <- t(eval_matrix)
+  kr_alphas[[d]] <- irr::kripp.alpha(eval_matrix, method = "ratio")
+}
+
+kr_alpha_values <- purrr::list_transpose(kr_alphas)$value
+
+huxtable(
+  Dimension = all_dimensions, 
+  `Krippendorff's Alpha` = kr_alpha_values
+) %>% 
+  set_caption(
+    glue("Krippendorf's alpha statistics for our quantitative measures. N = {n_papers} papers, {n_evals} evaluations.")
+  )
+
+```
+
+Because we have each rater's 90% credible interval, we can also ask a slightly
+different question: do raters tend to agree that each other's estimates are
+"reasonable"? That is, is rater 1's midpoint estimate within rater 2's
+central credible interval, and vice versa?
+
+
+```{r}
+#| label: tab-credible-intervals
+
+
+evals_long <- evals %>% 
+  select(id, crucial_rsx_id, ends_with(all_dimensions)) %>%
+  tidyr::pivot_longer(
+    cols = ends_with(all_dimensions), 
+    names_to = c("measure", "dimension"),
+    names_pattern = "(lb_|ub_|conf_|)(.*)"
+  )  %>% 
+  mutate(
+    measure = if_else(measure == "", "midpoint", measure),
+    measure = gsub("_$", "", measure)
+  ) %>% 
+  tidyr::pivot_wider(
+    names_from = measure
+  ) 
+
+# This gives a dataset with each paper-dimension in a separate row, but all
+# evaluators, and midpoints/lb/ub/confidence levels, in a single row.
+evals_long_dim <- evals_long %>% 
+  mutate(.by = c(crucial_rsx_id, dimension),
+    eval_num = consecutive_id(id),
+    id = NULL
+  ) %>% 
+  tidyr::pivot_wider(
+    names_from = c(eval_num),
+    values_from = c(midpoint, lb, ub, conf)
+  )
+
+evals_long_dim %>% 
+  mutate(
+    mp1ci2 = between(midpoint_1, lb_2, ub_2),
+    mp1ci3 = between(midpoint_1, lb_3, ub_3),
+    mp2ci1 = between(midpoint_2, lb_1, ub_1),
+    mp2ci3 = between(midpoint_2, lb_3, ub_3),
+    mp3ci1 = between(midpoint_3, lb_1, ub_1),
+    mp3ci2 = between(midpoint_3, lb_2, ub_2)
+  ) %>% 
+  summarize(.by = dimension,
+    `Proportion within C.I.` = mean(c_across(starts_with("mp")), na.rm = TRUE)    
+  ) %>% 
+  rename(
+    Dimension = dimension
+  ) %>% 
+  as_huxtable() %>% 
+  set_number_format(-1, 2, fmt_percent()) %>% 
+  set_caption(glue("Proportions of midpoints within other evaluators' 90% credible intervals. N = {n_papers} papers, {n_evals} evaluations."))
+```
+
+The table above already looks a bit worrying: typically no more than half of
+our evaluators' midpoints fall within their co-evaluators' 90% credible interval.
