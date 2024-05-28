@@ -1,40 +1,26 @@
-# Evaluation data: input/features
 
-```{r}
-#| warning: false
-#| label: load-packages
-#| code-summary: "load packages"
+# This creates data in the "long" form used by the shiny data explorer app
+# and writes it to shinyapp/DataExplorer/shiny_explorer.rds.
+# It's called automatically by the deploy.yml Github Actions workflow,
+# which then uploads the data and app to shinyapps.io
 
 library(tidyverse) 
 
-# markdown et al. ----
 library(knitr)
 library(bookdown)
 library(quarto)
 library(formattable)
 
-# others ----
 library(here)
 library(DescTools)
 select <- dplyr::select 
 
 source(here("code", "DistAggModified.R"))
 
-options(knitr.duplicate.label = "allow")
-
-```
-
-
-
-```{r read-data}
 
 all_papers_p <- readRDS(here("data/all_papers_p.Rdata"))
 evals_pub <- readRDS(here("data/evals.Rdata"))
 
-```
-
-
-```{r evals_pub to longer format}
 evals_pub_long <- evals_pub %>% 
   pivot_longer(cols = -c(id, crucial_rsx, crucial_rsx_id, 
                          paper_abbrev, eval_name, 
@@ -44,65 +30,10 @@ evals_pub_long <- evals_pub %>%
   mutate(value_type = if_else(value_type == "", "est_", value_type)) %>% #add main rating id
   pivot_wider(names_from = value_type, 
               values_from = value)
-```
 
-
-<!-- need airtable API stuff -->
-
-### Reconcile uncertainty ratings and CIs {-}
-
-Where people gave only confidence level 'dots', we impute CIs (confidence/credible intervals). We follow the correspondence described [here](https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis). (Otherwise, where they gave actual CIs, we use these.)^[Note this is only a first-pass; a more sophisticated approach may be warranted in future.]
-
-::: {.callout-note collapse="true"}
-## Dots to interval choices
-
-> 5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)
-
-For 0-100 ratings, code the LB as $max(R - 4,0)$ and the UB as $min(R + 4,100)$, where R is the stated (middle) rating. This 'scales' the CI, as interpreted, to be proportional to the rating, with a  maximum 'interval' of about 8, with the rating is about 96.
-
-> 4 = Very*confident: 90% confidence interval +/- 8 points or less
-
-For 0-100 ratings, code the LB as $max(R - 8,0)$ and the UB as $min(R + 8,100)$, where R is the stated (middle) rating. 
-
-> 3 = Somewhat** confident: 90% confidence interval +/- 15 points or less&#x20;
-
-> 2 = Not very** confident: 90% confidence interval, +/- 25 points or less
-
-Comparable scaling for the 2-3 ratings as for the 4 and 5 rating.
-
-> 1 = Not** confident: (90% confidence interval +/- more than 25 points)
-    
-Code LB as $max(R - 37.5,0)$ and the UB as $min(R + 37.5,100)$. 
-    
-This is just a first-pass. There might be a more information-theoretic way of doing this. On the other hand, we might be switching the evaluations to use a different tool soon, perhaps getting rid of the 1-5 confidence ratings altogether.
-
-::: 
-
-
-```{r reconcile_bounds}
-#| label: reconcile_bounds
-#| code-summary: "reconcile explicit bounds and stated confidence level"
-
-# Define the baseline widths for each confidence rating
-# JB: it would be good to have some more backing of whether this
-# is a valid way to translate these confidence levels into CIs
-
-# baseline_widths <- c(4, 8, 15, 25, 37.5)
-
-# Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
 
-#... 'predictions' are currently 1-5 (0-5?)
 pred_cats <- c("journal_predict", "merits_journal")
-
-#DR: Note that I use these objects in future chapters, but they are not connected to the data frame. Either one saves and reinputs the whole environment (messy, replicability issue), or you save this somewhere and re-input it or connect it to the data frame that gets saved (not sure how to do it), or you hard-code reinput it in the next chapter. 
-
-#I do the latter for now, but I'm not happy about it, because the idea is 'input definitions in a single place to use later'
-
-#JB: I don't really understand why not just hard code it in the next chapter. These are very short strings. Do you expect them to change often? If so, we can derive them from a dataframe somewhere in the future or save as a separate object. 
-
-
-# JB: Rewritten functions for adding imputed ub and lb
 
 # calculate the lower and upper bounds, 
 # rating: given a rating, 
@@ -183,34 +114,13 @@ evals_pub_long <- evals_pub_long %>%
                                    lb = lb_, ub = ub_, conf = conf_,
                                    bound_type = "upper"))
 
-# Reshape evals_pub_long into evals_pub to add imputed bounds
-evals_pub <- evals_pub_long %>% 
-  pivot_wider(names_from = rating_type, # take the dataframe back to old format
-              values_from = c(est_, ub_, lb_, conf_, lb_imp_, ub_imp_),
-              names_sep = "") %>% 
-  dplyr::rename_with(.cols = matches("^[ul]b_imp"),
-                     .fn = gsub,
-                     pattern = "(ub_imp|lb_imp)_(.+)", 
-                     replacement = "\\2_\\1") %>% 
-  dplyr::rename_with(.cols = starts_with("est_"),
-                     .fn = gsub,
-                     pattern = "est_(.+)",
-                     replacement = "\\1")
+
 
 # Clean evals_pub_long names (remove _ at end)
 evals_pub_long <- evals_pub_long %>% 
   rename_with(.cols = ends_with("_"),
               .fn = str_remove,
               pattern = "_$")
-
-```
-
-
-We cannot publicly share the 'papers under consideration', but we can share some of the statistics on these papers. Let's generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest
-
-
-```{r ratings_agg, warning=FALSE}
-#| code-summary: "Create and add aggregated ratings information to evals_pub_long"
 
 # paper_ratings: even longer dataframe (ie tidy)
 # renamed to conform to aggreCAT nomenclature
@@ -244,11 +154,22 @@ paper_agg_ratings <- paper_ratings %>%
   mutate(across(.cols = c("agg_est", "agg_90ci_lb", "agg_90ci_ub"), .fns = ~.x*100)) %>% 
   rename(agg_method = method)
 
-rm(paper_ratings)
 
 evals_pub_long <- evals_pub_long %>% 
   left_join(paper_agg_ratings, by = c("paper_abbrev" = "paper_id", "rating_type"="rating_type"))
 
-```
+evals_pub_long <- evals_pub_long %>% 
+  mutate(rating_type = factor(rating_type, 
+                              levels = c(rating_cats, pred_cats),
+                              labels = c("Overall assessment",
+                                         "Advances our knowledge & practice",  
+                                         "Methods: justification, reasonableness, validity, robustness", 
+                                         "Logic and communication", 
+                                         "Engages with real-world, impact quantification",
+                                         "Relevance to global priorities",
+                                         "Open, collaborative, replicable science and methods",
+                                         "Predicted Journal", "Merits Journal")))
+
+write_rds(evals_pub_long, file = here("shinyapp/DataExplorer/shiny_explorer.rds"))
 
 
