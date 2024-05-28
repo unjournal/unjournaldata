@@ -96,7 +96,10 @@ jobs:
                                forceUpdate = TRUE)
         shell: Rscript {0}
 
-      - name: Render and publish website to GitHub Pages 
+      - name: Render Quarto website
+        uses: quarto-dev/quarto-actions/render@v2
+  
+      - name: Publish Quarto website to GitHub Pages 
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
