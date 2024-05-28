@@ -89,9 +89,11 @@ jobs:
           rsconnect::setAccountInfo(name = Sys.getenv("RSCONNECT_USER"), 
                                     token = Sys.getenv("RSCONNECT_TOKEN"),
                                     secret = Sys.getenv("RSCONNECT_SECRET"))
-          rsconnect::deployApp(appDir = here("shinyapp/DataExplorer"),
+          rsconnect::deployApp(appDir = "shinyapp/DataExplorer",
                                appName = "DataExplorer",
-                               account = "unjournal")
+                               account = "unjournal",
+                               server = "shinyapps.io"
+                               forceUpdate = TRUE)
         shell: Rscript {0}
 
       - name: Render and publish website to GitHub Pages 
