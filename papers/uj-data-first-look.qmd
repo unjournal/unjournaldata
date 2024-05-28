@@ -84,7 +84,7 @@ We allow non-integer scores between 0 and 5.
 The last question is especially interesting, because unlike all the others,
 it has an observable ground truth. Eventually, papers do or do not get
 published in specific journals, and there is often a consensus
-about which journals count as e.g. "top".^[We also provide example
+about which journals count as e.g. "top".^[We also provide some specifics examples of journals that seem likely to represent these tiers; see [here](https://docs.google.com/spreadsheets/d/1nnS0FMOIKz-3rFJMn-JsX-6_oE54gdvCjxs0vac6WF8/edit#gid=0).]
 
 
 # Questions to ask
@@ -95,6 +95,8 @@ Here are some things we might hope to learn from our data.
   about the paper? Obviously, we don't have access to "ground truth" -- except
   in one case.
 
+<!-- DR: The word 'accurate' makes me think of something more fine-grained than what I think we mean here. The question is 'whether the evaluators give measures that are correlated *anything* important and about the paper'. When I here 'accurate' I think of situations where everyone knows what we are aiming for, and we are pretty confident people are providing something in this direction ... but some people may hit the target much more closely. -->
+
 2. Are the different measures *related*? Is there a single underlying dimension
    beneath the different numbers? Or more than one dimension?
 
@@ -102,8 +104,13 @@ Here are some things we might hope to learn from our data.
    Does a "better" written evaluation also score higher on the numbers? Can you
    predict the numbers from the evaluation?
 
+<!-- DR: I weakly suggest replacing 'better' with 'more positive' with or without scare quotes. Because 'better' could be read as 'the evaluation was done more carefully, showed more insight, etc'. -->
+
 4. Do evaluators understand the questions? Do they "grok" how our percentile
    questions, upper bounds, and lower bounds work?
+
+<!-- DR: Perhaps we are demanding more than just an understanding of percentiles and CI's in principle. We want them to be able to apply it to this case, and to understand how to express their own uncertainty in a calibrated way.  I'm not sure if 'grok' and 'work' fully captures this -->
+
 
 5. Do evaluators *take the questions seriously*? Or do some of them treat them
    as a nuisance compared to the "real", written review?
@@ -112,10 +119,13 @@ Here are some things we might hope to learn from our data.
    evaluators of the same paper answering the "same questions" in their head?
    What about evaluators of different papers in different fields?
 
+<!-- DR: do you think it's worth unpacking this into 1. whether they interpret the criteria similarly, as a vector in a particular direction and 2. Whether they interpret the percentile (or journal tier) scale similarly, considering comparable reference groups etc? -->
+
+
 7. Do papers score differently in *different fields*? This could be because
    evaluators hold papers to different standards in those fields -- or because
    some fields do genuinely better on some dimensions. We could ask the same
-   question about different categories: for example, do randomized controlled
+   question about different methodologies: for example, do randomized controlled
    trials score differently than other approaches?
 
 
@@ -188,8 +198,10 @@ amounts of data. Suppose that two raters give five ratings each:
 $R1 = \{1, 2, 3, 3, 3\}$ and $R2 = \{0, 2, 4, 4, 5\}$. The distributions look
 rather different - in fact they only share one number (2), so $p_e$ would be
 quite small. But are those really the marginal distributions? If we saw more
-data, we might find that both raters are really using uniform distributions.
+data, we might find that both raters are really drawing evenly from $\{0, 1, 2, 3, 4, 5, 6}$.
+<!-- DR: I guess this is what you meant? -- see the suggested change -->
 Krippendorff's alpha corrects for this problem by adjusting $p_e$ when the number of ratings is small.
+<!-- DR: Maybe this 'correction for small distributions part' should be put in a footnote? I'm also a bit curious to get a sense of how they might correct for this. -->
 
 ```{r}
 #| label: tab-kripp-alpha
@@ -201,6 +213,7 @@ for (d in all_dimensions) {
   eval_matrix <- evals_wide %>% select(starts_with(d))
   eval_matrix <- t(eval_matrix)
   kr_alphas[[d]] <- irr::kripp.alpha(eval_matrix, method = "ratio")
+  #DR: Don't we want method = "interval" here? The percentile scale has no sense of 'twice as good' nor a true zero, does it?
 }
 
 kr_alpha_values <- purrr::list_transpose(kr_alphas)$value
@@ -214,6 +227,28 @@ huxtable(
   )
 
 ```
+
+
+<!--
+DR notes and questions: We should probably reference the precise formula for the alpha measure we are using here, or at least make it clear what method this is.
+
+While our notes in `inter-rater-reliability.R` suggested that ICC might be a better for 'ordinal/interval data' I asked chatgpt see [here](https://chatgpt.com/share/ad6a9bac-102d-4f6e-95c2-11bf39eac960) and it seemed to think this is appropriate, and noted it uses a (normalized) squared difference metric. It's comments actually make me think it's better than ICC for this purpose, nice. But we should probably clarify this especially because your example above seemed tp emphasize a small number of categories. Also, see my note above; I'm not sure why we you chose the ratio method rather than the interval method for the percentile data. (Similarly for the journal tier data I think).
+
+-->
+
+::: {.callout-note collapse="true"}
+## DR: To do -- Some other things we might want here
+
+- Do confidence intervals or hypothesis test for the K-alphas make sense here? To account for sampling variation of course.
+
+- Characterize what values of K-alpha are seen as 'reasonable agreement' ... compare it to other contexts.
+
+- Comparisons by field etc. (I know that's coming, even maybe a select it dashboard).
+
+- Perhaps a specific take on the numbers above, noting that this is hard-coded as of a certain date and may not reflect updated data.
+
+:::
+
 
 Because we have each rater's 90% credible interval, we can also ask a slightly
 different question: do raters tend to agree that each other's estimates are
@@ -274,4 +309,6 @@ evals_long_dim %>%
 
 The table above already looks a bit worrying: typically no more than half of
 our evaluators' midpoints fall within their co-evaluators' 90% credible interval.
+
+<!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? -->
 
