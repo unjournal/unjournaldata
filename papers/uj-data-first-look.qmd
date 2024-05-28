@@ -273,3 +273,4 @@ evals_long_dim %>%
 
 The table above already looks a bit worrying: typically no more than half of
 our evaluators' midpoints fall within their co-evaluators' 90% credible interval.
+
