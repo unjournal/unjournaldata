@@ -14,7 +14,6 @@ library(irr)
 source(here("code", "DistAggModified.R"))
 
 evals_pub <- read_rds(file = here("data", "evals.Rdata"))
-evals_pub_long <-read_rds(file = here("data", "evals_long.rds"))
 
 # Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
@@ -84,13 +83,6 @@ We can also hold onto these aggregated metrics for later use in modeling.
 
 
 ### Simple rating aggregation {-}
-
-
-```{r ratings_agg, eval=F, warning=FALSE}
-
-
-```
-
 
 
 
