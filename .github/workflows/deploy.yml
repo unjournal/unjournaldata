@@ -79,7 +79,7 @@ jobs:
                                      forceUpdate = TRUE)
         shell: Rscript {0}
         
-      - name: Publish DataExplorer to Shinyapps.io
+      - name: Publish DataExplorer to shinyapps.io
         env:
           RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
           RSCONNECT_TOKEN: ${{ secrets.RSCONNECT_TOKEN }}
@@ -96,10 +96,8 @@ jobs:
                                forceUpdate = TRUE)
         shell: Rscript {0}
 
-      - name: Render Quarto website
-        uses: quarto-dev/quarto-actions/render@v2
-  
-      - name: Publish Quarto website to GitHub Pages 
+      - name: Render and publish Quarto website to GitHub Pages 
+        # The publish action also renders the website by default.
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
