@@ -10,7 +10,7 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 [ ] Maybe consider splitting the deploy action up
 
-[ ] Put the DataExplorer app deployment into deploy.yml and not in 
+[x] Put the DataExplorer app deployment into deploy.yml and not in 
     the quarto!
 
 
