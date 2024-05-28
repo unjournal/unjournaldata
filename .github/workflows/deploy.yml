@@ -92,7 +92,7 @@ jobs:
           rsconnect::deployApp(appDir = "shinyapp/DataExplorer",
                                appName = "DataExplorer",
                                account = "unjournal",
-                               server = "shinyapps.io"
+                               server = "shinyapps.io",
                                forceUpdate = TRUE)
         shell: Rscript {0}
 
