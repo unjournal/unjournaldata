@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -158,7 +158,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#simple-rating-aggregation" id="toc-simple-rating-aggregation" class="nav-link" data-scroll-target="#simple-rating-aggregation">Simple rating aggregation</a></li>
   <li><a href="#explicit-modeling-of-research-quality-for-use-in-prizes-etc." id="toc-explicit-modeling-of-research-quality-for-use-in-prizes-etc." class="nav-link" data-scroll-target="#explicit-modeling-of-research-quality-for-use-in-prizes-etc.">Explicit modeling of ‘research quality’ (for use in prizes, etc.)</a></li>
   </ul></li>
-  <li><a href="#inter-rater-reliability" id="toc-inter-rater-reliability" class="nav-link" data-scroll-target="#inter-rater-reliability"><span class="header-section-number">3.2</span> Inter-rater reliability</a></li>
+  <li><a href="#inter-rater-reliability" id="toc-inter-rater-reliability" class="nav-link" data-scroll-target="#inter-rater-reliability"><span class="header-section-number">3.2</span> Inter-rater reliability</a>
+  <ul class="collapse">
+  <li><a href="#what-are-we-looking-to-measure-and-why" id="toc-what-are-we-looking-to-measure-and-why" class="nav-link" data-scroll-target="#what-are-we-looking-to-measure-and-why"><span class="header-section-number">3.2.1</span> What are we looking to measure and why?</a></li>
+  <li><a href="#specific-discussion" id="toc-specific-discussion" class="nav-link" data-scroll-target="#specific-discussion"><span class="header-section-number">3.2.2</span> Specific discussion</a></li>
+  </ul></li>
   <li><a href="#decomposing-variation-dimension-reduction-simple-linear-models" id="toc-decomposing-variation-dimension-reduction-simple-linear-models" class="nav-link" data-scroll-target="#decomposing-variation-dimension-reduction-simple-linear-models"><span class="header-section-number">3.3</span> Decomposing variation, dimension reduction, simple linear models</a></li>
   <li><a href="#later-possiblities" id="toc-later-possiblities" class="nav-link" data-scroll-target="#later-possiblities"><span class="header-section-number">3.4</span> Later possiblities</a></li>
   </ul>
@@ -271,7 +275,22 @@ Also seems relevant:
 </section>
 <section id="inter-rater-reliability" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="inter-rater-reliability"><span class="header-section-number">3.2</span> Inter-rater reliability</h2>
-<p>Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the 7 aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.</p>
+<section id="what-are-we-looking-to-measure-and-why" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="what-are-we-looking-to-measure-and-why"><span class="header-section-number">3.2.1</span> What are we looking to measure and why?</h3>
+<p>In measuring and diagnosing our rating metrics, we want to answer a few distinct questions.</p>
+<ol type="1">
+<li><p><em>Construal validity</em>: Do evaluators perceive (and report) the ratings and scales similarly to one another? If they were presented research that had the same virtues <em>in their own minds</em> would they all give similar ratings for each category? We want to <em>maximize</em> the extent to which this is case. To the extent it is not the case, we need to improve our measures.</p></li>
+<li><p><em>‘Level of agreement’</em>: To what extent do evaluators <em>actually</em> agree about each characteristic of a paper? Assuming they all interpreted the ratings and scales in the same way, how much disagreement would there be? We want to <em>know</em> how this varies across the different categories. If there is a lot of agreement, this tells us we only need a small number of evaluators and we can be fairly confident that we understand how experts judge this work. If there is less agreement, we may need a lot of expert opinions to have any confidence. If there is very little agreement, this might mean expertise has little value here.</p></li>
+</ol>
+<p>We generally seek two types of statistical measures</p>
+<p>A. <em>Similarity</em> across raters (for particular papers and/or rating categories)</p>
+<p>B. Correlates of ratings, and systematic patterns of rating</p>
+<p>Low <em>similarity</em> (IRR etc) may be a sign of poor construal validity, or low <em>actual</em> agreement, or both. Distinguishing these is a challenge.</p>
+<p><em>Correlates</em> of ratings and systematic patterns may also reflect correlates of <em>actual</em> disagreements or of systematic biases and systematic ways that construal validity is failing. But insight and intuition may help us distinguish these; randomized trials could do even better.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</section>
+<section id="specific-discussion" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="specific-discussion"><span class="header-section-number">3.2.2</span> Specific discussion</h3>
+<p>Inter-rater reliability is a measure of the degree to which two or more independent raters (in our case, paper evaluators) agree. Here, the ratings are the seven aspects of each paper that evaluators were asked to rate. For each paper, we can obtain one value that summarizes the agreement between the two or three evaluators. Values closer to 1 indicate evaluators seem to agree on what score to attribute to a given paper across categories, while values close to zero indicate raters do not agree, and negative values indicate that raters have opposing opinions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -321,6 +340,7 @@ for all metrics across all papers
 https://unjournalfriends.slack.com/archives/D05JMD2KQMP/p1694561973337029
 -->
 </section>
+</section>
 <section id="decomposing-variation-dimension-reduction-simple-linear-models" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="decomposing-variation-dimension-reduction-simple-linear-models"><span class="header-section-number">3.3</span> Decomposing variation, dimension reduction, simple linear models</h2>
 </section>
@@ -332,6 +352,12 @@ https://unjournalfriends.slack.com/archives/D05JMD2KQMP/p1694561973337029
 </ul>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>E.g., if people assigned to reveal their names gave systematically higher ratings, this would suggest a reporting bias that did not reflect actual disagreements. If US-based academics typically gave scores in the 90-100 range, while UK-based academics focused more on 70-80 ranges for papers they otherwise highly praised, this might reflect a bias stemming from their country’s particular marking traditions. (In the UK, a 70 or above is a ‘first’, while in top US universities, most students get a 90 or above, representing an “A” grade.)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -209,64 +209,12 @@ window.Quarto = {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note on data input (10-Aug-23)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators’ reports. As PubPub builds (target: end of Sept.&nbsp;2023), this will allow us to include the ratings and predictions as structured data objects. We then plan to access and input this data <em>directly</em> from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.</p>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in air_api_key(): AIRTABLE_API_KEY environment variable is empty. See ?airtabler for help.</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in air_api_key(): AIRTABLE_API_KEY environment variable is empty. See ?airtabler for help.</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'pub_records' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'pub_records' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-</div>
 <!-- need airtable API stuff -->
 <section id="reconcile-uncertainty-ratings-and-cis" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="reconcile-uncertainty-ratings-and-cis">Reconcile uncertainty ratings and CIs</h3>
 <p>Where people gave only confidence level ‘dots’, we impute CIs (confidence/credible intervals). We follow the correspondence described <a href="https://effective-giving-marketing.gitbook.io/unjournal-x-ea-and-global-priorities-research/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#1-5-dots-explanation-and-relation-to-cis">here</a>. (Otherwise, where they gave actual CIs, we use these.)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -275,7 +223,7 @@ Dots to interval choices
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <blockquote class="blockquote">
 <p>5 = Extremely confident, i.e., 90% confidence interval spans +/- 4 points or less)</p>
@@ -300,61 +248,7 @@ Dots to interval choices
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
 <p>We cannot publicly share the ‘papers under consideration’, but we can share some of the statistics on these papers. Let’s generate an ID (or later, salted hash) for each such paper, and keep only the shareable features of interest</p>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in `dplyr::select()` at magrittr/R/pipe.R:136:3:
-! Can't select columns that don't exist.
-✖ Column `id` doesn't exist.</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'paper_ratings' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'all_papers_p' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'all_papers_p' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'evals_pub_long' not found</code></pre>
-</div>
-</div>
 
 
 </section>
