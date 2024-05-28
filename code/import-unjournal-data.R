@@ -12,10 +12,10 @@
  
 # Environment variable AIRTABLE_API_KEY should be set to your 
 # Personal Access Token; these function the same way as the old API keys.
-# Your PAT needs only read access to tables and table structure.
+# Your PAT needs only read access to tables and table structure. You can
+# store the environment variable in a .Renviron file; this should *not* be
+# checked into github!! Github actions stores it as a Github secret instead. 
 
-# Beginnings of work for pubpub are now in the import-from-pubpub branch
-# (but it only tries v6 for now)
 
 library(tidyr)
 library(dplyr)
@@ -27,20 +27,32 @@ library(readr)
 
 base_id <- "applDG6ifmUmeEJ7j" # new ID to cover "UJ - research & core members" base
 
-pub_records <- air_select(base = base_id, table = "crucial_rsx")
-all_pub_records <- pub_records
-offset <- get_offset(pub_records)
 
-# the offset is only returned while there are more records
-while(! is.null(offset)) {
-  pub_records <- air_select(base = base_id, table = "crucial_rsx", 
-                            offset = offset)
-  all_pub_records <- bind_rows(all_pub_records, pub_records)
-  offset <- get_offset(pub_records)
+#' Gets an entire table via the airtable API
+#'
+#' @param base_id Airtable ID for authentication
+#' @param table Table name
+#'
+#' @return A data frame
+get_whole_airtable <- function(base_id, table) {
+  next_rows <- air_select(base = base_id, table = table)
+  all_rows <- next_rows
+  offset <- get_offset(next_rows)
+
+  # the offset is only returned while there are more records
+  while(! is.null(offset)) {
+    next_rows <- air_select(base = base_id, table = table, offset = offset)
+    all_rows <- bind_rows(all_rows, next_rows)
+    offset <- get_offset(next_rows)
+  }
+  
+  all_rows
 }
-rm(pub_records)
 
-evals_pub <- air_get(base = base_id, "output_eval") 
+
+all_pub_records <- get_whole_airtable(base_id = base_id, table = "crucial_rsx")
+evals_pub <- get_whole_airtable(base_id = base_id, table = "output_eval") 
+
 colnames(evals_pub) <- snakecase::to_snake_case(colnames(evals_pub))
 
 evals_pub <- evals_pub %>% 
