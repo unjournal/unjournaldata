@@ -79,6 +79,21 @@ jobs:
                                      forceUpdate = TRUE)
         shell: Rscript {0}
         
+      - name: Publish DataExplorer to Shinyapps.io
+        env:
+          RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
+          RSCONNECT_TOKEN: ${{ secrets.RSCONNECT_TOKEN }}
+          RSCONNECT_SECRET: ${{ secrets.RSCONNECT_SECRET }}
+        run: |
+          source("code/create-data-for-DataExplorer.R")
+          rsconnect::setAccountInfo(name = Sys.getenv("RSCONNECT_USER"), 
+                                    token = Sys.getenv("RSCONNECT_TOKEN"),
+                                    secret = Sys.getenv("RSCONNECT_SECRET"))
+          rsconnect::deployApp(appDir = here("shinyapp/DataExplorer"),
+                               appName = "DataExplorer",
+                               account = "unjournal")
+        shell: Rscript {0}
+
       - name: Render and publish website to GitHub Pages 
         uses: quarto-dev/quarto-actions/publish@v2
         with:

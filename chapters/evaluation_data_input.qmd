@@ -15,7 +15,6 @@ library(formattable)
 
 # others ----
 library(here)
-# library(aggreCAT)
 library(DescTools)
 select <- dplyr::select 
 
@@ -26,12 +25,6 @@ options(knitr.duplicate.label = "allow")
 ```
 
 
-::: {.callout-note collapse="true"}
-## Note on data input (10-Aug-23)
-
-Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators' reports. As PubPub builds (target: end of Sept. 2023), this will allow us to  include the ratings and predictions as structured data objects. We then plan to access and input this data *directly* from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.
-
-::: 
 
 ```{r read-data}
 
@@ -259,20 +252,3 @@ evals_pub_long <- evals_pub_long %>%
 ```
 
 
-```{r shiny_data_explorer}
-#| code-summary: "create a dataset to be used as the input to the shiny app"
-
-evals_pub_long %>% 
-  mutate(rating_type = factor(rating_type, 
-                              levels = c(rating_cats, pred_cats),
-                              labels = c("Overall assessment",
-                                         "Advances our knowledge & practice",  
-                                         "Methods: justification, reasonableness, validity, robustness", 
-                                         "Logic and communication", 
-                                         "Engages with real-world, impact quantification",
-                                         "Relevance to global priorities",
-                                         "Open, collaborative, replicable science and methods",
-                                         "Predicted Journal", "Merits Journal"))) %>% 
-  write_rds(file = here("shinyapp/DataExplorer", "shiny_explorer.rds"))
- 
-```
