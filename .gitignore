@@ -36,5 +36,3 @@ quarto-cli
 # rsconnect info
 /shinyapp/DataExplorer/rsconnect/.
 passwords.txt
-renv.lock
-renv/activate.R
