@@ -12,7 +12,7 @@ book:
     - chapters/evaluation_data_input.qmd
     - chapters/evaluation_data_analysis.qmd
     - chapters/aggregation.qmd
-    #- chapters/uj-data-first-look.qmd
+    - chapters/uj-data-first-look.qmd
       #- references.qmd
   reader-mode: true
   page-navigation: true
