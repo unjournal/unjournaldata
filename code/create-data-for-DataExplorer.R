@@ -5,12 +5,11 @@
 # which then uploads the data and app to shinyapps.io
 
 library(tidyverse) 
-
 library(knitr)
 library(bookdown)
 library(quarto)
 library(formattable)
-
+library(readr)
 library(here)
 library(DescTools)
 select <- dplyr::select 
@@ -18,8 +17,8 @@ select <- dplyr::select
 source(here("code", "DistAggModified.R"))
 
 
-all_papers_p <- readRDS(here("data/all_papers_p.Rdata"))
-evals_pub <- readRDS(here("data/evals.Rdata"))
+evals_pub <- readr::read_csv(here("data/evals.csv"))
+all_papers_p <- readr::read_csv(here("data/all_papers_p.csv"))
 
 evals_pub_long <- evals_pub %>% 
   pivot_longer(cols = -c(id, crucial_rsx, crucial_rsx_id, 
