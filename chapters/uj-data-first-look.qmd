@@ -242,7 +242,7 @@ Krippendorff's alpha is a widely accepted statistic that corrects for $p_e$
 and also defines "agreement" appropriately for different levels of measurement.
 
 ```{r}
-#| label: tab-kripp-alpha
+#| label: tbl-kripp-alpha
 
 
 kr_alphas <- list()
@@ -302,7 +302,7 @@ central credible interval, and vice versa?
 
 
 ```{r}
-#| label: tab-credible-intervals
+#| label: tbl-credible-intervals
 
 
 evals_long <- evals %>%
@@ -364,14 +364,14 @@ for degenerate CIs, none visible-->
 We have 7 questions measuring paper quality, and 2 questions about journal tier.
 We can perform a simple factor analysis of these 9 questions. We don't
 yet have enough data to decide the appropriate number of factors, so we just
-try three. Table @tab-loadings shows loadings. Factor 1 captures 4 of the
+try three. @tbl-loadings shows loadings. Factor 1 captures 4 of the
 paper quality questions, especially real world relevance. Factor 2 correlates with
 the journal measures. Factor 3
 captures the "open science" quality measure, and to some degree the "methods"
 and "logic and communication" measures too.
 
 ```{r}
-#| label: tab-loadings
+#| label: tbl-loadings
 #| tbl-cap: Factor loadings of 3 factors
 
 
