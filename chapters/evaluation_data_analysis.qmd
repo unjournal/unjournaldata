@@ -7,15 +7,14 @@
 #| code-summary: "load packages"
 
 library(tidyverse) 
-
-# markdown et al. ----
 library(knitr)
 library(bookdown)
 library(rmarkdown)
 library(shiny)
 library(quarto)
-library(formattable) # Create 'Formattable' Data Structures
+library(formattable) 
 library(DT) # R interface to DataTables library (JavaScript)
+library(readr)
 
 # dataviz ----
 library(ggrepel)
@@ -48,8 +47,8 @@ Below, the evaluation data is input from an Airtable, which itself was largely h
 #| label: input_eval_data
 #| code-summary: "Input evaluation data"
  
-evals_pub <- readRDS(file = here("data", "evals.Rdata"))
-all_papers_p <- readRDS(file = here("data", "all_papers_p.Rdata"))
+evals_pub <- readr::read_csv(here("data/evals.csv"))
+all_papers_p <- readr::read_csv(here("data/all_papers_p.csv"))
 
 ```
 

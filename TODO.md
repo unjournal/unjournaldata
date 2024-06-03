@@ -10,6 +10,8 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 [ ] Maybe consider splitting the deploy action up
 
+[x] Add field descriptions to data folder, or point to documentation elsewhere.
+
 [x] Put the DataExplorer app deployment into deploy.yml and not in 
     the quarto!
 

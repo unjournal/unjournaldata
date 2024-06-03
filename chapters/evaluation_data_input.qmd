@@ -6,19 +6,16 @@
 #| code-summary: "load packages"
 
 library(tidyverse) 
-
-# markdown et al. ----
 library(knitr)
 library(bookdown)
 library(quarto)
 library(formattable)
-
-# others ----
+library(readr)
 library(here)
 library(DescTools)
 select <- dplyr::select 
 
-source(here("code", "DistAggModified.R"))
+source(here("code/DistAggModified.R"))
 
 options(knitr.duplicate.label = "allow")
 
@@ -28,8 +25,8 @@ options(knitr.duplicate.label = "allow")
 
 ```{r read-data}
 
-all_papers_p <- readRDS(here("data/all_papers_p.Rdata"))
-evals_pub <- readRDS(here("data/evals.Rdata"))
+evals_pub <- readr::read_csv(here("data/evals.csv"))
+all_papers_p <- readr::read_csv(here("data/all_papers_p.csv"))
 
 ```
 
