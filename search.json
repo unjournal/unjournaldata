@@ -148,5 +148,25 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aggregation of evaluators judgments (modeling)</span>"
     ]
+  },
+  {
+    "objectID": "chapters/uj-data-first-look.html",
+    "href": "chapters/uj-data-first-look.html",
+    "title": "4  A first look at Unjournal’s data",
+    "section": "",
+    "text": "5 About the data\nPapers1 can be suggested for evaluation either by Unjournal insiders, or by outsiders. The Unjournal then selects some papers for evaluation. I won’t focus on the details of this process here. Just note that we have more suggested papers than actual evaluations.\nEach paper is typically evaluated by two evaluators, though some have more or less than two. Getting two or more of every measure is useful, because it will let us check evaluations against each other.\nWe ask evaluators two kinds of quantitative questions. First, there are different measures of paper quality. Here they are, along with some snippets from our guidelines for evaluators:\nEach of these questions is meant to be a percentile scale, 0-100%, where the percentage captures the paper’s place in the distribution of the reference group (“all serious research in the same area that you have encountered in the last three years”).2 So, for example, a score of 70% would mean the paper is better than 70% of papers in the reference group. But note, the papers we evaluate are not randomly sampled from their reference group, so we should not necessarily expect them to be uniformly distributed on 0-100%.\nAs well as asking for each question (the midpoint or median of the evaluator’s belief distribution), we also ask for lower and upper bounds of a 90% credible interval.\nNext, we ask two practical questions about publication:\nTiers are measured from 0 (“won’t publish/little to no value”) up to 5 (“top journal”). Again, we ask for both an estimate and a 90% credible interval. We allow non-integer scores between 0 and 5.\nThe last question is especially interesting, because unlike all the others, it has an observable ground truth. Eventually, papers do or do not get published in specific journals, and there is often a consensus about which journals count as e.g. “top”.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>A first look at Unjournal's data</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/uj-data-first-look.html#footnotes",
+    "href": "chapters/uj-data-first-look.html#footnotes",
+    "title": "4  A first look at Unjournal’s data",
+    "section": "",
+    "text": "Actually we don’t just evaluate academic papers, but I’ll use “papers” for short.↩︎\nThis ‘reference group percentile’ interpretation was introduced around the end of 2023; before this evaluators were given the description of the ratings interval seen here.↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>A first look at Unjournal's data</span>"
+    ]
   }
 ]
