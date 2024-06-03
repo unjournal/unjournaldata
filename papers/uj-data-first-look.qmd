@@ -20,13 +20,13 @@ shows the code as a proof of concept.
 
 # About the data
 
-Papers can be suggested for evaluation either by Unjournal insiders, or by
+Papers^[Actually we don't just evaluate academic papers, but I'll use "papers"
+for short.] can be suggested for evaluation either by Unjournal insiders, or by
 outsiders. The Unjournal then selects some papers for evaluation. I won't focus on
 the details of this process here. Just note that we have more suggested papers
 than actual evaluations.
 
-Each paper^[Actually we don't just evaluate academic papers, but I'll use "papers"
-as a shorthand.] is typically evaluated by two evaluators, though some have more
+Each paper is typically evaluated by two evaluators, though some have more
 or less than two. Getting two or more of every measure is useful, because it
 will let us check evaluations against each other.
 
@@ -84,45 +84,40 @@ We allow non-integer scores between 0 and 5.
 The last question is especially interesting, because unlike all the others,
 it has an observable ground truth. Eventually, papers do or do not get
 published in specific journals, and there is often a consensus
-about which journals count as e.g. "top".^[We also provide some specifics examples of journals that seem likely to represent these tiers; see [here](https://docs.google.com/spreadsheets/d/1nnS0FMOIKz-3rFJMn-JsX-6_oE54gdvCjxs0vac6WF8/edit#gid=0).]
+about which journals count as e.g. "top".
 
 
 # Questions to ask
 
 Here are some things we might hope to learn from our data.
 
+1. Do evaluators understand the questions? Do they "grok" how our percentile
+   questions, upper bounds, and lower bounds work?
+
+1. Do evaluators *take the questions seriously*? Or do some of them treat them
+   as a nuisance compared to the "real", written review?
+   
+   Both these questions can be partly addressed by running sanity checks. For
+   example, do people "straightline" questions, giving the same answer for
+   every question? Do they produce excessively narrow or wide
+   confidence intervals?
+   
 1. Are our quantitative measures *accurate*? Do they capture something "real"
   about the paper? Obviously, we don't have access to "ground truth" -- except
   in one case.
 
-<!-- DR: The word 'accurate' makes me think of something more fine-grained than what I think we mean here. The question is 'whether the evaluators give measures that are correlated *anything* important and about the paper'. When I here 'accurate' I think of situations where everyone knows what we are aiming for, and we are pretty confident people are providing something in this direction ... but some people may hit the target much more closely. -->
-
-2. Are the different measures *related*? Is there a single underlying dimension
+1. Are the different measures *related*? Is there a single underlying dimension
    beneath the different numbers? Or more than one dimension?
 
-3. How do quantitative measures relate to the written, qualitative evaluation?
-   Does a "better" written evaluation also score higher on the numbers? Can you
-   predict the numbers from the evaluation?
+1. How do quantitative measures relate to the written, qualitative evaluation?
+   Does a more positive written evaluation also score higher on the numbers? 
+   Can you predict the numbers from the evaluation?
 
-<!-- DR: I weakly suggest replacing 'better' with 'more positive' with or without scare quotes. Because 'better' could be read as 'the evaluation was done more carefully, showed more insight, etc'. -->
-
-4. Do evaluators understand the questions? Do they "grok" how our percentile
-   questions, upper bounds, and lower bounds work?
-
-<!-- DR: Perhaps we are demanding more than just an understanding of percentiles and CI's in principle. We want them to be able to apply it to this case, and to understand how to express their own uncertainty in a calibrated way.  I'm not sure if 'grok' and 'work' fully captures this -->
-
-
-5. Do evaluators *take the questions seriously*? Or do some of them treat them
-   as a nuisance compared to the "real", written review?
-
-6. Do evaluators understand the questions *in the same way*? Are different
+1. Do evaluators understand the questions *in the same way*? Are different
    evaluators of the same paper answering the "same questions" in their head?
    What about evaluators of different papers in different fields?
 
-<!-- DR: do you think it's worth unpacking this into 1. whether they interpret the criteria similarly, as a vector in a particular direction and 2. Whether they interpret the percentile (or journal tier) scale similarly, considering comparable reference groups etc? -->
-
-
-7. Do papers score differently in *different fields*? This could be because
+1. Do papers score differently in *different fields*? This could be because
    evaluators hold papers to different standards in those fields -- or because
    some fields do genuinely better on some dimensions. We could ask the same
    question about different methodologies: for example, do randomized controlled
@@ -165,6 +160,57 @@ n_evals <- nrow(evals)
 
 ```
 
+# Sanity checks
+
+```{r}
+#| label: sanity-checks
+
+row_min_qual <- apply(evals[qual_dimensions], 1, min, na.rm = TRUE)
+row_max_qual <- apply(evals[qual_dimensions], 1, max, na.rm = TRUE)
+
+qual_lbs <- paste0("lb_", qual_dimensions)
+qual_ubs <- paste0("ub_", qual_dimensions)
+
+# straightliners give the same value for every question,
+# so minimum and maximum values are the same
+suppressWarnings({
+  row_min_qual_lbs <- apply(evals[qual_lbs], 1, min, na.rm = TRUE)
+  row_max_qual_lbs <- apply(evals[qual_lbs], 1, max, na.rm = TRUE)
+  row_min_qual_ubs <- apply(evals[qual_ubs], 1, min, na.rm = TRUE)
+  row_max_qual_ubs <- apply(evals[qual_ubs], 1, max, na.rm = TRUE)
+})
+
+straightlines_qual <- row_min_qual == row_max_qual
+straightlines_lbs <- row_min_qual_lbs == row_max_qual_lbs
+straightlines_ubs <- row_min_qual_ubs == row_max_qual_ubs
+
+n_straightliners <- sum(straightlines_qual)
+n_straightliners_lbs <- sum(straightlines_lbs)
+n_straightliners_ubs <- sum(straightlines_ubs)
+
+degenerate_cis <- evals[qual_lbs] == evals[qual_ubs]
+n_degenerate <- sum(degenerate_cis, na.rm = TRUE)
+
+uninformative_cis <- evals[qual_ubs] - evals[qual_lbs] >= 100
+n_uninformative <- sum(uninformative_cis, na.rm = TRUE)
+
+n_valid_cis <- length(na.omit(degenerate_cis))
+```
+
+Straightliners are evaluators who give the same score for every question.
+For the midpoints, we have `{r} n_straightliners` straightliners out of 
+`{r} n_evals` evaluations. We also check if people straightline lower bounds
+of the credible intervals (`{r} n_straightliners_lbs` straightliners) and upper
+bounds (`{r} n_straightliners_ubs` straightliners).
+
+Evaluators might also give "degenerate" credible intervals, with the lower bound 
+equal to the upper bound; or uninformatively wide intervals, with the lower
+and upper bounds equal to 0% and 100%. Out of `{r} n_valid_cis` evaluation
+questions for which we had valid confidence intervals, `{r} n_degenerate`
+were degenerate and `{r} n_uninformative` were uninformative. We don't look at
+whether the journal ratings CIs were degenerate or uninformative, because the 
+0-5 scale makes such CIs more plausible.
+
 # Accuracy
 
 We have no ground truth of whether a given paper scores high or low on our
@@ -192,16 +238,8 @@ the data is just random noise. But one time in six, both raters will agree,
 simply by chance. So we need to adjust for the expected amount of agreement.
 To do this most measures use the marginal distributions of the ratings: in
 our example, a 1 in 6 chance of each number from 0 to 5, giving $p_e = 1/6$.
-
-However, adjusting for expected agreement may be complex when we have small
-amounts of data. Suppose that two raters give five ratings each:
-$R1 = \{1, 2, 3, 3, 3\}$ and $R2 = \{0, 2, 4, 4, 5\}$. The distributions look
-rather different - in fact they only share one number (2), so $p_e$ would be
-quite small. But are those really the marginal distributions? If we saw more
-data, we might find that both raters are really drawing evenly from $\{0, 1, 2, 3, 4, 5, 6}$.
-<!-- DR: I guess this is what you meant? -- see the suggested change -->
-Krippendorff's alpha corrects for this problem by adjusting $p_e$ when the number of ratings is small.
-<!-- DR: Maybe this 'correction for small distributions part' should be put in a footnote? I'm also a bit curious to get a sense of how they might correct for this. -->
+Krippendorff's alpha is a widely accepted statistic that corrects for $p_e$
+and also defines "agreement" appropriately for different levels of measurement.
 
 ```{r}
 #| label: tab-kripp-alpha
@@ -236,19 +274,26 @@ While our notes in `inter-rater-reliability.R` suggested that ICC might be a bet
 
 -->
 
-::: {.callout-note collapse="true"}
+<!--
 ## DR: To do -- Some other things we might want here
 
 - Do confidence intervals or hypothesis test for the K-alphas make sense here? To account for sampling variation of course.
 
-- Characterize what values of K-alpha are seen as 'reasonable agreement' ... compare it to other contexts.
+DHJ they make sense but probably provide unnecessary info. 
+
+- Characterize what values of K-alpha are seen as 'reasonable agreement' ... compare it to other contexts. 
 
 - Comparisons by field etc. (I know that's coming, even maybe a select it dashboard).
 
+DHJ will do but right now it would really be too little data to be informative.
+
 - Perhaps a specific take on the numbers above, noting that this is hard-coded as of a certain date and may not reflect updated data.
 
-:::
+DHJ: I suggest that we wait till we've got better data before publicizing this.
+For now, just use it internally.
 
+
+-->
 
 Because we have each rater's 90% credible interval, we can also ask a slightly
 different question: do raters tend to agree that each other's estimates are
@@ -297,7 +342,7 @@ evals_long_dim %>%
     mp3ci2 = between(midpoint_3, lb_2, ub_2)
   ) %>%
   summarize(.by = dimension,
-    `Proportion within C.I.` = mean(c_across(starts_with("mp")), na.rm = TRUE)
+    `Proportion within C.I.` = mean(c_across(matches("mp.ci")), na.rm = TRUE)
   ) %>%
   rename(
     Dimension = dimension
@@ -308,7 +353,39 @@ evals_long_dim %>%
 ```
 
 The table above already looks a bit worrying: typically no more than half of
-our evaluators' midpoints fall within their co-evaluators' 90% credible interval.
+our evaluators' midpoints fall within their co-evaluator's 90% credible interval.
+This suggests that our evaluators may be overconfident.
 
-<!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? -->
+<!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
+for degenerate CIs, none visible-->
+
+# Relatedness and dimensionality
+
+We have 7 questions measuring paper quality, and 2 questions about journal tier.
+We can perform a simple factor analysis of these 9 questions. We don't
+yet have enough data to decide the appropriate number of factors, so we just
+try three. Table @tab-loadings shows loadings. Factor 1 captures 4 of the
+paper quality questions, especially real world relevance. Factor 2 correlates with
+the journal measures. Factor 3
+captures the "open science" quality measure, and to some degree the "methods"
+and "logic and communication" measures too.
+
+```{r}
+#| label: tab-loadings
+#| tbl-cap: Factor loadings of 3 factors
+
+
+fa <- factanal(na.omit(evals[all_dimensions]), factors = 3)
+
+ldg <- loadings(fa)
+ldg <- unclass(ldg)
+
+as_hux(ldg, add_colnames = TRUE, add_rownames = "Question") %>% 
+  set_text_color("white") %>% 
+  set_background_color("black") %>% 
+  style_header_rows(bold = TRUE) %>% 
+  set_all_borders(brdr(color = "white")) %>% 
+  map_text_color(-1, -1, by_colorspace("red", "yellow")) 
+```
+
 
