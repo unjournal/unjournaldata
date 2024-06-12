@@ -16,7 +16,8 @@ lookup_stats_scopus <- function (journal) {
       apiKey = Sys.getenv("SCOPUS_API_KEY"),
       title = journal,
       content = "journal"
-    ) 
+    ) %>% 
+    req_retry(max_tries = 3)
   
   resp <- req_perform(req)
   resp <- resp_body_json(resp)
@@ -52,24 +53,17 @@ lookup_stats_scopus <- function (journal) {
 #'
 #' @return A single journal name, or `NULL` if no journal was found
 lookup_journal <- function (authors, title) {
-  journal_scopus <- tryCatch(
-    lookup_journal_scopus(authors, title),
-    error = \(x) {warning(x); NULL}
-  )
-  journal_semantic <- tryCatch(
-    lookup_journal_semantic(authors, title),
-    error = \(x) {warning(x); NULL}
-  )
-  journal_pubmed <- tryCatch(
-    lookup_journal_pubmed(authors, title),
-    error = \(x) {warning(x); NULL}
-  )
-  journal_core <- tryCatch(
-    lookup_journal_core(authors, title),
-    error = \(x) {warning(x); NULL}
-  )
+  lookup_funs <- list(lookup_journal_scopus, lookup_journal_semantic,
+                      lookup_journal_pubmed, lookup_journal_core)
   
-  journals <- c(journal_scopus, journal_semantic, journal_pubmed, journal_core)
+  journals <- map(lookup_funs, function (lookup_fun) {
+    tryCatch(
+      lookup_fun(authors, title),
+      error = \(x) {warning(x); NULL}
+    )
+  })
+  journals <- compact(journals) # remove NULLs
+  journals <- unlist(journals)
   journals <- unique(journals)
   
   if (length(journals) > 1L) {
@@ -82,15 +76,21 @@ lookup_journal <- function (authors, title) {
 
 lookup_journal_scopus <- function (authors, title) {
   
-  author_strings <- glue("AUTHOR-NAME({authors})")
-  author_string <- paste(author_strings, collapse = " AND ")
-  query <- glue("{author_string} AND TITLE({title})")
+  if (grepl("\\(", title)) {
+    warning("Removing parentheses from title in scopus lookup")
+    title <- gsub("\\(.*?\\)", "", title)
+  }
+  # we always have AND at the end, since the last AND comes before TITLE(...).
+  author_strings <- glue("AUTHOR-NAME({authors}) AND ") 
+  author_string <- paste(author_strings, collapse = "")
+  query <- glue("{author_string}TITLE({title})")
   
   req <- request("https://api.elsevier.com/content/search/scopus") %>% 
     req_url_query(
       apiKey = Sys.getenv("SCOPUS_API_KEY"),
       query = query
-    ) 
+    ) %>% 
+    req_retry(max_tries = 3)
   
   resp <- req_perform(req)
   search_results <- resp_body_json(resp)$"search-results"
@@ -121,7 +121,8 @@ lookup_journal_semantic <- function (authors, title) {
       fields = "title,venue,journal,authors",
       publicationTypes = "journalArticle",
       limit = 10L
-    )
+    ) %>% 
+    req_retry(max_tries = 3)
   
   resp <- req_perform(req)
   resp <- resp_body_json(resp)
@@ -157,7 +158,8 @@ lookup_journal_pubmed <- function(authors, title) {
       db = "pubmed",
       term = search_term,
       retmode = "json"
-    )
+    ) %>% 
+    req_retry(max_tries = 3)
 
   resp <- req_perform(req)
   res <- resp_body_json(resp)
@@ -172,7 +174,8 @@ lookup_journal_pubmed <- function(authors, title) {
       db = "pubmed",
       id = paste(ids, collapse = ","),
       retmode = "json"
-    )
+    ) %>% 
+    req_retry(max_tries = 3)
   
   resp2 <- req_perform(req2)
   res2 <- resp_body_json(resp2)
@@ -203,14 +206,36 @@ lookup_journal_core <- function (authors, title) {
   author_string <- paste(author_strings, collapse = " ")
   search_query <- glue("{author_string} title:{title}")
   
+  # This function returns TRUE if the `resp`onse from the core server is 
+  # telling us to slow down.
+  core_is_transient <- function (resp) {
+    status <- resp_status(resp)
+    rate_limit_header <- resp_header(resp, "x-ratelimit-remaining")
+    status == 429 && rate_limit_header == "0"
+  }
+  # This function tells us how many seconds to wait.
+  core_delay <- function (resp) {
+    retry_time <- resp_header(resp, "X-ratelimit-retry-after")
+    retry_time <- as.POSIXct(retry_time, format="%Y-%m-%dT%H:%M:%S", tz = "UTC")
+    now <- as.POSIXct(Sys.time(), tz = "UTC")
+    delay <- difftime(retry_time, now, units = "secs")
+    delay <- as.double(delay)
+    ceiling(delay)
+  }
+  
   req <- request("https://api.core.ac.uk/v3/search/outputs") %>% 
     req_headers(
       Authorization = glue("Bearer {core_api_key}")
     ) %>% 
     req_url_query(
       q = search_query
-    )
-  
+    ) %>% 
+    req_retry(max_tries = 3L, is_transient = core_is_transient, 
+              after = core_delay) 
+  # %>% 
+  #   req_throttle(rate = 20/60) # core can be temperamental;
+  #                              # we try at most 20 requests per minute
+  # 
   resp <- req_perform(req)
   
   res <- resp_body_json(resp)
