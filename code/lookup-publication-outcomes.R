@@ -5,6 +5,43 @@ library(httr2)
 library(glue)
 library(purrr)
 
+#' Get statistics about a journal from Scopus
+#'
+#' @param journal String: a single journal name.
+#'
+#' @return A list of journal statistics.
+lookup_stats_scopus <- function (journal) {
+  req <- request("https://api.elsevier.com/content/serial/title") %>% 
+    req_url_query(
+      apiKey = Sys.getenv("SCOPUS_API_KEY"),
+      title = journal,
+      content = "journal"
+    ) 
+  
+  resp <- req_perform(req)
+  resp <- resp_body_json(resp)
+  res <- resp$"serial-metadata-response"
+  
+  n_results <- length(res$entry)
+  if (n_results > 1L) {
+    warning(glue("More than one match for journal title '{journal}'"))
+  }
+  
+  res <- res$entry[[1]]
+  
+  # source normalized impact per paper
+  snip <- res$SNIPList$SNIP[[1]]$"$"
+  snip <- as.numeric(snip)
+  
+  cite_score <- res$citeScoreYearInfoList$citeScoreCurrentMetric
+  cite_score <- as.numeric(cite_score)
+  
+  sjr <- res$SJRList$SJR[[1]]$"$"
+  sjr <- as.numeric(sjr)
+            
+  list(snip = snip, cite_score = cite_score, sjr = sjr)
+}
+
 #' Look up journal names of possible publications
 #' 
 #' If multiple journals are found these functions will emit a warning
@@ -27,8 +64,12 @@ lookup_journal <- function (authors, title) {
     lookup_journal_pubmed(authors, title),
     error = \(x) {warning(x); NULL}
   )
+  journal_core <- tryCatch(
+    lookup_journal_core(authors, title),
+    error = \(x) {warning(x); NULL}
+  )
   
-  journals <- c(journal_scopus, journal_semantic, journal_pubmed)
+  journals <- c(journal_scopus, journal_semantic, journal_pubmed, journal_core)
   journals <- unique(journals)
   
   if (length(journals) > 1L) {
@@ -149,6 +190,43 @@ lookup_journal_pubmed <- function(authors, title) {
   }
   
   if (n_journals == 0L) {
+    return(NULL)
+  } else {
+    return(journals[1])
+  }
+}
+
+
+lookup_journal_core <- function (authors, title) {
+  core_api_key <- Sys.getenv("CORE_API_KEY")
+  author_strings <- glue("authors:{authors}")
+  author_string <- paste(author_strings, collapse = " ")
+  search_query <- glue("{author_string} title:{title}")
+  
+  req <- request("https://api.core.ac.uk/v3/search/outputs") %>% 
+    req_headers(
+      Authorization = glue("Bearer {core_api_key}")
+    ) %>% 
+    req_url_query(
+      q = search_query
+    )
+  
+  resp <- req_perform(req)
+  
+  res <- resp_body_json(resp)
+  res <- res$results
+  journals <- map(res, "journals") %>% 
+    list_flatten() %>% 
+    map("title") %>% 
+    compact() %>% 
+    unlist() %>% 
+    unique()
+  
+  if (length(journals) > 1L) {
+    warning("Found more than one distinct journal in core")
+  }
+  
+  if (length(journals) == 0L) {
     return(NULL)
   } else {
     return(journals[1])
