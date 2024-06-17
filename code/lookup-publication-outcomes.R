@@ -1,9 +1,10 @@
 
-# functions to look for publication outcomes in different databases
+# Functions to look for publication outcomes in different online databases.
 
 library(httr2)
 library(glue)
 library(purrr)
+
 
 #' Get statistics about a journal from Scopus
 #'
@@ -47,34 +48,35 @@ lookup_stats_scopus <- function (journal) {
 #' 
 #' If multiple journals are found these functions will emit a warning
 #' and return the first journal name.
-#'
-#' @param authors Character vector: authors
+#' 
 #' @param title String: publication title
+#' @param authors Character vector: authors
 #'
-#' @return A single journal name, or `NULL` if no journal was found
-lookup_journal <- function (authors, title) {
+#' @return A single journal name, `NA` if no journal was found
+lookup_journal <- function (title, authors) {
   lookup_funs <- list(lookup_journal_scopus, lookup_journal_semantic,
                       lookup_journal_pubmed, lookup_journal_core)
   
-  journals <- map(lookup_funs, function (lookup_fun) {
+  journals <- map_char(lookup_funs, function (lookup_fun) {
     tryCatch(
-      lookup_fun(authors, title),
-      error = \(x) {warning(x); NULL}
+      lookup_fun(title, authors),
+      error = \(x) {warning(x); NA}
     )
   })
-  journals <- compact(journals) # remove NULLs
-  journals <- unlist(journals)
+  
+  journals <- journals[! is.na(journals)]
   journals <- unique(journals)
   
   if (length(journals) > 1L) {
     warning(glue("More than one match across databases for {title}"))
-  }
+  } 
   
-  return(journals[1])
+  result <- if (length(journals) > 0L) journals[1] else NA_character_
+  return(result)
 }
 
 
-lookup_journal_scopus <- function (authors, title) {
+lookup_journal_scopus <- function (title, authors) {
   
   if (grepl("\\(", title)) {
     warning("Removing parentheses from title in scopus lookup")
@@ -98,7 +100,7 @@ lookup_journal_scopus <- function (authors, title) {
   stopifnot(is.numeric(n_results), n_results >= 0L)
   
   if (n_results == 0L) {
-    return(NULL)
+    return(NA_character_)
   } else if (n_results > 0L) {
     if (n_results != 1L) {
       warning(glue("More than one match in scopus for {title}"))
@@ -111,7 +113,7 @@ lookup_journal_scopus <- function (authors, title) {
   }
 }
 
-lookup_journal_semantic <- function (authors, title) {
+lookup_journal_semantic <- function (title, authors) {
   req <- request("https://api.semanticscholar.org/graph/v1/paper/search") %>%
     req_headers(
       "x-api-key" = Sys.getenv("SEMANTIC_SCHOLAR_API_KEY")
@@ -144,12 +146,12 @@ lookup_journal_semantic <- function (authors, title) {
   if (length(journals) > 1L) {
     warning("Found more than one distinct journal in semantic scholar")
   }
-  if (length(journals) == 0L) return(NULL)
+  if (length(journals) == 0L) return(NA_character_)
   return(journals[1])
 }
 
 
-lookup_journal_pubmed <- function(authors, title) {
+lookup_journal_pubmed <- function(title, authors) {
   author_string <- glue("{authors}[au]")
   author_string <- paste(author_string, collapse = " AND ")
   search_term <- glue("\"{title}\"[Title] AND {author_string}")
@@ -165,7 +167,7 @@ lookup_journal_pubmed <- function(authors, title) {
   res <- resp_body_json(resp)
   
   n_results <- res$esearchresult$count
-  if (n_results == 0L) return(NULL)
+  if (n_results == 0L) return(NA_character_)
   
   ids <- unlist(res$esearchresult$idlist)
   
@@ -193,14 +195,14 @@ lookup_journal_pubmed <- function(authors, title) {
   }
   
   if (n_journals == 0L) {
-    return(NULL)
+    return(NA_character_)
   } else {
     return(journals[1])
   }
 }
 
 
-lookup_journal_core <- function (authors, title) {
+lookup_journal_core <- function (title, authors) {
   core_api_key <- Sys.getenv("CORE_API_KEY")
   author_strings <- glue("authors:{authors}")
   author_string <- paste(author_strings, collapse = " ")
@@ -252,7 +254,7 @@ lookup_journal_core <- function (authors, title) {
   }
   
   if (length(journals) == 0L) {
-    return(NULL)
+    return(NA_character_)
   } else {
     return(journals[1])
   }
