@@ -5,44 +5,7 @@ library(httr2)
 library(glue)
 library(purrr)
 
-
-#' Get statistics about a journal from Scopus
-#'
-#' @param journal String: a single journal name.
-#'
-#' @return A list of journal statistics.
-lookup_stats_scopus <- function (journal) {
-  req <- request("https://api.elsevier.com/content/serial/title") %>% 
-    req_url_query(
-      apiKey = Sys.getenv("SCOPUS_API_KEY"),
-      title = journal,
-      content = "journal"
-    ) %>% 
-    req_retry(max_tries = 3)
-  
-  resp <- req_perform(req)
-  resp <- resp_body_json(resp)
-  res <- resp$"serial-metadata-response"
-  
-  n_results <- length(res$entry)
-  if (n_results > 1L) {
-    warning(glue("More than one match for journal title '{journal}'"))
-  }
-  
-  res <- res$entry[[1]]
-  
-  # source normalized impact per paper
-  snip <- res$SNIPList$SNIP[[1]]$"$"
-  snip <- as.numeric(snip)
-  
-  cite_score <- res$citeScoreYearInfoList$citeScoreCurrentMetric
-  cite_score <- as.numeric(cite_score)
-  
-  sjr <- res$SJRList$SJR[[1]]$"$"
-  sjr <- as.numeric(sjr)
-            
-  list(snip = snip, cite_score = cite_score, sjr = sjr)
-}
+openalex_email <- "contact@unjournal.org"
 
 #' Look up journal names of possible publications
 #' 
@@ -53,11 +16,17 @@ lookup_stats_scopus <- function (journal) {
 #' @param authors Character vector: authors
 #'
 #' @return A single journal name, `NA` if no journal was found
-lookup_journal <- function (title, authors) {
-  lookup_funs <- list(lookup_journal_scopus, lookup_journal_semantic,
-                      lookup_journal_pubmed, lookup_journal_core)
+lookup_journal <- function (title, authors = character(0L)) {
+  lookup_funs <- list(
+    lookup_journal_scopus, 
+    # Disabled until we get an api key:
+    # lookup_journal_semantic, 
+    lookup_journal_pubmed, 
+    lookup_journal_core,
+    lookup_journal_openalex
+  )
   
-  journals <- map_char(lookup_funs, function (lookup_fun) {
+  journals <- map_chr(lookup_funs, function (lookup_fun) {
     tryCatch(
       lookup_fun(title, authors),
       error = \(x) {warning(x); NA}
@@ -76,7 +45,7 @@ lookup_journal <- function (title, authors) {
 }
 
 
-lookup_journal_scopus <- function (title, authors) {
+lookup_journal_scopus <- function (title, authors = character(0L)) {
   
   if (grepl("\\(", title)) {
     warning("Removing parentheses from title in scopus lookup")
@@ -113,7 +82,7 @@ lookup_journal_scopus <- function (title, authors) {
   }
 }
 
-lookup_journal_semantic <- function (title, authors) {
+lookup_journal_semantic <- function (title, authors = character(0L)) {
   req <- request("https://api.semanticscholar.org/graph/v1/paper/search") %>%
     req_headers(
       "x-api-key" = Sys.getenv("SEMANTIC_SCHOLAR_API_KEY")
@@ -151,7 +120,7 @@ lookup_journal_semantic <- function (title, authors) {
 }
 
 
-lookup_journal_pubmed <- function(title, authors) {
+lookup_journal_pubmed <- function(title, authors = character(0L)) {
   author_string <- glue("{authors}[au]")
   author_string <- paste(author_string, collapse = " AND ")
   search_term <- glue("\"{title}\"[Title] AND {author_string}")
@@ -202,7 +171,7 @@ lookup_journal_pubmed <- function(title, authors) {
 }
 
 
-lookup_journal_core <- function (title, authors) {
+lookup_journal_core <- function (title, authors = character(0L)) {
   core_api_key <- Sys.getenv("CORE_API_KEY")
   author_strings <- glue("authors:{authors}")
   author_string <- paste(author_strings, collapse = " ")
@@ -258,4 +227,177 @@ lookup_journal_core <- function (title, authors) {
   } else {
     return(journals[1])
   }
+}
+
+
+lookup_journal_openalex <- function (title, authors = character(0L)) {
+  # This is a hack because the title search doesn't like commas
+  title <- gsub(",", "", title, fixed = TRUE)
+  query_filter <- glue("title.search:{title}")
+  
+  if (length(authors) > 0L) {
+    author_ids <- lookup_authors_openalex(authors)
+    if (length(author_ids) > 0L) {
+      authors_string <- paste(author_ids, collapse = "|")
+      query_filter <- glue("{query_filter},authorships.author.id:{authors_string}")
+    }
+  }
+  
+  req <- request("https://api.openalex.org/works") %>% 
+    req_headers(
+      mailto = openalex_email
+    ) %>% 
+    req_url_query(
+      filter = query_filter,
+      select = "display_name,primary_location"
+    ) %>% 
+    req_throttle(
+      rate = 5 # openalex specifies 10 per second
+    )
+  
+  resp <- req_perform(req)
+  
+  res <- resp_body_json(resp)
+  res <- res$results
+  
+  # We discard results which aren't in journals
+  source_types <- map(res, c("primary_location", "source", "type"))
+  null_sources <- map_lgl(source_types, is.null)
+  res <- res[! null_sources]
+  source_types <- source_types[! null_sources]
+  res <- res[source_types == "journal"]
+  
+  journals <- map_chr(res, c("primary_location", "source", "display_name"))
+  if (length(journals) > 1L) {
+    warning("Found more than one distinct journal in openalex")
+  }
+  
+  if (length(journals) < 1L) {
+    return(NA_character_)
+  } else {
+    return(journals[1])
+  }
+}
+
+
+#' Look up authors' openalex IDs by name
+#'
+#' @param authors Character vector
+#'
+#' @return A named list of openalex ids e.g. 
+#' `"https://openalex.org/A5035113852"`. The names are the `display_name`s
+#' as given by openalex. There may be more than one matching name per author.
+#'   
+lookup_authors_openalex <- function (authors) {
+  author_string <- paste(authors, collapse = "|")
+  
+  req <- request("https://api.openalex.org/authors") %>% 
+    req_headers(
+      mailto = openalex_email
+    ) %>% 
+    req_url_query(
+      filter = glue("display_name.search:{author_string}"),
+      select = "id,display_name"
+    ) %>% 
+    req_throttle(
+      rate = 5 # openalex specifies max 10 per second
+    )
+  
+  resp <- req_perform(req)
+  
+  res <- resp_body_json(resp)
+  
+  openalex_ids <- map_chr(res$results, "id")
+  display_names <- map_chr(res$results, "display_name")
+  names(openalex_ids) <- display_names
+  
+  return(openalex_ids)
+}
+
+
+#' Get statistics about a journal from Scopus
+#'
+#' @param journal String: a single journal name.
+#'
+#' @return A list of journal statistics. List elements are `NA` if the journal
+#'   was not found. See 
+#'   <https://dev.elsevier.com/documentation/SerialTitleAPI.wadl>
+lookup_stats_scopus <- function (journal) {
+  req <- request("https://api.elsevier.com/content/serial/title") %>% 
+    req_url_query(
+      apiKey = Sys.getenv("SCOPUS_API_KEY"),
+      title = journal,
+      content = "journal"
+    ) %>% 
+    req_retry(max_tries = 3)
+  
+  resp <- req_perform(req)
+  resp <- resp_body_json(resp)
+  res <- resp$"serial-metadata-response"
+  
+  n_results <- length(res$entry)
+  if (n_results > 1L) {
+    warning(glue("More than one match for journal title '{journal}'"))
+  }
+  if (n_results < 1L) {
+    return(list(snip = NA_real_, cite_score = NA_real_, sjr = NA_real_))
+  }
+  
+  res <- res$entry[[1]]
+  
+  # source normalized impact per paper
+  snip <- res$SNIPList$SNIP[[1]]$"$"
+  snip <- as.numeric(snip)
+  
+  cite_score <- res$citeScoreYearInfoList$citeScoreCurrentMetric
+  cite_score <- as.numeric(cite_score)
+  
+  sjr <- res$SJRList$SJR[[1]]$"$"
+  sjr <- as.numeric(sjr)
+            
+  list(snip = snip, cite_score = cite_score, sjr = sjr)
+}
+
+
+#' Get statistics about a journal from openalex
+#'
+#' @param journal String: a single journal name.
+#'
+#' @return A list of journal statistics. List elements are `NA` if the journal
+#'   was not found. See 
+#'   <https://docs.openalex.org/api-entities/sources/source-object#summary_stats>
+lookup_stats_openalex <- function (journal) {
+  journal <- gsub(",", "", journal, fixed = TRUE)
+  
+  req <- request("https://api.openalex.org/sources") %>% 
+    req_headers(
+      mailto = openalex_email
+    ) %>% 
+    req_url_query(
+      filter = glue("display_name.search:{journal}"),
+      select = "display_name,summary_stats"
+    ) %>% 
+    req_throttle(
+      rate = 5
+    )
+  
+  resp <- req_perform(req)
+  res <- resp_body_json(resp)
+   
+  n_results <- res$meta$count
+  
+  if (n_results > 1L) {
+    warning(glue("More than one match for journal title '{journal}'"))
+  }
+  
+  if (n_results < 1L) {
+    return(list(
+      `2yr_mean_citedness` = NA_real_,
+      h_index = NA_integer_,
+      i10_index = NA_integer_
+    ))
+  }
+  
+  sum_stats <- res$results[[1]]$summary_stats
+  return(sum_stats)
 }

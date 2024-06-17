@@ -7,11 +7,8 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 [ ] Rewrite import-unjournal-data to use Coda.io (once the database schema is
     nailed down)
-
 [ ] Maybe consider splitting the deploy action up
-
 [x] Add field descriptions to data folder, or point to documentation elsewhere.
-
 [x] Put the DataExplorer app deployment into deploy.yml and not in 
     the quarto!
 
@@ -19,10 +16,8 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 # Descriptive work
 
 [x] What are we evaluating? How many papers in total? In what subfields? What does our “funnel” (selection process of candidate papers) look like?
-
 [ ] How’s our process? How many papers per month? Turnaround times?
   Numbers of evaluators per paper?
-
 [x] Basic averages e.g. ratings for each question; or averages per subfield.
 
 
@@ -37,7 +32,8 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
     - Systematic correlates of high/low ratings
     - Look for factors suggesting 'biases', e.g.,  ...
     - ... are evaluators who sign their names more positive
-    - ... do people in British-style academic institutions give lower ratings (perhaps because "a 70 is a first")
+    - ... do people in British-style academic institutions give lower ratings 
+      (perhaps because "a 70 is a first")
     - ... higher for some fields/causes
 
 Do these analyses in a ~quarto 'ask and answer questions' format
@@ -47,7 +43,15 @@ Do these analyses in a ~quarto 'ask and answer questions' format
 [ ] Find out how to check publication automatically (ish?)
   - get DOI; match it against databases; fall back to title and authors?
   - map publications to "tiers"
-  - DR: If necessary, we could do some of the matching manually; if so, we should just build a systematic protocol (who checks it, how do they check it, when, where do they input the results?)
+  - DR: If necessary, we could do some of the matching manually; if so, we 
+    should just build a systematic protocol (who checks it, how do they 
+    check it, when, where do they input the results?)
+  - openalex seems the most useful and friendly API
+  - it has both author/title search and some journal statistics
+  - consider using the openalexR package
+  - do we need paging?
+  - should we just return 1 "best guess"?
+  
 
 [ ] Build functions to create predictions from pairs of indiv. predictions
   - simple average
