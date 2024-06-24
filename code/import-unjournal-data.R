@@ -1,6 +1,6 @@
 
 # standalone script to create data frame of unjournal reviews
-# currently uses airtable. In future could use pubpub API.
+# This version imports from coda.io.
 
 # Currently creates 4 R variables:
 # - evals_pub: data frame of our evaluations
@@ -10,22 +10,55 @@
 
 # Data isn't saved to disk unless you explicitly call the save_data() function.
  
-# Environment variable AIRTABLE_API_KEY should be set to your 
-# Personal Access Token; these function the same way as the old API keys.
-# Your PAT needs only read access to tables and table structure. You can
-# store the environment variable in a .Renviron file; this should *not* be
-# checked into github!! Github actions stores it as a Github secret instead. 
 
-
-library(tidyr)
 library(dplyr)
-library(airtabler)   
+library(glue)
+library(here)
+library(httr2)
+library(purrr)
+library(readr)
 library(snakecase)
 library(stringr)
-library(here)
-library(readr)
+library(tidyr)
 
-base_id <- "applDG6ifmUmeEJ7j" # new ID to cover "UJ - research & core members" base
+coda_api_key <- Sys.getenv("CODA_API_KEY")
+
+
+import_coda_table <- function(doc, table) {
+  
+  next_req <- function (resp, req) {
+    body <- resp_body_json(resp)
+    npt <- body$nextPageToken
+    if (is.null(npt)) return(NULL)
+    req <- req_url_query(req,
+                         pageToken = npt
+                         )
+    return(req)
+  }
+  
+  extract_rows <- function (resp) {
+    body <- resp_body_json(resp)
+    items <- body$items
+    vals <- map(items, "values")
+  }
+  
+  req <- httr2::request(
+      glue("https://coda.io/apis/v1/docs/{doc}/tables/{table}/rows")
+    ) %>% 
+    req_headers(
+      Authorization = glue("Bearer {coda_api_key}"),
+    ) %>% 
+    req_retry(max_tries = 3)  
+  # resps is a list of response objects
+  resps <- req_perform_iterative(req, next_req = next_req)
+  
+  purrr::map(resps, extract_rows)
+}
+
+import_coda_table("0KBG3dSZCs", "grid-Iru9Fra3tE")
+
+
+
 
 
 #' Gets an entire table via the airtable API
