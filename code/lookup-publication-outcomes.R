@@ -1,9 +1,11 @@
 
 # Functions to look for publication outcomes in different online databases.
 
-library(httr2)
+library(dplyr)
 library(glue)
+library(httr2)
 library(purrr)
+library(tidyr)
 
 # The contact email passed to openalex in their header. This gives us access to 
 # a faster API.
@@ -18,26 +20,34 @@ openalex_email <- "contact@unjournal.org"
 #' @param title String: publication title
 #' @param authors Character vector: authors
 #'
-#' @return A character vector of journal titles, possibly empty.
+#' @return A [tibble()] with columns:
+#' 
+#' * name of `journal` 
+#' * publication `title`
+#' * lookup `source`
+#' 
+#' @examples
+#' lookup_journal("Honesty", authors = "David Hugh-Jones")
+#' 
 lookup_journal <- function (title, authors = character(0L)) {
   lookup_funs <- list(
-    lookup_journal_scopus, 
+    Scopus   = lookup_journal_scopus, 
     # Disabled until we get an api key:
-    # lookup_journal_semantic, 
-    lookup_journal_pubmed, 
-    lookup_journal_core,
-    lookup_journal_openalex
+    # `Semantic Scholar` = lookup_journal_semantic, 
+    PubMed   = lookup_journal_pubmed, 
+    CORE     = lookup_journal_core,
+    Openalex = lookup_journal_openalex
   )
   
-  journals <- map_chr(lookup_funs, function (lookup_fun) {
+  journals <- map(lookup_funs, function (lookup_fun) {
     tryCatch(
       lookup_fun(title, authors),
-      error = \(x) {warning(x); NA}
+      error = \(x) {warning(x); empty_results_tibble()}
     )
   })
   
-  journals <- journals[! is.na(journals)]
-  journals <- unique(journals)
+  journals <- list_rbind(journals)
+  journals <- journals %>% arrange(title, journal, source)
   
   return(journals)
 }
@@ -66,12 +76,17 @@ lookup_journal_scopus <- function (title, authors = character(0L)) {
   n_results <- as.numeric(search_results$"opensearch:totalResults")
   stopifnot(is.numeric(n_results), n_results >= 0L)
   
-  if (n_results == 0L) {
-    return(character())
-  } else if (n_results > 0L) {
-    journal_names <- map_chr(search_results$entry, "prism:publicationName")
-    return(journal_names)
-  }
+  results <- map(search_results$entry, \(x) {
+    tibble(
+      journal = x$"prism:publicationName", 
+      title   = x$"dc:title",
+      source  = "Scopus"
+    )
+  })
+  
+  results <- list_rbind(results)
+  
+  return(results)
 }
 
 
@@ -89,23 +104,26 @@ lookup_journal_semantic <- function (title, authors = character(0L)) {
     req_retry(max_tries = 3)
   
   resp <- req_perform(req)
-  resp <- resp_body_json(resp)
+  results <- resp_body_json(resp)
   
   # semantic scholar typically returns many results
   author_and_title_matches <- function (x) {
+    title_matches <- x$title == title
+    if (length(authors) == 0L) return(title_matches)
     author_names <- map(x$authors, "name")
     author_matches <- any(authors %in% author_names) 
-    title_matches <- x$title == title
     author_matches && title_matches
   }
   
-  results <- keep(resp$data, author_and_title_matches)
+  results <- keep(results$data, author_and_title_matches)
   
-  journal_names <- map(results, "journal")
-  journal_names <- compact(journal_names)
-  journal_names <- unique(journal_names)
+  results <- tibble(
+    journal = map_chr(results, "journal"),
+    title = map_chr(results, "title"),
+    source = "Semantic Scholar"
+  )
   
-  return(journal_names)
+  return(results)
 }
 
 
@@ -125,7 +143,7 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   res <- resp_body_json(resp)
   
   n_results <- res$esearchresult$count
-  if (n_results == 0L) return(character())
+  if (n_results == 0L) return(empty_results_tibble())
   
   ids <- unlist(res$esearchresult$idlist)
   
@@ -143,20 +161,90 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   res2 <- res2$result
   pub_details <- res2[names(res2) %in% ids]
   
-  journal_names <- map_chr(pub_details, "fulljournalname")
-  journal_names <- unique(journal_names)
-  journal_names <- journal_names[journal_names != ""]
+  results <- tibble(
+    journal = map_chr(pub_details, "fulljournalname"),
+    title   = map_chr(pub_details, "title"),
+    source  = "PubMed"
+  )
   
-  return(journal_names)
+  return(results)
 }
 
 
 lookup_journal_core <- function (title, authors = character(0L)) {
-  core_api_key <- Sys.getenv("CORE_API_KEY")
   author_strings <- glue("authors:{authors}")
   author_string <- paste(author_strings, collapse = " ")
   search_query <- glue("{author_string} title:{title}")
   
+  req <- request_core("https://api.core.ac.uk/v3/search/outputs") %>% 
+    req_url_query(
+      q = search_query
+    ) 
+  
+  resp <- req_perform(req)
+  
+  res <- resp_body_json(resp)
+  res <- res$results
+  
+  find_journal_name <- function (x) {
+    if (is.null(x$journals)) return(NA_character_)
+    map_chr(x$journals, \(jnl) {
+      if (! is.null(jnl$title)) return(jnl$title)
+      identifiers <- unlist(jnl$identifiers)
+      issns <- grep("^issn:", identifiers, value = TRUE)
+      titles <- map_chr(issns, lookup_journal_by_issn_core)
+      titles <- titles[! is.na(titles)]
+      if (length(titles)) return(titles[1]) else return(NA_character_)
+    })
+  }
+  
+  journal_names <- map_chr(res, find_journal_name)
+
+  results <- tibble(
+    journal = journal_names,
+    title = map_chr(res, "title"),
+    source = "CORE"
+  )
+
+  return(results)
+}
+
+
+#' Find journal title by issn using CORE
+#' 
+#' Often returns no result even for well-known journals
+#'
+#' @param issn An issn string like "issn:1832-4274" 
+#'
+#' @return A journal title or `NA_character_`.
+#' 
+#' @examples
+#' lookup_journal_by_issn_core("issn:1179-1497")
+lookup_journal_by_issn_core <- function (issn) {
+  req <- request_core("https://api.core.ac.uk/v3/journals/") %>% 
+    req_url_path_append(issn)
+  resp <- tryCatch(
+    req_perform(req),
+    httr2_http_404 = function (err) NULL
+  )
+  if (is.null(resp)) return(NA_character_)
+  
+  res <- resp_body_json(resp)
+  if (is.null(res$title)) {
+    warning("No `title` field found")
+    return(NA_character_)
+  }
+  
+  return(res$title)
+}
+
+
+#' Return a request object suitable for talking to the core.ac.uk server
+#'
+#' @param url A URL
+#'
+#' @return A [httr2::request()] object with headers and retry strategy set.
+request_core <- function(url) {
   # This function returns TRUE if the `resp`onse from the core server is 
   # telling us to slow down.
   core_is_transient <- function (resp) {
@@ -164,6 +252,7 @@ lookup_journal_core <- function (title, authors = character(0L)) {
     rate_limit_header <- resp_header(resp, "x-ratelimit-remaining")
     status == 429 && rate_limit_header == "0"
   }
+  
   # This function tells us how many seconds to wait.
   core_delay <- function (resp) {
     retry_time <- resp_header(resp, "X-ratelimit-retry-after")
@@ -174,32 +263,16 @@ lookup_journal_core <- function (title, authors = character(0L)) {
     ceiling(delay)
   }
   
-  req <- request("https://api.core.ac.uk/v3/search/outputs") %>% 
+  core_api_key <- Sys.getenv("CORE_API_KEY")
+  
+  req <- request(url) %>% 
     req_headers(
       Authorization = glue("Bearer {core_api_key}")
     ) %>% 
-    req_url_query(
-      q = search_query
-    ) %>% 
     req_retry(max_tries = 3L, is_transient = core_is_transient, 
               after = core_delay) 
-  # %>% 
-  #   req_throttle(rate = 20/60) # core can be temperamental;
-  #                              # we try at most 20 requests per minute
-  # 
-  resp <- req_perform(req)
-  
-  res <- resp_body_json(resp)
-  res <- res$results
-  
-  journal_names <- map(res, "journals") %>% 
-    list_flatten() %>% 
-    map("title") %>% 
-    compact() %>% 
-    unlist() %>% 
-    unique()
 
-  return(journal_names)
+  return(req)
 }
 
 
@@ -240,9 +313,13 @@ lookup_journal_openalex <- function (title, authors = character(0L)) {
   source_types <- source_types[! null_sources]
   res <- res[source_types == "journal"]
   
-  journal_names <- map_chr(res, c("primary_location", "source", "display_name"))
+  results <- tibble(
+    journal = map_chr(res, c("primary_location", "source", "display_name")),
+    title   = map_chr(res, "display_name"),
+    source  = "Openalex"
+  )
 
-  return(journal_names)
+  return(results)
 }
 
 
@@ -368,4 +445,16 @@ lookup_stats_openalex <- function (journal) {
   
   sum_stats <- res$results[[1]]$summary_stats
   return(sum_stats)
+}
+
+
+#' Helper function for lookups
+#'
+#' @return A zero-row tibble with the correct columns
+empty_results_tibble <- function () {
+  tibble(
+    journal = character(0L),
+    title   = character(0L),
+    source  = character(0L)
+  )
 }
