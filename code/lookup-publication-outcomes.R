@@ -5,7 +5,10 @@ library(httr2)
 library(glue)
 library(purrr)
 
+# The contact email passed to openalex in their header. This gives us access to 
+# a faster API.
 openalex_email <- "contact@unjournal.org"
+
 
 #' Look up journal names of possible publications
 #' 
@@ -15,7 +18,7 @@ openalex_email <- "contact@unjournal.org"
 #' @param title String: publication title
 #' @param authors Character vector: authors
 #'
-#' @return A single journal name, `NA` if no journal was found
+#' @return A character vector of journal titles, possibly empty.
 lookup_journal <- function (title, authors = character(0L)) {
   lookup_funs <- list(
     lookup_journal_scopus, 
@@ -36,12 +39,7 @@ lookup_journal <- function (title, authors = character(0L)) {
   journals <- journals[! is.na(journals)]
   journals <- unique(journals)
   
-  if (length(journals) > 1L) {
-    warning(glue("More than one match across databases for {title}"))
-  } 
-  
-  result <- if (length(journals) > 0L) journals[1] else NA_character_
-  return(result)
+  return(journals)
 }
 
 
@@ -69,18 +67,13 @@ lookup_journal_scopus <- function (title, authors = character(0L)) {
   stopifnot(is.numeric(n_results), n_results >= 0L)
   
   if (n_results == 0L) {
-    return(NA_character_)
+    return(character())
   } else if (n_results > 0L) {
-    if (n_results != 1L) {
-      warning(glue("More than one match in scopus for {title}"))
-    }
-    journal_name <- search_results$entry[[1]]$"prism:publicationName"
-    if (is.null(journal_name)) {
-      stop("'prism:publicationName' not found in scopus result")
-    }
-    return(journal_name)
+    journal_names <- map_chr(search_results$entry, "prism:publicationName")
+    return(journal_names)
   }
 }
+
 
 lookup_journal_semantic <- function (title, authors = character(0L)) {
   req <- request("https://api.semanticscholar.org/graph/v1/paper/search") %>%
@@ -99,24 +92,20 @@ lookup_journal_semantic <- function (title, authors = character(0L)) {
   resp <- resp_body_json(resp)
   
   # semantic scholar typically returns many results
-  
   author_and_title_matches <- function (x) {
     author_names <- map(x$authors, "name")
-    any(authors %in% author_names) &&
-    x$title == title
+    author_matches <- any(authors %in% author_names) 
+    title_matches <- x$title == title
+    author_matches && title_matches
   }
   
   results <- keep(resp$data, author_and_title_matches)
   
-  journals <- map(results, "journal")
-  journals <- compact(journals)
-  journals <- unique(journals)
+  journal_names <- map(results, "journal")
+  journal_names <- compact(journal_names)
+  journal_names <- unique(journal_names)
   
-  if (length(journals) > 1L) {
-    warning("Found more than one distinct journal in semantic scholar")
-  }
-  if (length(journals) == 0L) return(NA_character_)
-  return(journals[1])
+  return(journal_names)
 }
 
 
@@ -136,7 +125,7 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   res <- resp_body_json(resp)
   
   n_results <- res$esearchresult$count
-  if (n_results == 0L) return(NA_character_)
+  if (n_results == 0L) return(character())
   
   ids <- unlist(res$esearchresult$idlist)
   
@@ -154,20 +143,11 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   res2 <- res2$result
   pub_details <- res2[names(res2) %in% ids]
   
-  journals <- map_chr(pub_details, "fulljournalname")
-  journals <- unique(journals)
-  journals <- journals[journals != ""]
+  journal_names <- map_chr(pub_details, "fulljournalname")
+  journal_names <- unique(journal_names)
+  journal_names <- journal_names[journal_names != ""]
   
-  n_journals <- length(journals)
-  if (n_journals > 1L) {
-    warning("Found more than one distinct journal in Pubmed")
-  }
-  
-  if (n_journals == 0L) {
-    return(NA_character_)
-  } else {
-    return(journals[1])
-  }
+  return(journal_names)
 }
 
 
@@ -211,22 +191,15 @@ lookup_journal_core <- function (title, authors = character(0L)) {
   
   res <- resp_body_json(resp)
   res <- res$results
-  journals <- map(res, "journals") %>% 
+  
+  journal_names <- map(res, "journals") %>% 
     list_flatten() %>% 
     map("title") %>% 
     compact() %>% 
     unlist() %>% 
     unique()
-  
-  if (length(journals) > 1L) {
-    warning("Found more than one distinct journal in core")
-  }
-  
-  if (length(journals) == 0L) {
-    return(NA_character_)
-  } else {
-    return(journals[1])
-  }
+
+  return(journal_names)
 }
 
 
@@ -267,16 +240,9 @@ lookup_journal_openalex <- function (title, authors = character(0L)) {
   source_types <- source_types[! null_sources]
   res <- res[source_types == "journal"]
   
-  journals <- map_chr(res, c("primary_location", "source", "display_name"))
-  if (length(journals) > 1L) {
-    warning("Found more than one distinct journal in openalex")
-  }
-  
-  if (length(journals) < 1L) {
-    return(NA_character_)
-  } else {
-    return(journals[1])
-  }
+  journal_names <- map_chr(res, c("primary_location", "source", "display_name"))
+
+  return(journal_names)
 }
 
 
@@ -337,7 +303,8 @@ lookup_stats_scopus <- function (journal) {
   
   n_results <- length(res$entry)
   if (n_results > 1L) {
-    warning(glue("More than one match for journal title '{journal}'"))
+    warning(glue("More than one Scopus match for journal title '{journal}'.
+                  Returning the first match."))
   }
   if (n_results < 1L) {
     return(list(snip = NA_real_, cite_score = NA_real_, sjr = NA_real_))
@@ -387,7 +354,8 @@ lookup_stats_openalex <- function (journal) {
   n_results <- res$meta$count
   
   if (n_results > 1L) {
-    warning(glue("More than one match for journal title '{journal}'"))
+    warning(glue("More than one Openalex match for journal title '{journal}'.
+                  Returning the first match."))
   }
   
   if (n_results < 1L) {
