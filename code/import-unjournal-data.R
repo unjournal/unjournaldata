@@ -2,6 +2,8 @@
 # standalone script to create data frame of unjournal reviews
 # This version imports from coda.io.
 
+# NB right now this is unfinished work!!
+
 # Currently creates 4 R variables:
 # - evals_pub: data frame of our evaluations
 # - all_papers_p: data frame of all papers considered: shareable data
