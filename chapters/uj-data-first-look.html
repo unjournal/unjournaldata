@@ -8,7 +8,7 @@
 
 <meta name="author" content="David Hugh-Jones">
 
-<title>The Unjournal evaluations: data and analysis - 4&nbsp; A first look at Unjournal’s data</title>
+<title>The Unjournal evaluations: data and analysis - 3&nbsp; A first look at Unjournal’s data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/aggregation.html" rel="prev">
+<link href="../chapters/evaluation_data_analysis.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +116,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/uj-data-first-look.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/uj-data-first-look.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -169,14 +169,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../chapters/uj-data-first-look.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></span></a>
   </div>
 </li>
     </ul>
@@ -189,10 +183,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data"><span class="header-section-number">5</span> About the data</a></li>
-  <li><a href="#questions-to-ask" id="toc-questions-to-ask" class="nav-link" data-scroll-target="#questions-to-ask"><span class="header-section-number">6</span> Questions to ask</a></li>
-  <li><a href="#sanity-checks" id="toc-sanity-checks" class="nav-link" data-scroll-target="#sanity-checks"><span class="header-section-number">7</span> Sanity checks</a></li>
-  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">8</span> Accuracy</a></li>
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data"><span class="header-section-number">4</span> About the data</a></li>
+  <li><a href="#questions-to-ask" id="toc-questions-to-ask" class="nav-link" data-scroll-target="#questions-to-ask"><span class="header-section-number">5</span> Questions to ask</a></li>
+  <li><a href="#sanity-checks" id="toc-sanity-checks" class="nav-link" data-scroll-target="#sanity-checks"><span class="header-section-number">6</span> Sanity checks</a></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">7</span> Accuracy</a></li>
+  <li><a href="#more-accuracy-predicted-and-actual-publication-venues" id="toc-more-accuracy-predicted-and-actual-publication-venues" class="nav-link" data-scroll-target="#more-accuracy-predicted-and-actual-publication-venues"><span class="header-section-number">8</span> More accuracy: predicted and actual publication venues</a></li>
   <li><a href="#relatedness-and-dimensionality" id="toc-relatedness-and-dimensionality" class="nav-link" data-scroll-target="#relatedness-and-dimensionality"><span class="header-section-number">9</span> Relatedness and dimensionality</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/unjournal/unjournaldata/edit/main/chapters/uj-data-first-look.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/unjournal/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -202,7 +197,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A first look at Unjournal’s data</span></h1>
 </div>
 
 
@@ -227,8 +222,8 @@ window.Quarto = {
 
 <p><a href="https://www.unjournal.org">The Unjournal</a> is an organization aiming to change how scientific research is evaluated. We carry out journal-independent evaluation of research papers.</p>
 <p>We capture data from our evaluations, including quantitative measures of paper quality on different dimensions. One of our goals is to use this data to learn about the evaluation process. Right now, we have only a few dozen evaluations in the data, so this note just describes some things we <em>can</em> do in future, and shows the code as a proof of concept.</p>
-<section id="about-the-data" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> About the data</h1>
+<section id="about-the-data" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> About the data</h1>
 <p>Papers<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can be suggested for evaluation either by Unjournal insiders, or by outsiders. The Unjournal then selects some papers for evaluation. I won’t focus on the details of this process here. Just note that we have more suggested papers than actual evaluations.</p>
 <p>Each paper is typically evaluated by two evaluators, though some have more or less than two. Getting two or more of every measure is useful, because it will let us check evaluations against each other.</p>
 <p>We ask evaluators two kinds of quantitative questions. First, there are different measures of <em>paper quality</em>. Here they are, along with some snippets from our <a href="https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#quantitative-metrics">guidelines for evaluators</a>:</p>
@@ -251,8 +246,8 @@ window.Quarto = {
 <p>Tiers are measured from 0 (“won’t publish/little to no value”) up to 5 (“top journal”). Again, we ask for both an estimate and a 90% credible interval. We allow non-integer scores between 0 and 5.</p>
 <p>The last question is especially interesting, because unlike all the others, it has an observable ground truth. Eventually, papers do or do not get published in specific journals, and there is often a consensus about which journals count as e.g.&nbsp;“top”.</p>
 </section>
-<section id="questions-to-ask" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Questions to ask</h1>
+<section id="questions-to-ask" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Questions to ask</h1>
 <p>Here are some things we might hope to learn from our data.</p>
 <ol type="1">
 <li><p>Do evaluators understand the questions? Do they “grok” how our percentile questions, upper bounds, and lower bounds work?</p></li>
@@ -265,13 +260,13 @@ window.Quarto = {
 <li><p>Do papers score differently in <em>different fields</em>? This could be because evaluators hold papers to different standards in those fields – or because some fields do genuinely better on some dimensions. We could ask the same question about different methodologies: for example, do randomized controlled trials score differently than other approaches?</p></li>
 </ol>
 </section>
-<section id="sanity-checks" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Sanity checks</h1>
+<section id="sanity-checks" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Sanity checks</h1>
 <p>Straightliners are evaluators who give the same score for every question. For the midpoints, we have 0 straightliners out of 21 evaluations. We also check if people straightline lower bounds of the credible intervals (0 straightliners) and upper bounds (0 straightliners).</p>
 <p>Evaluators might also give “degenerate” credible intervals, with the lower bound equal to the upper bound; or uninformatively wide intervals, with the lower and upper bounds equal to 0% and 100%. Out of 42 evaluation questions for which we had valid confidence intervals, 0 were degenerate and 0 were uninformative. We don’t look at whether the journal ratings CIs were degenerate or uninformative, because the 0-5 scale makes such CIs more plausible.</p>
 </section>
-<section id="accuracy" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Accuracy</h1>
+<section id="accuracy" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Accuracy</h1>
 <p>We have no ground truth of whether a given paper scores high or low on our 7 dimensions. But because we usually have multiple evaluations per paper, we can take an indirect route. If two evaluators’ scores are correlated with reality, they will also correlate with each other. The converse does not necessarily hold: evaluators’ scores might be correlated because they both have similar prejudices or both misinterpret the paper in the same way. All the same, high “inter-rater reliability” (IRR) should increase our confidence that our scores are measuring something.</p>
 <p>IRR is complex. The basic form of most IRR statistics is</p>
 <p><span class="math display">\[
@@ -283,7 +278,7 @@ window.Quarto = {
 <div id="tbl-kripp-alpha" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-kripp-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;8.1
+Table&nbsp;7.1
 </figcaption>
 <div aria-describedby="tbl-kripp-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -346,7 +341,7 @@ For now, just use it internally.
 <div id="tbl-credible-intervals" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-credible-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;8.2
+Table&nbsp;7.2
 </figcaption>
 <div aria-describedby="tbl-credible-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -381,6 +376,59 @@ Table&nbsp;8.2
 <p>The table above already looks a bit worrying: typically no more than half of our evaluators’ midpoints fall within their co-evaluator’s 90% credible interval. This suggests that our evaluators may be overconfident.</p>
 <!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
 for degenerate CIs, none visible-->
+</section>
+<section id="more-accuracy-predicted-and-actual-publication-venues" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> More accuracy: predicted and actual publication venues</h1>
+<p>For the question “What journal ranking tier <em>will</em> this work be published in?” evaluators give a tier from 0-5 with 5 being top, and 0 being no publication. This gives us a source of ground truth when the evaluated paper gets published.</p>
+<p>What counts as a tier 1-5 journal? Several different organizations maintain journal tier lists, and Professor Anne-Wil Harzing has <a href="https://harzing.com/resources/journal-quality-list">collated 11 of them</a>. Different organizations cover different journals. To get round this we impute missing data, and take the first principal component. Luckily, it turns out that this correlates highly with most of the individual rankings (<a href="#tbl-journals-princomp" class="quarto-xref">Table&nbsp;<span>8.1</span></a>).</p>
+<div class="cell">
+<div id="tbl-journals-princomp" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-journals-princomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.1: Correlations of different journal rankings and their principal component
+</figcaption>
+<div aria-describedby="tbl-journals-princomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:tbl-journals-princomp">
+<colgroup><col><col><col><col><col><col><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">princomp1</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Cnrs</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ABDC</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ABS</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Den</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Fnege</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">JourQual</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">princomp1</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 203, 0); font-weight: normal;">0.849</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 182, 0); font-weight: normal;">0.79&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 220, 0); font-weight: normal;">0.896</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 141, 0); font-weight: normal;">0.68&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 233, 0); font-weight: normal;">0.934</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 207, 0); font-weight: normal;">0.86&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Cnrs</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 203, 0); font-weight: normal;">0.849</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 124, 0); font-weight: normal;">0.638</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 142, 0); font-weight: normal;">0.681</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 58, 0); font-weight: normal;">0.509</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 195, 0); font-weight: normal;">0.825</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 148, 0); font-weight: normal;">0.698</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ABDC</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 182, 0); font-weight: normal;">0.79&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 124, 0); font-weight: normal;">0.638</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 146, 0); font-weight: normal;">0.691</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 0, 0); font-weight: normal;">0.465</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 150, 0); font-weight: normal;">0.702</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 103, 0); font-weight: normal;">0.589</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ABS</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 220, 0); font-weight: normal;">0.896</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 142, 0); font-weight: normal;">0.681</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 146, 0); font-weight: normal;">0.691</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 93, 0); font-weight: normal;">0.568</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 201, 0); font-weight: normal;">0.843</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 159, 0); font-weight: normal;">0.727</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Den</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 141, 0); font-weight: normal;">0.68&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 58, 0); font-weight: normal;">0.509</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 0, 0); font-weight: normal;">0.465</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 93, 0); font-weight: normal;">0.568</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 111, 0); font-weight: normal;">0.605</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 70, 0); font-weight: normal;">0.526</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Fnege</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 233, 0); font-weight: normal;">0.934</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 195, 0); font-weight: normal;">0.825</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 150, 0); font-weight: normal;">0.702</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 201, 0); font-weight: normal;">0.843</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 111, 0); font-weight: normal;">0.605</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 179, 0); font-weight: normal;">0.78&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">JourQual</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 207, 0); font-weight: normal;">0.86&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 148, 0); font-weight: normal;">0.698</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 103, 0); font-weight: normal;">0.589</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 159, 0); font-weight: normal;">0.727</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 70, 0); font-weight: normal;">0.526</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 179, 0); font-weight: normal;">0.78&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0.4pt 0.4pt 0.4pt;    padding: 6pt 6pt 6pt 6pt; background-color: rgb(255, 255, 0); font-weight: normal;">1&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+</tbody></table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The exception is the “Den” ranking (from the Danish Ministry). We checked whether “Den” added any power beyond the first principal component to predict citations or h-index data, and it didn’t.</p>
+<p>To calibrate the principal component, we ran a series of ordinal logistic models predicting the different tier lists. We used just the “JourQual”, “Cnrs”, “ABS” and “Fnege” rankings, since these all had 5 tiers. Category cutoffs looked similar across all 4 rankings, so we simply took the averages to create our own meta-tier list. <a href="#fig-journal-rankings" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> shows the resulting histogram of journals.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-journal-rankings" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-journal-rankings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="uj-data-first-look_files/figure-html/fig-journal-rankings-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-journal-rankings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Histogram of journal rankings by the Unjournal Tier List
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="relatedness-and-dimensionality" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Relatedness and dimensionality</h1>
@@ -844,8 +892,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/aggregation.html" class="pagination-link" aria-label="Aggregation of evaluators judgments (modeling)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aggregation of evaluators judgments (modeling)</span></span>
+      <a href="../chapters/evaluation_data_analysis.html" class="pagination-link" aria-label="Evaluation data: description, exploration, checks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Evaluation data: description, exploration, checks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
