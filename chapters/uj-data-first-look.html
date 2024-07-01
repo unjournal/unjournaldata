@@ -380,7 +380,7 @@ for degenerate CIs, none visible-->
 <section id="more-accuracy-predicted-and-actual-publication-venues" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> More accuracy: predicted and actual publication venues</h1>
 <p>For the question “What journal ranking tier <em>will</em> this work be published in?” evaluators give a tier from 0-5 with 5 being top, and 0 being no publication. This gives us a source of ground truth when the evaluated paper gets published.</p>
-<p>What counts as a tier 1-5 journal? Several different organizations maintain journal tier lists, and Professor Anne-Wil Harzing has <a href="https://harzing.com/resources/journal-quality-list">collated 11 of them</a>. Different organizations cover different journals. To get round this we impute missing data, and take the first principal component. Luckily, it turns out that this correlates highly with most of the individual rankings (<a href="#tbl-journals-princomp" class="quarto-xref">Table&nbsp;<span>8.1</span></a>).</p>
+<p>What counts as a tier 1-5 journal? Several different organizations maintain journal tier lists, and Professor Anne-Wil Harzing has <a href="https://harzing.com/resources/journal-quality-list">collated 11 of them</a>. Different organizations cover different journals. To get round this we impute missing data, and take the first principal component. Luckily, it turns out that this correlates highly with most of the individual rankings (<a href="#tbl-journals-princomp" class="quarto-xref">Table&nbsp;<span>8.1</span></a>).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div id="tbl-journals-princomp" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -477,6 +477,7 @@ Table&nbsp;9.1: Factor loadings of 3 factors
 <ol>
 <li id="fn1"><p>Actually we don’t just evaluate academic papers, but I’ll use “papers” for short.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This ‘reference group percentile’ interpretation was introduced around the end of 2023; before this evaluators were given the description of the ratings interval seen <a href="https://app.gitbook.com/o/-MfFk4CTSGwVOPkwnRgx/s/b1RpEkRWWqZAV4SlrFCt/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators/why-these-guidelines#previous-descriptions-of-ratings-intervals">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The calibration code is available <a href="https://github.com/unjournal/unjournaldata/blob/main/code/calibrate-journal-stats.R">from our Github repository</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

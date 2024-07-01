@@ -104,7 +104,7 @@
     "href": "chapters/uj-data-first-look.html#footnotes",
     "title": "3  A first look at Unjournal’s data",
     "section": "",
-    "text": "Actually we don’t just evaluate academic papers, but I’ll use “papers” for short.↩︎\nThis ‘reference group percentile’ interpretation was introduced around the end of 2023; before this evaluators were given the description of the ratings interval seen here.↩︎",
+    "text": "Actually we don’t just evaluate academic papers, but I’ll use “papers” for short.↩︎\nThis ‘reference group percentile’ interpretation was introduced around the end of 2023; before this evaluators were given the description of the ratings interval seen here.↩︎\nThe calibration code is available from our Github repository.↩︎",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>A first look at Unjournal's data</span>"
     ]
