@@ -183,12 +183,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data"><span class="header-section-number">4</span> About the data</a></li>
-  <li><a href="#questions-to-ask" id="toc-questions-to-ask" class="nav-link" data-scroll-target="#questions-to-ask"><span class="header-section-number">5</span> Questions to ask</a></li>
-  <li><a href="#sanity-checks" id="toc-sanity-checks" class="nav-link" data-scroll-target="#sanity-checks"><span class="header-section-number">6</span> Sanity checks</a></li>
-  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">7</span> Accuracy</a></li>
-  <li><a href="#more-accuracy-predicted-and-actual-publication-venues" id="toc-more-accuracy-predicted-and-actual-publication-venues" class="nav-link" data-scroll-target="#more-accuracy-predicted-and-actual-publication-venues"><span class="header-section-number">8</span> More accuracy: predicted and actual publication venues</a></li>
-  <li><a href="#relatedness-and-dimensionality" id="toc-relatedness-and-dimensionality" class="nav-link" data-scroll-target="#relatedness-and-dimensionality"><span class="header-section-number">9</span> Relatedness and dimensionality</a></li>
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data"><span class="header-section-number">3.1</span> About the data</a></li>
+  <li><a href="#questions-to-ask" id="toc-questions-to-ask" class="nav-link" data-scroll-target="#questions-to-ask"><span class="header-section-number">3.2</span> Questions to ask</a></li>
+  <li><a href="#sanity-checks" id="toc-sanity-checks" class="nav-link" data-scroll-target="#sanity-checks"><span class="header-section-number">3.3</span> Sanity checks</a></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">3.4</span> Accuracy</a>
+  <ul class="collapse">
+  <li><a href="#more-accuracy-predicted-and-actual-publication-venues" id="toc-more-accuracy-predicted-and-actual-publication-venues" class="nav-link" data-scroll-target="#more-accuracy-predicted-and-actual-publication-venues"><span class="header-section-number">3.4.1</span> More accuracy: predicted and actual publication venues</a></li>
+  </ul></li>
+  <li><a href="#relatedness-and-dimensionality" id="toc-relatedness-and-dimensionality" class="nav-link" data-scroll-target="#relatedness-and-dimensionality"><span class="header-section-number">3.5</span> Relatedness and dimensionality</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/unjournal/unjournaldata/edit/main/chapters/uj-data-first-look.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/unjournal/unjournaldata/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -222,8 +224,8 @@ window.Quarto = {
 
 <p><a href="https://www.unjournal.org">The Unjournal</a> is an organization aiming to change how scientific research is evaluated. We carry out journal-independent evaluation of research papers.</p>
 <p>We capture data from our evaluations, including quantitative measures of paper quality on different dimensions. One of our goals is to use this data to learn about the evaluation process. Right now, we have only a few dozen evaluations in the data, so this note just describes some things we <em>can</em> do in future, and shows the code as a proof of concept.</p>
-<section id="about-the-data" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> About the data</h1>
+<section id="about-the-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="about-the-data"><span class="header-section-number">3.1</span> About the data</h2>
 <p>Papers<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can be suggested for evaluation either by Unjournal insiders, or by outsiders. The Unjournal then selects some papers for evaluation. I won’t focus on the details of this process here. Just note that we have more suggested papers than actual evaluations.</p>
 <p>Each paper is typically evaluated by two evaluators, though some have more or less than two. Getting two or more of every measure is useful, because it will let us check evaluations against each other.</p>
 <p>We ask evaluators two kinds of quantitative questions. First, there are different measures of <em>paper quality</em>. Here they are, along with some snippets from our <a href="https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#quantitative-metrics">guidelines for evaluators</a>:</p>
@@ -246,8 +248,8 @@ window.Quarto = {
 <p>Tiers are measured from 0 (“won’t publish/little to no value”) up to 5 (“top journal”). Again, we ask for both an estimate and a 90% credible interval. We allow non-integer scores between 0 and 5.</p>
 <p>The last question is especially interesting, because unlike all the others, it has an observable ground truth. Eventually, papers do or do not get published in specific journals, and there is often a consensus about which journals count as e.g.&nbsp;“top”.</p>
 </section>
-<section id="questions-to-ask" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Questions to ask</h1>
+<section id="questions-to-ask" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="questions-to-ask"><span class="header-section-number">3.2</span> Questions to ask</h2>
 <p>Here are some things we might hope to learn from our data.</p>
 <ol type="1">
 <li><p>Do evaluators understand the questions? Do they “grok” how our percentile questions, upper bounds, and lower bounds work?</p></li>
@@ -260,13 +262,13 @@ window.Quarto = {
 <li><p>Do papers score differently in <em>different fields</em>? This could be because evaluators hold papers to different standards in those fields – or because some fields do genuinely better on some dimensions. We could ask the same question about different methodologies: for example, do randomized controlled trials score differently than other approaches?</p></li>
 </ol>
 </section>
-<section id="sanity-checks" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Sanity checks</h1>
+<section id="sanity-checks" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sanity-checks"><span class="header-section-number">3.3</span> Sanity checks</h2>
 <p>Straightliners are evaluators who give the same score for every question. For the midpoints, we have 0 straightliners out of 21 evaluations. We also check if people straightline lower bounds of the credible intervals (0 straightliners) and upper bounds (0 straightliners).</p>
 <p>Evaluators might also give “degenerate” credible intervals, with the lower bound equal to the upper bound; or uninformatively wide intervals, with the lower and upper bounds equal to 0% and 100%. Out of 42 evaluation questions for which we had valid confidence intervals, 0 were degenerate and 0 were uninformative. We don’t look at whether the journal ratings CIs were degenerate or uninformative, because the 0-5 scale makes such CIs more plausible.</p>
 </section>
-<section id="accuracy" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Accuracy</h1>
+<section id="accuracy" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">3.4</span> Accuracy</h2>
 <p>We have no ground truth of whether a given paper scores high or low on our 7 dimensions. But because we usually have multiple evaluations per paper, we can take an indirect route. If two evaluators’ scores are correlated with reality, they will also correlate with each other. The converse does not necessarily hold: evaluators’ scores might be correlated because they both have similar prejudices or both misinterpret the paper in the same way. All the same, high “inter-rater reliability” (IRR) should increase our confidence that our scores are measuring something.</p>
 <p>IRR is complex. The basic form of most IRR statistics is</p>
 <p><span class="math display">\[
@@ -278,7 +280,7 @@ window.Quarto = {
 <div id="tbl-kripp-alpha" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-kripp-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;7.1
+Table&nbsp;3.1
 </figcaption>
 <div aria-describedby="tbl-kripp-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -341,7 +343,7 @@ For now, just use it internally.
 <div id="tbl-credible-intervals" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-credible-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;7.2
+Table&nbsp;3.2
 </figcaption>
 <div aria-describedby="tbl-credible-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -376,16 +378,15 @@ Table&nbsp;7.2
 <p>The table above already looks a bit worrying: typically no more than half of our evaluators’ midpoints fall within their co-evaluator’s 90% credible interval. This suggests that our evaluators may be overconfident.</p>
 <!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
 for degenerate CIs, none visible-->
-</section>
-<section id="more-accuracy-predicted-and-actual-publication-venues" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> More accuracy: predicted and actual publication venues</h1>
+<section id="more-accuracy-predicted-and-actual-publication-venues" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="more-accuracy-predicted-and-actual-publication-venues"><span class="header-section-number">3.4.1</span> More accuracy: predicted and actual publication venues</h3>
 <p>For the question “What journal ranking tier <em>will</em> this work be published in?” evaluators give a tier from 0-5 with 5 being top, and 0 being no publication. This gives us a source of ground truth when the evaluated paper gets published.</p>
-<p>What counts as a tier 1-5 journal? Several different organizations maintain journal tier lists, and Professor Anne-Wil Harzing has <a href="https://harzing.com/resources/journal-quality-list">collated 11 of them</a>. Different organizations cover different journals. To get round this we impute missing data, and take the first principal component. Luckily, it turns out that this correlates highly with most of the individual rankings (<a href="#tbl-journals-princomp" class="quarto-xref">Table&nbsp;<span>8.1</span></a>).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>What counts as a tier 1-5 journal? Several different organizations maintain journal tier lists, and Professor Anne-Wil Harzing has <a href="https://harzing.com/resources/journal-quality-list">collated 11 of them</a>. Different organizations cover different journals. To get round this we impute missing data, and take the first principal component. Luckily, it turns out that this correlates highly with most of the individual rankings (<a href="#tbl-journals-princomp" class="quarto-xref">Table&nbsp;<span>3.3</span></a>).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div id="tbl-journals-princomp" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-journals-princomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;8.1: Correlations of different journal rankings and their principal component
+Table&nbsp;3.3: Correlations of different journal rankings and their principal component
 </figcaption>
 <div aria-describedby="tbl-journals-princomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -414,7 +415,7 @@ Table&nbsp;8.1: Correlations of different journal rankings and their principal c
 </div>
 </div>
 <p>The exception is the “Den” ranking (from the Danish Ministry). We checked whether “Den” added any power beyond the first principal component to predict citations or h-index data, and it didn’t.</p>
-<p>To calibrate the principal component, we ran a series of ordinal logistic models predicting the different tier lists. We used just the “JourQual”, “Cnrs”, “ABS” and “Fnege” rankings, since these all had 5 tiers. Category cutoffs looked similar across all 4 rankings, so we simply took the averages to create our own meta-tier list. <a href="#fig-journal-rankings" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> shows the resulting histogram of journals.</p>
+<p>To calibrate the principal component, we ran a series of ordinal logistic models predicting the different tier lists. We used just the “JourQual”, “Cnrs”, “ABS” and “Fnege” rankings, since these all had 5 tiers. Category cutoffs looked similar across all 4 rankings, so we simply took the averages to create our own meta-tier list. <a href="#fig-journal-rankings" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> shows the resulting histogram of journals.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-journal-rankings" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -423,21 +424,22 @@ Table&nbsp;8.1: Correlations of different journal rankings and their principal c
 <img src="uj-data-first-look_files/figure-html/fig-journal-rankings-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-journal-rankings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.1: Histogram of journal rankings by the Unjournal Tier List
+Figure&nbsp;3.1: Histogram of journal rankings by the Unjournal Tier List
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="relatedness-and-dimensionality" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Relatedness and dimensionality</h1>
-<p>We have 7 questions measuring paper quality, and 2 questions about journal tier. We can perform a simple factor analysis of these 9 questions. We don’t yet have enough data to decide the appropriate number of factors, so we just try three. <a href="#tbl-loadings" class="quarto-xref">Table&nbsp;<span>9.1</span></a> shows loadings. Factor 1 captures 4 of the paper quality questions, especially real world relevance. Factor 2 correlates with the journal measures. Factor 3 captures the “open science” quality measure, and to some degree the “methods” and “logic and communication” measures too.</p>
+</section>
+<section id="relatedness-and-dimensionality" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="relatedness-and-dimensionality"><span class="header-section-number">3.5</span> Relatedness and dimensionality</h2>
+<p>We have 7 questions measuring paper quality, and 2 questions about journal tier. We can perform a simple factor analysis of these 9 questions. We don’t yet have enough data to decide the appropriate number of factors, so we just try three. <a href="#tbl-loadings" class="quarto-xref">Table&nbsp;<span>3.4</span></a> shows loadings. Factor 1 captures 4 of the paper quality questions, especially real world relevance. Factor 2 correlates with the journal measures. Factor 3 captures the “open science” quality measure, and to some degree the “methods” and “logic and communication” measures too.</p>
 <div class="cell">
 <div id="tbl-loadings" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-loadings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.1: Factor loadings of 3 factors
+Table&nbsp;3.4: Factor loadings of 3 factors
 </figcaption>
 <div aria-describedby="tbl-loadings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
