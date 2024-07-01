@@ -40,19 +40,7 @@ Do these analyses in a ~quarto 'ask and answer questions' format
 
 # Evaluating publication predictions
 
-[ ] Find out how to check publication automatically (ish?)
-  - get DOI; match it against databases; fall back to title and authors?
-  - map publications to "tiers"
-  - DR: If necessary, we could do some of the matching manually; if so, we 
-    should just build a systematic protocol (who checks it, how do they 
-    check it, when, where do they input the results?)
-  - openalex seems the most useful and friendly API
-  - it has both author/title search and some journal statistics
-  - consider using the openalexR package
-  - do we need paging?
-  - should we just return 1 "best guess"?
-  
-
+[x] Find out how to check publication automatically (ish?)
 [ ] Build functions to create predictions from pairs of indiv. predictions
   - simple average
   - weighted by interval width
