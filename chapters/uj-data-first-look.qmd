@@ -359,6 +359,59 @@ This suggests that our evaluators may be overconfident.
 <!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
 for degenerate CIs, none visible-->
 
+# More accuracy: predicted and actual publication venues
+
+For the question "What journal ranking tier *will* this work be published in?"
+evaluators give a tier from 0-5 with 5 being top, and 0 being no publication.
+This gives us a source of ground truth when the evaluated paper gets published.
+
+What counts as a tier 1-5 journal? Several different organizations maintain
+journal tier lists, and Professor Anne-Wil Harzing has 
+[collated 11 of them](https://harzing.com/resources/journal-quality-list).
+Different organizations cover different journals. To get round this we 
+impute missing data, and take the first principal component. Luckily, it turns
+out that this correlates highly with most of the individual rankings
+(@tbl-journals-princomp).
+
+```{r}
+#| label: tbl-journals-princomp
+#| tbl-cap: Correlations of different journal rankings and their principal
+#|   component
+
+jql <- readr::read_csv(here("data/jql-enriched.csv"), 
+                       show_col_types = FALSE)
+
+jql %>% 
+  select(c(princomp1, Cnrs_n, ABDC_n, ABS_n, Den_n, Fnege_n, JourQual_n)) %>% 
+  rename_with(\(x) sub("_n$", "", x)) %>% 
+  as.matrix() %>% 
+  cor(use = "pairwise") %>% 
+  as_huxtable() %>% 
+  huxtable::add_colnames(rowname = "") %>% 
+  huxtable::add_rownames() %>% 
+  map_background_color(-1, -1, by_colorspace("red", "yellow")) %>% 
+  set_all_borders()
+```
+
+The exception is the "Den" ranking (from the Danish Ministry). We
+checked whether "Den" added any power beyond the first principal
+component to predict citations or h-index data, and it didn't.
+
+To calibrate the principal component, we ran a series of ordinal logistic
+models predicting the different tier lists. We used just the "JourQual",
+"Cnrs", "ABS" and "Fnege" rankings, since these all had 5 tiers. Category
+cutoffs looked similar across all 4 rankings, so we simply took the averages to create our own meta-tier list. @fig-journal-rankings shows the resulting histogram of journals.
+
+```{r}
+#| label: fig-journal-rankings
+#| fig-cap: Histogram of journal rankings by the Unjournal Tier List
+
+palette("Dark 2")
+barplot(table(jql$unjournal_tier), col = 1:5, border = NA,
+        xlab = "Unjournal tier", ylab = "Number of journals",
+        ylim = c(0, 400))
+```
+
 # Relatedness and dimensionality
 
 We have 7 questions measuring paper quality, and 2 questions about journal tier.
