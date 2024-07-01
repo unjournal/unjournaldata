@@ -1,6 +1,7 @@
 
 # Functions to look for publication outcomes in different online databases.
 
+
 library(dplyr)
 library(glue)
 library(httr2)
