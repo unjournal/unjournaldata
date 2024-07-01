@@ -8,41 +8,9 @@ library(dplyr)
 library(here)
 library(MASS)
 library(readr)
-library(openxlsx2)
+library(sinkr) # marchtaylor/sinkr
 
 source(here("code/lookup-publication-outcomes.R"))
-
-# == ABDC models ====
-
-# == Use the ABDC journal quality list and correlate it with h-index and
-# impact factor
-# From https://abdc.edu.au/abdc-journal-quality-list/
-abdc_jql <- openxlsx2::read_xlsx(here("data/ABDC-JQL-2022-v3-100523.xlsx"), 
-                                 sheet = 1, start_row = 9)
-abdc_jql <- abdc_jql %>% 
-  mutate(
-    # Absolutely inevitably, the business school geniuses could not use Excel:
-    rating = gsub(" +$", "", `2022 rating`),
-    rating = ordered(rating, levels = c("C", "B", "A", "A*"))
-  )
-
-openalex_results <- map(abdc_jql$`Journal Title`, lookup_stats_openalex,
-                        .progress = TRUE)
-abdc_jql$h_index <- map_dbl(openalex_results, "h_index")
-abdc_jql$impact_factor <- map_dbl(openalex_results, "2yr_mean_citedness")
-
-readr::write_csv(abdc_jql, here("data/abdc-jql-enriched.csv"))
-
-model1 <- MASS::polr(rating ~ h_index, data = abdc_jql)
-model2 <- MASS::polr(rating ~ impact_factor, data = abdc_jql)
-model3 <- MASS::polr(rating ~ h_index + impact_factor, data = abdc_jql)
-
-saveRDS(model3, here("data/abdc-jql-model.rds"))
-
-coefs_h <- broom::tidy(model1)
-# This gives the cutpoint for a predicted A* journal in terms of the h index.
-# It's almost exactly 240
-cutpoint_a_star <- coefs_h$estimate[4] / coefs_h$estimate[1]
 
 
 # == Multiple ratings from Prof Harzing's list ====
@@ -122,11 +90,12 @@ jql <- readr::read_csv("data/jql70a.csv") %>%
 # * "Hceres" is a combination of "CNRS" and "Fnege" with no extra info
 #   of its own.
 
-library(sinkr)
+
 jql_matrix <- jql %>% 
   select(ends_with("_n") & !c(Scopus_n, Meta_n, Hceres_n)) %>% 
   as.matrix() 
 
+# Reconstructs missing values
 jql_recon <- sinkr::dineof(jql_matrix)
 # Xa is the reconstructed data with no missing values:
 prc <- prcomp(jql_recon$Xa, scale. = TRUE)
@@ -145,7 +114,69 @@ cor(jql_matrix, use = "compl") %>% round(3) %>%
   set_text_color("black") %>% 
   map_background_color(by_colorspace("darkred", "yellow"))
 
-# Look up journal title states from Openalex
+# Look up journal stats from Openalex
 openalex_results <- map(jql$Journal, lookup_stats_openalex, .progress = TRUE)
-jql$h_index <- map_dbl(openalex_results, "h_index")
-jql$impact_factor <- map_dbl(openalex_results, "2yr_mean_citedness")
+
+# For now, we simply discard the (quite common) journals which get multiple
+# answers in openalex:
+jql$h_index <- map_dbl(openalex_results, 
+  function (x) if (length(x) == 1) x[[1]]$h_index else NA_real_
+)
+jql$citedness <- map_dbl(openalex_results, 
+  function (x) if (length(x) == 1) x[[1]]$"2yr_mean_citedness" else NA_real_
+)
+
+# Den doesn't predict citedness beyond the first principal component:
+summary(lm(citedness ~ princomp1 + Den_n, data = jql))
+# Den doesn't predict h-index beyond the first principal component:
+summary(lm(h_index ~ princomp1 + Den_n, data = jql))
+
+# So, we feel justified in using the first principal component alone
+
+# Most of the "top" categories are about -6.5 with the exception of ABDC
+# JourQual is 5-tier with some A/B, B/C, C/D
+# Cnrs, ABS and Fnege are 5-tier
+# ABDC is 4 tier and the top tier is lower than the others
+
+#' Estimate category boundaries for princomp1
+#' 
+#' We do this by estimating an ordinal logit of the category on
+#' princomp1, then dividing the category boundaries by the coefficient
+#' for princomp1
+#'
+#' @param ranking Name of a ranking in the jql data
+#'
+#' @return A list of categories
+#' @export
+#'
+#' @examples
+get_cat_boundaries <- function (ranking) {
+  fml <- as.formula(sprintf("%s ~ princomp1", ranking))
+  mod <- MASS::polr(fml, data = jql)
+  coef <- coef(mod)[["princomp1"]]
+  boundaries <- mod$zeta
+  boundaries <- boundaries/coef
+  return(boundaries)
+}
+
+# Reduce JourQual to a 5-category ranking:
+jql$JourQual2 <- dplyr::case_match(jql$JourQual,
+                                "A/B" ~ "B",
+                                "B/C" ~ "C",
+                                "C/D" ~ "D",
+                               .default = jql$JourQual
+                               )
+jql$JourQual2 <- ordered(jql$JourQual2, levels = c("A+", "A", "B", "C", "D"))
+
+
+cat_bounds <- map(c("JourQual2", "Cnrs", "ABS", "Fnege"), get_cat_boundaries)
+cat_bounds <- map(cat_bounds, unname)
+# This transposes the list so the 1st element is the top category boundary,
+# 2nd element is the second boundary, etc.
+cat_bounds <- list_transpose(cat_bounds)
+cat_bounds <- map_dbl(cat_bounds, mean)
+cat_bounds <- round(cat_bounds, 1)
+
+jql$unjournal_tier <- cut(jql$princomp1, c(-Inf, cat_bounds, Inf),
+                          labels = c("1", "2", "3", "4"))
+

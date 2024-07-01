@@ -434,7 +434,8 @@ lookup_stats_openalex <- function (journal) {
   if (n_results > 1L) {
     warning(glue("More than one Openalex match for journal title '{journal}'."))
     # Trim results, if we can, to those with an exact match
-    results_trimmed <- purrr::keep(results, \(x) x$display_name == journal)
+    results_trimmed <- purrr::keep(results, 
+      ~ tolower(.x$display_name) == tolower(journal))
     if (length(results_trimmed) > 0L) results <- results_trimmed
   }
   
