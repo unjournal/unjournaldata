@@ -1,5 +1,6 @@
 
 # calibrate journal statistics against different "tier lists"
+# This creates data/jql-enriched.csv
 
 # == libraries ====
 library(conflicted)
@@ -12,6 +13,7 @@ library(sinkr) # marchtaylor/sinkr
 
 source(here("code/lookup-publication-outcomes.R"))
 
+set.seed(10271975)
 
 # == Multiple ratings from Prof Harzing's list ====
 
@@ -178,7 +180,7 @@ cat_bounds <- map_dbl(cat_bounds, mean)
 cat_bounds <- round(cat_bounds, 1)
 
 jql$unjournal_tier <- cut(jql$princomp1, c(-Inf, cat_bounds, Inf),
-                          labels = c("1", "2", "3", "4"))
+                          labels = c("1", "2", "3", "4", "5"))
 
 jql %>% 
   select(! ends_with("_n")) %>% 
