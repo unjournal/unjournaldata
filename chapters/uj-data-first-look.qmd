@@ -371,7 +371,7 @@ journal tier lists, and Professor Anne-Wil Harzing has
 Different organizations cover different journals. To get round this we 
 impute missing data, and take the first principal component. Luckily, it turns
 out that this correlates highly with most of the individual rankings
-(@tbl-journals-princomp).
+(@tbl-journals-princomp).^[The calibration code is available [from our Github repository](https://github.com/unjournal/unjournaldata/blob/main/code/calibrate-journal-stats.R).]
 
 ```{r}
 #| label: tbl-journals-princomp
