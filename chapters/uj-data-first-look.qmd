@@ -18,7 +18,7 @@ learn about the evaluation process. Right now, we have only a few dozen evaluati
 in the data, so this note just describes some things we *can* do in future, and
 shows the code as a proof of concept.
 
-# About the data
+## About the data
 
 Papers^[Actually we don't just evaluate academic papers, but I'll use "papers"
 for short.] can be suggested for evaluation either by Unjournal insiders, or by
@@ -87,7 +87,7 @@ published in specific journals, and there is often a consensus
 about which journals count as e.g. "top".
 
 
-# Questions to ask
+## Questions to ask
 
 Here are some things we might hope to learn from our data.
 
@@ -160,7 +160,7 @@ n_evals <- nrow(evals)
 
 ```
 
-# Sanity checks
+## Sanity checks
 
 ```{r}
 #| label: sanity-checks
@@ -211,7 +211,7 @@ were degenerate and `{r} n_uninformative` were uninformative. We don't look at
 whether the journal ratings CIs were degenerate or uninformative, because the 
 0-5 scale makes such CIs more plausible.
 
-# Accuracy
+## Accuracy
 
 We have no ground truth of whether a given paper scores high or low on our
 7 dimensions. But because we usually have multiple evaluations per paper, we
@@ -359,7 +359,7 @@ This suggests that our evaluators may be overconfident.
 <!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
 for degenerate CIs, none visible-->
 
-# More accuracy: predicted and actual publication venues
+### More accuracy: predicted and actual publication venues
 
 For the question "What journal ranking tier *will* this work be published in?"
 evaluators give a tier from 0-5 with 5 being top, and 0 being no publication.
@@ -412,7 +412,7 @@ barplot(table(jql$unjournal_tier), col = 1:5, border = NA,
         ylim = c(0, 400))
 ```
 
-# Relatedness and dimensionality
+## Relatedness and dimensionality
 
 We have 7 questions measuring paper quality, and 2 questions about journal tier.
 We can perform a simple factor analysis of these 9 questions. We don't
