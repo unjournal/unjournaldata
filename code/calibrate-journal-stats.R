@@ -181,5 +181,5 @@ jql$unjournal_tier <- cut(jql$princomp1, c(-Inf, cat_bounds, Inf),
                           labels = c("1", "2", "3", "4"))
 
 jql %>% 
-  select(! ends_with(n)) %>% 
-  readr::write_csv("jql-enriched.csv")
+  select(! ends_with("_n")) %>% 
+  readr::write_csv(here("data/jql-enriched.csv"))
