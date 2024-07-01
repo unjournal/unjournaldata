@@ -12,7 +12,7 @@ permissions:
     pages: write
 
 jobs:
-  build-deploy:
+  render-and-publish:
     runs-on: ubuntu-latest
     
     steps:
@@ -100,7 +100,7 @@ jobs:
         # The publish action also renders the website by default.
         uses: quarto-dev/quarto-actions/publish@v2
         with:
-          target: gh-pages
+          target: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
 
