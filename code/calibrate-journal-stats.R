@@ -1,5 +1,6 @@
 
 # calibrate journal statistics against different "tier lists"
+
 library(conflicted)
 conflict_prefer_all("dplyr", quiet = TRUE)
 library(dplyr)
@@ -32,3 +33,8 @@ model2 <- MASS::polr(rating ~ impact_factor, data = abdc_jql)
 model3 <- MASS::polr(rating ~ h_index + impact_factor, data = abdc_jql)
 
 saveRDS(model3, here("data/abdc-jql-model.rds"))
+
+coefs_h <- broom::tidy(model1)
+# This gives the cutpoint for a predicted A* journal in terms of the h index.
+# It's almost exactly 240
+cutpoint_a_star <- coefs_h$estimate[4] / coefs_h$estimate[1]
