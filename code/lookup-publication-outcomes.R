@@ -403,12 +403,12 @@ lookup_stats_scopus <- function (journal) {
 }
 
 
-#' Get statistics about a journal from openalex
+#' Get statistics about a journal from Openalex
 #'
 #' @param journal String: a single journal name.
 #'
-#' @return A list of journal statistics. List elements are `NA` if the journal
-#'   was not found. See 
+#' @return A list of lists of journal statistics. The names of the list
+#'   are display names according to Openalex. 
 #'   <https://docs.openalex.org/api-entities/sources/source-object#summary_stats>
 lookup_stats_openalex <- function (journal) {
   journal <- gsub(",", "", journal, fixed = TRUE)
@@ -430,21 +430,17 @@ lookup_stats_openalex <- function (journal) {
    
   n_results <- res$meta$count
   
+  results <- res$results
   if (n_results > 1L) {
-    warning(glue("More than one Openalex match for journal title '{journal}'.
-                  Returning the first match."))
+    warning(glue("More than one Openalex match for journal title '{journal}'."))
+    # Trim results, if we can, to those with an exact match
+    results_trimmed <- purrr::keep(results, \(x) x$display_name == journal)
+    if (length(results_trimmed) > 0L) results <- results_trimmed
   }
   
-  if (n_results < 1L) {
-    return(list(
-      `2yr_mean_citedness` = NA_real_,
-      h_index = NA_integer_,
-      i10_index = NA_integer_
-    ))
-  }
-  
-  sum_stats <- res$results[[1]]$summary_stats
-  return(sum_stats)
+  stats <- purrr::map(results, "summary_stats")
+  names(stats) <- purrr::map(results, "display_name")
+  return(stats)
 }
 
 
