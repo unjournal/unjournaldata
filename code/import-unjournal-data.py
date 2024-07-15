@@ -3,6 +3,10 @@
 # standalone script to import data via the coda.io api
 # should be run from the project root
 
+# THIS SCRIPT IMPORTS DATA FROM THE UNJOURNAL DATABASE INTO A **PUBLIC** 
+# REPOSITORY.
+# Check with management before adding columns and/or tables!
+
 from codaio import Coda, Document
 from dotenv import load_dotenv
 import os
@@ -30,11 +34,17 @@ doc = Document("0KBG3dSZCs", coda = coda)
 # This is the file of evaluations
 research = doc.get_table("grid-Iru9Fra3tE")
 research = pd.DataFrame(research.to_dict())
-research = strip_columns_with_space(research)
-research.to_csv("data/research.csv")
+columns = ['label_paper_title', 'status', 'research_url', 'doi', 
+  'main_cause_cat', 'secondary_cause_cat','check_in_date_process',
+  'publication_status', 'working_paper_release_date', 'topic_subfield',
+  'source_main']
+research = research[columns]
+research.to_csv("data/research.csv", index = False)
 
 # Evaluator ratings
 rsx_evalr_rating = doc.get_table("grid-pcJr9ZM3wT")
 rsx_evalr_rating = pd.DataFrame(rsx_evalr_rating.to_dict())
-rsx_evalr_rating = strip_columns_with_space(rsx_evalr_rating)
-rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv")
+columns = ['research', 'evaluator', 'criteria', 'middle_rating', 
+  'lower_CI', 'upper_CI', 'confidence_level']
+rsx_evalr_rating = rsx_evalr_rating[columns]
+rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv", index = False)
