@@ -13,29 +13,21 @@ import os
 import pandas as pd
 import re
 
-def strip_columns_with_space(df):
-  cols = df.columns
-  cols_with_space = [col for col in cols if re.search(" ", col) is not None]
-  df = df.drop(columns = cols_with_space)
-  return df
-
 # We share API variables with .Renviron, which uses a similar format
-# Note that on github the .Renviron path *should not* be there. Instead,
+# Note that the .Renviron file *must not* be on github. Instead,
 # environment variables are set by github actions from github secrets.
 if os.path.isfile(".Renviron"):
   load_dotenv(dotenv_path = ".Renviron")
   
 coda_api_key = os.environ["CODA_API_KEY"]
-
 coda = Coda(coda_api_key)
-
 doc = Document("0KBG3dSZCs", coda = coda)
 
 # This is the file of evaluations
 research = doc.get_table("grid-Iru9Fra3tE")
 research = pd.DataFrame(research.to_dict())
 columns = ['label_paper_title', 'status', 'research_url', 'doi', 
-  'main_cause_cat', 'secondary_cause_cat','check_in_date_process',
+  'main_cause_cat', 'secondary_cause_cat',
   'publication_status', 'working_paper_release_date', 'topic_subfield',
   'source_main']
 research = research[columns]
@@ -48,3 +40,10 @@ columns = ['research', 'evaluator', 'criteria', 'middle_rating',
   'lower_CI', 'upper_CI', 'confidence_level']
 rsx_evalr_rating = rsx_evalr_rating[columns]
 rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv", index = False)
+
+paper_authors = doc.get_table("grid-bJ5HubGR8H")
+paper_authors = pd.DataFrame(paper_authors.to_dict())
+columns = ['Research name', 'Contacting author', 'Author names', 
+  'Research link', 'All author emails', 'Contact author email']
+paper_authors = paper_authors[columns]
+paper_authors.to_csv("data/paper_authors.csv", index = False)
