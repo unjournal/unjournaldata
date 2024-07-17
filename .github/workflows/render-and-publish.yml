@@ -1,4 +1,8 @@
 on:
+  schedule:
+    # time is in UTC i.e. GMT London
+    # * is a special character in YAML so you have to quote this string
+    - cron: '30 13 * * *'
   push:
     branches:
       - main
