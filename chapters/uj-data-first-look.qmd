@@ -402,10 +402,7 @@ We have 7 questions measuring paper quality, and 2 questions about
 journal tier. We can perform a simple factor analysis of these 9
 questions. We don't yet have enough data to decide the appropriate
 number of factors, so we just try three. @tbl-loadings shows loadings.
-Factor 1 captures 4 of the paper quality questions, especially real
-world relevance. Factor 2 correlates with the journal measures. Factor 3
-captures the "open science" quality measure, and to some degree the
-"methods" and "logic and communication" measures too.
+
 
 ```{r}
 #| label: tbl-loadings
