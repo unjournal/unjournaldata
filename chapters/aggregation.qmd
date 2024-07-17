@@ -13,7 +13,7 @@ library(irr)
 # add the modified DistributionWAgg function to aggregate our ratings
 source(here("code", "DistAggModified.R"))
 
-evals_pub <- read_rds(file = here("data", "evals.Rdata"))
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
 
 # Lists of categories
 rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
@@ -153,6 +153,7 @@ More information about Krippendorff's alpha and links to further reading can be 
 
 ```{r}
 #| echo: false
+#| eval: false
 #| fig-height: 8
 
 # function that returns kripp.alpha
@@ -161,29 +162,31 @@ More information about Krippendorff's alpha and links to further reading can be 
 # and converts the nested data into
 # a matrix to allow 
 mod_kripp_alpha <- function(dat) {
-  dat = as.matrix.POSIXlt(dat)
-  if(nrow(dat)>1) {
-    a = kripp.alpha(dat, method = "ratio")
-    res = a$value
+  dat <- as.matrix(dat)
+  if (nrow(dat) > 1) {
+    a <- kripp.alpha(dat, method = "ratio")
+    res <- a$value
   } else {
-    res = NA_integer_
+    res <- NA_integer_
   }
   return(res)
 }
 
 # plot
-evals_pub %>% 
-  group_by(paper_abbrev) %>% 
-  select(paper_abbrev, all_of(rating_cats)) %>%
-  nest(data = -paper_abbrev) %>%
+ratings %>% 
+  select(research, criteria, middle_rating)
+  tidyr::pivot_wider(id_cols = research, )
+  group_by(research) %>% 
+  select(research, all_of(rating_cats)) %>%
+  nest(data = -research) %>%
   mutate(KrippAlpha = map_dbl(.x = data, .f = mod_kripp_alpha)) %>% 
   unnest(data) %>% 
   group_by(KrippAlpha, add = T) %>% 
   summarize(Raters = n()) %>%
   ungroup() %>% 
   filter(Raters > 1) %>% 
-  ggplot(aes(x = reorder(paper_abbrev, KrippAlpha), y = KrippAlpha)) +
-  geom_point(aes(color = paper_abbrev, size = Raters), 
+  ggplot(aes(x = reorder(research, KrippAlpha), y = KrippAlpha)) +
+  geom_point(aes(color = research, size = Raters), 
              stat = "identity", shape = 16, stroke = 1) +
   coord_flip() +
   labs(x = "Paper", y = "Krippendorf's Alpha", caption = "Papers with < 2 raters no pictured") +
