@@ -33,6 +33,13 @@ select <- dplyr::select
 options(knitr.duplicate.label = "allow")
 options(mc.cores = parallel::detectCores())
 
+paper_authors <- readr::read_csv(here("data/paper_authors.csv"))
+research <- readr::read_csv(here("data/research.csv"))
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
+
+rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
+
+pred_cats <- c("journal_predict", "merits_journal")
 ```
 
 
@@ -40,32 +47,6 @@ options(mc.cores = parallel::detectCores())
 ## Note on data input (10-Aug-23)
 
 Below, the evaluation data is input from an Airtable, which itself was largely hand-input from evaluators' reports. As PubPub builds (target: end of Sept. 2023), this will allow us to  include the ratings and predictions as structured data objects. We then plan to access and input this data *directly* from the PubPub (API?) into the present analysis. This will improve automation and limit the potential for data entry errors.
-
-::: 
-
-```{r}
-#| label: input_eval_data
-#| code-summary: "Input evaluation data"
- 
-evals_pub <- readr::read_csv(here("data/evals.csv"))
-all_papers_p <- readr::read_csv(here("data/all_papers_p.csv"))
-
-```
-
-
-
-```{r}
-#| label: list_of_columns
-#| code-summary: "Define lists of columns to use later"
-
-# Lists of categories
-rating_cats <- c("overall", "adv_knowledge", "methods", "logic_comms", "real_world", "gp_relevance", "open_sci")
-
-#... 'predictions' are currently 1-5 (0-5?)
-pred_cats <- c("journal_predict", "merits_journal")
-
-```
-
 
     
 ## Basic presentation
@@ -81,36 +62,35 @@ In the interactive table below we give some key attributes of the papers and the
 
 ```{r}
 
-evals_pub_df_overview <- evals_pub %>%
-  arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, crucial_rsx, eval_name, cat_1, cat_2, source_main, author_agreement) %>%
-  dplyr::select(-matches("ub_|lb_|conf")) 
+authors <- paper_authors %>% 
+  summarize(.by = research,
+    authors = paste(author, collapse = ", ")
+  )
 
-evals_pub_df_overview %>%   
+research %>%
+  arrange(label_paper_title) %>%  
+  left_join(authors, by = join_by(label_paper_title == research)) %>% 
    rename(
-    "Paper Abbreviation" = paper_abbrev,
-    "Paper name" = crucial_rsx,
-    "Evaluator Name" = eval_name,
-    "Main category" = cat_1,
-    "Category 2" = cat_2,
+    "Paper name" = label_paper_title,
+    "Main category" = main_cause_cat,
+    "Category 2" = secondary_cause_cat,
     "Main source" = source_main,
-    "Author contact" = author_agreement,
+    "Authors" = authors,
   ) %>% 
   DT::datatable(
     caption = "Evaluations (confidence bounds not shown)", 
     filter = 'top',
     rownames= FALSE,
-    options = list(pageLength = 5,
-      columnDefs = list(list(width = '150px', targets = 1)))) %>% 
-  formatStyle(columns = 2:ncol(evals_pub_df_overview), 
+    options = list(
+      pageLength = 5,
+      columnDefs = list(list(width = '150px', targets = 1)))
+    ) %>% 
+  formatStyle(columns = -1, 
               textAlign = 'center') %>% 
-formatStyle(
+  formatStyle(
     "Paper name",
     fontSize = '10px'
   )
-
-rm(evals_pub_df_overview)
-
 
 ```
 
@@ -121,24 +101,7 @@ rm(evals_pub_df_overview)
 #### Evaluation metrics (ratings) {-}
 
 
-```{r}
-rename_dtstuff <- function(df){
-  df %>%  
-  rename(
-    "Paper Abbreviation" = paper_abbrev,
-    "Evaluator Name" = eval_name,
-    "Advancing knowledge" = adv_knowledge,
-    "Methods" = methods,
-    "Logic & comm." = logic_comms,
-    "Real world engagement" = real_world,
-    "Global priorities relevance" = gp_relevance,
-    "Open Science" = open_sci
-  )
-}
-```
-
-
-Next, a preview of the evaluations, focusing on the 'middle ratings and predictions':
+Next, a preview of the evaluations:
 
 ::: column-body-outset    
 
@@ -147,56 +110,27 @@ Next, a preview of the evaluations, focusing on the 'middle ratings and predicti
 # Need to find a way to control column width but it seems to be a problem with DT
 # https://github.com/rstudio/DT/issues/29
 
-
-evals_pub_df <- evals_pub %>%
-  # Arrange data
-  arrange(paper_abbrev, eval_name, overall) %>%
-  
-  # Select and rename columns
-  dplyr::select(paper_abbrev, eval_name, all_of(rating_cats)) %>%
- rename_dtstuff 
-
-
-(
- evals_pub_dt <- evals_pub_df %>%  
-  # Convert to a datatable and apply styling
+ratings %>%
+  select(research, evaluator, criteria, middle_rating) %>% 
+  filter(! is.na(criteria)) %>% 
+  distinct(.keep_all = TRUE, research, evaluator, criteria) %>% 
+  tidyr::pivot_wider(id_cols = c(research, evaluator), names_from = criteria,
+                     values_from = middle_rating) %>% 
+  arrange(research, evaluator) %>%
+  rename(Research = research, Evaluator = evaluator) %>%
   datatable(
-    caption = "Evaluations and predictions (confidence bounds not shown)", 
-    filter = 'top',
+    caption  = "Evaluations and predictions (confidence bounds not shown)", 
+    filter   = 'top',
     rownames = FALSE,
-    options = list(pageLength = 5, 
-            columnDefs = list(list(width = '150px', targets = 0)))) %>% 
-  formatStyle(columns = 2:ncol(evals_pub_df), 
-              textAlign = 'center')
-)
-
-
+    options  = list(pageLength = 5, 
+                    columnDefs = list(list(width = '150px', targets = 0)))
+  ) %>% 
+  formatStyle(columns = -1, textAlign = 'center')
 
 ```
 :::
 
 
-
-\ 
-
-<!-- Todo -- Present these, including bounds, in a useful way -->
-
-```{r eval=FALSE}
-
-# we did not seem to be using all_evals_dt_ci so I removed it to improve readability
-evals_pub %>%
-  arrange(paper_abbrev, eval_name) %>%
-  dplyr::select(paper_abbrev, eval_name, conf_overall, all_of(rating_cats), matches("ub_imp|lb_imp")) %>%
-  rename_dtstuff %>% 
-  DT::datatable(
-    caption = "Evaluations and (imputed*) confidence bounds)", 
-    filter = 'top',
-    rownames= FALSE,
-    options = list(pageLength = 5)
-    )
-
-
-```
 #### Initial pool of papers: categories {-}
 
 Next, we present a plot of categories for all papers in the Unjournal's initial pool. One paper can belong to more than one category. 
