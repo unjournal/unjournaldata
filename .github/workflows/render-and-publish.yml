@@ -46,6 +46,20 @@ jobs:
           python3 code/import-unjournal-data.py
         env: 
           CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
+                
+      - name: Upload Unjournal data as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unjournal-data
+          path: data
+      
+      - name: Update Unjournal data in repository
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "Github Actions"
+          git add data/*.csv
+          git diff-index HEAD data/*.csv || git commit -m "Github actions: auto-update data"
+          git push
           
       - name: Setup dependencies with renv
         uses: r-lib/actions/setup-renv@v2
@@ -53,20 +67,6 @@ jobs:
           cache-version: 2 # increment this to invalidate the renv cache
         env:
           GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
-
-      - name: Upload Unjournal data as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: unjournal-data
-          path: data
-      
-      - name: Update data in repository
-        run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "Github Actions"
-          git add data/*.csv
-          git diff-index HEAD data/*.csv || git commit -m "Github actions: auto-update data"
-          git push
       
       - name: Publish dashboard to shinyapps.io
         env:
