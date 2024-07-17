@@ -34,6 +34,20 @@ jobs:
           sudo apt-get install jags libcurl4-openssl-dev \
             libharfbuzz-dev libfribidi-dev libsodium-dev
 
+      - name: Set up Python 3.11 and install requirements
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+
+      - name: Import Unjournal data
+        run: |
+          source .venv/bin/activate
+          python3 code/import-unjournal-data.py
+        env: 
+          CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
+          
       - name: Setup dependencies with renv
         uses: r-lib/actions/setup-renv@v2
         with:
@@ -41,14 +55,6 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
 
-      - name: Import Unjournal data
-        run: |
-          source("code/import-unjournal-data.R")
-          save_data()
-        env: 
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-        shell: Rscript {0}
-        
       - name: Upload Unjournal data as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -59,7 +65,7 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
-          git add data/evals.csv data/all_papers_p.csv
+          git add data/*.csv
           git diff-index HEAD data/*.csv || git commit -m "Github actions: auto-update data"
           git push
       
