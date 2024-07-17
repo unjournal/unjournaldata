@@ -395,10 +395,7 @@ half of our evaluators' midpoints fall within their co-evaluator's 90%
 credible interval. This suggests that our evaluators may be
 overconfident.
 
-```{=html}
-<!-- DR: But this might be driven by some of the evaluators giving degenerate CIs or leaving some categories blank? DHJ: blanks wouldn't be counted. I checked
-for degenerate CIs, none visible-->
-```
+
 # Relatedness and dimensionality
 
 We have 7 questions measuring paper quality, and 2 questions about
@@ -414,8 +411,16 @@ captures the "open science" quality measure, and to some degree the
 #| label: tbl-loadings
 #| tbl-cap: Factor loadings of 3 factors
 
+mean_ratings <- ratings %>% 
+  summarize(.by = c(research, criteria),
+    mean_rating = mean(middle_rating, na.omit = TRUE)          
+  )
 
-fa <- factanal(na.omit(evals[all_dimensions]), factors = 3)
+mean_ratings_wide <- mean_ratings %>% 
+  tidyr::pivot_wider(id_cols = research, names_from = criteria, 
+                     values_from = mean_rating)
+
+fa <- factanal(na.omit(mean_ratings_wide[all_dimensions]), factors = 3)
 
 ldg <- loadings(fa)
 ldg <- unclass(ldg)
