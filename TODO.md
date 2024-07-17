@@ -7,6 +7,10 @@ the [Unjournal coda.io project management website](https://coda.io/d/Project-Man
 
 [ ] Rewrite import-unjournal-data to use Coda.io (once the database schema is
     nailed down)
+    - rework scripts currently using the R version to read the csv file
+    - wait for column names etc. to settle down, then rewrite scripts using
+      the csv
+    - import for all_papers_p.csv
 [ ] Maybe consider splitting the deploy action up
 [x] Add field descriptions to data folder, or point to documentation elsewhere.
 [x] Put the DataExplorer app deployment into deploy.yml and not in 
