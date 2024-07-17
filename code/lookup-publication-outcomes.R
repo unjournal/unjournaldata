@@ -13,12 +13,10 @@ library(tidyr)
 openalex_email <- "contact@unjournal.org"
 
 
-#' Look up journal names of possible publications
+#' Look up journal names of a possible publication
 #' 
-#' If multiple journals are found these functions will emit a warning
-#' and return the first journal name.
 #' 
-#' @param title String: publication title
+#' @param title Length 1 character vector: publication title
 #' @param authors Character vector: authors
 #'
 #' @return A [tibble()] with columns:

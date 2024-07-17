@@ -439,7 +439,10 @@ component to predict citations or h-index data, and it didn't.
 To calibrate the principal component, we ran a series of ordinal logistic
 models predicting the different tier lists. We used just the "JourQual",
 "Cnrs", "ABS" and "Fnege" rankings, since these all had 5 tiers. Category
-cutoffs looked similar across all 4 rankings, so we simply took the averages to create our own meta-tier list. @fig-journal-rankings shows the resulting histogram of journals.
+cutoffs looked similar across all 4 rankings, so we simply took the averages to
+create our own meta-tier list. @fig-journal-rankings shows the resulting 
+histogram of journals.
+
 
 ```{r}
 #| label: fig-journal-rankings
@@ -450,6 +453,7 @@ barplot(table(jql$unjournal_tier), col = 1:5, border = NA,
         xlab = "Unjournal tier", ylab = "Number of journals",
         ylim = c(0, 400))
 ```
+
 
 ## Relatedness and dimensionality
 
