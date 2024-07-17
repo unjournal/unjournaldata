@@ -157,6 +157,7 @@ suppressPackageStartupMessages({
   library(purrr)
   library(glue)
 })
+options(huxtable.long_minus = TRUE)
 
 ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"), 
                            show_col_types = FALSE)
