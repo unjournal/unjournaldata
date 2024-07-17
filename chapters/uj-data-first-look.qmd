@@ -399,14 +399,13 @@ overconfident.
 # Relatedness and dimensionality
 
 We have 7 questions measuring paper quality, and 2 questions about
-journal tier. We can perform a simple factor analysis of these 9
-questions. We don't yet have enough data to decide the appropriate
-number of factors, so we just try three. @tbl-loadings shows loadings.
+journal tier. We can perform a simple principal components analysis of these 9
+questions. @tbl-loadings shows loadings for the first three components
 
 
 ```{r}
 #| label: tbl-loadings
-#| tbl-cap: Factor loadings of 3 factors
+#| tbl-cap: Loadings of first 3 principal components on ratings
 
 mean_ratings <- ratings %>% 
   summarize(.by = c(research, criteria),
@@ -417,15 +416,13 @@ mean_ratings_wide <- mean_ratings %>%
   tidyr::pivot_wider(id_cols = research, names_from = criteria, 
                      values_from = mean_rating)
 
-fa <- factanal(na.omit(mean_ratings_wide[all_dimensions]), factors = 3)
+pc <- princomp(na.omit(mean_ratings_wide[all_dimensions]))
 
-ldg <- loadings(fa)
+ldg <- loadings(pc)
 ldg <- unclass(ldg)
 
-as_hux(ldg, add_colnames = TRUE, add_rownames = "Question") %>% 
-  set_text_color("white") %>% 
-  set_background_color("black") %>% 
+as_hux(ldg[, 1:3], add_colnames = TRUE, add_rownames = "Question") %>% 
   style_header_rows(bold = TRUE) %>% 
-  set_all_borders(brdr(color = "white")) %>% 
-  map_text_color(-1, -1, by_colorspace("red", "yellow")) 
+  set_align(-1, -1, ".") %>% 
+  map_text_color(-1, -1, by_colorspace("blue", "grey", "red")) 
 ```
