@@ -8,20 +8,31 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 
 # How it works
 
-Data is currently imported from Airtable. 
+A single GitHub Action:
 
-The github site is created as a [Quarto](https://quarto.org) book. There are also [Shiny](https://shiny.posit.co) apps at
-<https://unjournal.shinyapps.io/DataExplorer/> and <https://unjournal.shinyapps.io/uj-dashboard>.
+* Exports data from Coda to csv files in the `/data` folder, via
+  `code/import-unjournal-data.py`.
+* Creates  <https://unjournal.github.io/unjournaldata> from a
+  [Quarto](https://quarto.org) book. 
+* Creates [Shiny](https://shiny.posit.co) apps at 
+  <https://unjournal.shinyapps.io/DataExplorer/> and 
+  <https://unjournal.shinyapps.io/uj-dashboard>.
 
-The github site and dashboard are automatically rendered on github when you push to the `main` branch.
+This action is automatically run when the "main" branch is pushed to, and
+once daily.
 
-Publicly available data is inside the `/data` folder. This is also auto-updated
-via github actions.
 
 
 # Data
 
-The files in the `/data` folder are:
+The files in the `/data` folder are imported from Coda:
+
+* `paper_authors.csv`: Lists of authors per paper.
+* `research.csv`: evaluated papers.
+* `rsx_evalr_rating.csv`: quantitative ratings given by each evaluator for each
+  paper.
+
+Plus some other data sources:
 
 * `jql70a.csv`: a list of journal quality rankings, maintained by 
   [Prof. Anne-Wil Harzing](https://harzing.com/resources/journal-quality-list)
@@ -30,8 +41,7 @@ The files in the `/data` folder are:
 * `jql-enriched.csv`: the same data, enriched with h-index and 
   citedness information from [Openalex](https://openalex.org), and
   our own meta-ranking of journals, via `code/calibrate-journal-stats.R`.
-* `evals.csv`: paper evaluations, imported from Airtable.
-* `all_papers_p.csv`: evaluated papers, imported from Airtable.
+
 
 # TODO
 
