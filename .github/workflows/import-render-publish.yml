@@ -8,7 +8,7 @@ on:
       - main
   workflow_dispatch:
 
-name: Render and Publish
+name: Import, Render and Publish
 
 # you need these permissions to publish to GitHub pages
 permissions: 
@@ -16,7 +16,7 @@ permissions:
     pages: write
 
 jobs:
-  render-and-publish:
+  import-render-publish:
     runs-on: ubuntu-latest
     
     steps:
