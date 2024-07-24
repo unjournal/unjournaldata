@@ -3,9 +3,7 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# Evaluation data: description, exploration, checks
 
-## Data input, cleaning, feature construction and imputation  
 
 ```{r setup, warning=FALSE}
 #| label: load-packages
@@ -36,10 +34,9 @@ pred_cats <- c("journal_predict", "merits_journal")
 ```
 
 
-::: {.callout-note collapse="true"}
+# Descriptive data on our evaluations
 
 
-    
 ## About our papers
 
 This section shows the papers and/or projects we have evaluated so far.
@@ -55,6 +52,7 @@ authors <- paper_authors %>%
   )
 
 research %>%
+  filter(status == "50_published evaluations (on PubPub, by Unjournal)") %>% 
   arrange(label_paper_title) %>%  
   left_join(authors, by = join_by(label_paper_title == research)) %>% 
    rename(
@@ -65,10 +63,10 @@ research %>%
     "Authors" = authors,
   ) %>% 
   DT::datatable(
-    caption = "Evaluations (confidence bounds not shown)", 
-    filter = 'top',
-    rownames= FALSE,
-    options = list(
+    caption  = "Evaluated papers", 
+    filter   = "top",
+    rownames = FALSE,
+    options  = list(
       pageLength = 5,
       columnDefs = list(list(width = '150px', targets = 1)))
     ) %>% 
@@ -85,12 +83,11 @@ research %>%
 
 :::
 
-<!-- Todo: make this smaller, get it to fit on the page better, more user-friendly -->
 
 #### Evaluation metrics {-}
 
 
-@metrics-table lists our quantitative metrics ("ratings") for each evaluation
+The next table lists our quantitative metrics ("ratings") for each evaluation
 of each paper.
 
 ::: column-body-outset    
@@ -113,9 +110,9 @@ ratings %>%
     filter   = 'top',
     rownames = FALSE,
     options  = list(pageLength = 5, 
-                    columnDefs = list(list(width = '150px', targets = 0)))
+                    columnDefs = list(list(width = "150px", targets = 0)))
   ) %>% 
-  formatStyle(columns = -1, textAlign = 'center')
+  formatStyle(columns = -1, textAlign = "center")
 
 ```
 :::
