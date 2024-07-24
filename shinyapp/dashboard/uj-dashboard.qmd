@@ -48,7 +48,8 @@ textOutput("papers_evaluated")
 ### Sources
 
 Papers can come to be evaluated by different routes: chosen by Unjournal staff,
-submitted by the authors, or suggested by another third party. As of 16 May 2024, many/most come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
+submitted by the authors, or suggested by another third party. 
+Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
 
 ```{r}
 plotOutput("barplot_sources")
@@ -102,6 +103,7 @@ plotOutput("plot_questions")
 #| include: false
 
 source(here("code/import-unjournal-data.R"))
+research <- readr::read_csv(here("data/research.csv"))
 # we now have evals_pub, all_papers_p, all_pub_records, and labels
 all_pub_records <- all_pub_records |>
   mutate(
