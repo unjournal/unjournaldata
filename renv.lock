@@ -237,23 +237,6 @@
       ],
       "Hash": "df49e3306f232ec28f1604e36a202847"
     },
-    "airtabler": {
-      "Package": "airtabler",
-      "Version": "0.1.6",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "bergant",
-      "RemoteRepo": "airtabler",
-      "RemoteRef": "master",
-      "RemoteSha": "c53967962a97396dc738fa14e3aa0537c4bc4dac",
-      "Requirements": [
-        "R",
-        "httr",
-        "jsonlite"
-      ],
-      "Hash": "3fd0bfd8d89b20e1937e56fb4d09aae4"
-    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.2.0",
@@ -1952,18 +1935,6 @@
         "vegan"
       ],
       "Hash": "f1f208fee73490721ee7cc20f54f1ab2"
-    },
-    "snakecase": {
-      "Package": "snakecase",
-      "Version": "0.11.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "stringi",
-        "stringr"
-      ],
-      "Hash": "58767e44739b76965332e8a4fe3f91f1"
     },
     "sourcetools": {
       "Package": "sourcetools",
