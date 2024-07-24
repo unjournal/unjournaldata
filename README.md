@@ -22,7 +22,6 @@ This action is automatically run when the "main" branch is pushed to, and
 once daily.
 
 
-
 # Data
 
 The files in the `/data` folder are imported from Coda:
@@ -42,7 +41,3 @@ Plus some other data sources:
   citedness information from [Openalex](https://openalex.org), and
   our own meta-ranking of journals, via `code/calibrate-journal-stats.R`.
 
-
-# TODO
-
-[TODO.md](TODO.md) has a list of planned changes.
