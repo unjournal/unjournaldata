@@ -10,7 +10,6 @@ book:
   chapters:
     - index.qmd
     - chapters/evaluation-data-analysis.qmd
-    - chapters/uj-data-first-look.qmd
   reader-mode: true
   page-navigation: true
   date: today
