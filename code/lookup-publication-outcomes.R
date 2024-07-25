@@ -331,7 +331,12 @@ lookup_journal_openalex <- function (title, authors = character(0L)) {
 #' as given by openalex. There may be more than one matching name per author.
 #'   
 lookup_authors_openalex <- function (authors) {
+  if (any(stringr::str_detect(authors, ","))) {
+    warning("Removing commas from authors in `lookup_authors_openalex()`")
+  }
+  authors <- stringr::str_remove(authors, ",")
   author_string <- paste(authors, collapse = "|")
+  
   
   req <- request("https://api.openalex.org/authors") %>% 
     req_headers(
