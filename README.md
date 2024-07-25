@@ -12,7 +12,7 @@ A single GitHub Action:
 
 * Exports data from Coda to csv files in the `/data` folder, via
   `code/import-unjournal-data.py`.
-* Creates  <https://unjournal.github.io/unjournaldata> from a
+* Creates <https://unjournal.github.io/unjournaldata> from a
   [Quarto](https://quarto.org) book. 
 * Creates [Shiny](https://shiny.posit.co) apps at 
   <https://unjournal.shinyapps.io/DataExplorer/> and 
