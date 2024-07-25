@@ -17,6 +17,7 @@ library(forcats)
 library(ggplot2)
 library(here)
 library(lubridate)
+library(shiny)
 library(stringr)
 library(tidyr)
 
@@ -49,7 +50,8 @@ textOutput("papers_evaluated")
 
 Papers can come to be evaluated by different routes: chosen by Unjournal staff,
 submitted by the authors, or suggested by another third party. 
-Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation).
+Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). This graph shows the sources of
+evaluated papers. Papers awaiting evaluation or selection are not included.
 
 ```{r}
 plotOutput("barplot_sources")
@@ -102,25 +104,11 @@ plotOutput("plot_questions")
 #| context: data
 #| include: false
 
-source(here("code/import-unjournal-data.R"))
 research <- readr::read_csv(here("data/research.csv"))
-# we now have evals_pub, all_papers_p, all_pub_records, and labels
-all_pub_records <- all_pub_records |>
-  mutate(
-    createdTime = as.POSIXct(createdTime)
-  )
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
 
-all_papers_p <- all_papers_p |>
-  mutate(
-    createdTime = as.POSIXct(createdTime)
-  )
-
-all_pub_dates <- all_pub_records |> select(id, createdTime)
-rm(all_pub_records)
-
-evals_pub <- left_join(evals_pub, all_pub_dates,
-                       by = join_by(crucial_rsx_id == id),
-                       relationship = "many-to-one")
+res_ratings <- inner_join(ratings, research, 
+                          by = join_by(research == label_paper_title))
 
 ```
 
@@ -129,24 +117,29 @@ evals_pub <- left_join(evals_pub, all_pub_dates,
 #| context: server
 
 evals <- reactive({
-  period_cutoff <- periods[[input$period]]
-  evals_pub |>
-    filter(createdTime >= period_cutoff)
+  res_ratings
+  # TODO add a time filter
 })
 
-n_evals <- reactive(nrow(evals()))
-n_papers <- reactive(n_distinct(evals()$paper_abbrev))
-all_cats <- reactive(c(evals()$cat_1, evals()$cat_2, evals()$cat_3))
-n_areas <- reactive(n_distinct(all_cats()))
+evaled_research <- reactive({
+  research %>% 
+    filter(status %in% "50_published evaluations (on PubPub, by Unjournal)")
+  
+})
 
 proposals <- reactive({
-  period_cutoff <- periods[[input$period]]
-  all_papers_p |>
-    filter(createdTime >= period_cutoff)
+  research
+  # TODO add a time filter
 })
 
-n_proposals <- reactive(nrow(proposals()))
+n_evals <- reactive(n_distinct(select(evals(), research, evaluator)))
+n_papers <- reactive(nrow(evaled_research()))
+all_cats <- reactive({
+  c(evaled_research()$main_cause_cat, evaled_research()$secondary_cause_cat)
+  })
+n_areas <- reactive(n_distinct(all_cats()))
 
+n_proposals <- reactive(nrow(proposals()))
 
 output$papers_evaluated <- renderText({
   glue::glue("In the selected period, we considered
@@ -156,13 +149,15 @@ output$papers_evaluated <- renderText({
 
 
 output$barplot_sources <- renderPlot({
-  evals() |>
+  evaled_research() |>
     mutate(
       Source = case_match(source_main,
-        "internal-NBER" ~ "Internal (NBER)",
+        "internal-NBER"                ~ "Internal (NBER)",
         "internal-from-syllabus-agenda-policy-database" ~ "Internal",
-        "submitted (by author(s))" ~ "Author",
-        "suggested - externally" ~ "Third party"
+        "submitted (by author(s))"     ~ "Author",
+        "suggested - externally"       ~ "Third party",
+        "suggested - externally - NGO" ~ "Third party (NGO)",
+        .default = "Unknown"
       ),
       Source = forcats::fct_infreq(Source),
       Source = forcats::fct_rev(Source)
@@ -191,6 +186,10 @@ output$barplot_areas <- renderPlot({
     filter( ! is.na(area)) |>
     mutate(
       area = stringr::str_to_title(area),
+      # Workaround to cope with long area categories. 
+      # TODO: remove once fixed.
+      area = stringr::str_remove(area, "\\(.*\\)"),
+      area = stringr::str_remove(area, "\\[.*\\]"),
       area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
@@ -218,25 +217,26 @@ output$barplot_areas <- renderPlot({
 output$barplot_proposals <- renderPlot({
   proposals() |>
     mutate(
-      Status = case_match(`stage of process/todo`,
-        c("awaiting authors' consent (where needed) or imminent update",
-          "final consideration needed",
-          "Needs prioritization/assessor rating")
+      Status = case_match(status,
+        c("03_awaiting authors' consent (where needed) or imminent update",
+          "02_final consideration needed",
+          "01_Needs prioritization/assessor rating")
           ~ "Under consideration",
         c("de-prioritized bc. of journal-publication status, authors permission, etc.",
-          "Authors rejected/blocked us",
+          "authors rejected/blocked us",
           "deprioritized -- low ratings",
           "Not a paper/project")
           ~ "Deprioritized by UJ or lack of author permission",
         c("Applied and Policy Research Stream",
-          "awaiting_evaluations",
+          "20_awaiting_evaluations",
           "contacting/awaiting_authors_response_to_evaluation",
           "In interim evaluation",
-          "seeking_(more)_evaluators",
-          "selected_choose_evaluation_manager")
+          "10_seeking_(more)_evaluators",
+          "04_selected_choose_evaluation_manager")
           ~ "Accepted and under evaluation",
-        c("published evaluations (on PubPub, by Unjournal)")
-          ~ "Evaluation published"
+        c("50_published evaluations (on PubPub, by Unjournal)")
+          ~ "Evaluation published",
+        .default = "Unknown"
       ),
       Status = forcats::fct_infreq(Status),
       Status = forcats::fct_rev(Status)
@@ -259,13 +259,14 @@ output$barplot_proposals <- renderPlot({
 
 output$plot_ratings <- renderPlot({
   evals() |>
+    filter(criteria == "overall") |>
     mutate(
-      area = stringr::str_to_title(cat_1),
+      area = stringr::str_to_title(main_cause_cat),
       area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
     ) |>
-    ggplot(aes(y = area, x = overall, color = area)) +
+    ggplot(aes(y = area, x = middle_rating, color = area)) +
       geom_point() +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
@@ -287,23 +288,23 @@ output$plot_ratings <- renderPlot({
 
 output$plot_questions <- renderPlot({
   evals() |>
-    select(id, overall, adv_knowledge, methods, logic_comms, real_world,
-           gp_relevance, open_sci) |>
-    tidyr::pivot_longer(-id, names_to = "question", values_to = "rating") |>
+    select(research, criteria, middle_rating) |>
     mutate(
-      question = case_match(question,
+      criteria = case_match(criteria,
         "overall" ~ "Overall assessment",
         "adv_knowledge" ~ "Advancing our knowledge and practice",
         "methods" ~ "Methods: justification, reasonableness, validity, robustness",
         "logic_comms" ~ "Logic and communication",
         "real_world" ~ "Real world relevance",
         "gp_relevance" ~ "Relevance to global priorities",
-        "open_sci" ~ "Open, collaborative, replicable science"
+        "open_sci" ~ "Open, collaborative, replicable science",
+        .default = NA_character_ # this removes two criteria on publication
       ),
-      question = forcats::fct_relevel(question, "Overall assessment"),
-      question = forcats::fct_rev(question)
+      criteria = forcats::fct_relevel(criteria, "Overall assessment"),
+      criteria = forcats::fct_rev(criteria)
     ) |>
-    ggplot(aes(y = question, x = rating, color = question)) +
+    filter(! is.na(criteria)) |>
+    ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
       geom_point() +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
