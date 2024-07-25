@@ -6,7 +6,7 @@ This is the repository for
 Outputs and reports from here are published at <https://unjournal.github.io/unjournaldata>.
 
 
-# How it works
+## How it works
 
 A single GitHub Action:
 
@@ -18,11 +18,25 @@ A single GitHub Action:
   <https://unjournal.shinyapps.io/DataExplorer/> and 
   <https://unjournal.shinyapps.io/uj-dashboard>.
 
-This action is automatically run when the "main" branch is pushed to, and
-once daily.
+This action is automatically run 
+
+* when the "main" branch is pushed to;
+* once daily in any case.
 
 
-# Data
+## Blog
+
+Unjournal blog posts are in the `/blog` folder. These aren't 
+created on GitHub, but directly on developer machines. 
+
+* To add a blog post, create a new folder inside `blog/posts`, and an 
+  `index.qmd` file inside the folder. 
+* Render the quarto file as normal, add it to the `gh-pages` branch, 
+  and push to GitHub.
+* See <https://quarto.org/docs/websites/website-blog.html> for more details.
+
+
+## Data
 
 The files in the `/data` folder are imported from Coda:
 
@@ -31,7 +45,7 @@ The files in the `/data` folder are imported from Coda:
 * `rsx_evalr_rating.csv`: quantitative ratings given by each evaluator for each
   paper.
 
-Plus some other data sources:
+There's also some data from other sources:
 
 * `jql70a.csv`: a list of journal quality rankings, maintained by 
   [Prof. Anne-Wil Harzing](https://harzing.com/resources/journal-quality-list)
