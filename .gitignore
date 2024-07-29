@@ -36,4 +36,5 @@ quarto-cli
 # rsconnect info
 /shinyapp/DataExplorer/rsconnect/.
 passwords.txt
-docs/*
+# python virtual environment
+.venv/
