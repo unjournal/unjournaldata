@@ -18,10 +18,10 @@ set.seed(10271975)
 
 # == Multiple ratings from Prof Harzing's list ====
 
-jql <- readr::read_csv("data/jql70a.csv") %>% 
+jql <- readr::read_csv("data/jql70a.csv") |> 
   # Remove page headings:
-  filter(! is.na(ISSN), ISSN != "ISSN") %>% 
-  rename(Subject = "Subject area [Range highest to lowest]") %>% 
+  filter(! is.na(ISSN), ISSN != "ISSN") |> 
+  rename(Subject = "Subject area [Range highest to lowest]") |> 
   # Excel misrecognized these numbers as dates. We convert them back:
   mutate(
     Scopus_date = as.Date(Scopus, format = "%d-%b"),
@@ -29,7 +29,7 @@ jql <- readr::read_csv("data/jql70a.csv") %>%
     Scopus_date = sub("\\.0([1-9])", ".\\1", Scopus_date),
     Scopus = ifelse(is.na(Scopus_date), Scopus, as.numeric(Scopus_date)),
     Scopus_date = NULL
-  ) %>% 
+  ) |> 
   mutate(
     # Blanks mean the FT did not use the journal. We recode this so as to
     # match the others (higher = worse)
@@ -43,18 +43,18 @@ jql <- readr::read_csv("data/jql70a.csv") %>%
     # we treat it as equivalent to P.
     EJL      = ifelse(EJL == "M*", "P*", EJL),
     EJL      = ifelse(EJL == "M", "P", EJL)
-  ) %>% 
+  ) |> 
   filter(
     # This removes one duplicate entry: Journal of Behavioral and Experimental
     # Economics. Below, we add in one piece of information from the deleted
     # entry.
     ! duplicated(Journal)
-  ) %>% 
+  ) |> 
   mutate(
     JourQual = ifelse(
       Journal == "Journal of Behavioral and Experimental Economics",
       "B", JourQual)
-  ) %>% 
+  ) |> 
   # We order rankings using the info given in the original PDF, from highest
   # to lowest:
   mutate(
@@ -73,7 +73,7 @@ jql <- readr::read_csv("data/jql70a.csv") %>%
     # this list will be highly selective/regarded journals."
     # So, we treat an NA here as equivalent to a low ranking.
     Meta     = ordered(Meta,   levels = c("A+", "A", "B"), exclude = NULL)
-  ) %>% 
+  ) |> 
   # We create numeric versions of the rankings, with the suffix "_n":
   mutate(
     across( ! c(ISSN,Journal, Subject),
@@ -94,8 +94,8 @@ jql <- readr::read_csv("data/jql70a.csv") %>%
 #   of its own.
 
 
-jql_matrix <- jql %>% 
-  select(ends_with("_n") & !c(Scopus_n, Meta_n, Hceres_n)) %>% 
+jql_matrix <- jql |> 
+  select(ends_with("_n") & !c(Scopus_n, Meta_n, Hceres_n)) |> 
   as.matrix() 
 
 # Reconstructs missing values
@@ -112,9 +112,9 @@ jql$princomp1 <- predict(prc)[, 1]
 # less than 0.75 with the first principal component.
 jql_matrix <- cbind(jql_matrix, jql$princomp1)
 library(huxtable)
-cor(jql_matrix, use = "compl") %>% round(3) %>% 
-  as_hux() %>% 
-  set_text_color("black") %>% 
+cor(jql_matrix, use = "compl") |> round(3) |> 
+  as_hux() |> 
+  set_text_color("black") |> 
   map_background_color(by_colorspace("darkred", "yellow"))
 
 # Look up journal stats from Openalex
@@ -183,5 +183,5 @@ cat_bounds <- round(cat_bounds, 1)
 jql$unjournal_tier <- cut(jql$princomp1, c(-Inf, cat_bounds, Inf),
                           labels = c("1", "2", "3", "4", "5"))
 
-jql %>% 
+jql |> 
   readr::write_csv(here("data/jql-enriched.csv"))

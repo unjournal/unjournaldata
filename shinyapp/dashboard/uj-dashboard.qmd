@@ -122,7 +122,7 @@ evals <- reactive({
 })
 
 evaled_research <- reactive({
-  research %>% 
+  research |> 
     filter(status %in% "50_published evaluations (on PubPub, by Unjournal)")
   
 })
