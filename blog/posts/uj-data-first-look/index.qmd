@@ -175,20 +175,20 @@ qual_dimensions <- c("overall", "adv_knowledge", "methods", "logic_comms",
 journal_dimensions <- c("journal_predict", "merits_journal")
 all_dimensions <- c(qual_dimensions, journal_dimensions)
 
-dupe_ratings <- (ratings %>% 
-  count(research, criteria, evaluator) %>% 
+dupe_ratings <- (ratings |> 
+  count(research, criteria, evaluator) |> 
   pull(n)) > 1L
 if (any(dupe_ratings)) warning("Duplicate rows found in ratings data.")
 
 # This is temporary and should be removed once the duplicate rows are fixed.
 # Otherwise it will hide the broken data, when it should be found and fixed.
-ratings <- ratings %>% 
+ratings <- ratings |> 
   distinct(.keep_all = TRUE,
     research, evaluator, criteria
   )
 
 # Again, this is a temporary hack until our data is solid.
-ratings <- ratings %>% 
+ratings <- ratings |> 
   tidyr::drop_na(research, evaluator, criteria)
 
 ```
@@ -200,8 +200,8 @@ ratings <- ratings %>%
 
 # We suppress warnings about "no non-missing arguments to min/max":
 suppressWarnings({
-  problem_ratings <- ratings %>% 
-    filter(criteria %in% all_dimensions) %>% 
+  problem_ratings <- ratings |> 
+    filter(criteria %in% all_dimensions) |> 
     summarize(.by = c(research, evaluator),
       all_same     = min(middle_rating, na.rm = TRUE) == max(middle_rating, 
                                                              na.rm = TRUE),
@@ -308,24 +308,24 @@ kr_alphas <- list()
 for (d in all_dimensions) {
   # This creates a tibble where rows are pieces of research 
   # and columns are different evaluators' ratings.
-  r_wide <- ratings %>% 
-    filter(criteria == d) %>% 
-    select(research, evaluator, middle_rating) %>% 
+  r_wide <- ratings |> 
+    filter(criteria == d) |> 
+    select(research, evaluator, middle_rating) |> 
     # The next two filters are separate, to make sure we have only papers
     # with exactly two *non-NA* ratings.
-    filter(! is.na(middle_rating)) %>% 
+    filter(! is.na(middle_rating)) |> 
     filter(.by = research,
       n() == 2L 
-    ) %>% 
+    ) |> 
     mutate(.by = research,
       # This is a trick: if `stopifnot()` doesn't throw an error, `dummy`
       # gets the return value of `NULL` and is never created.
       dummy    = stopifnot(n_distinct(evaluator) == 2L), 
       eval_num = paste0("eval_", seq_len(n()))
-    ) %>% 
-    select(-evaluator) %>% 
+    ) |> 
+    select(-evaluator) |> 
     tidyr::pivot_wider(id_cols = research, names_from = eval_num, 
-                       values_from = middle_rating) %>% 
+                       values_from = middle_rating) |> 
     select(-research)
   
   # We convert this into a matrix where *rows* are evaluators and
@@ -344,7 +344,7 @@ kr_alpha_values <- purrr::list_transpose(kr_alphas)$value
 huxtable(
   Dimension = all_dimensions,
   `Krippendorff's Alpha` = kr_alpha_values
-) %>%
+) |>
   set_caption(
     glue("Krippendorf's alpha statistics for our quantitative measures. N = {n_papers} papers, {n_evals} evaluations.")
   )
@@ -363,18 +363,18 @@ within rater 2's central credible interval, and vice versa?
 
 # This gives a dataset with one row per paper per dimension, and all
 # ratings and CIs of all evaluators in a single row.
-ratings_dims <- ratings %>% 
+ratings_dims <- ratings |> 
   mutate(.by = research,
     # This simply numbers the evaluators 1, 2, ... for each piece of research:
     eval_num  = as.numeric(factor(evaluator)),
     evaluator = NULL
-  ) %>% 
+  ) |> 
   tidyr::pivot_wider(id_cols = c(research, criteria), names_from = eval_num,
                      values_from = c(middle_rating, lower_CI, upper_CI,
                                     confidence_level))
 
 # This assumes we have no more than 3 evaluators per paper.
-ratings_coverage <- ratings_dims %>%
+ratings_coverage <- ratings_dims |>
   mutate(
     mp1ci2 = between(middle_rating_1, lower_CI_2, upper_CI_2),
     mp1ci3 = between(middle_rating_1, lower_CI_3, upper_CI_3),
@@ -382,17 +382,17 @@ ratings_coverage <- ratings_dims %>%
     mp2ci3 = between(middle_rating_2, lower_CI_3, upper_CI_3),
     mp3ci1 = between(middle_rating_3, lower_CI_1, upper_CI_1),
     mp3ci2 = between(middle_rating_3, lower_CI_2, upper_CI_2)
-  ) %>%
+  ) |>
   summarize(.by = criteria,
     `Proportion within C.I.` = mean(c_across(matches("mp.ci")), na.rm = TRUE)
   ) 
 
-ratings_coverage %>%
+ratings_coverage |>
   rename(
     Dimension = criteria
-  ) %>%
-  as_huxtable() %>%
-  set_number_format(-1, 2, fmt_percent()) %>%
+  ) |>
+  as_huxtable() |>
+  set_number_format(-1, 2, fmt_percent()) |>
   set_caption(glue("Proportions of midpoints within other evaluators' 90% credible intervals. N = {n_papers} papers, {n_evals} evaluations."))
 ```
 
@@ -413,12 +413,12 @@ questions. @tbl-loadings shows loadings for the first three components.
 #| label: tbl-loadings
 #| tbl-cap: Loadings of first 3 principal components on ratings
 
-mean_ratings <- ratings %>% 
+mean_ratings <- ratings |> 
   summarize(.by = c(research, criteria),
     mean_rating = mean(middle_rating, na.omit = TRUE)          
   )
 
-mean_ratings_wide <- mean_ratings %>% 
+mean_ratings_wide <- mean_ratings |> 
   tidyr::pivot_wider(id_cols = research, names_from = criteria, 
                      values_from = mean_rating)
 
@@ -427,8 +427,8 @@ pc <- princomp(na.omit(mean_ratings_wide[all_dimensions]))
 ldg <- loadings(pc)
 ldg <- unclass(ldg)
 
-as_hux(ldg[, 1:3], add_colnames = TRUE, add_rownames = "Question") %>% 
-  style_header_rows(bold = TRUE) %>% 
-  set_align(-1, -1, ".") %>% 
+as_hux(ldg[, 1:3], add_colnames = TRUE, add_rownames = "Question") |> 
+  style_header_rows(bold = TRUE) |> 
+  set_align(-1, -1, ".") |> 
   map_text_color(-1, -1, by_colorspace("blue", "grey", "red")) 
 ```

@@ -11,7 +11,7 @@ preprocess_judgements <- function(expert_judgements,
   if(any(is.na(expert_judgements$value))) stop("NAs Found in Values")
 
   # Variables of focus
-  expert_judgements <- expert_judgements %>%
+  expert_judgements <- expert_judgements |>
     dplyr::select(round,
       paper_id,
       user_name,
@@ -20,7 +20,7 @@ preprocess_judgements <- function(expert_judgements,
 
   filter_round <- function(expert_judgements, round_2_filter){
     output_df <-  if(isTRUE(round_2_filter)){
-      expert_judgements %>%
+      expert_judgements |>
         dplyr::filter(round %in% "round_2")
     } else {
       expert_judgements
@@ -29,13 +29,13 @@ preprocess_judgements <- function(expert_judgements,
 
   filter_element <- function(expert_judgements, three_point_filter){
     output_df <- if(isTRUE(three_point_filter)){
-      expert_judgements %>%
-        dplyr::group_by(round, paper_id, user_name) %>%
+      expert_judgements |>
+        dplyr::group_by(round, paper_id, user_name) |>
         dplyr::filter(element %in% c("three_point_best",
           "three_point_lower",
           "three_point_upper"))
     } else {
-      expert_judgements %>%
+      expert_judgements |>
         dplyr::filter(element != "binary_question")
     }
   }
@@ -43,7 +43,7 @@ preprocess_judgements <- function(expert_judgements,
   change_value <- function(expert_judgements, percent_toggle){
     # Converts values to 0,1
     output_df <- if(isTRUE(percent_toggle)){
-      expert_judgements %>%
+      expert_judgements |>
         dplyr::mutate(value =
             dplyr::case_when(
               element %in% c("three_point_best",
@@ -67,12 +67,12 @@ preprocess_judgements <- function(expert_judgements,
     return(expert_judgements)
   }
 
-  method_out <-  expert_judgements %>%
-    filter_round(round_2_filter) %>%
-    filter_element(three_point_filter) %>%
-    change_value(percent_toggle) %>%
-    dplyr::bind_rows() %>%
-    check_values(round_2_filter, three_point_filter, percent_toggle) %>%
+  method_out <-  expert_judgements |>
+    filter_round(round_2_filter) |>
+    filter_element(three_point_filter) |>
+    change_value(percent_toggle) |>
+    dplyr::bind_rows() |>
+    check_values(round_2_filter, three_point_filter, percent_toggle) |>
     dplyr::ungroup()
 
   return(method_out)
@@ -90,9 +90,9 @@ DistributionWAggMOD <- function(expert_judgements,
                  "DistributionWAggMOD",
                  name)
 
-    df <- expert_judgements %>%
+    df <- expert_judgements |>
       preprocess_judgements(percent_toggle = percent_toggle,
-                            round_2_filter = round_2_filter) %>%
+                            round_2_filter = round_2_filter) |>
       dplyr::group_by(paper_id)
     
     Fx_fun <- function(x, lower, best, upper) {
@@ -110,7 +110,7 @@ DistributionWAggMOD <- function(expert_judgements,
     }
     
     avdist_fun <- function(dq, claim_input) {
-      claim_input %>%
+      claim_input |>
         dplyr::mutate(Fx = purrr::pmap(
           list(three_point_lower,
                three_point_best,
@@ -124,17 +124,17 @@ DistributionWAggMOD <- function(expert_judgements,
                      upper = u)
             }
           }
-        ))  %>%
-        purrr::pluck("Fx") %>%
+        ))  |>
+        purrr::pluck("Fx") |>
         purrr::map_dbl(
           .f = function(Fx_fun) {
             Fx_fun(dq)
           }
-        ) %>%
+        ) |>
         mean()
     }
-    agg_judge_df <- df  %>%
-      tidyr::pivot_wider(names_from = element, values_from = value) %>%
+    agg_judge_df <- df  |>
+      tidyr::pivot_wider(names_from = element, values_from = value) |>
       dplyr::mutate(
         three_point_upper = dplyr::if_else(
           three_point_upper == 1,
@@ -167,9 +167,9 @@ DistributionWAggMOD <- function(expert_judgements,
           three_point_best,
           three_point_lower
         ),
-      ) %>%
-      dplyr::group_by(paper_id) %>%
-      tidyr::nest() %>%
+      ) |>
+      dplyr::group_by(paper_id) |>
+      tidyr::nest() |>
       dplyr::mutate(avdist = purrr::map(
         data,
         .f = function(data) {
@@ -177,15 +177,15 @@ DistributionWAggMOD <- function(expert_judgements,
             avdist_fun(x, claim_input = data)
           }
         }
-      )) %>% dplyr::ungroup()
+      )) |> dplyr::ungroup()
     
-    quantiles <- agg_judge_df %>%
+    quantiles <- agg_judge_df |>
       dplyr::mutate(avdist_preimage = purrr::map(
         avdist,
         .f = function(f) {
           GoFKernel::inverse(f, lower = 0, upper = 1)
         }
-      )) %>% 
+      )) |> 
       dplyr::mutate(aggregated_judgement =
                       purrr::map_dbl(
                         avdist_preimage,
@@ -193,7 +193,7 @@ DistributionWAggMOD <- function(expert_judgements,
                           # suppressing warnings on preimage
                           f(0.5) #gets the midpoint?
                         }
-                      )) %>% 
+                      )) |> 
       dplyr::mutate(aggregated_judgement_90ci_lb =
                       purrr::map_dbl(
                         avdist_preimage,
@@ -201,7 +201,7 @@ DistributionWAggMOD <- function(expert_judgements,
                           # suppressing warnings on preimage
                           f(0.05) # gets the lower bound for the 90% interval
                         }
-                      )) %>% 
+                      )) |> 
       dplyr::mutate(aggregated_judgement_90ci_ub =
                       purrr::map_dbl(
                         avdist_preimage,
@@ -213,30 +213,30 @@ DistributionWAggMOD <- function(expert_judgements,
     
     
     # figure out how many experts there are in the data?
-    n_experts <- df %>%
-      dplyr::group_by(paper_id, user_name) %>%
-      dplyr::summarise(n_experts = dplyr::n(), .groups = "drop_last") %>%
-      dplyr::count() %>%
-      dplyr::rename("n_experts" = "n") %>%
+    n_experts <- df |>
+      dplyr::group_by(paper_id, user_name) |>
+      dplyr::summarise(n_experts = dplyr::n(), .groups = "drop_last") |>
+      dplyr::count() |>
+      dplyr::rename("n_experts" = "n") |>
       dplyr::ungroup()
     
-    x <-  quantiles %>%
-      dplyr::left_join(n_experts, by = "paper_id") %>%
+    x <-  quantiles |>
+      dplyr::left_join(n_experts, by = "paper_id") |>
       dplyr::select(paper_id, aggregated_judgement, 
                     aggregated_judgement_90ci_lb, aggregated_judgement_90ci_ub, 
-                    n_experts) %>%
+                    n_experts) |>
       dplyr::ungroup()
     
-    x %>%
-      dplyr::group_by(paper_id) %>%
-      dplyr::mutate(method = name) %>%
-      dplyr::ungroup()  %>%
+    x |>
+      dplyr::group_by(paper_id) |>
+      dplyr::mutate(method = name) |>
+      dplyr::ungroup()  |>
       dplyr::select(method,
                     paper_id,
                     aggregated_judgement,
                     aggregated_judgement_90ci_lb, 
                     aggregated_judgement_90ci_ub,
-                    n_experts) %>%
+                    n_experts) |>
       dplyr::rename(
         agg_est = aggregated_judgement,
         agg_90ci_lb = aggregated_judgement_90ci_lb,
