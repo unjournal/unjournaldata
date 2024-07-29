@@ -15,7 +15,7 @@ book:
   date: today
 
 execute:
-  freeze: false # re-render only when source changes
+  freeze: false
   warning: false
   message: false
   error: true
@@ -23,7 +23,6 @@ execute:
 
 comments:
     hypothesis: true
-   #bibliography: references.bib
 
 format:
   html:
@@ -33,14 +32,3 @@ format:
     theme: cosmo
     citations-hover: true
     footnotes-hover: true
-    #css: styles.css
-
-    # margin-right: 0.5em
-    #  margin-left: 0.5em
-    #  max-width: 3200px
- # pdf:
-  #  documentclass: scrreprt
-  #
-
-
-
