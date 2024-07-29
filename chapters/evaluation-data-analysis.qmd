@@ -46,22 +46,22 @@ This section shows the papers and/or projects we have evaluated so far.
 
 ```{r research-table}
 
-authors <- paper_authors %>% 
+authors <- paper_authors |> 
   summarize(.by = research,
     authors = paste(author, collapse = ", ")
   )
 
-research %>%
-  filter(status == "50_published evaluations (on PubPub, by Unjournal)") %>% 
-  arrange(label_paper_title) %>%  
-  left_join(authors, by = join_by(label_paper_title == research)) %>% 
+research |>
+  filter(status == "50_published evaluations (on PubPub, by Unjournal)") |> 
+  arrange(label_paper_title) |>  
+  left_join(authors, by = join_by(label_paper_title == research)) |> 
    rename(
     "Paper" = label_paper_title,
     "Main category" = main_cause_cat,
     "Category 2" = secondary_cause_cat,
     "Main source" = source_main,
     "Authors" = authors,
-  ) %>% 
+  ) |> 
   DT::datatable(
     caption  = "Evaluated papers", 
     filter   = "top",
@@ -69,11 +69,11 @@ research %>%
     options  = list(
       pageLength = 5,
       columnDefs = list(list(width = '150px', targets = 1)))
-    ) %>% 
+    ) |> 
   formatStyle(
     columns = c("Paper", "Authors", "Main category", "Category 2", "Main source"), 
     textAlign = "center"
-  ) %>% 
+  ) |> 
   formatStyle(
     columns = "Paper",
     fontSize = "10px"
@@ -97,21 +97,21 @@ of each paper.
 # Need to find a way to control column width but it seems to be a problem with DT
 # https://github.com/rstudio/DT/issues/29
 
-ratings %>%
-  select(research, evaluator, criteria, middle_rating) %>% 
-  filter(! is.na(criteria)) %>% 
-  distinct(.keep_all = TRUE, research, evaluator, criteria) %>% 
+ratings |>
+  select(research, evaluator, criteria, middle_rating) |> 
+  filter(! is.na(criteria)) |> 
+  distinct(.keep_all = TRUE, research, evaluator, criteria) |> 
   tidyr::pivot_wider(id_cols = c(research, evaluator), names_from = criteria,
-                     values_from = middle_rating) %>% 
-  arrange(research, evaluator) %>%
-  rename(Research = research, Evaluator = evaluator) %>%
+                     values_from = middle_rating) |> 
+  arrange(research, evaluator) |>
+  rename(Research = research, Evaluator = evaluator) |>
   datatable(
     caption  = "Evaluations and predictions (confidence bounds not shown)", 
     filter   = 'top',
     rownames = FALSE,
     options  = list(pageLength = 5, 
                     columnDefs = list(list(width = "150px", targets = 0)))
-  ) %>% 
+  ) |> 
   formatStyle(columns = -1, textAlign = "center")
 
 ```
@@ -130,11 +130,11 @@ Next, we present a plot of categories for all papers in the Unjournal's initial 
 n_papers <- nrow(research)
 
 # plot
-research %>% 
-  select(main_cause_cat) %>% 
-  replace_na(list(main_cause_cat = "Unknown")) %>%
-  count(main_cause_cat) %>%
-  mutate(Category = str_to_title(main_cause_cat)) %>%
+research |> 
+  select(main_cause_cat) |> 
+  replace_na(list(main_cause_cat = "Unknown")) |>
+  count(main_cause_cat) |>
+  mutate(Category = str_to_title(main_cause_cat)) |>
   ggplot(aes(x = reorder(Category, n), y = n)) +
   geom_bar(aes(fill = Category), stat = "identity", color = "grey30") + 
   coord_flip() +
@@ -156,11 +156,11 @@ The Sankey diagram below starts with the papers we prioritized for likely
 #| label: sankey-plot
 #| eval: false
 
-all_papers_p %>% 
-  select(id, source_main, `stage of process/todo`) %>% 
-  rename(stage = `stage of process/todo`) %>% 
-  mutate(source_main = if_else(source_main == "NA", NA_character_, source_main)) %>% 
-  replace_na(list(source_main = "unknown", stage = "unknown")) %>%
+all_papers_p |> 
+  select(id, source_main, `stage of process/todo`) |> 
+  rename(stage = `stage of process/todo`) |> 
+  mutate(source_main = if_else(source_main == "NA", NA_character_, source_main)) |> 
+  replace_na(list(source_main = "unknown", stage = "unknown")) |>
   mutate(stage0 = "Paper Pool",
          stage1 = case_match(stage,
                              "contacting/awaiting_authors_response_to_evaluation" ~ "Selected",
@@ -170,18 +170,18 @@ all_papers_p %>%
          stage2 = paste0("Stage: ", str_to_sentence(stage)),
          source_main = str_replace_all(string = source_main, 
                                   pattern = "-", 
-                                  replace = " ") %>% 
-           # str_to_title() %>% 
+                                  replace = " ") |> 
+           # str_to_title() |> 
            str_replace_all(pattern = "\\s+",
                        replacement = " "),
          source = paste0("Source: ", source_main)) -> temp
 
-temp %>% 
-  select(source, stage0, stage1, stage2) %>%
-  pivot_longer(cols = everything()) %>% 
-  arrange(name) %>% 
-  select(value) %>% 
-  distinct() %>% drop_na() -> nodes
+temp |> 
+  select(source, stage0, stage1, stage2) |>
+  pivot_longer(cols = everything()) |> 
+  arrange(name) |> 
+  select(value) |> 
+  distinct() |> drop_na() -> nodes
 
 
 nodes = tibble(index =  seq(0,nrow(nodes)-1, by = 1),
@@ -199,50 +199,50 @@ nodes = tibble(index =  seq(0,nrow(nodes)-1, by = 1),
 # source -> paper pool (stage0) -> stage1 -> stage2
 
 # add source > paper pool (stage0)
-link = temp %>% 
-  group_by(source, stage0) %>% 
-  count() %>%
+link = temp |> 
+  group_by(source, stage0) |> 
+  count() |>
   rename(target = stage0, value = n) 
 
 # add paper pool > stage1 (selected)
-temp %>% 
-  group_by(stage0, stage1) %>% 
-  count() %>%
-  rename(source = stage0, target = stage1, value = n) %>% 
+temp |> 
+  group_by(stage0, stage1) |> 
+  count() |>
+  rename(source = stage0, target = stage1, value = n) |> 
   filter(!is.na(target)) -> temp2
 
 link = bind_rows(link, temp2)
 
 # add paper pool > stage2 (not selected)
-temp %>% 
-  group_by(stage0, stage1, stage2) %>% 
-  count() %>% 
-  ungroup() %>%
-  filter(is.na(stage1)) %>%
-  rename(source = stage0, target = stage2, value = n) %>%
+temp |> 
+  group_by(stage0, stage1, stage2) |> 
+  count() |> 
+  ungroup() |>
+  filter(is.na(stage1)) |>
+  rename(source = stage0, target = stage2, value = n) |>
   select(-stage1) -> temp2
 
 link = bind_rows(link, temp2) 
 
 # add selected (stage1) to stage 2
-temp %>% 
-  group_by(stage0, stage1, stage2) %>% 
-  count() %>% 
-  ungroup() %>% 
-  filter(stage1 == "Selected") %>% 
-  rename(source = stage1, target = stage2, value = n) %>%
+temp |> 
+  group_by(stage0, stage1, stage2) |> 
+  count() |> 
+  ungroup() |> 
+  filter(stage1 == "Selected") |> 
+  rename(source = stage1, target = stage2, value = n) |>
   select(-stage0) -> temp2
 
 link = bind_rows(link, temp2) 
 
 # add node index to link
-link %>% 
-  ungroup() %>% 
-  left_join(nodes, by = c("source" = "label")) %>%
-  rename(source_index = index) %>% 
-  left_join(nodes, by = c("target" = "label")) %>%
-  rename(target_index = index) %>% 
-  select(source_index, target_index, value) %>%
+link |> 
+  ungroup() |> 
+  left_join(nodes, by = c("source" = "label")) |>
+  rename(source_index = index) |> 
+  left_join(nodes, by = c("target" = "label")) |>
+  rename(target_index = index) |> 
+  select(source_index, target_index, value) |>
   rename(source = source_index,
          target = target_index) -> link
 
@@ -266,7 +266,7 @@ fig <- plot_ly(type = "sankey", orientation = "h",
     hovertemplate = "%{value:.0f} papers<extra></extra>"
   ))
 
-fig <- fig %>% layout(
+fig <- fig |> layout(
   title = "Unjournal Paper Flow Diagram",
   font = list(size = 10)
 )
@@ -289,13 +289,13 @@ The bar plot below shows how papers came to be evaluated by us.
 ```{r paper-source}
 
 # Bar plot
-research %>% 
-  replace_na(list(source_main = "Unknown")) %>% 
+research |> 
+  replace_na(list(source_main = "Unknown")) |> 
   mutate(
     source_main = str_replace_all(source_main, "-", " "),
     source_main = str_replace_all(source_main, " +", " ")
-  ) %>%
-  select(source_main) %>% 
+  ) |>
+  select(source_main) |> 
   ggplot(aes(y = source_main)) + 
   geom_bar(position = "stack", stat = "count", color = "grey30", fill = "grey80") +
   labs(x = "Count", y = "") +
@@ -317,17 +317,17 @@ eval_true = c("published",
               "awaiting_evaluations")
 
 # Is the paper being evaluated? 
-all_papers_p <- all_papers_p %>% 
+all_papers_p <- all_papers_p |> 
   mutate(is_evaluated = if_else(`stage of process/todo` %in% eval_true, TRUE, FALSE))
 
 # main source clean
-all_papers_p <- all_papers_p %>% 
+all_papers_p <- all_papers_p |> 
   mutate(source_main = case_when(source_main == "NA" ~ "Not applicable",
                                  source_main == "internal-from-syllabus-agenda-policy-database" ~ "Internal: syllabus, agenda, etc.",
                                  is.na(source_main) ~ "Unknown",
                                  TRUE ~ source_main))
 
-all_papers_p %>% 
+all_papers_p |> 
 ggplot(aes(x = fct_infreq(source_main), fill = is_evaluated)) + 
   geom_bar(position = "stack", stat = "count") +
   labs(x = "Source", y = "Count", fill = "Selected for\nevaluation?") +
