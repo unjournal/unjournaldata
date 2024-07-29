@@ -105,12 +105,4 @@ jobs:
       #                          forceUpdate = TRUE)
       #   shell: Rscript {0}
 
-      - name: Render and publish Quarto website to GitHub Pages 
-        # The publish action also renders the website by default.
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          # this secret is always available for github actions
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 

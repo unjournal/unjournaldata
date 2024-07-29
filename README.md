@@ -6,16 +6,12 @@ This is the repository for
 Outputs and reports from here are published at <https://unjournal.github.io/unjournaldata>.
 
 
-## How it works
+## How it works: data and dashboards
 
 A single GitHub Action:
 
-* Exports data from Coda to csv files in the `/data` folder, via
-  `code/import-unjournal-data.py`.
-* Creates <https://unjournal.github.io/unjournaldata> from a
-  [Quarto](https://quarto.org) book. 
-* Creates [Shiny](https://shiny.posit.co) apps at 
-  <https://unjournal.shinyapps.io/DataExplorer/> and 
+* Exports data from Coda to csv files in the `/data` folder, via `code/import-unjournal-data.py`.
+* Creates [Shiny](https://shiny.posit.co) apps at <https://unjournal.shinyapps.io/DataExplorer/> and 
   <https://unjournal.shinyapps.io/uj-dashboard>.
 
 This action is automatically run 
@@ -24,16 +20,19 @@ This action is automatically run
 * once daily in any case.
 
 
-## Blog
+## How it works: website and blog posts
 
-Unjournal blog posts are in the `/blog` folder. These aren't 
+The Unjournal data website is in the `/website` folder. It's not
 created on GitHub, but directly on developer machines. 
 
-* To add a blog post, create a new folder inside `blog/posts`, and an 
+* To add a blog post, create a new folder inside `website/posts`, and an 
   `index.qmd` file inside the folder. 
-* Render the quarto file as normal, add it to the `gh-pages` branch, 
-  and push to GitHub.
-* See <https://quarto.org/docs/websites/website-blog.html> for more details.
+* Then run `quarto publish gh-pages` from inside the `website` folder.
+* Individual blog posts are *frozen*, so they won't be updated once they have been
+  created. See [here](https://quarto.org/docs/websites/website-blog.html#freezing-posts).
+* Also add and push your blog post, so your source code is visible on GitHub.
+* See <https://quarto.org/docs/websites/website-blog.html> and 
+  <https://quarto.org/docs/publishing/github-pages.html> for more details.
 
 
 ## Data
