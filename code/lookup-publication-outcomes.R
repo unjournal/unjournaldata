@@ -46,7 +46,7 @@ lookup_journal <- function (title, authors = character(0L)) {
   })
   
   journals <- list_rbind(journals)
-  journals <- journals %>% arrange(title, journal, source)
+  journals <- journals |> arrange(title, journal, source)
   
   return(journals)
 }
@@ -63,11 +63,11 @@ lookup_journal_scopus <- function (title, authors = character(0L)) {
   author_string <- paste(author_strings, collapse = "")
   query <- glue("{author_string}TITLE({title})")
   
-  req <- request("https://api.elsevier.com/content/search/scopus") %>% 
+  req <- request("https://api.elsevier.com/content/search/scopus") |> 
     req_url_query(
       apiKey = Sys.getenv("SCOPUS_API_KEY"),
       query = query
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3)
   
   resp <- req_perform(req)
@@ -90,16 +90,16 @@ lookup_journal_scopus <- function (title, authors = character(0L)) {
 
 
 lookup_journal_semantic <- function (title, authors = character(0L)) {
-  req <- request("https://api.semanticscholar.org/graph/v1/paper/search") %>%
+  req <- request("https://api.semanticscholar.org/graph/v1/paper/search") |>
     req_headers(
       "x-api-key" = Sys.getenv("SEMANTIC_SCHOLAR_API_KEY")
-    ) %>% 
+    ) |> 
     req_url_query(
       query = title,
       fields = "title,venue,journal,authors",
       publicationTypes = "journalArticle",
       limit = 10L
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3)
   
   resp <- req_perform(req)
@@ -130,12 +130,12 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   author_string <- glue("{authors}[au]")
   author_string <- paste(author_string, collapse = " AND ")
   search_term <- glue("\"{title}\"[Title] AND {author_string}")
-  req <- request("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi") %>% 
+  req <- request("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi") |> 
     req_url_query(
       db = "pubmed",
       term = search_term,
       retmode = "json"
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3)
 
   resp <- req_perform(req)
@@ -146,12 +146,12 @@ lookup_journal_pubmed <- function(title, authors = character(0L)) {
   
   ids <- unlist(res$esearchresult$idlist)
   
-  req2 <- request("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi") %>% 
+  req2 <- request("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi") |> 
     req_url_query(
       db = "pubmed",
       id = paste(ids, collapse = ","),
       retmode = "json"
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3)
   
   resp2 <- req_perform(req2)
@@ -175,7 +175,7 @@ lookup_journal_core <- function (title, authors = character(0L)) {
   author_string <- paste(author_strings, collapse = " ")
   search_query <- glue("{author_string} title:{title}")
   
-  req <- request_core("https://api.core.ac.uk/v3/search/outputs") %>% 
+  req <- request_core("https://api.core.ac.uk/v3/search/outputs") |> 
     req_url_query(
       q = search_query
     ) 
@@ -220,7 +220,7 @@ lookup_journal_core <- function (title, authors = character(0L)) {
 #' @examples
 #' lookup_journal_by_issn_core("issn:1179-1497")
 lookup_journal_by_issn_core <- function (issn) {
-  req <- request_core("https://api.core.ac.uk/v3/journals/") %>% 
+  req <- request_core("https://api.core.ac.uk/v3/journals/") |> 
     req_url_path_append(issn)
   resp <- tryCatch(
     req_perform(req),
@@ -264,10 +264,10 @@ request_core <- function(url) {
   
   core_api_key <- Sys.getenv("CORE_API_KEY")
   
-  req <- request(url) %>% 
+  req <- request(url) |> 
     req_headers(
       Authorization = glue("Bearer {core_api_key}")
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3L, is_transient = core_is_transient, 
               after = core_delay) 
 
@@ -288,14 +288,14 @@ lookup_journal_openalex <- function (title, authors = character(0L)) {
     }
   }
   
-  req <- request("https://api.openalex.org/works") %>% 
+  req <- request("https://api.openalex.org/works") |> 
     req_headers(
       mailto = openalex_email
-    ) %>% 
+    ) |> 
     req_url_query(
       filter = query_filter,
       select = "display_name,primary_location"
-    ) %>% 
+    ) |> 
     req_throttle(
       rate = 5 # openalex specifies 10 per second
     )
@@ -337,15 +337,14 @@ lookup_authors_openalex <- function (authors) {
   authors <- stringr::str_remove(authors, ",")
   author_string <- paste(authors, collapse = "|")
   
-  
-  req <- request("https://api.openalex.org/authors") %>% 
+  req <- request("https://api.openalex.org/authors") |> 
     req_headers(
       mailto = openalex_email
-    ) %>% 
+    ) |> 
     req_url_query(
       filter = glue("display_name.search:{author_string}"),
       select = "id,display_name"
-    ) %>% 
+    ) |> 
     req_throttle(
       rate = 5 # openalex specifies max 10 per second
     )
@@ -370,12 +369,12 @@ lookup_authors_openalex <- function (authors) {
 #'   was not found. See 
 #'   <https://dev.elsevier.com/documentation/SerialTitleAPI.wadl>
 lookup_stats_scopus <- function (journal) {
-  req <- request("https://api.elsevier.com/content/serial/title") %>% 
+  req <- request("https://api.elsevier.com/content/serial/title") |> 
     req_url_query(
       apiKey = Sys.getenv("SCOPUS_API_KEY"),
       title = journal,
       content = "journal"
-    ) %>% 
+    ) |> 
     req_retry(max_tries = 3)
   
   resp <- req_perform(req)
@@ -417,14 +416,14 @@ lookup_stats_scopus <- function (journal) {
 lookup_stats_openalex <- function (journal) {
   journal <- gsub(",", "", journal, fixed = TRUE)
   
-  req <- request("https://api.openalex.org/sources") %>% 
+  req <- request("https://api.openalex.org/sources") |> 
     req_headers(
       mailto = openalex_email
-    ) %>% 
+    ) |> 
     req_url_query(
       filter = glue("display_name.search:{journal}"),
       select = "display_name,summary_stats"
-    ) %>% 
+    ) |> 
     req_throttle(
       rate = 5
     )
