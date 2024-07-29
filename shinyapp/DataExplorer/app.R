@@ -13,18 +13,18 @@ df <- read_rds("shiny_explorer.rds")
 # df <- read_rds("./shinyapp/DataExplorer/shiny_explorer.rds")
 
 # create a palette with a color for each paper
-color_count = df$paper_abbrev %>% unique() %>% length()
+color_count = df$paper_abbrev |> unique() |> length()
 my_pal = colorRampPalette(brewer.pal(8, "Set1"))(color_count)
 
 
 # create new variables
-df <- df %>% 
-  group_by(paper_abbrev, rating_type) %>% 
+df <- df |> 
+  group_by(paper_abbrev, rating_type) |> 
   mutate(n_evals = n(), # number of evaluators for each paper
-         rating_mean = mean(est, na.rm = T)) %>%  # TODO: replace with aggreCAT functions later
-  ungroup() %>%
-  nest(.by = paper_abbrev) %>% 
-  mutate(paper_color = my_pal) %>% # give each paper its own color
+         rating_mean = mean(est, na.rm = T)) |>  # TODO: replace with aggreCAT functions later
+  ungroup() |>
+  nest(.by = paper_abbrev) |> 
+  mutate(paper_color = my_pal) |> # give each paper its own color
   unnest(cols = c(data))
 
 
@@ -43,7 +43,7 @@ ui <- fluidPage(
                  
                  selectInput(inputId = "RatingType",
                              label = "Rating Type:",
-                             choices = df$rating_type[!grepl(x = df$rating_type, pattern = "Journal$")] %>% unique() %>% as.character(), 
+                             choices = df$rating_type[!grepl(x = df$rating_type, pattern = "Journal$")] |> unique() |> as.character(), 
                              selected = "Overall assessment",
                              multiple = F),
                  checkboxInput(inputId = "ToggleMean",
@@ -207,12 +207,12 @@ server <- function(input, output) {
       
 
       # All papers, one rating dot plot ========================================
-      p <- df %>% 
-        filter(eval_name %in% included_evals) %>% 
-        filter(rating_type == input$RatingType) %>% 
-        filter(paper_abbrev %in% input$IncludedPapers) %>% 
-        filter(!is.na(rating_mean)) %>% 
-        mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) %>% 
+      p <- df |> 
+        filter(eval_name %in% included_evals) |> 
+        filter(rating_type == input$RatingType) |> 
+        filter(paper_abbrev %in% input$IncludedPapers) |> 
+        filter(!is.na(rating_mean)) |> 
+        mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) |> 
         ggplot(aes(x = paper_abbrev, y = est, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
         geom_point(aes(color = paper_color),
                    stat = "identity", size = 2, shape = 18, stroke = 1,
@@ -242,10 +242,10 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
 
       # 1 paper, all ratings dot plot ===================================
-      p <- df %>% 
-        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
-        mutate(rating_type = fct_drop(rating_type)) %>% #drop unused levels
-        filter(paper_abbrev == input$PaperName) %>% 
+      p <- df |> 
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") |> 
+        mutate(rating_type = fct_drop(rating_type)) |> #drop unused levels
+        filter(paper_abbrev == input$PaperName) |> 
         ggplot(aes(x = fct_rev(rating_type), y = est, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
         geom_point(aes(color = rating_type),
                    stat = "identity", size = 2, shape = 18, stroke = 1,
@@ -274,13 +274,13 @@ server <- function(input, output) {
       pd = position_dodge(width = 0.8)
       
       # All papers, journal information ========================================
-      df %>% 
-        filter(rating_type %in% c("Merits Journal", "Predicted Journal")) %>% 
-        filter(paper_abbrev %in% input$IncludedPapers2) %>% 
-        filter(!is.na(rating_mean)) %>% 
-        mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) %>% 
-        select(paper_abbrev, eval_name, rating_type, est, paper_color) %>% 
-        pivot_wider(names_from = rating_type, values_from = est) %>%
+      df |> 
+        filter(rating_type %in% c("Merits Journal", "Predicted Journal")) |> 
+        filter(paper_abbrev %in% input$IncludedPapers2) |> 
+        filter(!is.na(rating_mean)) |> 
+        mutate(paper_abbrev = fct_reorder(paper_abbrev, rating_mean)) |> 
+        select(paper_abbrev, eval_name, rating_type, est, paper_color) |> 
+        pivot_wider(names_from = rating_type, values_from = est) |>
         ggplot(aes(x = paper_abbrev, text = eval_name)) + # dont remove eval name or posdodge stops working (???)
         geom_point(aes(y = `Merits Journal`, color = paper_color, shape = "Merits Journal"),
                    stat = "identity", size = 2, stroke = 2,
@@ -307,9 +307,9 @@ server <- function(input, output) {
       par(mar = c(3, 0.5, 2, 0.5))
       
       
-      df %>% 
-        select(paper_abbrev, eval_name, rating_type, est) %>%
-        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
+      df |> 
+        select(paper_abbrev, eval_name, rating_type, est) |>
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") |> 
         mutate(rating_short = case_match(rating_type,
                                          "Overall assessment" ~ "Overall",
                                          "Methods: justification, reasonableness, validity, robustness" ~ "Methods",
@@ -317,10 +317,10 @@ server <- function(input, output) {
                                          "Advances our knowledge & practice" ~ "Advances Knowledge",
                                          "Logic and communication" ~ "Logic & Communication",
                                          "Relevance to global priorities" ~ "Global Relevance",
-                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) %>% 
-        pivot_wider(id_cols = c(paper_abbrev, eval_name), names_from = rating_short, values_from = est) %>% 
-        filter(paper_abbrev == input$PaperNameSpider1) %>%
-        select(-paper_abbrev) %>% 
+                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) |> 
+        pivot_wider(id_cols = c(paper_abbrev, eval_name), names_from = rating_short, values_from = est) |> 
+        filter(paper_abbrev == input$PaperNameSpider1) |>
+        select(-paper_abbrev) |> 
         column_to_rownames("eval_name") -> dat_spider
       
       # Set graphic colors
@@ -347,9 +347,9 @@ server <- function(input, output) {
       par(mar = c(3, 0.5, 2, 0.5))
       
       
-      df %>% 
-        select(paper_abbrev, eval_name, rating_type, est) %>%
-        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
+      df |> 
+        select(paper_abbrev, eval_name, rating_type, est) |>
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") |> 
         mutate(rating_short = case_match(rating_type,
                                          "Overall assessment" ~ "Overall",
                                          "Methods: justification, reasonableness, validity, robustness" ~ "Methods",
@@ -357,10 +357,10 @@ server <- function(input, output) {
                                          "Advances our knowledge & practice" ~ "Advances Knowledge",
                                          "Logic and communication" ~ "Logic & Communication",
                                          "Relevance to global priorities" ~ "Global Relevance",
-                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) %>% 
-        pivot_wider(id_cols = c(paper_abbrev, eval_name), names_from = rating_short, values_from = est) %>% 
-        filter(paper_abbrev == input$PaperNameSpider2) %>%
-        select(-paper_abbrev) %>% 
+                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) |> 
+        pivot_wider(id_cols = c(paper_abbrev, eval_name), names_from = rating_short, values_from = est) |> 
+        filter(paper_abbrev == input$PaperNameSpider2) |>
+        select(-paper_abbrev) |> 
         column_to_rownames("eval_name") -> dat_spider
       
       # Set graphic colors
@@ -390,10 +390,10 @@ server <- function(input, output) {
           xpd = TRUE)
       
       
-      df %>% 
-        select(paper_abbrev, rating_type, rating_mean) %>%
-        filter(paper_abbrev %in% input$PaperNameSpiderOverlap) %>%
-        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") %>% 
+      df |> 
+        select(paper_abbrev, rating_type, rating_mean) |>
+        filter(paper_abbrev %in% input$PaperNameSpiderOverlap) |>
+        filter(rating_type != "Merits Journal" & rating_type != "Predicted Journal") |> 
         mutate(rating_short = case_match(rating_type,
                                          "Overall assessment" ~ "Overall",
                                          "Methods: justification, reasonableness, validity, robustness" ~ "Methods",
@@ -401,9 +401,9 @@ server <- function(input, output) {
                                          "Advances our knowledge & practice" ~ "Advances Knowledge",
                                          "Logic and communication" ~ "Logic & Communication",
                                          "Relevance to global priorities" ~ "Global Relevance",
-                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) %>% 
-        distinct() %>% 
-        pivot_wider(id_cols = c(paper_abbrev), names_from = rating_short, values_from = rating_mean) %>% 
+                                         "Open, collaborative, replicable science and methods" ~ "Open Science")) |> 
+        distinct() |> 
+        pivot_wider(id_cols = c(paper_abbrev), names_from = rating_short, values_from = rating_mean) |> 
         column_to_rownames("paper_abbrev") -> dat_spider
       
       # Set graphic colors
