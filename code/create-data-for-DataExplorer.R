@@ -20,13 +20,13 @@ source(here("code", "DistAggModified.R"))
 evals_pub <- readr::read_csv(here("data/evals.csv"))
 all_papers_p <- readr::read_csv(here("data/all_papers_p.csv"))
 
-evals_pub_long <- evals_pub %>% 
+evals_pub_long <- evals_pub |> 
   pivot_longer(cols = -c(id, crucial_rsx, crucial_rsx_id, 
                          paper_abbrev, eval_name, 
                          cat_1,cat_2, cat_3, source_main, author_agreement),
                names_pattern = "(lb_|ub_|conf_)?(.+)",
-               names_to = c("value_type", "rating_type")) %>% # one line per rating type
-  mutate(value_type = if_else(value_type == "", "est_", value_type)) %>% #add main rating id
+               names_to = c("value_type", "rating_type")) |> # one line per rating type
+  mutate(value_type = if_else(value_type == "", "est_", value_type)) |> #add main rating id
   pivot_wider(names_from = value_type, 
               values_from = value)
 
@@ -102,12 +102,12 @@ impute_bounds <- function(var_name, est, lb, ub, conf, bound_type) {
 # apply functions to evals_pub_long
 # where each row is one type of rating
 # so each evaluation is 9 rows long
-evals_pub_long <- evals_pub_long %>% 
-  rowwise() %>% # apply function to each row
+evals_pub_long <- evals_pub_long |> 
+  rowwise() |> # apply function to each row
   mutate(lb_imp_ = impute_bounds(var_name = rating_type,
                                    est = est_,
                                    lb = lb_, ub = ub_, conf = conf_,
-                                   bound_type = "lower")) %>% 
+                                   bound_type = "lower")) |> 
   mutate(ub_imp_ = impute_bounds(var_name = rating_type,
                                    est = est_,
                                    lb = lb_, ub = ub_, conf = conf_,
@@ -116,7 +116,7 @@ evals_pub_long <- evals_pub_long %>%
 
 
 # Clean evals_pub_long names (remove _ at end)
-evals_pub_long <- evals_pub_long %>% 
+evals_pub_long <- evals_pub_long |> 
   rename_with(.cols = ends_with("_"),
               .fn = str_remove,
               pattern = "_$")
@@ -124,40 +124,40 @@ evals_pub_long <- evals_pub_long %>%
 # paper_ratings: even longer dataframe (ie tidy)
 # renamed to conform to aggreCAT nomenclature
 
-paper_ratings <- evals_pub_long %>% 
-  select(id, eval_name, paper_abbrev, rating_type, est, lb_imp, ub_imp) %>% 
-  filter(rating_type %in% rating_cats) %>%
+paper_ratings <- evals_pub_long |> 
+  select(id, eval_name, paper_abbrev, rating_type, est, lb_imp, ub_imp) |> 
+  filter(rating_type %in% rating_cats) |>
   rename(paper_id = paper_abbrev,
          user_name = eval_name,
          three_point_lower = lb_imp,
          three_point_upper = ub_imp,
-         three_point_best = est) %>%
-  mutate(round = "round_1") %>% 
+         three_point_best = est) |>
+  mutate(round = "round_1") |> 
   pivot_longer(cols = starts_with("three_point"),
                names_to = "element",
                values_to = "value")
 
 # calculate aggregated upper and lower bounds using modified
 # aggreCAT function DistributionWAggMOD
-paper_agg_ratings <- paper_ratings %>% 
-  group_by(rating_type, user_name, paper_id) %>% 
-  filter(sum(is.na(value))==0) %>% #remove ratings (best, ub, lb) that have NA values
-  group_by(rating_type) %>% 
-  nest() %>% 
+paper_agg_ratings <- paper_ratings |> 
+  group_by(rating_type, user_name, paper_id) |> 
+  filter(sum(is.na(value))==0) |> #remove ratings (best, ub, lb) that have NA values
+  group_by(rating_type) |> 
+  nest() |> 
   mutate(results = map(.x = data, .f = DistributionWAggMOD, 
-                       round_2_filter = FALSE, percent_toggle = T)) %>% 
-  unnest(results) %>% 
-  select(-data) %>% 
-  select(paper_id, rating_type, everything()) %>%   
-  arrange(paper_id) %>% 
-  mutate(across(.cols = c("agg_est", "agg_90ci_lb", "agg_90ci_ub"), .fns = ~.x*100)) %>% 
+                       round_2_filter = FALSE, percent_toggle = T)) |> 
+  unnest(results) |> 
+  select(-data) |> 
+  select(paper_id, rating_type, everything()) |>   
+  arrange(paper_id) |> 
+  mutate(across(.cols = c("agg_est", "agg_90ci_lb", "agg_90ci_ub"), .fns = ~.x*100)) |> 
   rename(agg_method = method)
 
 
-evals_pub_long <- evals_pub_long %>% 
+evals_pub_long <- evals_pub_long |> 
   left_join(paper_agg_ratings, by = c("paper_abbrev" = "paper_id", "rating_type"="rating_type"))
 
-evals_pub_long <- evals_pub_long %>% 
+evals_pub_long <- evals_pub_long |> 
   mutate(rating_type = factor(rating_type, 
                               levels = c(rating_cats, pred_cats),
                               labels = c("Overall assessment",
