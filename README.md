@@ -27,7 +27,9 @@ created on GitHub, but directly on developer machines.
 
 * To add a blog post, create a new folder inside `website/posts`, and an 
   `index.qmd` file inside the folder. 
-* Then run `quarto publish gh-pages` from inside the `website` folder.
+* Then navigate to the `website` folder and run `quarto publish gh-pages` from 
+  the command line. This will update the `gh-pages` branch on GitHub, which 
+  will then be reflected on the [unjournal.github.io website](https://unjournal.github.io/unjournaldata).
 * Individual blog posts are *frozen*, so they won't be updated once they have been
   created. See [here](https://quarto.org/docs/websites/website-blog.html#freezing-posts).
 * Also add and push your blog post, so your source code is visible on GitHub.
