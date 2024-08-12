@@ -7,6 +7,8 @@ about:
     - icon: github
       text: Github
       href: https://github.com/unjournal/unjournaldata
+    - text: Posts
+      href: posts.html 
 aliases: 
   - chapters/evaluation_data_analysis.html
 ---
