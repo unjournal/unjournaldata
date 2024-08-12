@@ -6,7 +6,6 @@ website:
   description: "News and insights from The Unjournal"
   site-url: https://unjournal.github.io
   repo-url: https://github.com/unjournal/unjournaldata/
-  reader-mode: true
   navbar:
     right:
       - about.qmd
