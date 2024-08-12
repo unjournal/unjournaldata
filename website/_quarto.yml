@@ -8,7 +8,7 @@ website:
   repo-url: https://github.com/unjournal/unjournaldata/
   navbar:
     right:
-      - about.qmd
+      - posts.qmd
       - icon: github
         href: https://github.com/unjournal/unjournaldata
 
