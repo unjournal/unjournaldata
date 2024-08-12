@@ -1,5 +1,5 @@
 ---
-title: Posts
+title: Blog Posts
 listing:
   contents: posts
   sort: "date desc"
@@ -8,8 +8,6 @@ listing:
   sort-ui: false
   filter-ui: false
 page-layout: full
-aliases: 
-  - chapters/evaluation_data_analysis.html
 title-block-banner: true
 ---
 
