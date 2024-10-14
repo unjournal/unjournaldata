@@ -33,7 +33,10 @@ ui <- fluidPage(
   
   # Application title
   titlePanel("Unjournal Evaluation Data"),
-  
+  fluidRow(
+    column(width = 12, strong(HTML("This dashboard uses old data. For more recent
+           data see <a href=\"/uj-dashboard/\">here</a>.")))
+  ),
   tabsetPanel(
     tabPanel(title = "Across Papers",
     # Sidebar with plot options
