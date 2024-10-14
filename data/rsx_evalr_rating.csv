@@ -1,492 +1,492 @@
-research,evaluator,criteria,middle_rating,lower_CI,upper_CI,confidence_level
-Willful Ignorance and Moral Behavior,Romain Espinosa,adv_knowledge,85,80,90,
-Willful Ignorance and Moral Behavior,Romain Espinosa,methods,85,80,90,
-Willful Ignorance and Moral Behavior,Romain Espinosa,logic_comms,85,80,90,
-Willful Ignorance and Moral Behavior,Romain Espinosa,open_sci,50,50,50,
-Willful Ignorance and Moral Behavior,Romain Espinosa,real_world,90,85,95,
-Willful Ignorance and Moral Behavior,Romain Espinosa,gp_relevance,100,100,100,
-Willful Ignorance and Moral Behavior,Romain Espinosa,overall,88,83,93,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,overall,90,75,96,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,real_world,75,33,92,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,gp_relevance,75,33,92,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,open_sci,75,33,92,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,logic_comms,75,33,92,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,methods,60,20,80,
-Willful Ignorance and Moral Behavior,Joshua Tasoff,adv_knowledge,75,33,92,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,overall,40,30,50,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,real_world,50,40,60,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,gp_relevance,50,40,60,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,logic_comms,70,60,79,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,open_sci,80,70,90,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,methods,25,15,35,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,adv_knowledge,25,15,35,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,open_sci,78,70,85,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,logic_comms,80,70,90,
-"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,methods,21,10,33,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,adv_knowledge,70,65,75,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,methods,68,58,78,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,logic_comms,75,70,80,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,open_sci,80,70,90,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,real_world,70,65,75,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,gp_relevance,80,70,90,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,journal_predict,3,2.8,3.2,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,merits_journal,4.2,2.8,3.2,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,overall,75,68,82,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,journal_predict,2.5,2,3.0,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,merits_journal,3,2,3.5,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,overall,70,55,74,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,gp_relevance,83,77,87,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,real_world,80,73,85,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,logic_comms,66,58,75,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,open_sci,61,52,73,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,methods,60,44,82,
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,adv_knowledge,80,65,85,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,overall,80,65,90,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,real_world,95,90,100,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,gp_relevance,86,77,95,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,journal_predict,3.3,2.6,4.1,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,merits_journal,3.3,2.6,4.1,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,logic_comms,91,81,100,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,open_sci,96,92,100,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,methods,77,70,83,
-Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,adv_knowledge,76,64,85,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,adv_knowledge,85,75,90,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,methods,80,50,100,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,logic_comms,80,50,100,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,open_sci,70,25,80,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,real_world,95,70,100,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,gp_relevance,95,90,100,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,journal_predict,4.5,4,5.0,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,merits_journal,4.7,4,5.0,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,overall,85,75,90,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,journal_predict,4.7,4,5.0,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,merits_journal,4.7,4,5.0,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,overall,95,80,99,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,real_world,95,75,99,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,gp_relevance,85,70,99,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,logic_comms,90,70,95,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,open_sci,90,70,95,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,methods,90,70,95,
-Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,adv_knowledge,95,80,99,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,overall,70,60,80,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,real_world,70,65,75,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,gp_relevance,80,68,92,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,journal_predict,4,3.8,4.2,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,merits_journal,4,3.6,4.4,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,logic_comms,65,60,70,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,open_sci,65,60,70,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,methods,70,60,80,
-Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,adv_knowledge,80,75,85,
-Existential risk and growth,Ioannis Bournakis,adv_knowledge,60,55,65,
-Existential risk and growth,Ioannis Bournakis,methods,85,80,90,
-Existential risk and growth,Ioannis Bournakis,logic_comms,70,65,75,
-Existential risk and growth,Ioannis Bournakis,open_sci,63,60,70,
-Existential risk and growth,Ioannis Bournakis,real_world,65,60,72,
-Existential risk and growth,Ioannis Bournakis,gp_relevance,70,65,75,
-Existential risk and growth,Ioannis Bournakis,journal_predict,3.5,3.2,4.0,
-Existential risk and growth,Ioannis Bournakis,merits_journal,3.5,3.2,4.1,
-Existential risk and growth,Ioannis Bournakis,overall,68,60,70,
-Existential risk and growth,Seth G. Benzell,overall,95,80,99,
-Existential risk and growth,Seth G. Benzell,real_world,80,50,100,
-Existential risk and growth,Seth G. Benzell,gp_relevance,80,60,100,
-Existential risk and growth,Seth G. Benzell,journal_predict,4.5,4.2,5.0,
-Existential risk and growth,Seth G. Benzell,merits_journal,4.5,3,5.0,
-Existential risk and growth,Seth G. Benzell,open_sci,95,90,99,
-Existential risk and growth,Seth G. Benzell,logic_comms,90,85,95,
-Existential risk and growth,Seth G. Benzell,methods,90,75,95,
-Existential risk and growth,Seth G. Benzell,adv_knowledge,80,50,100,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,adv_knowledge,65,45,85,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,methods,75,65,85,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,logic_comms,95,90,100,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,open_sci,90,80,100,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,real_world,50,25,75,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,gp_relevance,90,85,95,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,journal_predict,3.7,3.2,4.2,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,merits_journal,3.7,3.2,4.7,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,overall,85,75,95,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,overall,50,40,60,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,real_world,20,0,40,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,gp_relevance,45,30,60,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,journal_predict,2.5,2,3.0,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,merits_journal,3.5,2,5.0,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,logic_comms,50,30,70,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,open_sci,35,20,50,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,methods,50,40,60,
-Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,adv_knowledge,80,70,90,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,adv_knowledge,85,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,methods,75,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,logic_comms,75,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,open_sci,85,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,real_world,95,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,gp_relevance,95,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,overall,80,,,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,overall,75,60,90,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,merits_journal,4,3.5,5.0,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,journal_predict,4,3.5,5.0,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,gp_relevance,90,85,95,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,real_world,90,85,95,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,open_sci,70,60,80,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,logic_comms,80,70,90,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,methods,70,60,80,
-Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,adv_knowledge,75,60,90,
-Biodiversity risk,Ben Balmford,adv_knowledge,45,39,50,
-Biodiversity risk,Ben Balmford,methods,45,40,50,
-Biodiversity risk,Ben Balmford,logic_comms,68,60,75,
-Biodiversity risk,Ben Balmford,open_sci,90,80,100,
-Biodiversity risk,Ben Balmford,real_world,63,55,70,
-Biodiversity risk,Ben Balmford,gp_relevance,86,75,100,
-Biodiversity risk,Ben Balmford,journal_predict,3.5,3.1,4.0,
-Biodiversity risk,Ben Balmford,merits_journal,4.4,3.3,5.0,
-Biodiversity risk,Ben Balmford,overall,61,51,72,
-Biodiversity risk,Anon. Evaluator 1,merits_journal,4.5,4,5.0,
-Biodiversity risk,Anon. Evaluator 1,open_sci,90,70,100,
-Biodiversity risk,Anon. Evaluator 1,overall,65,50,80,
-Biodiversity risk,Anon. Evaluator 1,journal_predict,4,3.5,4.5,
-Biodiversity risk,Anon. Evaluator 1,gp_relevance,92,85,100,
-Biodiversity risk,Anon. Evaluator 1,real_world,71,59,80,
-Biodiversity risk,Anon. Evaluator 1,logic_comms,81,70,91,
-Biodiversity risk,Anon. Evaluator 1,methods,70,60,85,
-Biodiversity risk,Anon. Evaluator 1,adv_knowledge,70,60,80,
-Legalizing Entrepreneurship,Anon. evaluation 1,adv_knowledge,60,50,70,
-Legalizing Entrepreneurship,Anon. evaluation 1,methods,60,50,70,
-Legalizing Entrepreneurship,Anon. evaluation 1,logic_comms,60,50,70,
-Legalizing Entrepreneurship,Anon. evaluation 1,open_sci,60,40,60,
-Legalizing Entrepreneurship,Anon. evaluation 1,real_world,60,70,90,
-Legalizing Entrepreneurship,Anon. evaluation 1,gp_relevance,60,70,90,
-Legalizing Entrepreneurship,Anon. evaluation 1,journal_predict,2.5,2,3,
-Legalizing Entrepreneurship,Anon. evaluation 2,methods,92,86,97,
-Legalizing Entrepreneurship,Anon. evaluation 2,logic_comms,98,95,100,
-Legalizing Entrepreneurship,Anon. evaluation 2,open_sci,78,72,83,
-Legalizing Entrepreneurship,Anon. evaluation 2,real_world,97,93,100,
-Legalizing Entrepreneurship,Anon. evaluation 2,gp_relevance,94,88,100,
-Legalizing Entrepreneurship,Anon. evaluation 2,journal_predict,4.4,4,4.7,
-Legalizing Entrepreneurship,Anon. evaluation 2,adv_knowledge,96,90,100,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,methods,50,30,60,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,logic_comms,30,10,50,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,open_sci,50,30,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,real_world,60,50,80,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,gp_relevance,60,50,80,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,merits_journal,2,1,3,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,journal_predict,2,1,4,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,adv_knowledge,35,10,50,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,journal_predict,2.5,1,3,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,gp_relevance,70,50,90,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,real_world,70,50,90,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,open_sci,70,50,90,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,logic_comms,70,50,90,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,methods,70,50,90,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,adv_knowledge,70,50,90,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,adv_knowledge,80,85,95,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,methods,80,65,75,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,logic_comms,90,80,90,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,open_sci,90,70,80,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,real_world,90,90,100,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,gp_relevance,90,90,100,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,journal_predict,4,,,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,methods,80,70,95,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,logic_comms,90,88,92,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,open_sci,80,75,95,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,real_world,95,90,100,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,gp_relevance,95,80,100,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,journal_predict,4,3,5,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,adv_knowledge,80,70,85,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,methods,10,0,40,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,logic_comms,30,10,50,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,real_world,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,gp_relevance,50,10,80,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,journal_predict,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,open_sci,10,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,merits_journal,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,adv_knowledge,50,20,70,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,adv_knowledge,30,20,80,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,methods,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,logic_comms,30,10,70,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,open_sci,10,0,50,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,real_world,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,gp_relevance,70,50,95,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,journal_predict,,,,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,merits_journal,,,,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,adv_knowledge,85,75,95,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,methods,40,30,60,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,logic_comms,85,60,90,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,open_sci,90,85,95,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,real_world,90,85,95,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,gp_relevance,90,85,95,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,journal_predict,4.3,4,4.5,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,journal_predict,4.5,4,5.0,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,gp_relevance,70,60,80,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,real_world,80,75,85,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,open_sci,70,65,75,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,logic_comms,70,65,75,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,methods,75,70,80,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,adv_knowledge,80,75,85,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,journal_predict,46,41,50,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,open_sci,88,82,95,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,gp_relevance,92,82,100,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,real_world,86,79,93,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,logic_comms,79,69,89,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,methods,90,83,97,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,adv_knowledge,90,80,100,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,journal_predict,40,35,45,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,gp_relevance,85,80,90,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,real_world,83,76,90,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,open_sci,35,20,50,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,logic_comms,77,74,80,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,methods,75,68,82,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,adv_knowledge,83,76,90,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,journal_predict,40,25,50,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,gp_relevance,70,45,90,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,real_world,87,74,98,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,open_sci,30,10,75,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,logic_comms,76,40,91,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,methods,85,63,95,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,adv_knowledge,85,65,95,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,journal_predict,47,40,50,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,gp_relevance,60,40,80,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,real_world,90,80,100,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,open_sci,90,80,100,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,logic_comms,80,70,90,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,methods,95,90,100,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,adv_knowledge,93,70,100,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,journal_predict,44,40,49,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,merits_journal,37,33,41,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,gp_relevance,10,1,20,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,real_world,24,17,32,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,open_sci,97,93,100,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,logic_comms,70,66,74,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,methods,75,66,84,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,adv_knowledge,50,45,55,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,gp_relevance,15,10,20,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,real_world,15,10,20,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,open_sci,95,90,100,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,logic_comms,85,75,90,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,methods,80,50,90,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,adv_knowledge,15,10,20,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,merits_journal,4,,,4
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,overall,75,70,84,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,overall,40,20,60,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,merits_journal,2,1,3,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,overall,85,80,90,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,merits_journal,4,,,85
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,merits_journal,4,3,5,
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,overall,90,75,95,
-Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,overall,40,10,60,
-Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,overall,25,0,50,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,overall,85,65,95,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,merits_journal,4,2.5,5.0,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,merits_journal,4.7,4,5.0,
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,overall,83,93,100,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,overall,92,81,100,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,merits_journal,4.7,4.4,5.0,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,merits_journal,4,3.5,4.5,
-"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,overall,77,70,84,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,merits_journal,40,40,50,
-When do “Nudges” Increase Welfare?,Anon. evaluator 2,overall,86,76,96,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,journal_predict,4,35,42,
-Legalizing Entrepreneurship,Anon. evaluation 1,merits_journal,2.5,2,3,
-Legalizing Entrepreneurship,Anon. evaluation 2,merits_journal,4.7,4,5,
-Legalizing Entrepreneurship,Anon. evaluation 2,overall,90,85,97,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,merits_journal,3.5,3,4,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,overall,75,60,90,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,merits_journal,4.5,4,5,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,merits_journal,2.5,1,3,
-Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,overall,70,50,78,
-The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,overall,75,70,85,
-When do “Nudges” Increase Welfare?,Anon. evaluator 1,overall,85,70,95,
-Legalizing Entrepreneurship,Anon. evaluation 1,overall,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,overall,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,adv_knowledge,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,methods,50,40,60,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,logic_comms,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,open_sci,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,real_world,60,50,70,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,gp_relevance,80,70,90,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,merits_journal,3,2.5,3.5,
-Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,journal_predict,3,2.5,3.5,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,adv_knowledge,80,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,methods,50,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,logic_comms,70,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,real_world,90,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,gp_relevance,65,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,journal_predict,2.5,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,open_sci,50,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,merits_journal,3,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,overall,75,,,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,adv_knowledge,70,55,75,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,methods,60,55,70,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,logic_comms,55,50,65,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,real_world,55,45,75,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,gp_relevance,80,70,90,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,journal_predict,3.6,2.8,4,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,open_sci,45,30,60,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,merits_journal,3.8,3,4.1,
-The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,overall,65,55,74,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,adv_knowledge,80,70,90,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,methods,70,50,90,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,logic_comms,85,65,95,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,real_world,,,,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,gp_relevance,85,70,90,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,journal_predict,3.5,3,5,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,open_sci,73,50,95,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,merits_journal,4,3,5,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,overall,80,60,90,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,adv_knowledge,65,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,methods,60,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,logic_comms,75,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,real_world,75,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,gp_relevance,75,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,journal_predict,,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,open_sci,50,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,merits_journal,4,,,4
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,overall,75,,,4
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,adv_knowledge,30,20,60,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,methods,50,40,60,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,logic_comms,60,40,75,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,real_world,,,,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,gp_relevance,90,60,95,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,journal_predict,2,1,2,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,open_sci,70,40,75,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,merits_journal,2,1,2,
-Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,overall,40,20,60,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,adv_knowledge,90,85,95,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,methods,80,70,90,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,logic_comms,80,75,85,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,real_world,90,85,95,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,gp_relevance,90,85,95,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,journal_predict,4.8,4,5,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,open_sci,70,60,80,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,merits_journal,4.8,4.5,5,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,overall,90,85,95,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,adv_knowledge,25,20,40,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,methods,95,85,97.5,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,logic_comms,75,60,90,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,real_world,,,,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,gp_relevance,60,40,75,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,journal_predict,3,2.5,4.5,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,open_sci,,,,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,merits_journal,,,,
-Advance Market Commitments: Insights from Theory and Experience,David Manheim,overall,80,70,90,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,adv_knowledge,70,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,methods,80,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,logic_comms,70,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,real_world,90,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,gp_relevance,80,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,journal_predict,3,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,open_sci,70,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,merits_journal,3,,,
-Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,overall,75,,,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,adv_knowledge,90,70,100,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,methods,70,50,90,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,logic_comms,70,50,90,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,real_world,90,70,100,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,gp_relevance,90,70,100,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,journal_predict,5,,,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,open_sci,50,30,70,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,merits_journal,5,,,
-Advance Market Commitments: Insights from Theory and Experience,Joel Tan,overall,79,59,94,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,adv_knowledge,76,68,83,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,methods,72,63,81,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,logic_comms,67,62,78,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,real_world,91,78,94,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,gp_relevance,92,82,95,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,journal_predict,4.6,3.8,5,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,open_sci,48,42,68,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,merits_journal,4.3,3.7,4.8,
-Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,overall,80,71,86,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,adv_knowledge,90,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,methods,75,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,logic_comms,80,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,real_world,95,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,gp_relevance,95,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,journal_predict,4,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,open_sci,90,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,merits_journal,4,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,overall,88,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,adv_knowledge,90,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,methods,80,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,logic_comms,80,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,real_world,,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,gp_relevance,95,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,journal_predict,4,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,open_sci,90,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,merits_journal,4,,,
-Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,overall,80,,,
-Artificial Intelligence and Economic Growth,Seth Benzell,adv_knowledge,75,65,85,
-Artificial Intelligence and Economic Growth,Seth Benzell,methods,80,75,85,
-Artificial Intelligence and Economic Growth,Seth Benzell,logic_comms,70,60,80,
-Artificial Intelligence and Economic Growth,Seth Benzell,real_world,,,,
-Artificial Intelligence and Economic Growth,Seth Benzell,gp_relevance,90,85,100,
-Artificial Intelligence and Economic Growth,Seth Benzell,journal_predict,,,,
-Artificial Intelligence and Economic Growth,Seth Benzell,open_sci,95,90,100,
-Artificial Intelligence and Economic Growth,Seth Benzell,merits_journal,4,3.5,5,
-Artificial Intelligence and Economic Growth,Seth Benzell,overall,80,70,90,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,adv_knowledge,55,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,methods,55,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,logic_comms,70,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,real_world,55,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,gp_relevance,70,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,journal_predict,3,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,open_sci,45,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,merits_journal,3,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,overall,62,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,adv_knowledge,70,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,methods,,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,logic_comms,80,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,real_world,,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,gp_relevance,80,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,journal_predict,3.5,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,open_sci,,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,merits_journal,3.5,,,
-Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,overall,65,,,
-Artificial Intelligence and Economic Growth,Phil Trammel,adv_knowledge,97,80,100,
-Artificial Intelligence and Economic Growth,Phil Trammel,methods,70,40,90,
-Artificial Intelligence and Economic Growth,Phil Trammel,logic_comms,45,30,70,
-Artificial Intelligence and Economic Growth,Phil Trammel,real_world,,,,
-Artificial Intelligence and Economic Growth,Phil Trammel,gp_relevance,92,80,100,
-Artificial Intelligence and Economic Growth,Phil Trammel,journal_predict,3.5,,,
-Artificial Intelligence and Economic Growth,Phil Trammel,open_sci,80,,,
-Artificial Intelligence and Economic Growth,Phil Trammel,merits_journal,5,,,
-Artificial Intelligence and Economic Growth,Phil Trammel,overall,92,80,100,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,adv_knowledge,60,55,65,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,methods,90,82,94,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,logic_comms,70,62,82,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,real_world,50,48,52,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,gp_relevance,50,40,60,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,journal_predict,4,,,
-Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,open_sci,90,80,95,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,adv_knowledge,90,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,methods,80,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,logic_comms,85,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,real_world,100,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,gp_relevance,100,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,journal_predict,4,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,open_sci,80,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,merits_journal,5,,,
-When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,overall,85,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,adv_knowledge,70,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,methods,70,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,logic_comms,75,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,real_world,60,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,gp_relevance,80,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,journal_predict,4,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,open_sci,65,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,merits_journal,4,,,
-The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,overall,70,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,adv_knowledge,90,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,methods,90,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,logic_comms,80,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,real_world,100,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,gp_relevance,100,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,journal_predict,4,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,open_sci,70,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,merits_journal,5,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,overall,90,,,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,adv_knowledge,70,60,90,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,methods,90,85,95,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,logic_comms,75,70,90,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,real_world,75,60,90,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,gp_relevance,90,80,100,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,journal_predict,3,2,4,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,open_sci,50,40,80,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,merits_journal,4,3,4,
-The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,overall,75,65,85,
+research,evaluator,criteria,middle_rating,lower_CI,upper_CI,confidence_level,row_created_date
+Willful Ignorance and Moral Behavior,Romain Espinosa,adv_knowledge,85,80,90,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,methods,85,80,90,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,logic_comms,85,80,90,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,open_sci,50,50,50,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,real_world,90,85,95,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,gp_relevance,100,100,100,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Romain Espinosa,overall,88,83,93,,2024-09-24T15:37:52.731-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,overall,90,75,96,,2024-09-24T15:37:27.207-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,real_world,75,33,92,,2024-09-24T15:37:00.900-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,gp_relevance,75,33,92,,2024-09-24T15:37:00.900-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,open_sci,75,33,92,,2024-09-24T15:36:22.085-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,logic_comms,75,33,92,,2024-09-24T15:36:04.129-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,methods,60,20,80,,2024-09-24T15:35:31.305-04:00
+Willful Ignorance and Moral Behavior,Joshua Tasoff,adv_knowledge,75,33,92,,2024-09-24T15:34:35.367-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,overall,40,30,50,,2024-09-24T15:19:11.529-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,real_world,50,40,60,,2024-09-24T15:17:49.858-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,gp_relevance,50,40,60,,2024-09-24T15:17:49.858-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,logic_comms,70,60,79,,2024-09-24T15:16:40.499-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,open_sci,80,70,90,,2024-09-24T15:16:40.499-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,methods,25,15,35,,2024-09-24T15:16:36.240-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 2,adv_knowledge,25,15,35,,2024-09-24T15:15:44.330-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,open_sci,78,70,85,,2024-09-24T15:11:52.194-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,logic_comms,80,70,90,,2024-09-24T15:11:35.449-04:00
+"Zero-Sum Thinking, the Evolution of Effort-Suppressing Beliefs, and Economic Development",Evaluator 1,methods,21,10,33,,2024-09-24T15:08:01.494-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,adv_knowledge,70,65,75,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,methods,68,58,78,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,logic_comms,75,70,80,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,open_sci,80,70,90,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,real_world,70,65,75,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,gp_relevance,80,70,90,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,journal_predict,3,2.8,3.2,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,merits_journal,4.2,2.8,3.2,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 2,overall,75,68,82,,2024-08-15T13:29:40.784-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,journal_predict,2.5,2,3.0,,2024-08-15T13:29:12.926-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,merits_journal,3,2,3.5,,2024-08-15T13:29:12.926-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,overall,70,55,74,,2024-08-15T13:29:12.926-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,gp_relevance,83,77,87,,2024-08-15T13:28:52.730-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,real_world,80,73,85,,2024-08-15T13:28:46.214-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,logic_comms,66,58,75,,2024-08-15T13:27:20.429-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,open_sci,61,52,73,,2024-08-15T13:27:20.429-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,methods,60,44,82,,2024-08-15T13:27:05.299-04:00
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Anon. evaluation 1,adv_knowledge,80,65,85,,2024-08-15T13:25:49.079-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,overall,80,65,90,,2024-08-15T13:19:30.030-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,real_world,95,90,100,,2024-08-15T13:18:33.162-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,gp_relevance,86,77,95,,2024-08-15T13:18:33.162-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,journal_predict,3.3,2.6,4.1,,2024-08-15T13:18:33.162-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,merits_journal,3.3,2.6,4.1,,2024-08-15T13:18:33.162-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,logic_comms,91,81,100,,2024-08-15T13:18:28.453-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,open_sci,96,92,100,,2024-08-15T13:18:28.453-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,methods,77,70,83,,2024-08-15T13:18:24.171-04:00
+Economic vs. Epidemiological Approaches to Measuring the Human Capital Impacts of Infectious Disease Elimination,Anon. evaluator 2,adv_knowledge,76,64,85,,2024-08-15T13:16:54.337-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,adv_knowledge,85,75,90,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,methods,80,50,100,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,logic_comms,80,50,100,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,open_sci,70,25,80,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,real_world,95,70,100,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,gp_relevance,95,90,100,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,journal_predict,4.5,4,5.0,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,merits_journal,4.7,4,5.0,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 3,overall,85,75,90,,2024-08-15T13:03:44.804-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,journal_predict,4.7,4,5.0,,2024-08-15T13:01:56.548-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,merits_journal,4.7,4,5.0,,2024-08-15T13:01:56.548-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,overall,95,80,99,,2024-08-15T13:01:56.548-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,real_world,95,75,99,,2024-08-15T13:00:16.837-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,gp_relevance,85,70,99,,2024-08-15T13:00:16.837-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,logic_comms,90,70,95,,2024-08-15T13:00:13.950-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,open_sci,90,70,95,,2024-08-15T13:00:13.950-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,methods,90,70,95,,2024-08-15T13:00:09.466-04:00
+Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Anon. evaluator 2,adv_knowledge,95,80,99,,2024-08-15T12:59:34.624-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,overall,70,60,80,,2024-08-15T12:56:29.267-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,real_world,70,65,75,,2024-08-15T12:54:35.601-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,gp_relevance,80,68,92,,2024-08-15T12:54:35.601-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,journal_predict,4,3.8,4.2,,2024-08-15T12:54:35.601-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,merits_journal,4,3.6,4.4,,2024-08-15T12:54:35.601-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,logic_comms,65,60,70,,2024-08-15T12:54:31.949-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,open_sci,65,60,70,,2024-08-15T12:54:31.949-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,methods,70,60,80,,2024-08-15T12:54:28.091-04:00
+Does Conservation Work in General Equilibrium?,Anon. Evaluator 1,adv_knowledge,80,75,85,,2024-08-15T12:54:04.764-04:00
+Existential risk and growth,Ioannis Bournakis,adv_knowledge,60,55,65,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,methods,85,80,90,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,logic_comms,70,65,75,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,open_sci,63,60,70,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,real_world,65,60,72,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,gp_relevance,70,65,75,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,journal_predict,3.5,3.2,4.0,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,merits_journal,3.5,3.2,4.1,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Ioannis Bournakis,overall,68,60,70,,2024-08-15T12:45:07.105-04:00
+Existential risk and growth,Seth G. Benzell,overall,95,80,99,,2024-08-15T12:44:54.454-04:00
+Existential risk and growth,Seth G. Benzell,real_world,80,50,100,,2024-08-15T12:44:15.042-04:00
+Existential risk and growth,Seth G. Benzell,gp_relevance,80,60,100,,2024-08-15T12:44:15.042-04:00
+Existential risk and growth,Seth G. Benzell,journal_predict,4.5,4.2,5.0,,2024-08-15T12:44:15.042-04:00
+Existential risk and growth,Seth G. Benzell,merits_journal,4.5,3,5.0,,2024-08-15T12:44:15.042-04:00
+Existential risk and growth,Seth G. Benzell,open_sci,95,90,99,,2024-08-15T12:43:53.988-04:00
+Existential risk and growth,Seth G. Benzell,logic_comms,90,85,95,,2024-08-15T12:43:40.016-04:00
+Existential risk and growth,Seth G. Benzell,methods,90,75,95,,2024-08-15T12:43:31.956-04:00
+Existential risk and growth,Seth G. Benzell,adv_knowledge,80,50,100,,2024-08-15T12:42:24.208-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,adv_knowledge,65,45,85,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,methods,75,65,85,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,logic_comms,95,90,100,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,open_sci,90,80,100,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,real_world,50,25,75,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,gp_relevance,90,85,95,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,journal_predict,3.7,3.2,4.2,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,merits_journal,3.7,3.2,4.7,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Anon. evaluation 2,overall,85,75,95,,2024-08-15T09:31:34.362-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,overall,50,40,60,,2024-08-15T09:30:27.330-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,real_world,20,0,40,,2024-08-15T09:30:21.921-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,gp_relevance,45,30,60,,2024-08-15T09:30:21.921-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,journal_predict,2.5,2,3.0,,2024-08-15T09:30:21.921-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,merits_journal,3.5,2,5.0,,2024-08-15T09:30:21.921-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,logic_comms,50,30,70,,2024-08-15T09:30:17.576-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,open_sci,35,20,50,,2024-08-15T09:30:17.576-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,methods,50,40,60,,2024-08-15T09:30:09.070-04:00
+Water Treatment and Child Mortality: A Meta-analysis and Cost-effectiveness Analysis,Masset and Waddington,adv_knowledge,80,70,90,,2024-08-15T09:28:41.092-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,adv_knowledge,85,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,methods,75,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,logic_comms,75,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,open_sci,85,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,real_world,95,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,gp_relevance,95,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 2,overall,80,,,,2024-08-15T09:24:55.706-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,overall,75,60,90,,2024-08-15T09:22:08.470-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,merits_journal,4,3.5,5.0,,2024-08-15T09:22:02.202-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,journal_predict,4,3.5,5.0,,2024-08-15T09:21:55.934-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,gp_relevance,90,85,95,,2024-08-15T09:21:39.951-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,real_world,90,85,95,,2024-08-15T09:20:21.038-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,open_sci,70,60,80,,2024-08-15T09:20:14.684-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,logic_comms,80,70,90,,2024-08-15T09:20:08.702-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,methods,70,60,80,,2024-08-15T09:20:01.342-04:00
+Forecasting Existential Risks: Evidence From a Long-Run Forecasting Tournament,Anon. evaluation 1,adv_knowledge,75,60,90,,2024-08-15T09:19:27.199-04:00
+Biodiversity risk,Ben Balmford,adv_knowledge,45,39,50,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,methods,45,40,50,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,logic_comms,68,60,75,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,open_sci,90,80,100,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,real_world,63,55,70,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,gp_relevance,86,75,100,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,journal_predict,3.5,3.1,4.0,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,merits_journal,4.4,3.3,5.0,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Ben Balmford,overall,61,51,72,,2024-08-15T09:06:15.200-04:00
+Biodiversity risk,Anon. Evaluator 1,merits_journal,4.5,4,5.0,,2024-08-15T09:04:58.484-04:00
+Biodiversity risk,Anon. Evaluator 1,open_sci,90,70,100,,2024-08-15T09:03:34.610-04:00
+Biodiversity risk,Anon. Evaluator 1,overall,65,50,80,,2024-08-15T08:53:17.081-04:00
+Biodiversity risk,Anon. Evaluator 1,journal_predict,4,3.5,4.5,,2024-08-15T08:53:14.452-04:00
+Biodiversity risk,Anon. Evaluator 1,gp_relevance,92,85,100,,2024-08-15T08:53:11.366-04:00
+Biodiversity risk,Anon. Evaluator 1,real_world,71,59,80,,2024-08-15T08:53:01.625-04:00
+Biodiversity risk,Anon. Evaluator 1,logic_comms,81,70,91,,2024-08-15T08:52:58.990-04:00
+Biodiversity risk,Anon. Evaluator 1,methods,70,60,85,,2024-08-15T08:52:56.693-04:00
+Biodiversity risk,Anon. Evaluator 1,adv_knowledge,70,60,80,,2024-08-15T08:50:36.850-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,adv_knowledge,60,50,70,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,methods,60,50,70,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,logic_comms,60,50,70,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,open_sci,60,40,60,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,real_world,60,70,90,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,gp_relevance,60,70,90,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,journal_predict,2.5,2,3,,2024-07-09T10:50:42.081-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,methods,92,86,97,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,logic_comms,98,95,100,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,open_sci,78,72,83,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,real_world,97,93,100,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,gp_relevance,94,88,100,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,journal_predict,4.4,4,4.7,,2024-07-09T10:49:10.488-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,adv_knowledge,96,90,100,,2024-07-09T10:49:10.238-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,methods,50,30,60,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,logic_comms,30,10,50,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,open_sci,50,30,70,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,real_world,60,50,80,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,gp_relevance,60,50,80,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,merits_journal,2,1,3,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,journal_predict,2,1,4,,2024-07-09T10:46:48.718-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,adv_knowledge,35,10,50,,2024-07-09T10:46:48.495-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,journal_predict,2.5,1,3,,2024-07-09T10:45:04.453-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,gp_relevance,70,50,90,,2024-07-09T10:44:34.338-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,real_world,70,50,90,,2024-07-09T10:44:22.035-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,open_sci,70,50,90,,2024-07-09T10:44:17.430-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,logic_comms,70,50,90,,2024-07-09T10:44:05.350-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,methods,70,50,90,,2024-07-09T10:43:59.080-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,adv_knowledge,70,50,90,,2024-07-09T10:43:49.564-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,adv_knowledge,80,85,95,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,methods,80,65,75,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,logic_comms,90,80,90,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,open_sci,90,70,80,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,real_world,90,90,100,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,gp_relevance,90,90,100,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,journal_predict,4,,,,2024-07-09T10:36:34.095-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,methods,80,70,95,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,logic_comms,90,88,92,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,open_sci,80,75,95,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,real_world,95,90,100,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,gp_relevance,95,80,100,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,journal_predict,4,3,5,,2024-07-09T10:34:31.367-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,adv_knowledge,80,70,85,,2024-07-09T10:34:31.149-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,methods,10,0,40,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,logic_comms,30,10,50,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,real_world,,,,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,gp_relevance,50,10,80,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,journal_predict,,,,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,open_sci,10,,,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,merits_journal,,,,,2024-07-09T10:31:48.203-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,adv_knowledge,50,20,70,,2024-07-09T10:31:47.848-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,adv_knowledge,30,20,80,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,methods,,,,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,logic_comms,30,10,70,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,open_sci,10,0,50,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,real_world,,,,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,gp_relevance,70,50,95,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,journal_predict,,,,,2024-07-09T10:28:27.861-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,merits_journal,,,,,2024-07-09T10:28:27.351-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,adv_knowledge,85,75,95,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,methods,40,30,60,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,logic_comms,85,60,90,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,open_sci,90,85,95,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,real_world,90,85,95,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,gp_relevance,90,85,95,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,journal_predict,4.3,4,4.5,,2024-07-09T10:25:54.297-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,journal_predict,4.5,4,5.0,,2024-07-09T10:25:03.208-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,gp_relevance,70,60,80,,2024-07-09T10:24:42.667-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,real_world,80,75,85,,2024-07-09T10:24:06.793-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,open_sci,70,65,75,,2024-07-09T10:24:00.263-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,logic_comms,70,65,75,,2024-07-09T10:23:32.239-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,methods,75,70,80,,2024-07-09T10:23:22.988-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,adv_knowledge,80,75,85,,2024-07-09T10:23:13.120-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,journal_predict,46,41,50,,2024-07-09T10:15:22.364-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,open_sci,88,82,95,,2024-07-09T10:15:16.763-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,gp_relevance,92,82,100,,2024-07-09T10:15:14.640-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,real_world,86,79,93,,2024-07-09T10:15:12.734-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,logic_comms,79,69,89,,2024-07-09T10:15:10.113-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,methods,90,83,97,,2024-07-09T10:15:07.731-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,adv_knowledge,90,80,100,,2024-07-09T10:15:04.877-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,journal_predict,40,35,45,,2024-07-09T10:14:23.858-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,gp_relevance,85,80,90,,2024-07-09T10:14:04.153-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,real_world,83,76,90,,2024-07-09T10:13:47.134-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,open_sci,35,20,50,,2024-07-09T10:13:31.102-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,logic_comms,77,74,80,,2024-07-09T10:13:01.206-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,methods,75,68,82,,2024-07-09T10:12:35.779-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,adv_knowledge,83,76,90,,2024-07-09T10:12:02.995-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,journal_predict,40,25,50,,2024-07-09T10:10:18.290-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,gp_relevance,70,45,90,,2024-07-09T10:09:46.429-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,real_world,87,74,98,,2024-07-09T10:08:46.641-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,open_sci,30,10,75,,2024-07-09T10:08:29.185-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,logic_comms,76,40,91,,2024-07-09T10:08:08.551-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,methods,85,63,95,,2024-07-09T10:07:45.294-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,adv_knowledge,85,65,95,,2024-07-09T10:03:28.726-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,journal_predict,47,40,50,,2024-07-09T10:03:03.440-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,gp_relevance,60,40,80,,2024-07-09T10:02:52.960-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,real_world,90,80,100,,2024-07-09T10:02:43.447-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,open_sci,90,80,100,,2024-07-09T10:02:27.832-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,logic_comms,80,70,90,,2024-07-09T10:01:22.318-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,methods,95,90,100,,2024-07-09T10:01:21.631-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,adv_knowledge,93,70,100,,2024-07-09T10:00:58.741-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,journal_predict,44,40,49,,2024-07-09T09:56:17.545-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,merits_journal,37,33,41,,2024-07-09T09:56:03.055-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,gp_relevance,10,1,20,,2024-07-09T09:55:36.853-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,real_world,24,17,32,,2024-07-09T09:55:09.218-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,open_sci,97,93,100,,2024-07-09T09:54:56.716-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,logic_comms,70,66,74,,2024-07-09T09:47:42.830-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,methods,75,66,84,,2024-07-09T09:47:41.734-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,adv_knowledge,50,45,55,,2024-07-09T09:47:37.241-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,gp_relevance,15,10,20,,2024-07-09T09:44:48.684-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,real_world,15,10,20,,2024-07-09T09:44:28.792-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,open_sci,95,90,100,,2024-07-09T09:40:15.010-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,logic_comms,85,75,90,,2024-07-09T09:39:58.765-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,methods,80,50,90,,2024-07-09T09:39:28.493-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,adv_knowledge,15,10,20,,2024-07-09T09:38:55.700-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,merits_journal,4,,,4,2024-07-02T12:13:44.740-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,overall,75,70,84,,2024-07-02T12:13:44.740-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,overall,40,20,60,,2024-07-02T12:07:14.199-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Richard Bruns,merits_journal,2,1,3,,2024-07-02T12:06:30.154-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,overall,85,80,90,,2024-07-02T11:43:29.513-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Anon. evaluator 2,merits_journal,4,,,85,2024-07-02T11:43:29.513-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,merits_journal,4,3,5,,2024-07-02T11:43:01.638-04:00
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Karthik Tadepalli,overall,90,75,95,,2024-07-02T11:42:45.337-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Max Meier,overall,40,10,60,,2024-07-02T11:26:39.499-04:00
+Replicability & Generalisability:  A Guide to CEA discounts,Anon. evaluator 1,overall,25,0,50,,2024-07-02T11:12:03.805-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,overall,85,65,95,,2024-07-02T11:04:15.956-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 2,merits_journal,4,2.5,5.0,,2024-07-02T11:04:15.956-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,merits_journal,4.7,4,5.0,,2024-07-02T11:04:12.957-04:00
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Anon. evaluator 1,overall,83,93,100,,2024-07-02T11:03:35.004-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,overall,92,81,100,,2024-07-02T11:00:22.222-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 2,merits_journal,4.7,4.4,5.0,,2024-07-02T11:00:22.222-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,merits_journal,4,3.5,4.5,,2024-07-02T10:59:25.084-04:00
+"The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Anon. evaluator 1,overall,77,70,84,,2024-07-02T10:58:48.920-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,merits_journal,40,40,50,,2024-07-02T10:57:18.627-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 2,overall,86,76,96,,2024-07-02T10:55:58.459-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,journal_predict,4,35,42,,2024-07-02T10:55:55.132-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,merits_journal,2.5,2,3,,2024-07-02T10:52:45.349-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,merits_journal,4.7,4,5,,2024-07-02T10:52:45.349-04:00
+Legalizing Entrepreneurship,Anon. evaluation 2,overall,90,85,97,,2024-07-02T10:52:17.497-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,merits_journal,3.5,3,4,,2024-07-02T10:44:27.689-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 2,overall,75,60,90,,2024-07-02T10:44:03.541-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,merits_journal,4.5,4,5,,2024-07-02T10:44:00.610-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,merits_journal,2.5,1,3,,2024-07-02T10:33:16.059-04:00
+Effects of Emigration on Rural Labor Markets,Frank Gyimah Sackey,overall,70,50,78,,2024-07-02T10:31:51.539-04:00
+The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor,Anon. evaluator 1,overall,75,70,85,,2024-06-25T08:51:24.655-04:00
+When do “Nudges” Increase Welfare?,Anon. evaluator 1,overall,85,70,95,,2024-06-25T08:51:03.721-04:00
+Legalizing Entrepreneurship,Anon. evaluation 1,overall,60,50,70,,2024-06-25T08:50:34.139-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,overall,60,50,70,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,adv_knowledge,60,50,70,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,methods,50,40,60,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,logic_comms,60,50,70,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,open_sci,60,50,70,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,real_world,60,50,70,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,gp_relevance,80,70,90,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,merits_journal,3,2.5,3.5,,2024-06-07T17:12:14.230-04:00
+Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Tim Colbourn,journal_predict,3,2.5,3.5,,2024-06-07T17:12:14.230-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,adv_knowledge,80,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,methods,50,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,logic_comms,70,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,real_world,90,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,gp_relevance,65,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,journal_predict,2.5,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,open_sci,50,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,merits_journal,3,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Liew Jia Huan,overall,75,,,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,adv_knowledge,70,55,75,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,methods,60,55,70,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,logic_comms,55,50,65,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,real_world,55,45,75,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,gp_relevance,80,70,90,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,journal_predict,3.6,2.8,4,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,open_sci,45,30,60,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,merits_journal,3.8,3,4.1,,2024-06-07T16:40:59.270-04:00
+The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Anonymous_2,overall,65,55,74,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,adv_knowledge,80,70,90,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,methods,70,50,90,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,logic_comms,85,65,95,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,gp_relevance,85,70,90,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,journal_predict,3.5,3,5,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,open_sci,73,50,95,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,merits_journal,4,3,5,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Anca Hanea,overall,80,60,90,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,adv_knowledge,65,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,methods,60,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,logic_comms,75,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,real_world,75,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,gp_relevance,75,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,journal_predict,,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,open_sci,50,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,merits_journal,4,,,4,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 1,overall,75,,,4,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,adv_knowledge,30,20,60,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,methods,50,40,60,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,logic_comms,60,40,75,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,gp_relevance,90,60,95,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,journal_predict,2,1,2,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,open_sci,70,40,75,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,merits_journal,2,1,2,,2024-06-07T16:40:59.270-04:00
+Long term cost-effectiveness of resilient foods for global catastrophes compared to artificial general intelligence safety,Alex Bates,overall,40,20,60,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,adv_knowledge,90,85,95,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,methods,80,70,90,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,logic_comms,80,75,85,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,real_world,90,85,95,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,gp_relevance,90,85,95,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,journal_predict,4.8,4,5,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,open_sci,70,60,80,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,merits_journal,4.8,4.5,5,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Robert Kubinec,overall,90,85,95,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,adv_knowledge,25,20,40,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,methods,95,85,97.5,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,logic_comms,75,60,90,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,gp_relevance,60,40,75,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,journal_predict,3,2.5,4.5,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,open_sci,,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,merits_journal,,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,David Manheim,overall,80,70,90,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,adv_knowledge,70,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,methods,80,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,logic_comms,70,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,real_world,90,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,gp_relevance,80,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,journal_predict,3,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,open_sci,70,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,merits_journal,3,,,,2024-06-07T16:40:59.270-04:00
+Banning wildlife trade can boost demand for unregulated threatened species,Anonymous_8,overall,75,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,adv_knowledge,90,70,100,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,methods,70,50,90,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,logic_comms,70,50,90,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,real_world,90,70,100,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,gp_relevance,90,70,100,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,journal_predict,5,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,open_sci,50,30,70,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,merits_journal,5,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Joel Tan,overall,79,59,94,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,adv_knowledge,76,68,83,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,methods,72,63,81,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,logic_comms,67,62,78,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,real_world,91,78,94,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,gp_relevance,92,82,95,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,journal_predict,4.6,3.8,5,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,open_sci,48,42,68,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,merits_journal,4.3,3.7,4.8,,2024-06-07T16:40:59.270-04:00
+Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China,Anonymous_10,overall,80,71,86,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,adv_knowledge,90,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,methods,75,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,logic_comms,80,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,real_world,95,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,gp_relevance,95,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,open_sci,90,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,merits_journal,4,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Elias Cisneros,overall,88,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,adv_knowledge,90,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,methods,80,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,logic_comms,80,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,gp_relevance,95,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,open_sci,90,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,merits_journal,4,,,,2024-06-07T16:40:59.270-04:00
+Advance Market Commitments: Insights from Theory and Experience,Dan Tortorice,overall,80,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,adv_knowledge,75,65,85,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,methods,80,75,85,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,logic_comms,70,60,80,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,gp_relevance,90,85,100,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,journal_predict,,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,open_sci,95,90,100,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,merits_journal,4,3.5,5,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Seth Benzell,overall,80,70,90,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,adv_knowledge,55,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,methods,55,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,logic_comms,70,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,real_world,55,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,gp_relevance,70,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,journal_predict,3,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,open_sci,45,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,merits_journal,3,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anonymous_14,overall,62,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,adv_knowledge,70,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,methods,,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,logic_comms,80,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,gp_relevance,80,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,journal_predict,3.5,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,open_sci,,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,merits_journal,3.5,,,,2024-06-07T16:40:59.270-04:00
+Long-term cost-effectiveness of interventions for loss of electricity/industry compared to artificial general intelligence safety,Scott Janzwood,overall,65,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,adv_knowledge,97,80,100,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,methods,70,40,90,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,logic_comms,45,30,70,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,real_world,,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,gp_relevance,92,80,100,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,journal_predict,3.5,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,open_sci,80,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,merits_journal,5,,,,2024-06-07T16:40:59.270-04:00
+Artificial Intelligence and Economic Growth,Phil Trammel,overall,92,80,100,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,adv_knowledge,60,55,65,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,methods,90,82,94,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,logic_comms,70,62,82,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,real_world,50,48,52,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,gp_relevance,50,40,60,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+Cognitive Behavioral Therapy among Ghana’s Rural Poor Is Effective Regardless of Baseline Mental Distress,Anon. Evaluator 2,open_sci,90,80,95,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,adv_knowledge,90,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,methods,80,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,logic_comms,85,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,real_world,100,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,gp_relevance,100,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,open_sci,80,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,merits_journal,5,,,,2024-06-07T16:40:59.270-04:00
+When Celebrities Speak: A Nationwide Twitter Experiment Promoting Vaccination In Indonesia,Anirugh Tagat,overall,85,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,adv_knowledge,70,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,methods,70,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,logic_comms,75,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,real_world,60,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,gp_relevance,80,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,open_sci,65,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,merits_journal,4,,,,2024-06-07T16:40:59.270-04:00
+The Environmental Effects of Economic Production: Evidence from Ecological Observations,Anonymous_19,overall,70,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,adv_knowledge,90,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,methods,90,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,logic_comms,80,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,real_world,100,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,gp_relevance,100,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,journal_predict,4,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,open_sci,70,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,merits_journal,5,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Hannah Metzler,overall,90,,,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,adv_knowledge,70,60,90,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,methods,90,85,95,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,logic_comms,75,70,90,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,real_world,75,60,90,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,gp_relevance,90,80,100,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,journal_predict,3,2,4,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,open_sci,50,40,80,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,merits_journal,4,3,4,,2024-06-07T16:40:59.270-04:00
+The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being,Anonymous_21,overall,75,65,85,,2024-06-07T16:40:59.270-04:00
