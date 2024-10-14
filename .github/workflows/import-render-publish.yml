@@ -47,7 +47,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
           git add data/*.csv
-          git diff-index HEAD data/*.csv || git commit -m "Github actions: auto-update data"
+          git commit -m "Github actions: auto-update data"
           git push
         
       - name: Set up Quarto
