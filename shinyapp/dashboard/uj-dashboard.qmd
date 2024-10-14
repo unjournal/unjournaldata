@@ -26,6 +26,7 @@ periods <- c(
   "Ever"      = as.Date("1900-01-01"),
   "12 months" = today() - period(12, "months"),
   "6 months"  = today() - period(6, "months"),
+  "3 months"  = today() - period(3, "months"),
   "1 month"   = today() - period(1, "months")
 )
 
@@ -69,7 +70,9 @@ plotOutput("barplot_areas")
 
 ### Proposals
 
-The plot below shows the status of all papers proposed for evaluation.
+The plot below shows the status of all papers proposed for evaluation. We
+don't currently record when papers were proposed, so this plot ignores the
+time period chosen above.
 
 ```{r}
 plotOutput("barplot_proposals")
@@ -116,19 +119,27 @@ res_ratings <- inner_join(ratings, research,
 ```{r}
 #| context: server
 
+start_date <- reactive({
+  periods[input$period]  
+})
+
 evals <- reactive({
-  res_ratings
-  # TODO add a time filter
+  cat(period())
+  res_ratings |> 
+    filter(
+      row_created_date >= start_date()
+    )
 })
 
 evaled_research <- reactive({
   research |> 
-    filter(status %in% "50_published evaluations (on PubPub, by Unjournal)")
+    filter(status %in% "50_published evaluations (on PubPub, by Unjournal)") |> 
+    # this applies the time filter
+    semi_join(evals(), by = join_by(label_paper_title == research))
 })
 
 proposals <- reactive({
   research
-  # TODO add a time filter
 })
 
 n_evals <- reactive(n_distinct(select(evals(), research, evaluator)))
@@ -141,8 +152,7 @@ n_areas <- reactive(n_distinct(all_cats()))
 n_proposals <- reactive(nrow(proposals()))
 
 output$papers_evaluated <- renderText({
-  glue::glue("In the selected period, we considered
-  {n_proposals()} papers for evaluation. We ran {n_evals()} evaluations of
+  glue::glue("In the selected period, we ran {n_evals()} evaluations of
   {n_papers()} papers in {n_areas()} distinct research areas.")
 })
 
