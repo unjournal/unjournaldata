@@ -37,7 +37,7 @@ research.to_csv("data/research.csv", index = False)
 rsx_evalr_rating = doc.get_table("grid-pcJr9ZM3wT")
 rsx_evalr_rating = pd.DataFrame(rsx_evalr_rating.to_dict())
 columns = ['research', 'evaluator', 'criteria', 'middle_rating', 
-  'lower_CI', 'upper_CI', 'confidence_level']
+  'lower_CI', 'upper_CI', 'confidence_level', 'row_created_date']
 rsx_evalr_rating = rsx_evalr_rating[columns]
 rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv", index = False)
 
