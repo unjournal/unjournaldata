@@ -4,6 +4,7 @@ server: shiny
 format:
   dashboard:
     theme: simplex
+    expandable: false
 ---
 
 ```{r}
@@ -15,6 +16,7 @@ library(dplyr)
 conflicts_prefer(dplyr::filter)
 library(forcats)
 library(ggplot2)
+library(ggiraph)
 library(here)
 library(lubridate)
 library(shiny)
@@ -33,21 +35,57 @@ periods <- c(
 ```
 
 
-## {height=30%}
+```{r}
+#| context: data
+#| include: false
+
+research <- readr::read_csv(here("data/research.csv"))
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
+
+res_ratings <- inner_join(ratings, research, 
+                          by = join_by(research == label_paper_title))
+
+research_areas <- unique(research$main_cause_cat)
+research_areas <- c("All", research_areas)
+names(research_areas) <- research_areas
+
+```
+
+
+## {.toolbar}
+
+<style>
+.selectize-input {
+  white-space: nowrap;
+}
+.selectize-dropdown {
+  width: 400px !important;
+}
+#period + .shiny-input-select .selectize-dropdown {
+  width: 150px !important;
+}
+</style>
 
 ```{r}
 selectInput("period", "Period", names(periods))
 ```
 
 ```{r}
+selectInput("research_area", "Research area", names(research_areas))
+```
+
+
+```{r}
 textOutput("papers_evaluated")
 ```
 
 
-## {height=70% .tabset}
+## {.tabset}
 
 
 ### Sources
+
+#### Column
 
 Papers can come to be evaluated by different routes: chosen by Unjournal staff,
 submitted by the authors, or suggested by another third party. 
@@ -60,6 +98,8 @@ plotOutput("barplot_sources")
 
 ### Research areas
 
+#### Column
+
 The barplot shows the research areas of evaluated papers. Papers can belong to more
 than one research area. See [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) for a discussion of the research areas we cover.
 
@@ -69,6 +109,8 @@ plotOutput("barplot_areas")
 
 
 ### Proposals
+
+#### Column
 
 The plot below shows the status of all papers proposed for evaluation. We
 don't currently record when papers were proposed, so this plot ignores the
@@ -81,14 +123,18 @@ plotOutput("barplot_proposals")
 
 ### Ratings
 
+#### Column
+
 The plot below shows the distribution of ratings by research area. Ratings
 are evaluators' overall assessments of research quality, on a 0-100 scale.
 
 ```{r}
-plotOutput("plot_ratings")
+girafeOutput("plot_ratings")
 ```
 
-### Questions
+### Questions 
+
+#### Column
 
 Below we show the distribution of evaluators' answers to detailed, quantitative
 questions about different aspects of the research. For more information
@@ -97,22 +143,7 @@ on these questions, see
 
 
 ```{r}
-plotOutput("plot_questions")
-```
-
-
-
-
-```{r}
-#| context: data
-#| include: false
-
-research <- readr::read_csv(here("data/research.csv"))
-ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
-
-res_ratings <- inner_join(ratings, research, 
-                          by = join_by(research == label_paper_title))
-
+girafeOutput("plot_questions")
 ```
 
 
@@ -124,10 +155,10 @@ start_date <- reactive({
 })
 
 evals <- reactive({
-  cat(period())
   res_ratings |> 
     filter(
-      row_created_date >= start_date()
+      row_created_date >= start_date(),
+      input$research_area == "All" | main_cause_cat == input$research_area
     )
 })
 
@@ -139,7 +170,10 @@ evaled_research <- reactive({
 })
 
 proposals <- reactive({
-  research
+  research |> 
+      filter(
+      input$research_area == "All" | main_cause_cat == input$research_area
+    )
 })
 
 n_evals <- reactive(n_distinct(select(evals(), research, evaluator)))
@@ -152,8 +186,12 @@ n_areas <- reactive(n_distinct(all_cats()))
 n_proposals <- reactive(nrow(proposals()))
 
 output$papers_evaluated <- renderText({
-  glue::glue("In the selected period, we ran {n_evals()} evaluations of
-  {n_papers()} papers in {n_areas()} distinct research areas.")
+  if (input$research_area == "All") {
+    glue::glue("{n_evals()} evaluations of
+    {n_papers()} papers in {n_areas()} distinct research areas")  
+  } else {
+    glue::glue("{n_evals()} evaluations of {n_papers()} papers") 
+  }
 })
 
 
@@ -266,8 +304,8 @@ output$barplot_proposals <- renderPlot({
 })
 
 
-output$plot_ratings <- renderPlot({
-  evals() |>
+output$plot_ratings <- renderGirafe({
+  ggp <- evals() |>
     filter(criteria == "overall") |>
     mutate(
       area = stringr::str_to_title(main_cause_cat),
@@ -276,7 +314,9 @@ output$plot_ratings <- renderPlot({
       area = forcats::fct_rev(area),
     ) |>
     ggplot(aes(y = area, x = middle_rating, color = area)) +
-      geom_point() +
+      ggiraph::geom_point_interactive(
+        aes(tooltip = research)
+      ) +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
       theme_minimal() +
@@ -292,11 +332,15 @@ output$plot_ratings <- renderPlot({
         x = NULL,
         y = NULL
       )
+  
+  girafe(ggobj = ggp, 
+         width_svg = 9,
+         options = list(opts_sizing(rescale = FALSE, width = 1)))
 })
 
 
-output$plot_questions <- renderPlot({
-  evals() |>
+output$plot_questions <- renderGirafe({
+  ggp <- evals() |>
     select(research, criteria, middle_rating) |>
     mutate(
       criteria = case_match(criteria,
@@ -314,7 +358,9 @@ output$plot_questions <- renderPlot({
     ) |>
     filter(! is.na(criteria)) |>
     ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-      geom_point() +
+      ggiraph::geom_point_interactive(
+        aes(tooltip = research)
+      ) +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
       theme_minimal() +
@@ -330,5 +376,9 @@ output$plot_questions <- renderPlot({
         x = NULL,
         y = NULL
       )
+    
+  girafe(ggobj = ggp, 
+         width_svg = 8,
+         options = list(opts_sizing(rescale = FALSE, width = 1)))
 })
 ```
