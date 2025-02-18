@@ -345,7 +345,7 @@ output$plot_questions <- renderGirafe({
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "Arial")
+        axis.text.y = element_text(size = 12, family = "sans")
       ) +
       labs(
         title = "Answers to quantitative evaluation questions",
