@@ -27,7 +27,7 @@ doc = Document("0KBG3dSZCs", coda = coda)
 research = doc.get_table("grid-Iru9Fra3tE")
 research = pd.DataFrame(research.to_dict())
 columns = ['label_paper_title', 'status', 'research_url', 'doi', 
-  'main_cause_cat', 'secondary_cause_cat',
+  'main_cause_cat', 'main_cause_cat_abbrev', 'secondary_cause_cat',
   'publication_status', 'working_paper_release_date', 'topic_subfield',
   'source_main']
 research = research[columns]
