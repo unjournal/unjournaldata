@@ -304,7 +304,7 @@ output$plot_ratings <- renderGirafe({
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12)
+        axis.text.y = element_text(size = 12, family = "sans")
       ) +
       labs(
         title = "Overall ratings of papers by research area",
@@ -315,7 +315,8 @@ output$plot_ratings <- renderGirafe({
   
   girafe(ggobj = ggp, 
          width_svg = 9,
-         options = list(opts_sizing(rescale = FALSE, width = 1)))
+         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         fonts = list(sans = "Open Sans"))
 })
 
 
@@ -349,7 +350,7 @@ output$plot_questions <- renderGirafe({
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans")
+        axis.text.y = element_text(size = 10, family = "sans")
       ) +
       labs(
         title = "Answers to quantitative evaluation questions",
