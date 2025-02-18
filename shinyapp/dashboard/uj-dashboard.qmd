@@ -45,7 +45,7 @@ ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
 res_ratings <- inner_join(ratings, research, 
                           by = join_by(research == label_paper_title))
 
-research_areas <- unique(research$main_cause_cat)
+research_areas <- unique(research$main_cause_cat_abbrev)
 research_areas <- c("All", research_areas)
 names(research_areas) <- research_areas
 
@@ -59,7 +59,7 @@ names(research_areas) <- research_areas
   white-space: nowrap;
 }
 .selectize-dropdown {
-  width: 400px !important;
+  width: 450px !important;
 }
 #period + .shiny-input-select .selectize-dropdown {
   width: 150px !important;
@@ -83,32 +83,18 @@ textOutput("papers_evaluated")
 ## {.tabset}
 
 
-### Sources
-
-#### Column
-
-Papers can come to be evaluated by different routes: chosen by Unjournal staff,
-submitted by the authors, or suggested by another third party. 
-Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). This graph shows the sources of
-evaluated papers. Papers awaiting evaluation or selection are not included.
-
-```{r}
-plotOutput("barplot_sources")
-```
-
 ### Research areas
 
 #### Column
 
-The barplot shows the research areas of evaluated papers. Papers can belong to more
-than one research area. See [here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) for a discussion of the research areas we cover.
+The barplot shows the [research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers. 
 
 ```{r}
 plotOutput("barplot_areas")
 ```
 
 
-### Proposals
+### Proposed papers
 
 #### Column
 
@@ -147,6 +133,21 @@ girafeOutput("plot_questions")
 ```
 
 
+### Sources
+
+#### Column
+
+Papers can come to be evaluated by different routes: chosen by Unjournal staff,
+submitted by the authors, or suggested by another third party. 
+Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). This graph shows the sources of
+evaluated papers. Papers awaiting evaluation or selection are not included.
+
+```{r}
+plotOutput("barplot_sources")
+```
+
+
+
 ```{r}
 #| context: server
 
@@ -158,7 +159,7 @@ evals <- reactive({
   res_ratings |> 
     filter(
       row_created_date >= start_date(),
-      input$research_area == "All" | main_cause_cat == input$research_area
+      input$research_area == "All" | main_cause_cat_abbrev == input$research_area
     )
 })
 
@@ -172,18 +173,19 @@ evaled_research <- reactive({
 proposals <- reactive({
   research |> 
       filter(
-      input$research_area == "All" | main_cause_cat == input$research_area
+      input$research_area == "All" | main_cause_cat_abbrev == input$research_area
     )
 })
 
 n_evals <- reactive(n_distinct(select(evals(), research, evaluator)))
 n_papers <- reactive(nrow(evaled_research()))
 all_cats <- reactive({
-  c(evaled_research()$main_cause_cat, evaled_research()$secondary_cause_cat)
-  })
+  evaled_research()$main_cause_cat_abbrev
+})
 n_areas <- reactive(n_distinct(all_cats()))
 
 n_proposals <- reactive(nrow(proposals()))
+
 
 output$papers_evaluated <- renderText({
   if (input$research_area == "All") {
@@ -195,39 +197,6 @@ output$papers_evaluated <- renderText({
 })
 
 
-output$barplot_sources <- renderPlot({
-  evaled_research() |>
-    mutate(
-      Source = case_match(source_main,
-        "internal-NBER"                ~ "Internal (NBER)",
-        "internal-from-syllabus-agenda-policy-database" ~ "Internal",
-        "submitted (by author(s))"     ~ "Author",
-        "suggested - externally"       ~ "Third party",
-        "suggested - externally - NGO" ~ "Third party (NGO)",
-        .default = "Unknown"
-      ),
-      Source = forcats::fct_infreq(Source),
-      Source = forcats::fct_rev(Source)
-    ) |>
-    ggplot() +
-      geom_bar(aes(y = Source, fill = Source)) +
-      scale_x_continuous(
-        breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
-      ) +
-      theme_minimal() +
-      theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank()
-      ) +
-      labs(
-        title = "Sources of evaluated papers",
-        x = NULL,
-        y = NULL
-      )
-})
-
-
 output$barplot_areas <- renderPlot({
   data.frame(area = all_cats()) |>
     filter( ! is.na(area)) |>
@@ -235,9 +204,8 @@ output$barplot_areas <- renderPlot({
       area = stringr::str_to_title(area),
       # Workaround to cope with long area categories. 
       # TODO: remove once fixed.
-      area = stringr::str_remove(area, "\\(.*\\)"),
-      area = stringr::str_remove(area, "\\[.*\\]"),
-      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
+      # area = stringr::str_remove(area, "\\(.*\\)"),
+      # area = stringr::str_remove(area, "\\[.*\\]"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
     ) |>
@@ -250,11 +218,11 @@ output$barplot_areas <- renderPlot({
       theme(
         legend.position = "none",
         panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank()
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text(size = 16)
       ) +
       labs(
         title = "Research areas of evaluated papers",
-        subtitle = "Papers may be in more than one area",
         x = NULL,
         y = NULL
       )
@@ -265,15 +233,17 @@ output$barplot_proposals <- renderPlot({
   proposals() |>
     mutate(
       Status = case_match(status,
-        c("03_awaiting authors' consent (where needed) or imminent update",
+        c("03_awaiting authors' consent (if needed) or update",
           "02_final consideration needed",
           "01_Needs prioritization/assessor rating")
           ~ "Under consideration",
-        c("de-prioritized bc. of journal-publication status, authors permission, etc.",
+        c("de-prioritized bc. of journal-publication status, authors' permission, age, etc.",
           "authors rejected/blocked us",
-          "deprioritized -- low ratings",
+          "deprioritized -- low ratings/voting",
+          "deprioritized -- out of scope or other subjective judgment or managerial concern",
+          "deprioritized - no open access version",
           "Not a paper/project")
-          ~ "Deprioritized by UJ or lack of author permission",
+          ~ "Deprioritized",
         c("Applied and Policy Research Stream",
           "20_awaiting_evaluations",
           "contacting/awaiting_authors_response_to_evaluation",
@@ -285,8 +255,13 @@ output$barplot_proposals <- renderPlot({
           ~ "Evaluation published",
         .default = "Unknown"
       ),
-      Status = forcats::fct_infreq(Status),
+      Status = forcats::fct_relevel(Status, 
+                                    "Under consideration", 
+                                    "Deprioritized", 
+                                    "Accepted and under evaluation", 
+                                    "Evaluation published", "Unknown"),
       Status = forcats::fct_rev(Status)
+      
     ) |>
     ggplot() +
       geom_bar(aes(y = Status, fill = Status)) +
@@ -294,7 +269,8 @@ output$barplot_proposals <- renderPlot({
       theme(
         legend.position = "none",
         panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank()
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text(size = 18)
       ) +
       labs(
         title = "Status of papers proposed for evaluation",
@@ -308,8 +284,7 @@ output$plot_ratings <- renderGirafe({
   ggp <- evals() |>
     filter(criteria == "overall") |>
     mutate(
-      area = stringr::str_to_title(main_cause_cat),
-      area = forcats::fct_recode(area, "Global Health & Development" = "Gh&D"),
+      area = stringr::str_to_title(main_cause_cat_abbrev),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
     ) |>
@@ -324,7 +299,8 @@ output$plot_ratings <- renderGirafe({
         legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        panel.grid.minor.x = element_blank()
+        panel.grid.minor.x = element_blank(),
+        axis.text.y = element_text(size = 12)
       ) +
       labs(
         title = "Overall ratings of papers by research area",
@@ -368,7 +344,8 @@ output$plot_questions <- renderGirafe({
         legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        panel.grid.minor.x = element_blank()
+        panel.grid.minor.x = element_blank(),
+        axis.text.y = element_text(size = 12)
       ) +
       labs(
         title = "Answers to quantitative evaluation questions",
@@ -381,4 +358,42 @@ output$plot_questions <- renderGirafe({
          width_svg = 8,
          options = list(opts_sizing(rescale = FALSE, width = 1)))
 })
+
+
+output$barplot_sources <- renderPlot({
+  evaled_research() |>
+    mutate(
+      Source = case_match(source_main,
+        "internal-NBER"                ~ "Internal (NBER)",
+        "internal-from-syllabus-agenda-policy-database" ~ "Internal",
+        "suggested - internally"       ~ "Internal",
+        "submitted (by author(s))"     ~ "Author",
+        "suggested - externally"       ~ "Third party",
+        "suggested - externally - NGO" ~ "Third party (NGO)",
+        .default = "Unknown"
+      ),
+      Source = forcats::fct_infreq(Source),
+      Source = forcats::fct_rev(Source)
+    ) |>
+    ggplot() +
+      geom_bar(aes(y = Source, fill = Source)) +
+      scale_x_continuous(
+        breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
+      ) +
+      theme_minimal() +
+      theme(
+        legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text(size = 16)
+      ) +
+      labs(
+        title = "Sources of evaluated papers",
+        x = NULL,
+        y = NULL
+      )
+})
+
+
 ```
+
