@@ -15,6 +15,8 @@ library(conflicted)
 library(dplyr)
 conflicts_prefer(dplyr::filter)
 library(forcats)
+library(gdtools)
+library(gfonts)
 library(ggplot2)
 library(ggiraph)
 library(here)
@@ -23,6 +25,8 @@ library(shiny)
 library(stringr)
 library(tidyr)
 
+register_gfont("Open Sans")
+addGFontHtmlDependency(family = "Open Sans")
 # names are display periods; values are relevant starting dates for data
 periods <- c(
   "Ever"      = as.Date("1900-01-01"),
@@ -356,7 +360,8 @@ output$plot_questions <- renderGirafe({
     
   girafe(ggobj = ggp, 
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1)))
+         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         fonts = list(sans = "Open Sans"))
 })
 
 
