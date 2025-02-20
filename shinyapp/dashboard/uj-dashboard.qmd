@@ -12,6 +12,7 @@ format:
 #| include: false
 
 library(conflicted)
+library(cowplot)
 library(dplyr)
 conflicts_prefer(dplyr::filter)
 library(forcats)
@@ -312,49 +313,81 @@ output$plot_ratings <- renderGirafe({
          fonts = list(sans = "Open Sans"))
 })
 
-
-output$plot_critera <- renderGirafe({
-  ggp <- evals() |>
+criteria_plot_data <- reactive({
+  evals() |>
     select(research, criteria, middle_rating) |>
     mutate(
+      scale_0_to_5 = criteria %in% c("merits_journal", "journal_predict"),
       criteria = case_match(criteria,
         "overall" ~ "Overall assessment",
         "adv_knowledge" ~ "Advancing our knowledge and practice",
-        "methods" ~ "Methods: justification, reasonableness, validity, robustness",
+        "methods" ~ "Methods",
         "logic_comms" ~ "Logic and communication",
         "real_world" ~ "Real world relevance",
         "gp_relevance" ~ "Relevance to global priorities",
         "open_sci" ~ "Open, collaborative, replicable science",
-        .default = NA_character_ # this removes two criteria on publication
+        "merits_journal" ~ "Deserved journal tier",
+        "journal_predict" ~ "Predicted journal tier",
+        .default = NA, # 7 rows where criteria is "claims"
       ),
       criteria = forcats::fct_relevel(criteria, "Overall assessment"),
       criteria = forcats::fct_rev(criteria)
     ) |>
-    filter(! is.na(criteria)) |>
+    filter(! is.na(criteria))
+})
+
+output$plot_critera <- renderGirafe({
+  
+    ggp1 <- criteria_plot_data() |> 
+      filter(scale_0_to_5 == FALSE) |> 
+      ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
+        ggiraph::geom_point_interactive(
+          aes(tooltip = research)
+        ) +
+        stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
+        scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+        theme(
+          panel.grid.minor.x = element_blank(),
+          axis.text.y = element_text(size = 10, family = "sans"),
+          axis.text.x = element_text(size = 10, family = "sans"),
+          plot.title = element_text(size = 14, family = "sans")
+        ) +
+        labs(
+          title = "Answers to quantitative evaluation questions",
+          subtitle = "Crosses show per-question averages",
+          x = NULL,
+          y = NULL
+        )
+
+  ggp2 <- criteria_plot_data() |> 
+    filter(scale_0_to_5 == TRUE) |> 
     ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-      ggiraph::geom_point_interactive(
-        aes(tooltip = research)
-      ) +
-      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
-      scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme(
-        panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 10, family = "sans"),
-        axis.text.x = element_text(size = 10, family = "sans"),
-        plot.title = element_text(size = 14, family = "sans")
-      ) +
-      labs(
-        title = "Answers to quantitative evaluation questions",
-        subtitle = "Crosses show per-question averages",
-        x = NULL,
-        y = NULL
-      )
-    
-  girafe(ggobj = ggp, 
+    ggiraph::geom_point_interactive(
+      aes(tooltip = research)
+    ) +
+    stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
+    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      axis.text.y = element_text(size = 10, family = "sans"),
+      axis.text.x = element_text(size = 10, family = "sans"),
+      plot.title = element_text(size = 14, family = "sans")
+    ) +
+    labs(
+      x = NULL,
+      y = NULL
+    )
+  
+  combined_plot <- cowplot::plot_grid(ggp1, ggp2, nrow = 2, 
+                                      rel_heights = c(6, 3), align = "hv",
+                                      scale = 0.9)
+  
+  girafe(ggobj = combined_plot, 
          width_svg = 8,
          options = list(opts_sizing(rescale = FALSE, width = 1)),
          fonts = list(sans = "Open Sans"))
 })
+
 
 
 output$barplot_sources <- renderPlot({
