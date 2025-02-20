@@ -36,6 +36,19 @@ periods <- c(
   "1 month"   = today() - period(1, "months")
 )
 
+
+my_theme <- theme_minimal() +
+      theme(
+        legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text(size = 16),
+        axis.text.x = element_text(size = 14),
+        plot.title = element_text(size = 18)
+      )
+ggplot2::theme_set(my_theme)
+
+
 ```
 
 
@@ -129,7 +142,7 @@ Detailed evaluations of [different aspects of research quality](https://globalim
 
 
 ```{r}
-girafeOutput("plot_questions")
+girafeOutput("plot_critera")
 ```
 
 
@@ -149,6 +162,7 @@ plotOutput("barplot_sources")
 
 ```{r}
 #| context: server
+
 
 start_date <- reactive({
   periods[input$period]  
@@ -213,13 +227,6 @@ output$barplot_areas <- renderPlot({
       scale_x_continuous(
         breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
       ) +
-      theme_minimal() +
-      theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        axis.text.y = element_text(size = 16)
-      ) +
       labs(
         title = "Research areas of evaluated papers",
         x = NULL,
@@ -264,13 +271,6 @@ output$barplot_proposals <- renderPlot({
     ) |>
     ggplot() +
       geom_bar(aes(y = Status, fill = Status)) +
-      theme_minimal() +
-      theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        axis.text.y = element_text(size = 18)
-      ) +
       labs(
         title = "Status of papers proposed for evaluation",
         x = NULL,
@@ -293,13 +293,10 @@ output$plot_ratings <- renderGirafe({
       ) +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme_minimal() +
       theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans")
+        axis.text.y = element_text(size = 12, family = "sans"),
+        plot.title = element_text(size = 14, family = "sans")
       ) +
       labs(
         title = "Overall ratings of papers by research area",
@@ -315,7 +312,7 @@ output$plot_ratings <- renderGirafe({
 })
 
 
-output$plot_questions <- renderGirafe({
+output$plot_critera <- renderGirafe({
   ggp <- evals() |>
     select(research, criteria, middle_rating) |>
     mutate(
@@ -339,13 +336,11 @@ output$plot_questions <- renderGirafe({
       ) +
       stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme_minimal() +
       theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 10, family = "sans")
+        axis.text.y = element_text(size = 10, family = "sans"),
+        axis.text.x = element_text(size = 10, family = "sans"),
+        plot.title = element_text(size = 14, family = "sans")
       ) +
       labs(
         title = "Answers to quantitative evaluation questions",
@@ -380,13 +375,6 @@ output$barplot_sources <- renderPlot({
       geom_bar(aes(y = Source, fill = Source)) +
       scale_x_continuous(
         breaks = scales::breaks_extended(Q = c(1, 5, 2, 4, 3))
-      ) +
-      theme_minimal() +
-      theme(
-        legend.position = "none",
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        axis.text.y = element_text(size = 16)
       ) +
       labs(
         title = "Sources of evaluated papers",
