@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.45">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -34,10 +34,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,12 +123,8 @@ ul.task-list li input[type="checkbox"] {
 </header> <main class="content page-columns page-full" id="quarto-document-content">
 <p><a href="https://www.unjournal.org">The Unjournal</a> coordinates the public evaluation of papers and research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim is to make rigorous research more impactful, and impactful research more rigorous.</p>
 <p>This site hosts the <a href="posts.html">Unjournal data blog</a>. Our main web site, <a href="https://www.unjournal.org">unjournal.org</a>, and our <a href="https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space">knowledge base</a> explain and present our vision, procedures and progress. The ‘output’ evaluations, including feedback and discussion, can be found on our <a href="https://unjournal.pubpub.org/">PubPub page</a>, and are indexed in scholarly archives.</p>
-<p>We also have interactive dashboards:</p>
-<ul>
-<li><p><a href="https://unjournal.shinyapps.io/DataExplorer/">here</a></p></li>
-<li><p><a href="https://unjournal.shinyapps.io/uj-dashboard/">and here</a></p></li>
-</ul>
-<p>This site and the accompanying dashboards present data and analysis on The Unjournal’s pipeline and evaluation output. We use them to:</p>
+<p>We also have an <a href="https://unjournal.shinyapps.io/uj-dashboard/">interactive dashboard</a>.</p>
+<p>This site and the dashboard present data and analysis on The Unjournal’s pipeline and evaluation output. We use them to:</p>
 <ol type="1">
 <li><p>Keep track of what we are covering, when and how.</p></li>
 <li><p>Present the quantitative evaluations in useful ways.</p></li>
@@ -147,10 +143,10 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Interactive: presenting a dashboard-style interface, allowing readers to choose their analyses of interest.</p></li>
 </ol>
 <p>20 May 2024: David Reinstein, Julia Bottesini, and David Hugh-Jones have done most of the analysis here and in the accompanying dashboards.</p>
-<section id="data-explorer" class="level3 unnumbered page-columns page-full">
-<h3 class="unnumbered" data-anchor-id="data-explorer">Data explorer</h3>
+<section id="data-dashboard" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered" data-anchor-id="data-dashboard">Data dashboard</h3>
 <div class="column-body-outset">
-<iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/DataExplorer/"> </iframe>
+<iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/uj-dashboard/"> </iframe>
 
 
 </div>
@@ -244,8 +240,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -356,7 +350,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
