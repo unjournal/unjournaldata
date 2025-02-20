@@ -62,7 +62,8 @@ ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
 res_ratings <- inner_join(ratings, research, 
                           by = join_by(research == label_paper_title))
 
-research_areas <- unique(research$main_cause_cat_abbrev)
+research_areas <- unique(res_ratings$main_cause_cat_abbrev)
+research_areas <- sort(research_areas)
 research_areas <- c("All", research_areas)
 names(research_areas) <- research_areas
 
