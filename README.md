@@ -11,8 +11,7 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 A single GitHub Action:
 
 * Exports data from Coda to csv files in the `/data` folder, via `code/import-unjournal-data.py`.
-* Creates [Shiny](https://shiny.posit.co) apps at <https://unjournal.shinyapps.io/DataExplorer/> and 
-  <https://unjournal.shinyapps.io/uj-dashboard>.
+* Creates the [Shiny](https://shiny.posit.co) dashboard at <https://unjournal.shinyapps.io/uj-dashboard>.
 
 This action is automatically run 
 
