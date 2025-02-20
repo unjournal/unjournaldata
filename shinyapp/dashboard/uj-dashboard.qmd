@@ -163,18 +163,15 @@ girafeOutput("plot_critera")
 
 #### Column
 
-Directly compare two or more papers.
+Select one or more papers to compare them directly.
 
 ```{r}
 selectizeInput("comparison_papers", label = "Choose papers", 
                choices = character(0), multiple = TRUE)
 
-
-```
-
-```{r}
 girafeOutput("plot_comparison")
 ```
+
 
 
 ### Sources
@@ -429,25 +426,30 @@ output$plot_comparison <- renderGirafe({
       criteria = forcats::fct_rev(criteria),
       criteria = forcats::fct_relevel(criteria, c("Predicted journal tier", 
                                                   "Deserved journal tier")),
-    )
-  
-  ggp <- ggp |> 
+    ) |> 
+    filter(! is.na(criteria)) |> 
     ggplot(aes(x = rating, y = criteria, color = research, group = research)) + 
       ggiraph::geom_point_interactive(
         aes(tooltip = research)
       ) +
       geom_line(orientation = "y") +
-      scale_x_continuous(limits = c(0, 100), 
+      scale_x_continuous(limits = c(0, 100), position = "top",
                          sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
       labs(
-        title = "Paper comparison",
         x = "Percentile rank",
         y = NULL
+      ) +
+      theme(
+        axis.text.y = element_text(size = 12, family = "sans"),
+        plot.title = element_text(size = 14, family = "sans"),
+        legend.position = "top",
+        legend.direction = "vertical",
+        legend.title = element_blank()
       )
   
   girafe(ggobj = ggp, 
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         options = list(opts_sizing(rescale = FALSE, width = 0.9)),
          fonts = list(sans = "Open Sans"))
 })
 
