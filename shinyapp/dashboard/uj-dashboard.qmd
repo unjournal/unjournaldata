@@ -49,7 +49,17 @@ my_theme <- theme_minimal() +
       )
 ggplot2::theme_set(my_theme)
 
-
+criteria_titles <- c(
+        "overall"         = "Overall assessment",
+        "adv_knowledge"   = "Advancing our knowledge and practice",
+        "methods"         = "Methods",
+        "logic_comms"     = "Logic and communication",
+        "real_world"      = "Real world relevance",
+        "gp_relevance"    = "Relevance to global priorities",
+        "open_sci"        = "Open, collaborative, replicable science",
+        "merits_journal"  = "Deserved journal tier",
+        "journal_predict" = "Predicted journal tier"
+      )
 ```
 
 
@@ -92,6 +102,7 @@ selectInput("period", "Period", names(periods))
 ```{r}
 selectInput("research_area", "Research area", names(research_areas))
 ```
+
 
 
 ```{r}
@@ -148,6 +159,24 @@ girafeOutput("plot_critera")
 ```
 
 
+### Paper comparison
+
+#### Column
+
+Directly compare two or more papers.
+
+```{r}
+selectizeInput("comparison_papers", label = "Choose papers", 
+               choices = character(0), multiple = TRUE)
+
+
+```
+
+```{r}
+girafeOutput("plot_comparison")
+```
+
+
 ### Sources
 
 #### Column
@@ -183,6 +212,12 @@ evaled_research <- reactive({
     filter(status %in% "50_published evaluations (on PubPub, by Unjournal)") |> 
     # this applies the time filter
     semi_join(evals(), by = join_by(label_paper_title == research))
+})
+
+observe({
+  titles <- evaled_research() |> pull(label_paper_title) |> sort()
+  updateSelectizeInput(inputId = "comparison_papers",
+                       choices = titles)
 })
 
 proposals <- reactive({
@@ -313,23 +348,13 @@ output$plot_ratings <- renderGirafe({
          fonts = list(sans = "Open Sans"))
 })
 
+
 criteria_plot_data <- reactive({
   evals() |>
     select(research, criteria, middle_rating) |>
     mutate(
       scale_0_to_5 = criteria %in% c("merits_journal", "journal_predict"),
-      criteria = case_match(criteria,
-        "overall" ~ "Overall assessment",
-        "adv_knowledge" ~ "Advancing our knowledge and practice",
-        "methods" ~ "Methods",
-        "logic_comms" ~ "Logic and communication",
-        "real_world" ~ "Real world relevance",
-        "gp_relevance" ~ "Relevance to global priorities",
-        "open_sci" ~ "Open, collaborative, replicable science",
-        "merits_journal" ~ "Deserved journal tier",
-        "journal_predict" ~ "Predicted journal tier",
-        .default = NA, # 7 rows where criteria is "claims"
-      ),
+      criteria = criteria_titles[criteria],
       criteria = forcats::fct_relevel(criteria, "Overall assessment"),
       criteria = forcats::fct_rev(criteria)
     ) |>
@@ -388,6 +413,43 @@ output$plot_critera <- renderGirafe({
          fonts = list(sans = "Open Sans"))
 })
 
+
+output$plot_comparison <- renderGirafe({
+  ggp <- evals() |> 
+    filter(
+      research %in% input$comparison_papers
+    ) |> 
+    summarize(.by = c(research, criteria), 
+              rating = mean(middle_rating, na.rm = TRUE)) |> 
+    mutate(
+      rating = ifelse(criteria %in% c("merits_journal", "journal_predict"), 
+                      rating * 20, rating),
+      criteria = criteria_titles[criteria],
+      criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
+      criteria = forcats::fct_rev(criteria),
+      criteria = forcats::fct_relevel(criteria, c("Predicted journal tier", 
+                                                  "Deserved journal tier")),
+    )
+  
+  ggp <- ggp |> 
+    ggplot(aes(x = rating, y = criteria, color = research, group = research)) + 
+      ggiraph::geom_point_interactive(
+        aes(tooltip = research)
+      ) +
+      geom_line(orientation = "y") +
+      scale_x_continuous(limits = c(0, 100), 
+                         sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
+      labs(
+        title = "Paper comparison",
+        x = "Percentile rank",
+        y = NULL
+      )
+  
+  girafe(ggobj = ggp, 
+         width_svg = 8,
+         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         fonts = list(sans = "Open Sans"))
+})
 
 
 output$barplot_sources <- renderPlot({
