@@ -91,7 +91,7 @@ textOutput("papers_evaluated")
 
 #### Column
 
-The barplot shows the [research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers. 
+[Research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers. 
 
 ```{r}
 plotOutput("barplot_areas")
@@ -102,7 +102,7 @@ plotOutput("barplot_areas")
 
 #### Column
 
-The plot below shows the status of all papers proposed for evaluation. We
+Current status of all papers proposed for evaluation. We
 don't currently record when papers were proposed, so this plot ignores the
 time period chosen above.
 
@@ -111,25 +111,21 @@ plotOutput("barplot_proposals")
 ```
 
 
-### Ratings
+### Overall Ratings
 
 #### Column
 
-The plot below shows the distribution of ratings by research area. Ratings
-are evaluators' overall assessments of research quality, on a 0-100 scale.
+Overall assessments for each paper, averaging evaluators' [research quality percentile scores](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#overall-assessment).
 
 ```{r}
 girafeOutput("plot_ratings")
 ```
 
-### Questions 
+### Individual Criteria 
 
 #### Column
 
-Below we show the distribution of evaluators' answers to detailed, quantitative
-questions about different aspects of the research. For more information
-on these questions, see
-[here](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
+Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
 
 
 ```{r}
@@ -141,10 +137,9 @@ girafeOutput("plot_questions")
 
 #### Column
 
-Papers can come to be evaluated by different routes: chosen by Unjournal staff,
-submitted by the authors, or suggested by another third party. 
-Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). This graph shows the sources of
-evaluated papers. Papers awaiting evaluation or selection are not included.
+Papers can be chosen for evaluation by Unjournal staff,
+submitted by authors or by a third party. 
+Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). Papers awaiting evaluation or selection are not included.
 
 ```{r}
 plotOutput("barplot_sources")
