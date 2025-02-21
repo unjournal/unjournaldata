@@ -163,11 +163,23 @@ girafeOutput("plot_critera")
 
 #### Column
 
-Select one or more papers to compare them directly.
-
 ```{r}
-selectizeInput("comparison_papers", label = "Choose papers", 
-               choices = character(0), multiple = TRUE)
+selectizeInput("comparison_papers", label = "Select papers to compare:", 
+               choices = character(0), multiple = TRUE,
+               options = list(
+                 render = I("
+{
+    // display shortened names of selected papers
+    item: function(item, escape) {
+      const fullPaperName = item.value;
+      const shortenedName = fullPaperName.length > 30 
+        ? fullPaperName.substring(0, 30) + '...' 
+        : fullPaperName;
+      return '<div class=\"item\">' + escape(shortenedName) + '</div>';
+    }
+}
+")
+               ))
 
 girafeOutput("plot_comparison")
 ```
@@ -432,14 +444,19 @@ output$plot_comparison <- renderGirafe({
       ggiraph::geom_point_interactive(
         aes(tooltip = research)
       ) +
+      # hack to break the graph into two parts for other vs journal metrics:
+      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") + 
       geom_line(orientation = "y") +
-      scale_x_continuous(limits = c(0, 100), position = "top",
+      scale_x_continuous(limits = c(0, 100), position = "top", 
+                         breaks = seq(0, 100, 20),
                          sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
       labs(
         x = "Percentile rank",
         y = NULL
       ) +
       theme(
+        panel.grid.major.y = element_line(color = "grey80"),
+        panel.grid.minor.x = element_blank(),
         axis.text.y = element_text(size = 12, family = "sans"),
         plot.title = element_text(size = 14, family = "sans"),
         legend.position = "top",
