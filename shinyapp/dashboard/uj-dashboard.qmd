@@ -8,6 +8,7 @@ format:
 ---
 
 ```{r}
+#| label: setup
 #| context: setup
 #| include: false
 
@@ -55,7 +56,8 @@ criteria_titles <- c(
         "methods"         = "Methods",
         "logic_comms"     = "Logic and communication",
         "real_world"      = "Real world relevance",
-        "gp_relevance"    = "Relevance to global priorities",
+        "gp_relevance"    = "Relevance to global priorities/usefulness to practitioners",
+        "claims"          = "Claims, strength, and characterization of Evidence",
         "open_sci"        = "Open, collaborative, replicable science",
         "merits_journal"  = "Deserved journal tier",
         "journal_predict" = "Predicted journal tier"
@@ -64,6 +66,7 @@ criteria_titles <- c(
 
 
 ```{r}
+#| label: data-import
 #| context: data
 #| include: false
 
@@ -201,6 +204,7 @@ plotOutput("barplot_sources")
 
 
 ```{r}
+#| label: render-graphics
 #| context: server
 
 
@@ -434,19 +438,26 @@ output$plot_comparison <- renderGirafe({
       rating = ifelse(criteria %in% c("merits_journal", "journal_predict"), 
                       rating * 20, rating),
       criteria = criteria_titles[criteria],
+      criteria = factor(criteria, levels = unique(criteria_titles)),
       criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
       criteria = forcats::fct_rev(criteria),
       criteria = forcats::fct_relevel(criteria, c("Predicted journal tier", 
                                                   "Deserved journal tier")),
+      crit_grp = criteria %in% c("Predicted journal tier", 
+                                                  "Deserved journal tier")
     ) |> 
     filter(! is.na(criteria)) |> 
-    ggplot(aes(x = rating, y = criteria, color = research, group = research)) + 
+    ggplot(aes(x = rating, y = criteria, color = research, 
+               group = interaction(research, crit_grp))) + 
       ggiraph::geom_point_interactive(
         aes(tooltip = research)
       ) +
       # hack to break the graph into two parts for other vs journal metrics:
       geom_hline(yintercept = 2.5, linewidth = 6, color = "white") + 
       geom_line(orientation = "y") +
+      # If we don't add this explicitly, the graph gets weird numbers on the
+      # y axis instead of the criteria, when no papers are selected:
+      scale_y_discrete(breaks = criteria_titles) +
       scale_x_continuous(limits = c(0, 100), position = "top", 
                          breaks = seq(0, 100, 20),
                          sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
