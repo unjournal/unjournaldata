@@ -1,4 +1,6 @@
 research,author,author_emails,corresponding
+Forecasts estimate limited cultured meat production through 2050 (EA forum post),Linchuan Zhang,,False
+Forecasts estimate limited cultured meat production through 2050 (EA forum post),Neil Dullaghan,,False
 "Therapy, Mental Health, and Human Capital Accumulation among Adolescents in Uganda",Danish Us-Salam,danish.salam@brac.net,False
 "Therapy, Mental Health, and Human Capital Accumulation among Adolescents in Uganda",Luca Parisotto,luca.parisotto@phd.unibocconi.it,False
 "Therapy, Mental Health, and Human Capital Accumulation among Adolescents in Uganda",Chiara Dell’Aira,N/A,False
@@ -51,7 +53,6 @@ All Crises Are Unhappy in Their Own Way: The Role of Societal Instability in Sha
 From mostly vegetarian to fully vegetarian: Meat avoidance and the expression of social identity,,,False
 All Crises Are Unhappy in Their Own Way: The Role of Societal Instability in Shaping the Past,,,False
 Biodiversity risk,,,False
-,,,False
 Biodiversity risk,Xuran Zeng,xz4183@nyu.edu,False
 Biodiversity risk,Johannes Stroebel,johannes.stroebel@nyu.edu,False
 Biodiversity risk,Theresa Kuchler,tkuchler@stern.nyu.edu,False
@@ -63,7 +64,7 @@ Sample paper,Davit Jintcharadze ,davitjintcharadze@unjournal.org,False
 Sample paper,David Reinstein,daaronr@gmail.com,True
 Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,,,False
 Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India,Bharat Ramaswami,bharat.ramaswami@ashoka.edu.in,False
-"Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India,Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India",Digvijay Negi,digvijay@igidr.ac.in,False
+Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India (New title “Cash or Rice”),Digvijay Negi,digvijay@igidr.ac.in,False
 Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India,Gaurav Datt,gaurav.datt@monash.edu,False
 Deadweight Losses or Gains from In-kind Transfers? Experimental Evidence from India,Klaus Abbink,klaus.abbink@monash.edu,False
 When Product Markets Become Collective Traps: The Case of Social Media,Christopher Roth,cproth89@gmail.com,False
@@ -124,8 +125,8 @@ Behavioral Evidence for Global Consciousness Transcending National Parochialism,
 The Wandering Scholars: Understanding the Heterogeneity of University Commercialization,Heidi L. Williams,heidi.lie.williams@dartmouth.edu,False
 The Wandering Scholars: Understanding the Heterogeneity of University Commercialization,Carolyn Stein,carolyn_stein@berkeley.edu,False
 The Wandering Scholars: Understanding the Heterogeneity of University Commercialization,Henry J. Manley,manleyh@nber.org,False
-Choose Your Moments: Peer Review and Scientific Risk Taking,Jeffrey G. Shrader,jgs2103@columbia.edu,False
-Choose Your Moments: Peer Review and Scientific Risk Taking,Joshua S. Graff Zivin,jgraffzivin@ucsd.edu,False
+Choose Your Moments: [NIH] Peer Review and Scientific Risk Taking,Jeffrey G. Shrader,jgs2103@columbia.edu,False
+Choose Your Moments: [NIH] Peer Review and Scientific Risk Taking,Joshua S. Graff Zivin,jgraffzivin@ucsd.edu,False
 Generative AI at Work,Lindsey R. Raymond,lindsey.r.raymond@gmail.com,False
 Generative AI at Work,Danielle Li,d_li@mit.edu,False
 Dust pollution from the Sahara and African infant mortality,Marshall Burke,mburke@stanford.edu,False
@@ -540,9 +541,9 @@ Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Im
 Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,Arun G. Chandrasekhar,arungc@stanford.edu,False
 Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization,"Duflo, Esther",eduflo@mit.edu,False
 Welfare costs of catastrophes: lost consumption and lost lives,Robert S. Pindyck,rpindyck@mit.edu,False
-Population ethical intuitions. Cognition.,Geoffrey P. Goodwin,ggoodwin@psych.upenn.edu,False
-Population ethical intuitions. Cognition.,Andreas L. Mogensen,andreas.mogensen@philosophy.ox.ac.uk,False
-Population ethical intuitions. Cognition.,David Althaus,N/A,False
+Population ethical intuitions. Cognition. https://www.sciencedirect.com/science/article/abs/pii/S0010027721003644,Geoffrey P. Goodwin,ggoodwin@psych.upenn.edu,False
+Population ethical intuitions. Cognition. https://www.sciencedirect.com/science/article/abs/pii/S0010027721003644,Andreas L. Mogensen,andreas.mogensen@philosophy.ox.ac.uk,False
+Population ethical intuitions. Cognition. https://www.sciencedirect.com/science/article/abs/pii/S0010027721003644,David Althaus,N/A,False
 Every little helps: exploring meat and animal product consumption in the Tesco 1.0 dataset,,,False
 Every little helps: exploring meat and animal product consumption in the Tesco 1.0 dataset,Katharina Hofmann,K.Hofmann@lse.ac.uk,False
 Every little helps: exploring meat and animal product consumption in the Tesco 1.0 dataset,Christopher Bryant,chris@bryantresearch.co.uk,False
@@ -584,7 +585,7 @@ Animals and Social Welfare,Romain Espinosa,romain.espinosa@gmail.com,False
 Behavioral Evidence for Global Consciousness Transcending National Parochialism,James H. Liu,j.h.liu@massey.ac.nz,False
 Giving farm animals a name and a face: Eliciting animal advocacy among omnivores using the identifiable victim effect,Rakefet Cohen Ben-Arye,rakefetc.biu@gmail.com,False
 The Elasticity of Science,Kyle Myers,kmyers@hbs.edu,False
-Choose Your Moments: Peer Review and Scientific Risk Taking,Richard T. Carson,rcarson@ucsd.edu,False
+Choose Your Moments: [NIH] Peer Review and Scientific Risk Taking,Richard T. Carson,rcarson@ucsd.edu,False
 The Wandering Scholars: Understanding the Heterogeneity of University Commercialization,Josh Lerner,jlerner@hbs.edu,False
 Replicability & Generalisability:  A Guide to CEA discounts,Rosie Bettle,,False
 Generative AI at Work,Erik Brynjolfsson,erik.brynjolfsson@gmail.com,False
@@ -635,7 +636,7 @@ Persistence: A critical review,Jaime Sevilla,jaimesevillamolina@gmail.com,False
 "Catastrophic climate change, population ethics and intergenerational equity",Aurélie Méjean,mejean@centre-cired.fr,True
 National parochialism is ubiquitous across 42 nations around the world. Nature Communications. ,Angelo Romano,a.romano@fsw.leidenuniv.nl,True
 Global variation in subjective well-being predicts seven forms of altruism. ,Shawn A Rhoads,sr1209@georgetown.edu,False
-Population ethical intuitions. Cognition.,Lucius Caviola,lucius.caviola@gmail.com,False
+Population ethical intuitions. Cognition. https://www.sciencedirect.com/science/article/abs/pii/S0010027721003644,Lucius Caviola,lucius.caviola@gmail.com,False
 "How to better estimate an incidence correction factor for malnutrition treatment (see example), Water Treatment and Child Mortality: Evidence from Kenya (superceded by meta-analysis?), Informing Mothers about the Benefits of Conversing with Infants: Experimental Evidence from Ghana",Christopher T Andersen,N/A,False
 "Barriers to Education Technology Tools Faced by Educators in Pakistan, with a Focus on Mobile Internet Connectivity",Paper not found / sharepoint not working,,False
 NOTE: research with [PREVIOUS] 50% or lower prioritization moved to the overflow airtable. Full set of ‘crucial research’ can also be accessed here: https://www.dropbox.com/scl/fi/ltskzo0pe796pn8me2xuy/crucial_research-Grid-view-main-_31_july_2023_all.csv?rlkey=s9yg0tigpvv4xsiwefn6mb78s&dl=0,,,False
