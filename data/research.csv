@@ -1,4 +1,6 @@
 label_paper_title,status,research_url,doi,main_cause_cat,main_cause_cat_abbrev,secondary_cause_cat,publication_status,working_paper_release_date,topic_subfield,source_main
+DAVIT TESTING PAPER,,,https://doi.org/10.1093/epolic/eiae057,,,,,,,
+"Life Satisfaction, QALYs, and the Monetary Value of Health. ",901_PQ_candidate_eval,https://eprints.lse.ac.uk/89398/1/Frijters_Life-satisfaction-Published.pdf,,,,,,,,
 Feeling good is Feeling better,901_PQ_candidate_eval,https://docs.iza.org/dp13166.pdf,,,,,,,,
 ,,,,,,,,,,
 ,,,,,,,,,,
@@ -32,7 +34,7 @@ Does the advertising of plant-based burgers attract meat consumers?,901_PQ_candi
 Test if this entry duplicates,901_PQ_candidate_eval,,,,,,,,,
 The Sad Truth about Happiness Scales,901_PQ_candidate_eval,https://open.bu.edu/server/api/core/bitstreams/12666acb-7311-4a94-9b1a-340b39d5705e/content,,,,,,,,
 The WELLBY: a new measure of social value and progress,901_PQ_candidate_eval,https://www.nature.com/articles/s41599-024-03229-5,,,,,,,,
-"A Handbook for Wellbeing Policy-Making: History, Theory, Measurements, Implementation and Examples (Chapter 4)",,https://academic.oup.com/book/39348,,,,,,,,
+"A Handbook for Wellbeing Policy-Making: History, Theory, Measurements, Implementation and Examples (Chapter 4)",901_PQ_candidate_eval,https://academic.oup.com/book/39348,,,,,,,,
 "Resolution of the Jacobian Conjecture via
 Modular Recursion and Lie-Galois Symmetries",,,,,,,,,Millennium Solutions,
 How much will large-scale production of cell-cultured meat cost?,901_PQ_candidate_eval,https://www.researchgate.net/publication/362764455_How_much_will_large-scale_production_of_cell-cultured_meat_cost,,,,,,,,
@@ -111,8 +113,7 @@ Impact Of Corporate Commitments On Public Attitudes,01_Needs prioritization/asse
 The Effects of Exposure to Information about Animal Welfare Reforms on Animal Farming Opposition: A Randomized Experiment ,01_Needs prioritization/assessor rating,https://osf.io/preprints/psyarxiv/p6hbk,,Markets for products with large externalities (focus: animal agriculture),"Animal welfare, markets",,,,,
 "Price-, Taste-, and Convenience-Competitive Plant-Based Meat Would Not Currently Replace Meat (~EAF post) ",901_PQ_candidate_eval,https://forum.effectivealtruism.org/posts/iukeBPYNhKcddfFki/price-taste-and-convenience-competitive-plant-based-meat,,Markets for products with large externalities (focus: animal agriculture),"Animal welfare, markets",,,,,
 Quantifying Death Valence: A Thermometer Scale to Evaluate Explicit Expectations About One’s Own Mortality,02_final consideration needed,https://www.preprints.org/manuscript/202412.1312/v1,,Empirical methods,"Empirical methods, measurement",,,,death studies in social psychology,
-"Concentrating Intelligence: Scaling and Market Structure in Artificial Intelligence
-",02_final consideration needed,https://www.nber.org/papers/w33139,https://doi.org/10.1093/epolic/eiae057,Emerging technologies: social and economic impacts (focus: AI),Social impact of tech/AI,"Innovation, meta-science, & research","Published, ? journal",2024-11-15T00:00:00.000-05:00,"Industrial Organization,Market Structure and Firm Performance,Innovation and R&D",internal-NBER
+Concentrating Intelligence: Scaling and Market Structure in Artificial Intelligence,02_final consideration needed,https://www.nber.org/papers/w33139,https://doi.org/10.1093/epolic/eiae057,Emerging technologies: social and economic impacts (focus: AI),Social impact of tech/AI,"Innovation, meta-science, & research","Published, ? journal",2024-11-15T00:00:00.000-05:00,"Industrial Organization,Market Structure and Firm Performance,Innovation and R&D",internal-NBER
 Additionality and Asymmetric Information in Environmental Markets: Evidence from Conservation Auctions,"deprioritized bc. of journal-publication status, authors' permission, age, etc.",https://annarusso.github.io/papers/aspelund_russo_crp.pdf,,"The Environment: Harm to human health, biodiversity, risks and climate change",Environment,,"Working paper/mimeo, not published",,,
 Anticipatory Cash Transfers in Climate Disaster Response,02_final consideration needed,https://www.anticipation-hub.org/download/file-3482,,Economic development & governance (LMICs),Dev. econ/gov. (LMICs),,"Working paper/mimeo, not published",,,
 "We Are All in the Same Boat: Cross-Border Spillovers of Climate Shocks Through International Trade and Supply Chain 
