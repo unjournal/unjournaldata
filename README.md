@@ -47,11 +47,68 @@ The files in the `/data` folder are imported from Coda:
 
 There's also some data from other sources:
 
-* `jql70a.csv`: a list of journal quality rankings, maintained by 
+* `jql70a.csv`: a list of journal quality rankings, maintained by
   [Prof. Anne-Wil Harzing](https://harzing.com/resources/journal-quality-list)
   and converted to CSV format. We thank Prof. Harzing for creating this valuable
   resource.
-* `jql-enriched.csv`: the same data, enriched with h-index and 
+* `jql-enriched.csv`: the same data, enriched with h-index and
   citedness information from [Openalex](https://openalex.org), and
   our own meta-ranking of journals, via `code/calibrate-journal-stats.R`.
+
+## PubPub export utility
+
+The repository includes `code/harvest_pubpub_assets.py`, a standalone script
+that downloads fresh Markdown and PDF exports for every pub in a PubPub
+community (``unjournal.pubpub.org`` by default).
+
+### Quick start
+
+1. Ensure you have Python 3.9+ available. Create and activate a virtual
+   environment if you do not want to install dependencies globally:
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+2. Install the required Python packages:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the harvester, pointing it at an output directory where the Markdown and
+   PDF exports should be written (the directory will be created if necessary):
+
+   ```bash
+   python code/harvest_pubpub_assets.py --output-dir pubpub_exports
+   ```
+
+   When the command finishes you will have fresh `<pub-slug>.md` and
+   `<pub-slug>.pdf` files for every pub in the community.
+
+### Additional usage tips
+
+* Display all available options (including how to target a different community):
+
+  ```bash
+  python code/harvest_pubpub_assets.py --help
+  ```
+
+* To re-run the harvest later, simply execute the same command again; the
+  script always requests new exports from PubPub before downloading them, so
+  you will receive the latest content.
+
+* Use `--community-host` if you want to collect assets from a community other
+  than `unjournal.pubpub.org`, for example:
+
+  ```bash
+  python code/harvest_pubpub_assets.py \
+      --community-host yourcommunity.pubpub.org \
+      --output-dir ./yourcommunity_exports
+  ```
+
+* If you encounter transient network issues, the script will retry each
+  download a few times. Re-running the command typically resolves failures
+  caused by temporary connectivity errors.
 
