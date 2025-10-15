@@ -38,3 +38,4 @@ quarto-cli
 passwords.txt
 # python virtual environment
 .venv/
+shinyapp/dashboard/uj-dashboard_previous_checkme.qmd

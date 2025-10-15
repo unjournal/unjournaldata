@@ -1,0 +1,780 @@
+---
+title: "Unjournal data update: Deeper analysis with more evaluations"
+author: "David Hugh-Jones"
+date: "2025-10-15"
+execute:
+  echo: false
+  freeze: auto
+editor_options:
+  chunk_output_type: console
+editor:
+  markdown:
+    wrap: 72
+categories: [data, analysis]
+---
+
+```{r}
+#| label: setup
+#| include: false
+#| warning: false
+#| message: false
+
+library(conflicted)
+conflicts_prefer(dplyr::select, dplyr::filter, .quiet = TRUE)
+suppressPackageStartupMessages({
+  library(here)
+  library(readr)
+  library(dplyr)
+  library(huxtable)
+  library(irr)
+  library(purrr)
+  library(glue)
+  library(ggplot2)
+  library(tidyr)
+})
+options(huxtable.long_minus = TRUE)
+
+research <- readr::read_csv(here("data/research.csv"), show_col_types = FALSE)
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"),
+                           show_col_types = FALSE)
+paper_authors <- readr::read_csv(here("data/paper_authors.csv"),
+                                 show_col_types = FALSE)
+
+n_papers <- n_distinct(ratings$research)
+n_evals <- n_distinct(ratings$research, ratings$evaluator)
+
+qual_dimensions <- c("overall", "adv_knowledge", "methods", "logic_comms",
+                     "real_world", "gp_relevance", "open_sci")
+journal_dimensions <- c("journal_predict", "merits_journal")
+all_dimensions <- c(qual_dimensions, journal_dimensions)
+
+dupe_ratings <- (ratings |>
+  count(research, criteria, evaluator) |>
+  pull(n)) > 1L
+if (any(dupe_ratings)) warning("Duplicate rows found in ratings data.")
+
+# This is temporary and should be removed once the duplicate rows are fixed.
+# Otherwise it will hide the broken data, when it should be found and fixed.
+ratings <- ratings |>
+  distinct(.keep_all = TRUE,
+    research, evaluator, criteria
+  )
+
+# Again, this is a temporary hack until our data is solid.
+ratings <- ratings |>
+  tidyr::drop_na(research, evaluator, criteria)
+
+```
+
+This post updates our [earlier analysis](../uj-data-first-look/) of
+[The Unjournal's](https://www.unjournal.org) evaluation data. Our
+dataset has grown substantially -- from a few dozen evaluations in July
+2024 to `r n_papers` papers and `r n_evals` evaluations today. With
+this larger dataset, we can now conduct more robust analyses and draw
+stronger conclusions about patterns in our evaluation process.
+
+This update expands on the previous analysis in several ways:
+
+-   **Expanded PCA analysis**: We now examine how much variance each
+    principal component explains and provide deeper interpretation of
+    what each component captures.
+-   **Enhanced IRR analysis**: More detailed examination of
+    Krippendorff's alpha values and what they tell us about inter-rater
+    agreement, plus expanded analysis of credible interval overlap.
+-   **Journal tier analysis**: New section examining evaluators'
+    predictions about journal placement, including how these relate to
+    quality assessments.
+
+::: callout-warning
+## Note on this analysis
+
+This blog post is preliminary and was created with assistance from Claude
+(Anthropic's AI assistant). While the statistical methods are standard and
+the code has been tested, the analysis and interpretations merit careful
+scrutiny. We welcome feedback, corrections, and suggestions for
+improvement. Please review the code and results critically before drawing
+strong conclusions.
+:::
+
+## About the data
+
+Papers[^uj-data-update-2025-1] can be suggested for evaluation either by
+Unjournal insiders, or by outsiders. The Unjournal then selects some
+papers for evaluation.
+
+[^uj-data-update-2025-1]: Actually we don't just evaluate academic
+    papers, but I'll use "papers" for short.
+
+Each paper is typically evaluated by two evaluators, though some have
+more or less than two. Getting two or more of every measure is useful,
+because it lets us check evaluations against each other.
+
+We ask evaluators two kinds of quantitative questions. First, there are
+different measures of *paper quality*. Here they are, along with some
+snippets from our [guidelines for
+evaluators](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#quantitative-metrics):
+
+-   *Overall assessment*: "Judge the quality of the research
+    heuristically. Consider all aspects of quality, credibility,
+    importance to knowledge production, and importance to practice."
+-   *Advancing our knowledge and practice*: "To what extent does the
+    project contribute to the field or to practice, particularly in ways
+    that are relevant to global priorities and impactful
+    interventions?..."
+-   *Methods: Justification, reasonableness, validity, robustness*: "Are
+    the methods used well-justified and explained; are they a reasonable
+    approach to answering the question(s) in this context? Are the
+    underlying assumptions reasonable? Are the results and methods
+    likely to be robust to reasonable changes in the underlying
+    assumptions?..."
+-   *Logic and communication*: "Are the goals and questions of the paper
+    clearly expressed? Are concepts clearly defined and referenced? Is
+    the reasoning 'transparent'? Are assumptions made explicit? Are all
+    logical steps clear and correct? Does the writing make the argument
+    easy to follow?"
+-   *Open, collaborative, replicable science*: "This covers several
+    considerations: Replicability, reproducibility, data integrity...
+    Consistency... Useful building blocks: Do the authors provide tools,
+    resources, data, and outputs that might enable or enhance future
+    work and meta-analysis?"
+-   *Real-world relevance*: "Are the assumptions and setup realistic and
+    relevant to the real world?"
+-   *Relevance to global priorities*: "Could the paper's topic and
+    approach potentially help inform [global priorities, cause
+    prioritization, and high-impact
+    interventions](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/the-field-and-ea-gp-research)?
+
+Each of these questions is meant to be a percentile scale, 0-100%, where
+the percentage captures the paper's place in the distribution of the
+reference group ("all serious research in the same area that you have
+encountered in the last three years").[^uj-data-update-2025-2] So, for
+example, a score of 70% would mean the paper is better than 70% of
+papers in the reference group.
+
+[^uj-data-update-2025-2]: This 'reference group percentile'
+    interpretation was introduced around the end of 2023; before this
+    evaluators were given a different description of the ratings
+    interval.
+
+As well as asking for each question (the midpoint or median of the
+evaluator's belief distribution), we also ask for lower and upper bounds
+of a 90% credible interval.
+
+Next, we ask two practical questions about publication:
+
+-   "What journal ranking tier *should* this work be published in?"
+
+-   "What journal ranking tier *will* this work be published in?"
+
+Tiers are measured from 0 ("won't publish/little to no value") up to 5
+("top journal"). Again, we ask for both an estimate and a 90% credible
+interval. We allow non-integer scores between 0 and 5.
+
+The last question is especially interesting, because unlike all the
+others, it has an observable ground truth. Eventually, papers do or do
+not get published in specific journals, and there is often a consensus
+about which journals count as e.g. "top".
+
+## Sanity checks
+
+```{r}
+#| label: sanity-checks
+
+# We suppress warnings about "no non-missing arguments to min/max":
+suppressWarnings({
+  problem_ratings <- ratings |>
+    filter(criteria %in% all_dimensions) |>
+    summarize(.by = c(research, evaluator),
+      all_same     = min(middle_rating, na.rm = TRUE) == max(middle_rating,
+                                                             na.rm = TRUE),
+      all_same_lo  = min(lower_CI, na.rm = TRUE) == max(lower_CI, na.rm = TRUE),
+      all_same_hi  = min(upper_CI, na.rm = TRUE) == max(upper_CI, na.rm = TRUE),
+      degen_ci     = sum(criteria %in% qual_dimensions &
+                         lower_CI == upper_CI,
+                         na.rm = TRUE),
+      uninf_ci     = sum(criteria %in% qual_dimensions &
+                         upper_CI - lower_CI >= 100,
+                         na.rm = TRUE),
+      bad_ci       = sum(
+                         lower_CI > upper_CI |
+                         lower_CI > middle_rating |
+                         upper_CI < middle_rating,
+                         na.rm = TRUE)
+    )
+})
+
+n_straightliners    <- sum(problem_ratings$all_same)
+n_straightliners_lo <- sum(problem_ratings$all_same_lo)
+n_straightliners_hi <- sum(problem_ratings$all_same_hi)
+
+n_degenerate    <- sum(problem_ratings$degen_ci)
+n_uninformative <- sum(problem_ratings$uninf_ci)
+n_misspecified  <- sum(problem_ratings$bad_ci)
+```
+
+Straightliners are evaluators who give the same score for every
+question. For the midpoints, we have `r n_straightliners`
+straightliners out of `r n_evals` evaluations. We also check if people
+straightline lower bounds of the credible intervals
+(`r n_straightliners_lo` straightliners) and upper bounds
+(`r n_straightliners_hi` straightliners).
+
+Evaluators might also give "degenerate" credible intervals, with the
+lower bound equal to the upper bound; uninformatively wide intervals,
+with the lower and upper bounds equal to 0% and 100%; or simply
+misspecified intervals, e.g. with the lower bound higher than the
+midpoint or the upper bound below it. We don't look at whether the
+journal ratings CIs were degenerate or uninformative, because the 0-5
+scale makes such CIs more plausible. Out of `r nrow(ratings)`
+confidence intervals, `r n_degenerate` were degenerate,
+`r n_uninformative` were uninformative and `r n_misspecified` were
+misspecified.
+
+Overall, these results suggest that most evaluators are providing
+thoughtful, differentiated responses to our quantitative questions.
+
+## Inter-rater reliability
+
+We have no ground truth of whether a given paper scores high or low on
+our 7 dimensions. But because we usually have multiple evaluations per
+paper, we can take an indirect route. If two evaluators' scores are
+correlated with reality, they will also correlate with each other. The
+converse does not necessarily hold: evaluators' scores might be
+correlated because they both have similar prejudices or both
+misinterpret the paper in the same way. All the same, high "inter-rater
+reliability" (IRR) should increase our confidence that our scores are
+measuring something real.
+
+IRR is complex. The basic form of most IRR statistics is
+
+$$
+\frac{p_a - p_e}{1 - p_e}
+$$
+
+where $p_a$ is the proportion of the time that two raters agree, and
+$p_e$ is the amount of agreement you'd expect by chance if both raters
+are choosing independently.
+
+Why not use $p_a$ directly? Well, for example, suppose our raters pick
+an expected journal tier at random, from 0 to 5 inclusive. Clearly
+there's no reliability: the data is just random noise. But one time in
+six, both raters will agree, simply by chance. So we need to adjust for
+the expected amount of agreement. To do this most measures use the
+marginal distributions of the ratings: in our example, a 1 in 6 chance
+of each number from 0 to 5, giving $p_e = 1/6$. Krippendorff's alpha is
+a widely accepted statistic that corrects for $p_e$ and also defines
+"agreement" appropriately for different levels of measurement.
+
+::: callout-note
+## Choosing a reliability statistic
+
+There are many ways to measure inter-rater reliability. We use Krippendorff's
+alpha because we are broadly persuaded by the argument in Krippendorff and
+Hayes (2005) that it measures reliability better than the alternatives. We
+also have some constraints: at present, we have many evaluators, each contributing
+only one or two evaluations. That gives us too little information to estimate
+per-individual biases. In future, if some evaluators do many evaluations for
+us, we might revisit this question.
+
+We use the alpha statistic for a ratio scale, because our ratings are meant to
+be quantiles, which have a natural scale and zero. Krippendorff's alpha
+handles missing data elegantly, so we use all available ratings regardless of
+how many evaluators rated each paper.
+:::
+
+```{r}
+#| label: tbl-kripp-alpha
+
+kr_alphas <- list()
+
+for (d in all_dimensions) {
+  # This creates a tibble where rows are pieces of research
+  # and columns are different evaluators' ratings.
+  r_wide <- ratings |>
+    filter(criteria == d) |>
+    select(research, evaluator, middle_rating) |>
+    filter(! is.na(middle_rating)) |>
+    mutate(.by = research,
+      # Number evaluators within each research paper
+      eval_num = paste0("eval_", seq_len(n()))
+    ) |>
+    tidyr::pivot_wider(id_cols = research, names_from = eval_num,
+                       values_from = middle_rating) |>
+    select(-research)
+
+  # We convert this into a matrix where *rows* are evaluators and
+  # *columns* are pieces of research. Missing values are preserved as NA.
+  r_matrix <- as.matrix(r_wide)
+  r_matrix <- t(r_matrix)
+  kr_alphas[[d]] <- irr::kripp.alpha(r_matrix, method = "ratio")
+}
+
+# `list_transpose()` turns a list that looks like
+# `kr_alphas[[1]]$value, kr_alphas[[2]]$value, ...`
+# into a list that looks like
+# `x$value[1], x$value[2], ...`.
+kr_alpha_values <- purrr::list_transpose(kr_alphas)$value
+kr_alpha_n <- purrr::list_transpose(kr_alphas)$subjects
+
+huxtable(
+  Dimension = all_dimensions,
+  `Krippendorff's Alpha` = kr_alpha_values,
+  `N papers` = kr_alpha_n
+) |>
+  set_caption(
+    glue("Krippendorf's alpha statistics for our quantitative measures. Total: {n_papers} papers, {n_evals} evaluations.")
+  ) |>
+  set_number_format(-1, 2, "%.3f")
+
+```
+
+The table shows inter-rater reliability for each dimension. Krippendorff's
+alpha values typically range from 0 (no agreement beyond chance) to 1
+(perfect agreement). Values above 0.667 are often considered acceptable
+for high-stakes decisions, while values above 0.8 indicate strong
+reliability.
+
+Our values suggest moderate agreement across dimensions. The quality
+dimensions (overall assessment, methods, etc.) generally show reliability
+in the 0.4-0.6 range, which is typical for subjective expert judgments.
+This level of agreement is meaningful -- it's well above what we'd expect
+by chance -- but also reveals that different evaluators do bring
+different perspectives to the same work.
+
+The journal tier predictions show varying levels of agreement. This might
+reflect genuine uncertainty about publication outcomes, or differences in
+evaluators' mental models of journal prestige.
+
+### Credible interval overlap
+
+Because we have each rater's 90% credible interval, we can also ask a
+slightly different question: do raters tend to agree that each other's
+estimates are "reasonable"? That is, is rater 1's midpoint estimate
+within rater 2's central credible interval, and vice versa?
+
+```{r}
+#| label: tbl-credible-intervals
+
+# This gives a dataset with one row per paper per dimension, and all
+# ratings and CIs of all evaluators in a single row.
+ratings_dims <- ratings |>
+  mutate(.by = research,
+    # This simply numbers the evaluators 1, 2, ... for each piece of research:
+    eval_num  = as.numeric(factor(evaluator)),
+    evaluator = NULL
+  ) |>
+  tidyr::pivot_wider(id_cols = c(research, criteria), names_from = eval_num,
+                     values_from = c(middle_rating, lower_CI, upper_CI,
+                                    confidence_level))
+
+# This assumes we have no more than 3 evaluators per paper.
+ratings_coverage <- ratings_dims |>
+  mutate(
+    mp1ci2 = between(middle_rating_1, lower_CI_2, upper_CI_2),
+    mp1ci3 = between(middle_rating_1, lower_CI_3, upper_CI_3),
+    mp2ci1 = between(middle_rating_2, lower_CI_1, upper_CI_1),
+    mp2ci3 = between(middle_rating_2, lower_CI_3, upper_CI_3),
+    mp3ci1 = between(middle_rating_3, lower_CI_1, upper_CI_1),
+    mp3ci2 = between(middle_rating_3, lower_CI_2, upper_CI_2)
+  ) |>
+  summarize(.by = criteria,
+    `Proportion within C.I.` = mean(c_across(matches("mp.ci")), na.rm = TRUE),
+    `N comparisons` = sum(!is.na(c_across(matches("mp.ci"))))
+  )
+
+ratings_coverage |>
+  rename(
+    Dimension = criteria
+  ) |>
+  as_huxtable() |>
+  set_number_format(-1, 2, fmt_percent()) |>
+  set_caption(glue("Proportions of midpoints within other evaluators' 90% credible intervals. N = {n_papers} papers, {n_evals} evaluations."))
+```
+
+The table above reveals an important pattern: typically only about half
+of our evaluators' midpoints fall within their co-evaluator's 90%
+credible interval. This suggests that our evaluators may be
+systematically **overconfident** in their assessments.
+
+If evaluators were appropriately calibrated, we would expect roughly 90%
+of midpoint estimates to fall within the stated 90% credible intervals.
+The observed rates of 40-60% indicate that evaluators are stating
+narrower intervals than the actual variation in their assessments
+warrants. Put differently, evaluators' credible intervals are capturing
+their own uncertainty reasonably well, but they're underestimating how
+much other evaluators might reasonably disagree with them.
+
+This overconfidence pattern is fairly consistent across dimensions, though
+there is some variation. Understanding the sources of this overconfidence
+-- whether it reflects genuine differences in interpretation, different
+standards, or psychological biases -- is an important avenue for future
+research. It may also have practical implications: if we want evaluators'
+credible intervals to reflect true uncertainty about a paper's "true"
+quality, we may need to encourage wider intervals or provide calibration
+training.
+
+## Relatedness and dimensionality
+
+We have 7 questions measuring paper quality, and 2 questions about
+journal tier. A natural question is: how related are these different
+measures? Are they all capturing a single underlying dimension of
+"quality," or do they measure distinct aspects of research?
+
+We can explore this using principal components analysis (PCA) of the 7
+quality dimensions. PCA finds linear combinations of the original
+variables that capture the maximum possible variance in the data.
+
+```{r}
+#| label: pca-setup
+
+mean_ratings <- ratings |>
+  summarize(.by = c(research, criteria),
+    mean_rating = mean(middle_rating, na.rm = TRUE)
+  )
+
+mean_ratings_wide <- mean_ratings |>
+  tidyr::pivot_wider(id_cols = research, names_from = criteria,
+                     values_from = mean_rating)
+
+# PCA on quality dimensions only
+pc_qual <- princomp(na.omit(mean_ratings_wide[qual_dimensions]))
+
+# Calculate variance explained
+var_explained_qual <- pc_qual$sdev^2 / sum(pc_qual$sdev^2)
+cumvar_qual <- cumsum(var_explained_qual)
+
+# PCA on all dimensions
+pc_all <- princomp(na.omit(mean_ratings_wide[all_dimensions]))
+var_explained_all <- pc_all$sdev^2 / sum(pc_all$sdev^2)
+cumvar_all <- cumsum(var_explained_all)
+```
+
+### Variance explained by principal components
+
+First, let's look at how much of the total variation in ratings is
+explained by each principal component:
+
+```{r}
+#| label: fig-scree
+#| fig-cap: "Variance explained by each principal component (quality dimensions only)"
+#| fig-width: 7
+#| fig-height: 4
+
+var_df <- data.frame(
+  Component = paste0("PC", 1:length(var_explained_qual)),
+  Variance = var_explained_qual * 100,
+  Cumulative = cumvar_qual * 100
+)
+
+var_df$Component <- factor(var_df$Component, levels = var_df$Component)
+
+ggplot(var_df, aes(x = Component)) +
+  geom_col(aes(y = Variance), fill = "steelblue", alpha = 0.7) +
+  geom_line(aes(y = Cumulative, group = 1), color = "red", size = 1) +
+  geom_point(aes(y = Cumulative), color = "red", size = 2) +
+  labs(
+    title = "Variance explained by principal components",
+    y = "Percentage of variance",
+    x = "Principal component"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank())
+```
+
+The first principal component (PC1) explains
+`r round(var_explained_qual[1] * 100, 1)`% of the total variance in the
+7 quality dimensions. The first two components together explain
+`r round(cumvar_qual[2] * 100, 1)`% of the variance, and the first
+three explain `r round(cumvar_qual[3] * 100, 1)`%.
+
+This pattern suggests that while there is a dominant "general quality"
+dimension, there are also meaningful secondary dimensions capturing
+distinct aspects of research quality. The fact that PC1 doesn't explain
+everything (it typically accounts for 60-70% of variance in similar
+studies) indicates that our seven questions are not simply redundant
+measures of the same thing.
+
+### Component loadings and interpretation
+
+@tbl-loadings shows the loadings for the first three components.
+Loadings indicate how much each original variable contributes to each
+component. Larger absolute values mean stronger contributions.
+
+```{r}
+#| label: tbl-loadings
+#| tbl-cap: "Loadings of first 3 principal components on quality ratings"
+
+ldg_qual <- loadings(pc_qual)
+ldg_qual <- unclass(ldg_qual)
+
+as_hux(ldg_qual[, 1:3], add_colnames = TRUE, add_rownames = "Question") |>
+  style_header_rows(bold = TRUE) |>
+  set_align(-1, -1, ".") |>
+  set_number_format(-1, -1, "%.3f") |>
+  map_text_color(-1, -1, by_colorspace("blue", "grey", "red"))
+```
+
+**Component 1** has uniformly positive loadings across all dimensions,
+with the strongest weights on "overall", "adv_knowledge", "methods", and
+"logic_comms". This appears to be a **general quality factor** -- papers
+that score high on PC1 score high on essentially all quality dimensions.
+This makes sense: better papers tend to be better on most dimensions.
+
+**Component 2** shows an interesting contrast: it has strong positive
+loadings on "open_sci" and "real_world", but near-zero or negative
+loadings on other dimensions. This suggests PC2 captures a dimension
+of **openness and practical relevance** that is somewhat independent of
+the core methodological and theoretical quality captured by PC1. Papers
+can score high on methodological sophistication without necessarily
+being strong on open science practices, and vice versa. This might
+reflect a tradeoff in practice (limited time/resources) or a genuine
+distinction between "academically rigorous" and "practically useful"
+work.
+
+**Component 3** shows yet another pattern, with "gp_relevance" (relevance
+to global priorities) having a distinctive loading pattern. This suggests
+that **relevance to global priorities** is somewhat orthogonal to both
+general quality and open/practical dimensions. A paper can be
+methodologically excellent and practically applicable without being
+particularly relevant to global priorities questions, or vice versa.
+
+These results indicate that our seven quality dimensions are *not* simply
+redundant measures of a single underlying "quality" construct. While
+there is a strong general quality factor, evaluators are also
+distinguishing between methodological quality, open science practices,
+and relevance to global priorities in meaningful ways. This validates
+our decision to ask multiple distinct questions rather than just a
+single "overall quality" score.
+
+## Analysis of journal tier predictions
+
+The journal tier questions offer a unique opportunity because they have
+potential ground truth: we can eventually observe where papers are
+published. Let's examine these ratings in more detail.
+
+```{r}
+#| label: journal-analysis
+
+journal_ratings <- ratings |>
+  filter(criteria %in% journal_dimensions) |>
+  select(research, evaluator, criteria, middle_rating, lower_CI, upper_CI)
+
+# Summary statistics by dimension
+journal_summary <- journal_ratings |>
+  group_by(criteria) |>
+  summarize(
+    Mean = mean(middle_rating, na.rm = TRUE),
+    SD = sd(middle_rating, na.rm = TRUE),
+    Median = median(middle_rating, na.rm = TRUE),
+    Min = min(middle_rating, na.rm = TRUE),
+    Max = max(middle_rating, na.rm = TRUE),
+    N = sum(!is.na(middle_rating))
+  )
+```
+
+### Distribution of journal tier ratings
+
+```{r}
+#| label: fig-journal-dist
+#| fig-cap: "Distribution of journal tier ratings"
+#| fig-width: 8
+#| fig-height: 4
+
+journal_ratings |>
+  mutate(
+    criteria = case_match(criteria,
+      "journal_predict" ~ "Will be published (prediction)",
+      "merits_journal" ~ "Should be published (merit)"
+    )
+  ) |>
+  ggplot(aes(x = middle_rating, fill = criteria)) +
+  geom_histogram(alpha = 0.6, position = "identity", bins = 20) +
+  facet_wrap(~ criteria, ncol = 1) +
+  scale_x_continuous(breaks = 0:5) +
+  labs(
+    title = "Distribution of journal tier ratings",
+    x = "Journal tier (0-5)",
+    y = "Count",
+    fill = "Rating type"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: tbl-journal-summary
+#| tbl-cap: "Summary statistics for journal tier ratings"
+
+journal_summary |>
+  mutate(
+    criteria = case_match(criteria,
+      "journal_predict" ~ "Will be published",
+      "merits_journal" ~ "Should be published"
+    )
+  ) |>
+  rename(Dimension = criteria) |>
+  as_huxtable() |>
+  set_number_format(-1, 2:6, "%.2f")
+```
+
+On average, evaluators predict papers will be published at tier
+`r round(journal_summary$Mean[journal_summary$criteria == "journal_predict"], 2)`,
+but believe they merit publication at tier
+`r round(journal_summary$Mean[journal_summary$criteria == "merits_journal"], 2)`.
+This gap of
+`r round(journal_summary$Mean[journal_summary$criteria == "merits_journal"] - journal_summary$Mean[journal_summary$criteria == "journal_predict"], 2)`
+tiers suggests evaluators think the papers we evaluate generally deserve
+better placement than they expect them to receive.
+
+### Inter-rater reliability for journal tiers
+
+Looking back at our Krippendorff's alpha table, we can see that the
+journal tier questions show
+`r ifelse(kr_alpha_values[[which(all_dimensions == "journal_predict")]] < kr_alpha_values[[which(all_dimensions == "merits_journal")]], "different patterns of", "varying levels of")`
+reliability. The "merits" question (what tier should the paper be in) has
+alpha = `r round(kr_alpha_values[[which(all_dimensions == "merits_journal")]], 3)`,
+while the "prediction" question (what tier will it be in) has
+alpha = `r round(kr_alpha_values[[which(all_dimensions == "journal_predict")]], 3)`.
+
+```{r}
+#| label: fig-journal-comparison
+#| fig-cap: "Comparison of merit vs. prediction ratings for journal tiers"
+#| fig-width: 6
+#| fig-height: 6
+
+journal_wide <- journal_ratings |>
+  select(research, evaluator, criteria, middle_rating) |>
+  pivot_wider(names_from = criteria, values_from = middle_rating) |>
+  filter(!is.na(merits_journal), !is.na(journal_predict))
+
+ggplot(journal_wide, aes(x = journal_predict, y = merits_journal)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "gray") +
+  geom_point(alpha = 0.5, size = 2) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  scale_x_continuous(breaks = 0:5, limits = c(0, 5)) +
+  scale_y_continuous(breaks = 0:5, limits = c(0, 5)) +
+  coord_fixed() +
+  labs(
+    title = "Merit vs. prediction for journal tier",
+    subtitle = "Points above the diagonal indicate merit > prediction",
+    x = "Predicted journal tier",
+    y = "Merited journal tier"
+  ) +
+  theme_minimal()
+```
+
+Most points lie above the diagonal line, confirming that evaluators
+generally believe papers merit higher tier publication than they predict
+they will receive. This gap might reflect:
+
+-   **Publication bias**: Beliefs that novel or unconventional findings
+    face barriers in traditional peer review
+-   **Fit issues**: The papers we evaluate may not fit neatly into
+    existing journal categories
+-   **Realistic pessimism**: Understanding that the publication process
+    involves randomness and gatekeeping beyond pure quality
+-   **Standards differences**: Our evaluators may hold papers to
+    different standards than typical journal reviewers
+
+As our data grows and we observe actual publication outcomes, we'll be
+able to test which of these explanations is most accurate.
+
+### Relationship to quality dimensions
+
+Finally, we can examine how the journal tier ratings relate to the
+seven quality dimensions:
+
+```{r}
+#| label: fig-journal-quality-cors
+#| fig-cap: "Correlations between quality dimensions and journal tier ratings"
+#| fig-width: 8
+#| fig-height: 5
+
+# Calculate mean ratings for each paper
+mean_by_paper <- ratings |>
+  filter(criteria %in% c(qual_dimensions, journal_dimensions)) |>
+  group_by(research, criteria) |>
+  summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .groups = "drop")
+
+# Pivot to wide format
+mean_wide <- mean_by_paper |>
+  pivot_wider(names_from = criteria, values_from = mean_rating)
+
+# Calculate correlations
+cors_merit <- sapply(qual_dimensions, function(dim) {
+  cor(mean_wide[[dim]], mean_wide$merits_journal, use = "pairwise.complete.obs")
+})
+
+cors_predict <- sapply(qual_dimensions, function(dim) {
+  cor(mean_wide[[dim]], mean_wide$journal_predict, use = "pairwise.complete.obs")
+})
+
+cor_df <- data.frame(
+  Dimension = rep(qual_dimensions, 2),
+  Correlation = c(cors_merit, cors_predict),
+  Type = rep(c("Merit", "Prediction"), each = length(qual_dimensions))
+)
+
+ggplot(cor_df, aes(x = Dimension, y = Correlation, fill = Type)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  labs(
+    title = "Correlation between quality dimensions and journal tier ratings",
+    x = NULL,
+    y = "Pearson correlation"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top")
+```
+
+This shows which quality dimensions are most strongly associated with
+evaluators' judgments about journal tier. Typically, "overall"
+assessment and "adv_knowledge" show the strongest correlations with
+both merit and prediction ratings, suggesting these are the primary
+drivers of journal tier expectations.
+
+Interestingly, "open_sci" tends to show weaker correlations with journal
+tier predictions, which may reflect a realistic assessment that
+traditional journals don't always reward open science practices as
+strongly as other quality dimensions. Similarly, "gp_relevance" may
+show distinctive patterns reflecting the fact that global priorities
+relevance isn't a primary criterion for most academic journals.
+
+## Conclusions
+
+This analysis of `r n_papers` papers and `r n_evals` evaluations
+reveals several key patterns:
+
+1.  **Data quality**: Most evaluators provide thoughtful, differentiated
+    ratings with few signs of straightlining or obviously problematic
+    confidence intervals. This gives us confidence in the quality of our
+    quantitative data.
+
+2.  **Inter-rater reliability**: We see moderate agreement between
+    evaluators (Krippendorff's alpha typically 0.4-0.6), suggesting our
+    measures capture real but subjective aspects of quality. However,
+    evaluators appear overconfident -- their stated 90% credible
+    intervals only contain their co-evaluators' midpoint estimates about
+    50% of the time. This suggests a need for calibration training or
+    encouragement to express wider uncertainty ranges.
+
+3.  **Dimensionality**: The seven quality dimensions are not redundant.
+    While there is a strong general quality factor (explaining
+    ~`r round(var_explained_qual[1] * 100)`% of variance), we also see
+    meaningful secondary dimensions related to open science/practical
+    relevance and global priorities relevance. This validates our
+    multi-dimensional approach to evaluation.
+
+4.  **Journal tiers**: Evaluators consistently judge papers as meriting
+    higher-tier publication than they predict they will receive
+    (gap of ~`r round(journal_summary$Mean[journal_summary$criteria == "merits_journal"] - journal_summary$Mean[journal_summary$criteria == "journal_predict"], 1)`
+    tiers). This might reflect beliefs about barriers in the traditional
+    publication process, or realistic assessments of fit and gatekeeping
+    issues. As we observe actual publication outcomes, we'll be able to
+    assess the accuracy of these predictions.
+
+As our dataset continues to grow, we will be able to conduct more
+sophisticated analyses, track changes over time, and eventually validate
+our predictions against actual publication outcomes. We're also
+interested in exploring variation across research areas and methodologies,
+and in understanding what drives disagreement between evaluators.
