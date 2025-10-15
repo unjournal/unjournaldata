@@ -1,6 +1,6 @@
 ---
 title: "Unjournal data update: Deeper analysis with more evaluations"
-author: "David Hugh-Jones"
+author: "David Reinstein and Claude AI, reusing content from David Hugh-Jones (see disclaimer)"
 date: "2025-10-15"
 execute:
   echo: false
@@ -69,9 +69,11 @@ ratings <- ratings |>
 This post updates our [earlier analysis](../uj-data-first-look/) of
 [The Unjournal's](https://www.unjournal.org) evaluation data. Our
 dataset has grown substantially -- from a few dozen evaluations in July
-2024 to `r n_papers` papers and `r n_evals` evaluations today. With
+2024 to `r n_papers` papers and `r n_evals` evaluations today. (See [unjournal.pubpub.org](unjournal.pubpub.org) to see our 55+ packages).[^uj-data-update-2025-2] With
 this larger dataset, we can now conduct more robust analyses and draw
 stronger conclusions about patterns in our evaluation process.
+
+[^uj-data-update-2025-2]: Some of the newest evaluations still need integrating into the present dataset.
 
 This update expands on the previous analysis in several ways:
 
@@ -89,8 +91,7 @@ This update expands on the previous analysis in several ways:
 ## Note on this analysis
 
 This blog post is preliminary and was created with assistance from Claude
-(Anthropic's AI assistant). While the statistical methods are standard and
-the code has been tested, the analysis and interpretations merit careful
+(Anthropic's AI assistant), including both analysis and text. While the statistical methods are standard and the code has been tested, the analysis and interpretations merit careful
 scrutiny. We welcome feedback, corrections, and suggestions for
 improvement. Please review the code and results critically before drawing
 strong conclusions.
