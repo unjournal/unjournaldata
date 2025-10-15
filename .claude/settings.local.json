@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(cat:*)",
+      "Bash(Rscript:*)",
+      "Bash(grep -n '`r ' posts/uj-data-update-2025/index.qmd)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
