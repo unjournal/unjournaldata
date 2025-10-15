@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://unjournal.github.io/posts.html</loc>
-    <lastmod>2025-02-17T05:57:05.134Z</lastmod>
+    <loc>https://unjournal.github.io/posts/uj-data-first-look/index.html</loc>
+    <lastmod>2025-10-15T21:36:46.093Z</lastmod>
   </url>
   <url>
-    <loc>https://unjournal.github.io/posts/uj-data-first-look/index.html</loc>
-    <lastmod>2025-02-17T05:57:05.134Z</lastmod>
+    <loc>https://unjournal.github.io/posts/uj-data-update-2025/index.html</loc>
+    <lastmod>2025-10-15T21:36:51.064Z</lastmod>
   </url>
   <url>
     <loc>https://unjournal.github.io/index.html</loc>
-    <lastmod>2025-02-20T01:16:49.957Z</lastmod>
+    <lastmod>2025-10-15T21:36:51.664Z</lastmod>
+  </url>
+  <url>
+    <loc>https://unjournal.github.io/posts.html</loc>
+    <lastmod>2025-10-15T21:36:52.123Z</lastmod>
   </url>
 </urlset>
