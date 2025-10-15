@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This post updates our <a href="../uj-data-first-look/">earlier analysis</a> of <a href="https://www.unjournal.org">The Unjournal’s</a> evaluation data. Our dataset has grown substantially – from a few dozen evaluations in July 2024 to <code>{r} n_papers</code> papers and <code>{r} n_evals</code> evaluations today. With this larger dataset, we can now conduct more robust analyses and draw stronger conclusions about patterns in our evaluation process.</p>
+<p>This post updates our <a href="../uj-data-first-look/">earlier analysis</a> of <a href="https://www.unjournal.org">The Unjournal’s</a> evaluation data. Our dataset has grown substantially – from a few dozen evaluations in July 2024 to 49 papers and 95 evaluations today. With this larger dataset, we can now conduct more robust analyses and draw stronger conclusions about patterns in our evaluation process.</p>
 <p>This update expands on the previous analysis in several ways:</p>
 <ul>
 <li><strong>Expanded PCA analysis</strong>: We now examine how much variance each principal component explains and provide deeper interpretation of what each component captures.</li>
@@ -181,19 +181,14 @@ Note on this analysis
 </ul>
 <p>Tiers are measured from 0 (“won’t publish/little to no value”) up to 5 (“top journal”). Again, we ask for both an estimate and a 90% credible interval. We allow non-integer scores between 0 and 5.</p>
 <p>The last question is especially interesting, because unlike all the others, it has an observable ground truth. Eventually, papers do or do not get published in specific journals, and there is often a consensus about which journals count as e.g.&nbsp;“top”.</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Duplicate rows found in ratings data.</code></pre>
-</div>
-</div>
 </section>
 <section id="sanity-checks" class="level2">
 <h2 class="anchored" data-anchor-id="sanity-checks">Sanity checks</h2>
 <div class="cell">
 
 </div>
-<p>Straightliners are evaluators who give the same score for every question. For the midpoints, we have <code>{r} n_straightliners</code> straightliners out of <code>{r} n_evals</code> evaluations. We also check if people straightline lower bounds of the credible intervals (<code>{r} n_straightliners_lo</code> straightliners) and upper bounds (<code>{r} n_straightliners_hi</code> straightliners).</p>
-<p>Evaluators might also give “degenerate” credible intervals, with the lower bound equal to the upper bound; uninformatively wide intervals, with the lower and upper bounds equal to 0% and 100%; or simply misspecified intervals, e.g.&nbsp;with the lower bound higher than the midpoint or the upper bound below it. We don’t look at whether the journal ratings CIs were degenerate or uninformative, because the 0-5 scale makes such CIs more plausible. Out of <code>{r} nrow(ratings)</code> confidence intervals, <code>{r} n_degenerate</code> were degenerate, <code>{r} n_uninformative</code> were uninformative and <code>{r} n_misspecified</code> were misspecified.</p>
+<p>Straightliners are evaluators who give the same score for every question. For the midpoints, we have 0 straightliners out of 95 evaluations. We also check if people straightline lower bounds of the credible intervals (0 straightliners) and upper bounds (0 straightliners).</p>
+<p>Evaluators might also give “degenerate” credible intervals, with the lower bound equal to the upper bound; uninformatively wide intervals, with the lower and upper bounds equal to 0% and 100%; or simply misspecified intervals, e.g.&nbsp;with the lower bound higher than the midpoint or the upper bound below it. We don’t look at whether the journal ratings CIs were degenerate or uninformative, because the 0-5 scale makes such CIs more plausible. Out of 851 confidence intervals, 6 were degenerate, 0 were uninformative and 10 were misspecified.</p>
 <p>Overall, these results suggest that most evaluators are providing thoughtful, differentiated responses to our quantitative questions.</p>
 </section>
 <section id="inter-rater-reliability" class="level2">
@@ -322,7 +317,7 @@ Choosing a reliability statistic
 </div>
 </div>
 </div>
-<p>The first principal component (PC1) explains <code>{r} round(var_explained_qual[1] * 100, 1)</code>% of the total variance in the 7 quality dimensions. The first two components together explain <code>{r} round(cumvar_qual[2] * 100, 1)</code>% of the variance, and the first three explain <code>{r} round(cumvar_qual[3] * 100, 1)</code>%.</p>
+<p>The first principal component (PC1) explains 57.3% of the total variance in the 7 quality dimensions. The first two components together explain 77% of the variance, and the first three explain 90.7%.</p>
 <p>This pattern suggests that while there is a dominant “general quality” dimension, there are also meaningful secondary dimensions capturing distinct aspects of research quality. The fact that PC1 doesn’t explain everything (it typically accounts for 60-70% of variance in similar studies) indicates that our seven questions are not simply redundant measures of the same thing.</p>
 </section>
 <section id="component-loadings-and-interpretation" class="level3">
@@ -397,11 +392,11 @@ Choosing a reliability statistic
 </div>
 </div>
 </div>
-<p>On average, evaluators predict papers will be published at tier <code>{r} round(journal_summary$Mean[journal_summary$criteria == "journal_predict"], 2)</code>, but believe they merit publication at tier <code>{r} round(journal_summary$Mean[journal_summary$criteria == "merits_journal"], 2)</code>. This gap of <code>{r} round(journal_summary$Mean[journal_summary$criteria == "merits_journal"] - journal_summary$Mean[journal_summary$criteria == "journal_predict"], 2)</code> tiers suggests evaluators think the papers we evaluate generally deserve better placement than they expect them to receive.</p>
+<p>On average, evaluators predict papers will be published at tier 3.88, but believe they merit publication at tier 3.85. This gap of -0.03 tiers suggests evaluators think the papers we evaluate generally deserve better placement than they expect them to receive.</p>
 </section>
 <section id="inter-rater-reliability-for-journal-tiers" class="level3">
 <h3 class="anchored" data-anchor-id="inter-rater-reliability-for-journal-tiers">Inter-rater reliability for journal tiers</h3>
-<p>Looking back at our Krippendorff’s alpha table, we can see that the journal tier questions show <code>{r} ifelse(kr_alpha_values[[which(all_dimensions == "journal_predict")]] &lt; kr_alpha_values[[which(all_dimensions == "merits_journal")]], "different patterns of", "varying levels of")</code> reliability. The “merits” question (what tier should the paper be in) has alpha = <code>{r} round(kr_alpha_values[[which(all_dimensions == "merits_journal")]], 3)</code>, while the “prediction” question (what tier will it be in) has alpha = <code>{r} round(kr_alpha_values[[which(all_dimensions == "journal_predict")]], 3)</code>.</p>
+<p>Looking back at our Krippendorff’s alpha table, we can see that the journal tier questions show varying levels of reliability. The “merits” question (what tier should the paper be in) has alpha = 0.284, while the “prediction” question (what tier will it be in) has alpha = 0.373.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -443,12 +438,12 @@ Choosing a reliability statistic
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
-<p>This analysis of <code>{r} n_papers</code> papers and <code>{r} n_evals</code> evaluations reveals several key patterns:</p>
+<p>This analysis of 49 papers and 95 evaluations reveals several key patterns:</p>
 <ol type="1">
 <li><p><strong>Data quality</strong>: Most evaluators provide thoughtful, differentiated ratings with few signs of straightlining or obviously problematic confidence intervals. This gives us confidence in the quality of our quantitative data.</p></li>
 <li><p><strong>Inter-rater reliability</strong>: We see moderate agreement between evaluators (Krippendorff’s alpha typically 0.4-0.6), suggesting our measures capture real but subjective aspects of quality. However, evaluators appear overconfident – their stated 90% credible intervals only contain their co-evaluators’ midpoint estimates about 50% of the time. This suggests a need for calibration training or encouragement to express wider uncertainty ranges.</p></li>
-<li><p><strong>Dimensionality</strong>: The seven quality dimensions are not redundant. While there is a strong general quality factor (explaining ~<code>{r} round(var_explained_qual[1] * 100)</code>% of variance), we also see meaningful secondary dimensions related to open science/practical relevance and global priorities relevance. This validates our multi-dimensional approach to evaluation.</p></li>
-<li><p><strong>Journal tiers</strong>: Evaluators consistently judge papers as meriting higher-tier publication than they predict they will receive (gap of ~<code>{r} round(journal_summary$Mean[journal_summary$criteria == "merits_journal"] - journal_summary$Mean[journal_summary$criteria == "journal_predict"], 1)</code> tiers). This might reflect beliefs about barriers in the traditional publication process, or realistic assessments of fit and gatekeeping issues. As we observe actual publication outcomes, we’ll be able to assess the accuracy of these predictions.</p></li>
+<li><p><strong>Dimensionality</strong>: The seven quality dimensions are not redundant. While there is a strong general quality factor (explaining ~57% of variance), we also see meaningful secondary dimensions related to open science/practical relevance and global priorities relevance. This validates our multi-dimensional approach to evaluation.</p></li>
+<li><p><strong>Journal tiers</strong>: Evaluators consistently judge papers as meriting higher-tier publication than they predict they will receive (gap of ~0 tiers). This might reflect beliefs about barriers in the traditional publication process, or realistic assessments of fit and gatekeeping issues. As we observe actual publication outcomes, we’ll be able to assess the accuracy of these predictions.</p></li>
 </ol>
 <p>As our dataset continues to grow, we will be able to conduct more sophisticated analyses, track changes over time, and eventually validate our predictions against actual publication outcomes. We’re also interested in exploring variation across research areas and methodologies, and in understanding what drives disagreement between evaluators.</p>
 
