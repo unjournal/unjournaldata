@@ -5,7 +5,11 @@
       "Bash(cat:*)",
       "Bash(Rscript:*)",
       "Bash(grep -n '`r ' posts/uj-data-update-2025/index.qmd)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(quarto render:*)",
+      "Bash(open:*)"
     ],
     "deny": [],
     "ask": []
