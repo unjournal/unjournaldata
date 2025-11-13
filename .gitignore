@@ -39,3 +39,5 @@ passwords.txt
 # python virtual environment
 .venv/
 shinyapp/dashboard/uj-dashboard_previous_checkme.qmd
+data/evaluator_survey_responses.csv
+data/survey_responses_preview.csv
