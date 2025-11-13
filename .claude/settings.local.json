@@ -9,7 +9,10 @@
       "Bash(git fetch:*)",
       "Bash(git pull:*)",
       "Bash(quarto render:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(python3 -m pip show:*)",
+      "Bash(python3.9:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

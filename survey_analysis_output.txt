@@ -1,0 +1,215 @@
+================================================================================
+EVALUATOR SURVEY RESPONSES - SUMMARY STATISTICS
+================================================================================
+
+Total responses: 102
+Non-empty responses (with some data): 102
+
+================================================================================
+TIME SPENT ON EVALUATIONS
+================================================================================
+
+Responses to 'How long did you spend?': 34
+
+Examples of responses:
+  1. Three to four full days
+  2. One day
+  3. 3 hours
+  4. 4 hrs
+  5. 4 hours
+  6. 3.5 hours
+  7. few days, probably 15 hours total
+  8. 20 hours
+  9. 1.5 work days
+  10. 4 hours
+
+
+Manually imputed hours (numeric):
+  Count: 33
+  Mean: 9.6 hours
+  Median: 8.0 hours
+  Min: 3.0 hours
+  Max: 32.0 hours
+  Std Dev: 7.0 hours
+
+================================================================================
+EVALUATOR EXPERIENCE
+================================================================================
+
+Responses to 'How long in field?': 85
+
+Examples:
+  1. Eighteen years working on digital advertising, thirty years evangelizing for the use of field experiments in economics.
+  2. More than 10 years
+  3. 15
+  4. 10 years
+  5. 10 years
+  6. 27 years
+  7. 4 years
+  8. 5 years
+  9. 10 years 
+  10. ~4 years, if you mean doing original research in economic theory with a large proportion of my time; ~2.5 years, if you mean having some particular focus on growth theory or the economics of AI.
+
+
+Responses to 'How many papers reviewed?': 83
+
+Examples:
+  1. Probably around 200 over 30 years
+  2. Close to 100
+  3. 25+
+  4. >100
+  5. 100+
+  6. 100 +
+  7. >10
+  8. 20
+  9. ~200
+  10. I’m not sure how to interpret this.
+I’ve peer-reviewed one paper on the economics of AI.
+I’ve “evaluated” around 30 papers on the economics of AI in the course of writing a literature review on the subject.
+More generally, I’ve given informal feedback on many research ideas and papers in progress by fellow researchers at GPI, fellow economics graduate students, and people (usually undergraduates) interested in doing EA-relevant economics work who reach out or are put in touch with me in some way.
+
+================================================================================
+FEEDBACK ON THE UNJOURNAL PROCESS
+================================================================================
+
+Responses to 'Rate this template/process': 32
+
+All responses:
+
+  [1] It’s a little cumbersome.   Picking sliders on so many dimensions feels like it requires a lot of extra thinking on my part, and I’m not sure how useful all these dimensions of sliders are.
+
+  [2] It’s good. However, despite multiple attempts I wasn’t able to log in, and so I worry that my responses might be lost if there’s a glitch after I submit the form.
+
+  [3] Metrics with the intervals is confusing. 
+
+  [4] The sliding scales were difficult to use.
+
+  [5] 90/100
+
+  [6] i found it very heavy in terms of the number of questions being asked.  It also took me a long time to understand the ranking process.  It would eb good if you gave a couple of worked examples.
+
+  [7] two enthusiastic thumbs up
+
+  [8] Good!
+
+  [9] 9.5/10
+
+  [10] Process was clear, template was helpful.
+
+  [11] I know there’s a revised version in the works... it was fine for me
+
+  [12] 8/10
+
+  [13] very good
+
+  [14] I have little confidence in the numeric ratings, but I’ll be curious to see if there’s any predictive power there. Let me know if there is!
+
+  [15] The questions were annoying after I already spent a lot of time on the referee report. I was really ready to hit submit, but had to reason through a bunch of questions, where some were already answered in the referee report.
+
+  [16] I would rate this very posively! The process supports a very thorough evaluation of the paper, and I enjoyed being able to provide point estimates for specific characteristics of the paper along with a more text-based peer review 
+
+  [17] This template is functiong well, although with long web questionnaires one always dreads the loss of responses due to some accident or connection failure.
+
+  [18] The template is very helpful, I hope it is saved rightly as there is no way to save it, so was worried as I filled it during several days.
+
+  [19] 9/10
+
+  [20] 7/10
+
+  [21] Very useful
+
+  [22] The template and instructions were clear and helpful! I found it interesting to think about these metrics. 
+
+  [23] Favorably
+
+  [24] A tad bit long but thorough. 
+
+  [25] Good
+
+  [26] Rigorous and unfamiliar, but good
+
+  [27] Above average 
+
+  [28] 8/10
+
+  [29] 9/10, all clear
+
+  [30] Not bad, I’d crib about it but that’s just me trying this out for the first time
+
+  [31] Some of the questions were repetitive of what was included in my report
+
+  [32] Many strengths! The numeric measures will likely not be useful until there are repeated measures for individual reviewers. I also liked the push for discussion of policy relevance. However, I think the separate smaller questions could be collapsed into the main review.
+
+================================================================================
+WILLINGNESS TO RE-EVALUATE
+================================================================================
+
+Responses to 'Willing to re-evaluate?': 33
+  Contains 'Yes': 24
+  Contains 'No': 1
+
+Sample responses:
+  1. The paper is already published, so I can’t imagine the authors revising it again.  I’d consider reviewing a follow-up paper on the spillover effects.
+  2. Yes
+  3. The work is already published so it won’t be revised. 
+  4. Yes
+  5. yes
+  6. yes
+  7. Depends on my dissertation progress but I would consider it
+  8. yes
+  9. Yes I would, it is a good project and a few changes could make it stronger.
+  10. Sure
+
+================================================================================
+SUGGESTIONS & QUESTIONS
+================================================================================
+
+Non-empty responses: 7
+
+All suggestions:
+
+  [1] The review process is confusing and not intuitive. The guidelines are helpful but take time to understand and apply. 
+
+  [2] I’ve written separately about this!
+
+  [3] -
+
+  [4] Thank you for the invitation. This is a good paper, and I am glad to have read it.
+
+  [5] No.
+
+  [6] The rating sliders are a bit wonky and think it would be better to have like a text-box in there, and the process to upload a file of the written evaluation just stacks documents instead of replacing the previous one or having the option to delete one – and I’m not re-entering all of these details again (both are identical with just one minor formatting difference).
+
+  [7] This is an interesting project—thanks for including me in it. 
+
+================================================================================
+FIELDS OF EXPERTISE
+================================================================================
+
+Non-empty responses: 20
+
+Fields represented:
+  1. Field experiments on the effects of advertising campaigns
+  2. I conduct impact evaluations related to the effectiveness of social safety net programs and have studied cash vs food preferences in similar contexts to those studied in this paper.
+  3. small scale irrigation (social science)
+  4. moral psychology, behavioural economics
+  5. Development Studies/ Agricultural Economist
+  6. Meta-analysis
+  7. Experimental economics
+  8. Political Science; Authoritarian Politics; MENA Politics; Experimental Methods 
+  9. Development economics, with some work on irrigation.
+  10. Political economy, media and politics
+  11. experimental economics
+  12. Experimental and behavioral economics
+  13. Applied econometrics
+  14. welfare economics and normative ethics
+  15. Science-of-science
+  16. I work on integrated assessments and climate policy and cost-benefit analysis more in general.
+  17. Development economics
+  18. AI Safety
+  19. Land use and conservation
+  20. Environmental Economics
+
+================================================================================
+END OF ANALYSIS
+================================================================================
