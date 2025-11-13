@@ -46,3 +46,42 @@ paper_authors = pd.DataFrame(paper_authors.to_dict())
 columns = ['research', 'author', 'author_emails', 'corresponding']
 paper_authors = paper_authors[columns]
 paper_authors.to_csv("data/paper_authors.csv", index = False)
+
+# Evaluator survey responses (PUBLIC COLUMNS ONLY - NO CONFIDENTIAL DATA)
+# Combines responses from both academic and applied stream evaluations
+# Academic stream
+academic_survey = doc.get_table("grid-aDSyEIerdL")
+academic_survey = pd.DataFrame(academic_survey.to_dict())
+
+# Applied stream
+applied_survey = doc.get_table("grid-znNSTj_xX3")
+applied_survey = pd.DataFrame(applied_survey.to_dict())
+
+# Standardize column names between the two tables
+academic_survey = academic_survey.rename(columns={'Name of the paper or project': 'paper_title'})
+applied_survey = applied_survey.rename(columns={'Title of the paper or project': 'paper_title'})
+
+# Combine both streams
+evaluator_survey = pd.concat([academic_survey, applied_survey], ignore_index=True)
+
+# Only export PUBLIC-SAFE columns - exclude confidential comments, COI info, and evaluator codes
+public_columns = [
+  'paper_title',
+  # 'Code' excluded - evaluator pseudonyms kept private
+  'How long have you been in this field?',
+  'How many proposals, papers, and projects have you evaluated/reviewed (for journals, grants, or other peer-review)?',
+  'Approximately how long did you spend completing this evaluation?',
+  'How would you rate this template and process?',
+  'Would you be willing to consider evaluating a revised version of this work?',
+  'Do you have any other suggestions or questions about this process or The Unjournal? (We will try to respond, and incorporate your suggestions.)',
+  'Field/expertise',
+  'research_link_coda',
+  'status',
+  'Date entered (includes transfer from PubPub)',
+  'hours_spent_manual_impute'
+]
+
+# Filter to only include columns that exist in the dataframe
+available_columns = [col for col in public_columns if col in evaluator_survey.columns]
+evaluator_survey = evaluator_survey[available_columns]
+evaluator_survey.to_csv("data/evaluator_survey_responses.csv", index = False)
