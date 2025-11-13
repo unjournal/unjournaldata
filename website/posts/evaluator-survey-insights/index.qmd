@@ -85,20 +85,90 @@ ggplotly(p)
 ## Evaluator Experience
 
 ```{r}
-#| label: experience
+#| label: experience-parsing
 
-exp_counts <- survey %>%
-  summarise(
-    field_exp = sum(!is.na(how_long_have_you_been_in_this_field) &
-                    how_long_have_you_been_in_this_field != ""),
-    reviews = sum(!is.na(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) &
-                  how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review != "")
-  )
+# Parse years in field from text responses
+years_data <- survey %>%
+  filter(!is.na(how_long_have_you_been_in_this_field) &
+         how_long_have_you_been_in_this_field != "") %>%
+  mutate(
+    # Extract first number from text
+    years_numeric = str_extract(how_long_have_you_been_in_this_field, "\\d+"),
+    years_numeric = as.numeric(years_numeric)
+  ) %>%
+  filter(!is.na(years_numeric))
+
+# Parse number of papers reviewed
+reviews_data <- survey %>%
+  filter(!is.na(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) &
+         how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review != "") %>%
+  mutate(
+    # Extract numbers, handle "100+", "25+", ">100" etc
+    reviews_text = how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review,
+    # Clean and extract number
+    reviews_numeric = str_extract(reviews_text, "\\d+"),
+    reviews_numeric = as.numeric(reviews_numeric)
+  ) %>%
+  filter(!is.na(reviews_numeric))
+
+# Calculate statistics
+exp_stats <- list(
+  years_n = nrow(years_data),
+  years_median = median(years_data$years_numeric),
+  years_mean = round(mean(years_data$years_numeric), 1),
+  years_10plus = sum(years_data$years_numeric >= 10),
+  reviews_n = nrow(reviews_data),
+  reviews_median = median(reviews_data$reviews_numeric),
+  reviews_mean = round(mean(reviews_data$reviews_numeric), 1),
+  reviews_100plus = sum(reviews_data$reviews_numeric >= 100)
+)
 ```
 
-Our evaluators are highly experienced: **`r exp_counts$field_exp` respondents** reported their field experience, and **`r exp_counts$reviews` respondents** shared their review history. Most report **10+ years** in their field and having reviewed **100+ papers** for journals and grants.
+Our evaluators are highly experienced. From **`r exp_stats$years_n` respondents** who reported years in field, the median is **`r exp_stats$years_median` years** (mean: `r exp_stats$years_mean` years), with **`r exp_stats$years_10plus` (`r round(100*exp_stats$years_10plus/exp_stats$years_n)`%)** reporting 10+ years.
 
-**Sample experience levels:**
+For review experience, **`r exp_stats$reviews_n` respondents** provided counts, with a median of **`r exp_stats$reviews_median` papers reviewed** (mean: `r exp_stats$reviews_mean`). **`r exp_stats$reviews_100plus` evaluators (`r round(100*exp_stats$reviews_100plus/exp_stats$reviews_n)`%)** have reviewed 100+ papers.
+
+```{r}
+#| label: exp-viz
+#| fig-cap: "Evaluator experience distribution"
+#| fig-height: 4
+
+p1 <- ggplot(years_data, aes(x = years_numeric)) +
+  geom_histogram(bins = 10, fill = "#2E86AB", alpha = 0.7, color = "white") +
+  geom_vline(xintercept = exp_stats$years_median,
+             color = "#F18F01", linetype = "dashed", linewidth = 1) +
+  labs(
+    title = "Years in Field",
+    subtitle = paste0("Median: ", exp_stats$years_median, " years | N=", exp_stats$years_n),
+    x = "Years", y = "Count"
+  ) +
+  theme_minimal()
+
+ggplotly(p1)
+```
+
+```{r}
+#| label: exp-viz2
+#| fig-cap: "Papers reviewed (log scale)"
+#| fig-height: 4
+
+p2 <- ggplot(reviews_data, aes(x = reviews_numeric)) +
+  geom_histogram(bins = 12, fill = "#A23B72", alpha = 0.7, color = "white") +
+  geom_vline(xintercept = exp_stats$reviews_median,
+             color = "#F18F01", linetype = "dashed", linewidth = 1) +
+  scale_x_continuous(trans = "log10", breaks = c(10, 25, 50, 100, 200)) +
+  labs(
+    title = "Papers Reviewed",
+    subtitle = paste0("Median: ", exp_stats$reviews_median, " papers | N=", exp_stats$reviews_n),
+    x = "Number of Papers", y = "Count"
+  ) +
+  theme_minimal()
+
+ggplotly(p2)
+```
+
+::: {.callout-note collapse="true"}
+## Sample text responses
 
 ```{r}
 #| label: exp-samples
@@ -123,6 +193,7 @@ knitr::kable(
   caption = "Sample evaluator experience"
 )
 ```
+:::
 
 ## Process Feedback
 
