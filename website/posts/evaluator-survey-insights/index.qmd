@@ -1,0 +1,241 @@
+---
+title: "Inside The Unjournal: What Evaluators Tell Us"
+author: "David Reinstein with Claude Code assistance"
+date: "2025-11-12"
+execute:
+  echo: false
+  code-fold: true
+  code-summary: "Show code"
+  freeze: auto
+  warning: false
+  message: false
+editor_options:
+  chunk_output_type: console
+categories: [evaluators, process, survey]
+description: "Analyzing 100+ evaluator survey responses about time spent, experience levels, and feedback on The Unjournal process."
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(stringr)
+library(plotly)
+library(here)
+library(DT)
+library(janitor)
+
+# Load evaluator survey data (excludes confidential comments, COI info, evaluator codes)
+# Combines both academic and applied stream evaluations
+survey <- read_csv(here("data/evaluator_survey_responses.csv"),
+                   show_col_types = FALSE) %>%
+  clean_names()
+```
+
+## Overview
+
+We've collected feedback from evaluators through survey questions in our evaluation forms. With over 100 completed evaluations from both academic and applied streams, we can now share insights about time commitments, evaluator experience, and process feedback.
+
+## Time Commitment
+
+```{r}
+#| label: time-stats
+
+hours_data <- survey %>%
+  filter(!is.na(hours_spent_manual_impute))
+
+time_stats <- hours_data %>%
+  summarise(
+    Mean = round(mean(hours_spent_manual_impute), 1),
+    Median = median(hours_spent_manual_impute),
+    Min = min(hours_spent_manual_impute),
+    Max = max(hours_spent_manual_impute),
+    N = n()
+  )
+```
+
+Evaluators spend an average of **`r time_stats$Mean` hours** (median: `r time_stats$Median` hours) on an evaluation, ranging from `r time_stats$Min` to `r time_stats$Max` hours. This reflects differences in paper complexity and evaluator approaches.
+
+```{r}
+#| label: time-viz
+#| fig-cap: "Distribution of evaluation time"
+#| fig-height: 4
+
+p <- ggplot(hours_data, aes(x = hours_spent_manual_impute)) +
+  geom_histogram(bins = 15, fill = "#2E86AB", alpha = 0.7, color = "white") +
+  geom_vline(xintercept = time_stats$Mean,
+             color = "#A23B72", linetype = "dashed", linewidth = 1) +
+  geom_vline(xintercept = time_stats$Median,
+             color = "#F18F01", linetype = "dashed", linewidth = 1) +
+  labs(
+    title = "Hours Spent on Evaluations",
+    subtitle = paste0("Mean: ", time_stats$Mean, " hrs (purple) | Median: ",
+                     time_stats$Median, " hrs (orange) | N=", time_stats$N),
+    x = "Hours", y = "Count"
+  ) +
+  theme_minimal()
+
+ggplotly(p)
+```
+
+## Evaluator Experience
+
+```{r}
+#| label: experience
+
+exp_counts <- survey %>%
+  summarise(
+    field_exp = sum(!is.na(how_long_have_you_been_in_this_field) &
+                    how_long_have_you_been_in_this_field != ""),
+    reviews = sum(!is.na(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) &
+                  how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review != "")
+  )
+```
+
+Our evaluators are highly experienced: **`r exp_counts$field_exp` respondents** reported their field experience, and **`r exp_counts$reviews` respondents** shared their review history. Most report **10+ years** in their field and having reviewed **100+ papers** for journals and grants.
+
+**Sample experience levels:**
+
+```{r}
+#| label: exp-samples
+
+field_sample <- survey %>%
+  filter(!is.na(how_long_have_you_been_in_this_field) &
+         how_long_have_you_been_in_this_field != "") %>%
+  select(how_long_have_you_been_in_this_field) %>%
+  slice_head(n = 5)
+
+review_sample <- survey %>%
+  filter(!is.na(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) &
+         how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review != "") %>%
+  select(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) %>%
+  slice_head(n = 5)
+
+knitr::kable(
+  data.frame(
+    `Years in Field` = field_sample[[1]],
+    `Papers Reviewed` = review_sample[[1]]
+  ),
+  caption = "Sample evaluator experience"
+)
+```
+
+## Process Feedback
+
+```{r}
+#| label: process-stats
+
+process_ratings <- survey %>%
+  filter(!is.na(how_would_you_rate_this_template_and_process) &
+         how_would_you_rate_this_template_and_process != "")
+
+n_ratings <- nrow(process_ratings)
+```
+
+**`r n_ratings` evaluators** provided feedback on our template and process.
+
+**Highlights of positive feedback:**
+
+- "two enthusiastic thumbs up" • "9.5/10"
+- "Process was clear, template was helpful"
+- "Very thorough evaluation... enjoyed providing point estimates alongside text-based review"
+
+**Key areas for improvement:**
+
+1. **Questionnaire length**: "Too many questions," "annoying after spending time on referee report"
+2. **Usability**: "Sliders are confusing/wonky," "metrics with intervals is confusing"
+3. **Clarity**: "Would be good to have worked examples," "process not intuitive"
+
+::: {.callout-note collapse="true"}
+## View all process feedback
+
+```{r}
+#| label: all-feedback
+
+datatable(
+  process_ratings %>% select(how_would_you_rate_this_template_and_process),
+  colnames = "Feedback",
+  options = list(pageLength = 5, scrollX = TRUE)
+)
+```
+:::
+
+## Willingness to Re-evaluate
+
+```{r}
+#| label: reevaluate-stats
+
+reevaluate <- survey %>%
+  filter(!is.na(would_you_be_willing_to_consider_evaluating_a_revised_version_of_this_work) &
+         would_you_be_willing_to_consider_evaluating_a_revised_version_of_this_work != "")
+
+yes_count <- sum(str_detect(
+  str_to_lower(reevaluate$would_you_be_willing_to_consider_evaluating_a_revised_version_of_this_work),
+  "yes"
+))
+
+pct_yes <- round(100 * yes_count / nrow(reevaluate))
+```
+
+Out of **`r nrow(reevaluate)` responses**, **`r yes_count` included "yes" (~`r pct_yes`%)** when asked about evaluating revised versions. This high engagement suggests evaluators find the process worthwhile despite friction points.
+
+## Fields Represented
+
+```{r}
+#| label: fields
+
+expertise <- survey %>%
+  filter(!is.na(field_expertise) & field_expertise != "") %>%
+  pull(field_expertise)
+
+n_fields <- length(expertise)
+```
+
+Our **`r n_fields` evaluators** come from diverse backgrounds including development economics, experimental economics, environmental economics, political science, AI safety, meta-analysis, and more.
+
+::: {.callout-note collapse="true"}
+## View all fields of expertise
+
+```{r}
+#| label: all-fields
+
+knitr::kable(
+  data.frame(`Field/Expertise` = expertise),
+  caption = paste0(n_fields, " evaluator fields")
+)
+```
+:::
+
+## What We're Learning
+
+1. **Time commitment is substantial but manageable**: Median of 8 hours for high-quality peer review
+2. **Evaluators are highly qualified**: 10+ years experience, 100+ prior reviews
+3. **Process needs refinement**: Appreciate thoroughness but find sliders/questions cumbersome
+4. **Strong engagement**: High re-evaluation willingness indicates value despite friction
+
+## Next Steps
+
+We're working on:
+
+- Streamlining the evaluation template
+- Creating guides with worked examples
+- Improving rating interface usability
+- Reducing redundancy between written reviews and structured metrics
+
+## Conclusion
+
+Analysis of **`r nrow(survey)` evaluations** reveals The Unjournal successfully engages experienced researchers in substantive reviews averaging ~10 hours. While room for improvement exists—particularly around usability—evaluators remain willing to participate, suggesting we provide value justifying the time investment.
+
+---
+
+::: {.callout-tip}
+## Data & Privacy
+
+Analysis code and data (excluding confidential information) available in our [GitHub repository](https://github.com/unjournal/unjournaldata).
+
+**Privacy**: This dataset excludes confidential comments, COI information, and evaluator pseudonyms.
+:::
