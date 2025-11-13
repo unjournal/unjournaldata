@@ -3,7 +3,9 @@ title: "Unjournal data update: Deeper analysis with more evaluations"
 author: "Orchestrated by David Reinstein with Claude Code assistance*"
 date: "2025-10-15"
 execute:
-  echo: false
+  echo: true
+  code-fold: true
+  code-summary: "Show code"
   freeze: auto
   warning: false
   message: false
@@ -20,6 +22,7 @@ categories: [data, analysis]
 ```{r}
 #| label: setup
 #| include: false
+#| code-fold: false
 
 library(conflicted)
 conflicts_prefer(dplyr::select, dplyr::filter, .quiet = TRUE)
