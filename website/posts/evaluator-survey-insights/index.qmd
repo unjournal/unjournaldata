@@ -211,7 +211,15 @@ knitr::kable(
 
 process_ratings <- survey %>%
   filter(!is.na(how_would_you_rate_this_template_and_process) &
-         how_would_you_rate_this_template_and_process != "")
+         how_would_you_rate_this_template_and_process != "") %>%
+  mutate(
+    # Redact potentially identifying feedback
+    how_would_you_rate_this_template_and_process = str_replace(
+      how_would_you_rate_this_template_and_process,
+      "I feel it was designed for other Unjournal work and less suitable for.*",
+      "I feel it was designed for other Unjournal work and less suitable for... [redacted to avoid identification]"
+    )
+  )
 
 n_ratings <- nrow(process_ratings)
 ```
@@ -272,10 +280,10 @@ expertise <- survey %>%
   filter(!is.na(field_expertise) & field_expertise != "") %>%
   pull(field_expertise)
 
-n_fields <- length(expertise)
+n_field_responses <- length(expertise)
 ```
 
-Our **`r n_fields` evaluators** come from diverse backgrounds including development economics, experimental economics, environmental economics, political science, AI safety, meta-analysis, and more.
+**`r n_field_responses` evaluators** provided their field of expertise, representing diverse backgrounds including development economics, experimental economics, environmental economics, political science, AI safety, meta-analysis, and more.
 
 ::: {.callout-note collapse="true"}
 ## View all fields of expertise
@@ -285,7 +293,7 @@ Our **`r n_fields` evaluators** come from diverse backgrounds including developm
 
 knitr::kable(
   data.frame(`Field/Expertise` = expertise),
-  caption = paste0(n_fields, " evaluator fields")
+  caption = paste0(n_field_responses, " evaluator fields")
 )
 ```
 :::
