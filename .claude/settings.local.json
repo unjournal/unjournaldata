@@ -12,7 +12,14 @@
       "Bash(open:*)",
       "Bash(python3 -m pip show:*)",
       "Bash(python3.9:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:unjournal.pubpub.org)",
+      "Bash(pip install:*)",
+      "Bash(if [ -f .Renviron ])",
+      "Bash(then echo \".Renviron exists\")",
+      "Bash(else echo \"No .Renviron file\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []

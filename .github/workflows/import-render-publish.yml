@@ -33,7 +33,13 @@ jobs:
       - name: Import Unjournal data
         run: |
           python3 code/import-unjournal-data.py
-        env: 
+        env:
+          CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
+
+      - name: Create evaluator-paper level dataset
+        run: |
+          python3 code/create_evaluator_paper_dataset.py
+        env:
           CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
                 
       - name: Upload Unjournal data as artifact
