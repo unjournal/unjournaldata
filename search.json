@@ -18,7 +18,7 @@
     "href": "posts/evaluator-survey-insights/index.html#evaluator-experience",
     "title": "Inside The Unjournal: What Evaluators Tell Us",
     "section": "Evaluator Experience",
-    "text": "Evaluator Experience\n\n\n\nOur evaluators are highly experienced. From 82 respondents who reported years in field, the median is 10 years (mean: 106.6 years), with 43 (52%) reporting 10+ years.\nFor review experience, 79 respondents provided counts, with a median of 20 papers reviewed (mean: 37.3). 11 evaluators (14%) have reviewed 100+ papers.\n\n\n\n\nEvaluator experience distribution\n\n\n\n\n\n\nPapers reviewed (log scale)\n\n\n\n\n\n\n\n\nSample text responses\n\n\n\n\n\n\n\n\nSample evaluator experience\n\n\n\n\n\n\nYears.in.Field\nPapers.Reviewed\n\n\n\n\nEighteen years working on digital advertising, thirty years evangelizing for the use of field experiments in economics.\nProbably around 200 over 30 years\n\n\nMore than 10 years\nClose to 100\n\n\n15\n25+\n\n\n10 years\n>100\n\n\n10 years\n100+"
+    "text": "Evaluator Experience\n\n\n\nOur evaluators are highly experienced. From 78 respondents who reported years in field, the median is 10 years (mean: 9.3 years), with 44 (56%) reporting 10+ years.\nFor review experience, 70 respondents provided counts, with a median of 22.5 papers reviewed (mean: 41.8). 11 evaluators (16%) have reviewed 100+ papers.\n\n\n\n\nEvaluator experience distribution\n\n\n\n\n\n\nPapers reviewed (log scale)\n\n\n\n\n\n\n\n\nSample text responses\n\n\n\n\n\n\n\n\nSample evaluator experience\n\n\n\n\n\n\nYears.in.Field\nPapers.Reviewed\n\n\n\n\nEighteen years working on digital advertising, thirty years evangelizing for the use of field experiments in economics.\nProbably around 200 over 30 years\n\n\nMore than 10 years\nClose to 100\n\n\n15\n25+\n\n\n10 years\n>100\n\n\n10 years\n100+"
   },
   {
     "objectID": "posts/evaluator-survey-insights/index.html#process-feedback",
@@ -49,18 +49,11 @@
     "text": "What We’re Learning\n\nTime commitment is substantial but manageable: Median of 8 hours for high-quality peer review\nEvaluators are highly qualified: 10+ years experience, 100+ prior reviews\nProcess needs refinement: Appreciate thoroughness but find sliders/questions cumbersome\nStrong engagement: High re-evaluation willingness indicates value despite friction"
   },
   {
-    "objectID": "posts/evaluator-survey-insights/index.html#next-steps",
-    "href": "posts/evaluator-survey-insights/index.html#next-steps",
-    "title": "Inside The Unjournal: What Evaluators Tell Us",
-    "section": "Next Steps",
-    "text": "Next Steps\nWe’re working on:\n\nStreamlining the evaluation template\nCreating guides with worked examples\nImproving rating interface usability\nReducing redundancy between written reviews and structured metrics"
-  },
-  {
     "objectID": "posts/evaluator-survey-insights/index.html#conclusion",
     "href": "posts/evaluator-survey-insights/index.html#conclusion",
     "title": "Inside The Unjournal: What Evaluators Tell Us",
     "section": "Conclusion",
-    "text": "Conclusion\nAnalysis of 111 evaluations reveals The Unjournal successfully engages experienced researchers in substantive reviews averaging ~10 hours. While room for improvement exists—particularly around usability—evaluators remain willing to participate, suggesting we provide value justifying the time investment.\n\n\n\n\n\n\n\nData & Privacy\n\n\n\nAnalysis code and data (excluding confidential information) available in our GitHub repository.\nPrivacy: This dataset excludes confidential comments, COI information, and evaluator pseudonyms."
+    "text": "Conclusion\nAnalysis of 111 evaluations reveals The Unjournal successfully engages experienced researchers in substantive reviews averaging ~10 hours. While room for improvement exists—particularly around usability—evaluators remain willing to participate, suggesting we provide value justifying the time investment.\nWe’re continuing to improve the evaluation interface based on this feedback, analyzing our quantitative ratings to identify which metrics are most useful or redundant (see our other data analysis posts). We’re also seeking funding and partnerships to transition to a new evaluation platform, given PubPub’s sun-setting. Looking ahead, we aim to provide tools helping evaluators better calibrate their ratings and predictions.\n\n\n\n\n\n\n\nData & Privacy\n\n\n\nAnalysis code and data (excluding confidential information) available in our GitHub repository.\nPrivacy: This dataset excludes confidential comments, COI information, and evaluator pseudonyms."
   },
   {
     "objectID": "posts/uj-data-first-look/index.html",
