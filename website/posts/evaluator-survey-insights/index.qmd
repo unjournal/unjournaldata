@@ -87,29 +87,38 @@ ggplotly(p)
 ```{r}
 #| label: experience-parsing
 
-# Parse years in field from text responses
+# Parse years in field - look for patterns like "15 years", "10+", "More than 10"
 years_data <- survey %>%
   filter(!is.na(how_long_have_you_been_in_this_field) &
          how_long_have_you_been_in_this_field != "") %>%
   mutate(
-    # Extract first number from text
-    years_numeric = str_extract(how_long_have_you_been_in_this_field, "\\d+"),
-    years_numeric = as.numeric(years_numeric)
+    text = how_long_have_you_been_in_this_field,
+    # Extract number that comes before "years" or is standalone
+    years_numeric = case_when(
+      # Match "X years" or "X+"
+      str_detect(text, "\\d+\\s*(years?|\\+)") ~
+        as.numeric(str_extract(text, "\\d+(?=\\s*(years?|\\+))")),
+      # Match standalone numbers at start
+      str_detect(text, "^\\d+") ~
+        as.numeric(str_extract(text, "^\\d+")),
+      # Match "than X" (for "more than X")
+      str_detect(text, "than\\s+\\d+") ~
+        as.numeric(str_extract(text, "(?<=than\\s)\\d+")),
+      TRUE ~ NA_real_
+    )
   ) %>%
-  filter(!is.na(years_numeric))
+  filter(!is.na(years_numeric), years_numeric < 100) # Remove outliers
 
-# Parse number of papers reviewed
+# Parse papers reviewed - simpler approach
 reviews_data <- survey %>%
   filter(!is.na(how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review) &
          how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review != "") %>%
   mutate(
-    # Extract numbers, handle "100+", "25+", ">100" etc
-    reviews_text = how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review,
-    # Clean and extract number
-    reviews_numeric = str_extract(reviews_text, "\\d+"),
-    reviews_numeric = as.numeric(reviews_numeric)
+    text = how_many_proposals_papers_and_projects_have_you_evaluated_reviewed_for_journals_grants_or_other_peer_review,
+    # Extract any number (first occurrence)
+    reviews_numeric = as.numeric(str_extract(text, "\\d+"))
   ) %>%
-  filter(!is.na(reviews_numeric))
+  filter(!is.na(reviews_numeric), reviews_numeric >= 5) # Remove very low counts
 
 # Calculate statistics
 exp_stats <- list(
@@ -288,18 +297,11 @@ knitr::kable(
 3. **Process needs refinement**: Appreciate thoroughness but find sliders/questions cumbersome
 4. **Strong engagement**: High re-evaluation willingness indicates value despite friction
 
-## Next Steps
-
-We're working on:
-
-- Streamlining the evaluation template
-- Creating guides with worked examples
-- Improving rating interface usability
-- Reducing redundancy between written reviews and structured metrics
-
 ## Conclusion
 
 Analysis of **`r nrow(survey)` evaluations** reveals The Unjournal successfully engages experienced researchers in substantive reviews averaging ~10 hours. While room for improvement exists—particularly around usability—evaluators remain willing to participate, suggesting we provide value justifying the time investment.
+
+We're continuing to improve the evaluation interface based on this feedback, analyzing our quantitative ratings to identify which metrics are most useful or redundant (see our [other data analysis posts](https://unjournal.github.io/unjournaldata/)). We're also seeking funding and partnerships to transition to a new evaluation platform, given PubPub's sun-setting. Looking ahead, we aim to provide tools helping evaluators better calibrate their ratings and predictions.
 
 ---
 
