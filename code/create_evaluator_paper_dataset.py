@@ -133,60 +133,37 @@ def main():
     # ========================================
     print("\n3. Merging survey responses with ratings...")
 
-    # The ratings table has the public evaluator names
-    # Survey responses will get generic "Evaluator 1, 2, 3" names
-    # We merge on paper_title only, then try to match evaluators
+    # Since survey responses don't have evaluator identifiers that match ratings,
+    # we need to keep them separate and then combine
 
-    # For ratings-only rows: use the evaluator name from ratings (already public)
-    # For survey-only rows: keep the assigned "Evaluator N" name
-    # For matches: prefer the ratings evaluator name if it exists
+    # For ratings: use the evaluator names from the ratings table (already public)
+    # For survey-only: keep generic "Evaluator N" identifiers
 
+    # Full outer join to keep all rows
     combined_df = pd.merge(
-        survey_df,
         rating_wide,
-        on='paper_title',
-        how='outer',
-        suffixes=('_survey', '_rating')
+        survey_df,
+        on=['paper_title', 'evaluator'],
+        how='outer'
     )
 
-    # Use rating evaluator name if available, otherwise survey evaluator name
-    combined_df['evaluator'] = combined_df['evaluator_rating'].fillna(combined_df['evaluator_survey'])
-    combined_df = combined_df.drop(['evaluator_survey', 'evaluator_rating'], axis=1, errors='ignore')
-
     print(f"   Combined dataset: {len(combined_df)} rows")
+
+    unique_combos = combined_df[['paper_title', 'evaluator']].drop_duplicates().shape[0]
+    print(f"   Unique paper-evaluator combinations: {unique_combos}")
+
+    # Remove any duplicates that may have occurred
+    combined_df = combined_df.drop_duplicates(subset=['paper_title', 'evaluator'], keep='first')
+
+    print(f"   After deduplication: {len(combined_df)} rows")
     print(f"   Unique evaluators: {combined_df['evaluator'].nunique()}")
     print(f"   Unique papers: {combined_df['paper_title'].nunique()}")
 
     # ========================================
-    # 4. ADD PUBPUB SCRAPED DATA
+    # 4. SKIP PUBPUB SCRAPED DATA
     # ========================================
-    print("\n4. Adding PubPub scraped survey data...")
-
-    try:
-        pubpub_df = pd.read_csv("data/pubpub_survey_CLEANED_for_coda_import.csv")
-
-        # PubPub data doesn't have evaluator codes, so match by paper title
-        # and fill in missing survey values where possible
-        pubpub_cols_to_add = [
-            'How long have you been in this field?',
-            'How many proposals, papers, and projects have you evaluated/reviewed?',
-            'Field/expertise'
-        ]
-
-        # Rename PubPub columns to match
-        pubpub_rename = {
-            'Name of the paper or project': 'paper_title',
-            'How many proposals, papers, and projects have you evaluated/reviewed?':
-                'How many proposals, papers, and projects have you evaluated/reviewed (for journals, grants, or other peer-review)?'
-        }
-        pubpub_df = pubpub_df.rename(columns=pubpub_rename)
-
-        # For now, just note availability
-        print(f"   PubPub data: {len(pubpub_df)} evaluations with survey responses")
-        print(f"   Note: PubPub data doesn't have evaluator identifiers for direct merge")
-
-    except FileNotFoundError:
-        print("   No PubPub scraped data found (optional)")
+    # PubPub scraped data quality is poor and lacks evaluator identifiers
+    # Skip this step
 
     # ========================================
     # 5. ADD PAPER METADATA
@@ -236,7 +213,20 @@ def main():
     for col in sensitive_columns:
         if col in final_df.columns:
             final_df = final_df.drop(col, axis=1)
-            print(f"   Removed: {col}")
+            print(f"   Removed sensitive: {col}")
+
+    # REMOVE COMPLETELY BLANK COLUMNS
+    blank_cols = []
+    for col in final_df.columns:
+        non_null = final_df[col].notna().sum()
+        if non_null == 0:
+            blank_cols.append(col)
+
+    if blank_cols:
+        print(f"\n   Removing {len(blank_cols)} blank columns:")
+        for col in blank_cols:
+            print(f"   Removed blank: {col}")
+        final_df = final_df.drop(blank_cols, axis=1)
 
     # Order columns logically: identifiers, then survey, then ratings, then metadata
     identifier_cols = ['evaluator', 'paper_title', 'evaluation_stream']
