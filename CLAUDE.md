@@ -90,6 +90,65 @@ shinyapp/dashboard/uj-dashboard.qmd (reads CSVs)
 Published to shinyapps.io
 ```
 
+### Linode SQLite Database (Optional)
+
+**Status:** Operational (as of 2025-11-15)
+
+A separate SQLite database export is available for SQL-based data analysis and offline access.
+
+**Location:** Linode server at `/var/lib/unjournal/unjournal_data.db`
+
+**Export Script:** `code/export_to_sqlite.py`
+
+**Database Schema:**
+- `research` - Papers/projects being evaluated (309 papers as of Nov 2025)
+- `evaluator_ratings` - Quantitative ratings in long format (859 ratings)
+- `paper_authors` - Author relationships (757 entries)
+- `survey_responses` - Combined academic + applied evaluator surveys (113 responses)
+- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper
+- `researchers_evaluators` - Evaluator pool (requires team management doc access)
+- `export_metadata` - Export history and statistics
+
+**Automated Sync:**
+- Daily export at 2:00 AM UTC (cron job on Linode server)
+- Cron script: `linode_setup/sync_cron.sh`
+- Installation script: `linode_setup/install_sqlite_sync.sh`
+- Logs: `/var/log/unjournal/sync_cron.log`
+- Weekly backups: `/var/lib/unjournal/backups/` (30-day retention)
+
+**Setup Documentation:** See `LINODE_CRON_SETUP.md` for complete installation and configuration guide
+
+**Known Issues:**
+- The `evaluator_paper_level` table export may fail with "status_x" column error due to duplicate column names in source CSV. This is non-critical as the core tables (research, evaluator_ratings, paper_authors, survey_responses) export successfully.
+
+**Sample Queries:**
+```bash
+# Connect to database
+sqlite3 /var/lib/unjournal/unjournal_data.db
+
+# Papers with most evaluators
+SELECT
+  r.label_paper_title,
+  COUNT(DISTINCT rt.evaluator) as num_evaluators,
+  COUNT(rt.id) as num_ratings
+FROM research r
+LEFT JOIN evaluator_ratings rt ON r.label_paper_title = rt.research
+GROUP BY r.label_paper_title
+HAVING num_evaluators > 0
+ORDER BY num_evaluators DESC;
+```
+
+**Data Flow (Linode):**
+```
+Coda.io (source database)
+    ↓
+code/export_to_sqlite.py (runs daily via cron)
+    ↓
+/var/lib/unjournal/unjournal_data.db (SQLite database)
+    ↓
+Available for SQL queries and analysis
+```
+
 ### Key R Scripts
 - `code/calibrate-journal-stats.R`: Enriches journal quality rankings with OpenAlex data, creates `data/jql-enriched.csv`
 - `code/lookup-publication-outcomes.R`: Sourced by calibrate-journal-stats.R
@@ -99,6 +158,7 @@ Published to shinyapps.io
 ### Directory Structure
 - `/code`: Python and R scripts for data processing
 - `/data`: CSV exports from Coda.io and external data sources
+- `/linode_setup`: Automated SQLite sync scripts for Linode server
 - `/shinyapp/dashboard`: Main Shiny dashboard (Quarto format)
 - `/shinyapp/DataExplorer`: Secondary Shiny app (not currently deployed)
 - `/website`: Quarto website with blog posts (published to gh-pages)
@@ -110,4 +170,17 @@ Published to shinyapps.io
 - Data files in `/data` are auto-generated and auto-committed by GitHub Actions. Don't edit them manually.
 - The DataExplorer app deployment is commented out in the GitHub Actions workflow.
 - Website blog posts are frozen to prevent rebuilds.
-- Environment variables are shared between Python (`.Renviron`) and GitHub Actions (secrets). The `.Renviron` file must never be committed.
+
+## Security & Secrets
+
+**CRITICAL:** No API keys or secrets are committed to this repository.
+
+- `.Renviron` files (containing `CODA_API_KEY`) are gitignored and never committed
+- `.env` files (used by Linode SQLite sync) are gitignored and never committed
+- GitHub Actions uses repository secrets for all API keys (`CODA_API_KEY`, `RSCONNECT_TOKEN`, `AIRTABLE_API_KEY`, etc.)
+- Linode server stores API keys in `/var/lib/unjournal/.env` with 600 permissions
+
+**Protected files in .gitignore:**
+- `.Renviron` - R environment variables
+- `.env`, `*.env` - Python environment files
+- `passwords.txt` - Any password files

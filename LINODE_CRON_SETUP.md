@@ -1,6 +1,11 @@
-# Linode Server Cron Job Setup
+# Linode Server Automation Setup
 
-This guide explains how to set up automated daily data imports and dataset generation on a Linode server.
+This guide explains how to set up automated daily processes on a Linode server:
+1. **CSV Export** - Export Coda data to CSV files (for GitHub)
+2. **SQLite Database** - Export Coda data to local SQLite database
+3. **Dataset Generation** - Create evaluator-paper level dataset
+
+Choose the setup that fits your needs.
 
 ## Prerequisites
 
@@ -313,3 +318,422 @@ For issues:
 - GitHub: https://github.com/unjournal/unjournaldata/issues
 - Check logs first: `/path/to/projects/unjournaldata/logs/`
 - Test script manually before debugging cron
+
+---
+
+# Part 2: SQLite Database Setup
+
+For local database access with SQL queries (recommended for analysis and offline access).
+
+## Quick Start
+
+Run the automated installation script:
+
+```bash
+# Download and run installation script
+cd /tmp
+wget https://raw.githubusercontent.com/unjournal/unjournaldata/main/linode_setup/install_sqlite_sync.sh
+sudo bash install_sqlite_sync.sh
+```
+
+This will:
+- Install SQLite3 and Python dependencies
+- Create directory structure (`/var/lib/unjournal`, `/var/log/unjournal`)
+- Clone repository to `/opt/unjournal`
+- Set up environment file template
+- Create backup script
+
+## Manual Setup
+
+If you prefer manual installation:
+
+### 1. Install Dependencies
+
+```bash
+# Install SQLite3
+sudo apt-get update
+sudo apt-get install -y sqlite3 libsqlite3-dev
+
+# Install Python packages
+pip3 install codaio pandas python-dotenv
+```
+
+### 2. Create Directory Structure
+
+```bash
+sudo mkdir -p /opt/unjournal
+sudo mkdir -p /var/lib/unjournal
+sudo mkdir -p /var/lib/unjournal/backups
+sudo mkdir -p /var/log/unjournal
+
+# Set permissions
+sudo chmod 750 /var/lib/unjournal
+sudo chmod 750 /var/log/unjournal
+```
+
+### 3. Clone Repository
+
+```bash
+cd /opt/unjournal
+git clone https://github.com/unjournal/unjournaldata.git .
+```
+
+### 4. Configure API Key
+
+```bash
+# Create environment file
+sudo nano /var/lib/unjournal/.env
+
+# Add this content:
+CODA_API_KEY=your-api-key-here
+```
+
+```bash
+# Secure the file
+sudo chmod 600 /var/lib/unjournal/.env
+
+# Link to repository
+sudo ln -s /var/lib/unjournal/.env /opt/unjournal/.Renviron
+```
+
+## Testing the Export
+
+Test the SQLite export manually before setting up cron:
+
+```bash
+cd /opt/unjournal
+
+# Step 1: Create evaluator-paper dataset (optional but recommended)
+sudo python3 code/create_evaluator_paper_dataset.py
+
+# Step 2: Export to SQLite database
+sudo python3 code/export_to_sqlite.py --db-path /var/lib/unjournal/unjournal_data.db
+```
+
+**Note:** The evaluator-paper dataset (`data/evaluator_paper_level.csv`) is created with privacy protections and then included in the SQLite export. The automated cron job runs both steps.
+
+Expected output:
+```
+================================================================================
+Starting Coda to SQLite export
+================================================================================
+
+1. Exporting research papers...
+   Exporting 85 rows to research
+   Successfully exported 85 rows to research
+
+2. Exporting evaluator ratings...
+   Exporting 859 rows to evaluator_ratings
+   Successfully exported 859 rows to evaluator_ratings
+
+[...]
+
+================================================================================
+EXPORT SUMMARY
+================================================================================
+Duration: 12.34 seconds
+Database: /var/lib/unjournal/unjournal_data.db
+Database size: 2.45 MB
+Rows exported:
+  research: 85
+  evaluator_ratings: 859
+  paper_authors: 123
+  survey_responses: 113
+  evaluator_paper_level: 149
+  researchers_evaluators: 0
+================================================================================
+```
+
+## Querying the Database
+
+Once exported, you can query the SQLite database:
+
+```bash
+# Open database
+sqlite3 /var/lib/unjournal/unjournal_data.db
+
+# Show tables
+.tables
+
+# Show schema for a table
+.schema research
+
+# Run a query
+SELECT label_paper_title, overall_mean_score 
+FROM research 
+WHERE overall_mean_score > 80
+ORDER BY overall_mean_score DESC
+LIMIT 10;
+
+# Export query results to CSV
+.mode csv
+.output top_papers.csv
+SELECT * FROM research WHERE overall_mean_score > 80;
+.output stdout
+
+# Exit
+.quit
+```
+
+For more query examples, see: [docs/SQLITE_QUERIES.md](docs/SQLITE_QUERIES.md)
+
+## Automated Daily Sync
+
+### Using Cron
+
+Set up daily export at 2:00 AM:
+
+```bash
+sudo crontab -e
+```
+
+Add this line:
+```cron
+# Daily SQLite export at 2:00 AM
+0 2 * * * /opt/unjournal/linode_setup/sync_cron.sh
+```
+
+### Verify Cron Job
+
+```bash
+# List cron jobs
+sudo crontab -l
+
+# Check if cron daemon is running
+sudo systemctl status cron
+
+# View sync logs
+tail -f /var/log/unjournal/sync_cron.log
+```
+
+## Automated Backups
+
+Set up weekly database backups:
+
+```bash
+sudo crontab -e
+```
+
+Add:
+```cron
+# Weekly database backup (Sunday 3:00 AM)
+0 3 * * 0 /var/lib/unjournal/backup_database.sh
+```
+
+Backups are stored in: `/var/lib/unjournal/backups/`
+
+They are automatically:
+- Compressed with gzip
+- Deleted after 30 days
+
+### Manual Backup
+
+```bash
+sudo /var/lib/unjournal/backup_database.sh
+```
+
+### Restore from Backup
+
+```bash
+# List backups
+ls -lh /var/lib/unjournal/backups/
+
+# Restore
+gunzip -c /var/lib/unjournal/backups/unjournal_data_20250114_030000.db.gz > /var/lib/unjournal/unjournal_data.db
+```
+
+## Database Schema
+
+The SQLite database contains these tables:
+
+1. **research** - Papers/projects being evaluated
+   - Primary key: `label_paper_title`
+   - 85 rows, ~15 columns
+
+2. **evaluator_ratings** - Quantitative ratings (long format)
+   - Foreign key: `research` → `research(label_paper_title)`
+   - 859 rows, 8 columns
+   - Unique: `(research, evaluator, criteria)`
+
+3. **paper_authors** - Author relationships
+   - Foreign key: `research` → `research(label_paper_title)`
+   - ~123 rows
+
+4. **survey_responses** - Evaluator survey data
+   - Combined academic + applied streams
+   - ~113 rows
+
+5. **evaluator_paper_level** - Combined wide-format dataset
+   - Unique: `(paper_title, evaluator)`
+   - 149 rows, 45 columns
+   - Includes all rating criteria with confidence intervals
+
+6. **researchers_evaluators** - Evaluator pool
+   - (Requires team management doc access)
+
+7. **export_metadata** - Export history and statistics
+
+## Monitoring
+
+### Check Export Status
+
+```bash
+# View recent exports
+sqlite3 /var/lib/unjournal/unjournal_data.db "
+SELECT 
+  table_name,
+  row_count,
+  export_timestamp,
+  status
+FROM export_metadata
+ORDER BY export_timestamp DESC
+LIMIT 10;"
+```
+
+### Check Database Size
+
+```bash
+du -h /var/lib/unjournal/unjournal_data.db
+```
+
+### View Sync Logs
+
+```bash
+# Latest sync
+tail -n 50 /var/log/unjournal/sync_cron.log
+
+# All syncs today
+grep "$(date +%Y-%m-%d)" /var/log/unjournal/sync_cron.log
+
+# Failed syncs
+grep "ERROR" /var/log/unjournal/sync_cron.log
+```
+
+## Troubleshooting
+
+### Export Fails with "CODA_API_KEY not set"
+
+```bash
+# Check environment file
+sudo cat /var/lib/unjournal/.env
+
+# Ensure it contains:
+CODA_API_KEY=your-actual-key-here
+
+# Test loading environment
+source /var/lib/unjournal/.env
+echo $CODA_API_KEY
+```
+
+### Permission Denied Errors
+
+```bash
+# Fix ownership
+sudo chown -R $USER:$USER /opt/unjournal
+sudo chown -R $USER:$USER /var/lib/unjournal
+sudo chown -R $USER:$USER /var/log/unjournal
+```
+
+### Database Locked Error
+
+```bash
+# Check for other processes using database
+sudo lsof /var/lib/unjournal/unjournal_data.db
+
+# If cron is running, wait for it to finish
+# Or kill the process if needed
+```
+
+### Import Fails with Python Errors
+
+```bash
+# Reinstall Python packages
+pip3 install --upgrade codaio pandas python-dotenv
+
+# Check Python version (need 3.8+)
+python3 --version
+```
+
+## Accessing from Other Machines
+
+### Copy Database to Local Machine
+
+```bash
+# From local machine
+scp user@linode-server:/var/lib/unjournal/unjournal_data.db ./
+
+# Then query locally
+sqlite3 ./unjournal_data.db
+```
+
+### Remote Access via SSH Tunnel
+
+```bash
+# On local machine
+ssh -L 5000:localhost:5000 user@linode-server
+
+# On Linode server (in another terminal)
+cd /var/lib/unjournal
+python3 -m http.server 5000
+
+# Access from local browser
+# http://localhost:5000/unjournal_data.db
+```
+
+## Integration with Analysis Tools
+
+### Python
+
+```python
+import sqlite3
+import pandas as pd
+
+# Connect
+conn = sqlite3.connect('/var/lib/unjournal/unjournal_data.db')
+
+# Query
+df = pd.read_sql_query("""
+    SELECT 
+        r.label_paper_title,
+        r.overall_mean_score,
+        COUNT(DISTINCT rt.evaluator) as num_evaluators
+    FROM research r
+    LEFT JOIN evaluator_ratings rt ON r.label_paper_title = rt.research
+    GROUP BY r.label_paper_title
+    ORDER BY r.overall_mean_score DESC
+""", conn)
+
+print(df.head())
+conn.close()
+```
+
+### R
+
+```r
+library(DBI)
+library(RSQLite)
+
+# Connect
+con <- dbConnect(RSQLite::SQLite(), "/var/lib/unjournal/unjournal_data.db")
+
+# Query
+df <- dbGetQuery(con, "
+  SELECT * FROM research 
+  WHERE overall_mean_score > 80
+")
+
+# List tables
+dbListTables(con)
+
+# Disconnect
+dbDisconnect(con)
+```
+
+## Support
+
+For issues:
+- Check logs: `/var/log/unjournal/`
+- GitHub Issues: https://github.com/unjournal/unjournaldata/issues
+- Documentation: See `docs/SQLITE_QUERIES.md` for query examples
+
+---

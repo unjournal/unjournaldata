@@ -6,21 +6,21 @@ The `evaluator_paper_level.csv` dataset provides a comprehensive view of evaluat
 
 ## Dataset Structure
 
-- **207 rows** (evaluator-paper combinations)
-- **58 columns** including:
-  - Evaluator identifiers (pseudonyms)
+- **~150 rows** (evaluator-paper combinations)
+- **45+ columns** including:
+  - Evaluator identifiers (PUBLIC NAMES ONLY - no pseudonyms)
   - Paper metadata
-  - Survey responses (experience, time spent, feedback)
+  - Survey responses (experience, time spent, field expertise)
   - Quantitative ratings (10 criteria with confidence intervals)
   - Evaluation stream (academic/applied)
-
-- **98 unique evaluators**
-- **85 unique papers**
 
 ## Key Columns
 
 ### Identifiers
-- `evaluator` - Evaluator pseudonym (e.g., "Frank Venmans", "salted cod and hash")
+- `evaluator` - PUBLIC evaluator identifier:
+  - Names from ratings table if evaluator chose to use their name (e.g., "Ioannis Bournakis", "Romain Espinosa")
+  - Generic "Evaluator 1", "Evaluator 2" for anonymous evaluations
+  - **NEVER includes pseudonyms or confidential identifiers**
 - `paper_title` - Full paper title
 - `evaluation_stream` - "academic" or "applied"
 
@@ -77,16 +77,23 @@ Data is merged from:
 Low overlap between survey and ratings is expected - many evaluations have either survey OR ratings, not both.
 
 ### Privacy & Exclusions
-**INCLUDED** (non-confidential):
-- Evaluator pseudonyms (e.g., "Frank Venmans")
-- All survey responses (experience, time, feedback)
-- All quantitative ratings with confidence intervals
+
+⚠️ **CRITICAL: This dataset has strong privacy protections**
+
+**INCLUDED** (PUBLIC information only):
+- Public evaluator identifiers (names if evaluator chose to use their name, or generic "Evaluator N")
+- Survey responses: experience, time spent, field expertise
+- Quantitative ratings with confidence intervals
 - Paper metadata
 
-**EXCLUDED** (confidential):
-- Evaluator personal contact information
-- Conflicts of interest (COI) disclosures
-- Confidential comments
+**EXCLUDED** (confidential/sensitive):
+- ❌ Evaluator pseudonyms (private codes used internally)
+- ❌ Evaluator personal contact information
+- ❌ Conflicts of interest (COI) disclosures
+- ❌ Confidential comments and feedback
+- ❌ Process feedback questions
+- ❌ Re-evaluation willingness
+- ❌ Any identifying feedback that could reveal evaluator identity
 
 ## File Generation
 
@@ -154,7 +161,10 @@ df[rating_cols].mean()
 - Paper titles are used for merging - slight variations can prevent matches
 - Some evaluators have multiple evaluations of the same paper (revisions)
 - NaN values are common - not all evaluations include all fields
-- Evaluator pseudonyms are stable identifiers but may not be globally unique
+- Evaluator identifiers follow privacy protections:
+  - Public names are used if evaluator chose to identify themselves
+  - Generic "Evaluator N" labels for anonymous evaluations
+  - No internal pseudonyms or private identifiers are exposed
 
 ## Contact
 
