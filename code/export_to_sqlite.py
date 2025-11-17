@@ -456,6 +456,34 @@ def main(db_path=None):
                 eval_paper_df = eval_paper_df.drop(columns=confidence_cols)
                 logger.info(f"Dropped deprecated confidence_level columns: {confidence_cols}")
 
+            # Drop duplicate/merge columns (status_x, status_y, etc.) - keep only non-suffixed versions
+            duplicate_cols = [col for col in eval_paper_df.columns if col.endswith('_x') or col.endswith('_y')]
+            if duplicate_cols:
+                eval_paper_df = eval_paper_df.drop(columns=duplicate_cols)
+                logger.info(f"Dropped duplicate merge columns: {duplicate_cols}")
+
+            # Select only columns that exist in the database schema
+            schema_columns = [
+                'evaluator', 'paper_title', 'evaluation_stream',
+                'years_in_field', 'papers_reviewed', 'time_spent', 'field_expertise',
+                'adv_knowledge_rating', 'claims_rating', 'gp_relevance_rating',
+                'journal_predict_rating', 'logic_comms_rating', 'merits_journal_rating',
+                'methods_rating', 'open_sci_rating', 'overall_rating', 'real_world_rating',
+                'adv_knowledge_lower', 'claims_lower', 'gp_relevance_lower',
+                'journal_predict_lower', 'logic_comms_lower', 'merits_journal_lower',
+                'methods_lower', 'open_sci_lower', 'overall_lower', 'real_world_lower',
+                'adv_knowledge_upper', 'claims_upper', 'gp_relevance_upper',
+                'journal_predict_upper', 'logic_comms_upper', 'merits_journal_upper',
+                'methods_upper', 'open_sci_upper', 'overall_upper', 'real_world_upper',
+                'research_link_coda', 'status', 'date_entered', 'hours_spent',
+                'research_url', 'doi', 'main_cause_cat'
+            ]
+
+            # Keep only schema columns that exist in the dataframe
+            available_cols = [col for col in schema_columns if col in eval_paper_df.columns]
+            eval_paper_df = eval_paper_df[available_cols]
+            logger.info(f"Selected {len(available_cols)} columns matching database schema")
+
             export_stats['evaluator_paper_level'] = export_table(
                 conn, eval_paper_df, 'evaluator_paper_level',
                 unique_columns=['paper_title', 'evaluator']
