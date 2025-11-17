@@ -8,15 +8,33 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 
 ## How it works: data and dashboards
 
-A single GitHub Action:
+### Data Pipeline Overview
 
-* Exports data from Coda to csv files in the `/data` folder, via `code/import-unjournal-data.py`.
-* Creates the [Shiny](https://shiny.posit.co) dashboard at <https://unjournal.shinyapps.io/uj-dashboard>.
+```
+Coda.io (source database)
+    ↓
+GitHub Actions (daily + on push to main)
+    ├→ code/import-unjournal-data.py → CSV files (data/*.csv)
+    ├→ code/create_evaluator_paper_dataset.py → evaluator_paper_level.csv (with privacy protections)
+    └→ Shiny dashboard deployment → https://unjournal.shinyapps.io/uj-dashboard
 
-This action is automatically run 
+Optional: Linode Server (daily at 2 AM UTC)
+    └→ code/export_to_sqlite.py → SQLite database
+       (reads evaluator_paper_level.csv + direct Coda export)
+```
 
-* when the "main" branch is pushed to;
-* once daily in any case.
+### GitHub Actions Workflow
+
+A single GitHub Action (`.github/workflows/import-render-publish.yml`):
+
+1. **Exports data from Coda** to CSV files in the `/data` folder via `code/import-unjournal-data.py`
+2. **Creates evaluator-paper dataset** with privacy protections via `code/create_evaluator_paper_dataset.py`
+3. **Deploys the [Shiny](https://shiny.posit.co) dashboard** at <https://unjournal.shinyapps.io/uj-dashboard>
+
+This action is automatically run:
+
+* when the "main" branch is pushed to
+* once daily at 13:30 UTC
 
 
 ## How it works: website and blog posts
@@ -38,12 +56,15 @@ created on GitHub, but directly on developer machines.
 
 ## Data
 
+### CSV Files (Primary Data Format)
+
 The files in the `/data` folder are imported from Coda:
 
 * `paper_authors.csv`: Lists of authors per paper.
 * `research.csv`: evaluated papers.
 * `rsx_evalr_rating.csv`: quantitative ratings given by each evaluator for each
   paper.
+* `evaluator_paper_level.csv`: Combined dataset at evaluator-paper level with privacy protections (no confidential feedback, COI info, or personal contact information).
 
 There's also some data from other sources:
 
@@ -54,6 +75,59 @@ There's also some data from other sources:
 * `jql-enriched.csv`: the same data, enriched with h-index and
   citedness information from [Openalex](https://openalex.org), and
   our own meta-ranking of journals, via `code/calibrate-journal-stats.R`.
+
+### SQLite Database (Optional)
+
+For SQL-based analysis and offline access, an optional SQLite database export is available.
+
+**Database location:** Linode server at `/var/lib/unjournal/unjournal_data.db`
+
+**Database tables:**
+- `research` - Papers/projects being evaluated (~309 papers)
+- `evaluator_ratings` - Quantitative ratings in long format (~859 ratings)
+- `paper_authors` - Author relationships (~757 entries)
+- `survey_responses` - Combined academic + applied evaluator surveys (~113 responses)
+- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper
+- `researchers_evaluators` - Evaluator pool
+- `export_metadata` - Export history and statistics
+
+**Setup and usage:**
+- Setup instructions: See [LINODE_CRON_SETUP.md](LINODE_CRON_SETUP.md)
+- Query examples: See [docs/SQLITE_QUERIES.md](docs/SQLITE_QUERIES.md)
+- Export script: `code/export_to_sqlite.py`
+- Automated daily sync at 2:00 AM UTC (Linode server)
+
+**Create local database:**
+```bash
+# Requires CODA_API_KEY in .Renviron file
+python3 code/export_to_sqlite.py --db-path ./unjournal_data.db
+
+# Query the database
+sqlite3 ./unjournal_data.db
+```
+
+## Privacy & Data Protection
+
+All publicly shared datasets follow strict privacy protections:
+
+- **NO confidential feedback** or evaluator comments
+- **NO conflicts of interest** (COI) disclosures
+- **NO personal contact information**
+- **NO internal pseudonyms** or private identifiers
+
+Public evaluator identifiers only:
+- Names if evaluator chose to use their name (e.g., "Ioannis Bournakis")
+- Generic "Evaluator 1", "Evaluator 2" for anonymous evaluations
+
+See [EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md) for detailed privacy documentation.
+
+## Documentation
+
+- **[README.md](README.md)** (this file) - Project overview and quick start
+- **[CLAUDE.md](CLAUDE.md)** - Detailed architecture and developer guide
+- **[LINODE_CRON_SETUP.md](LINODE_CRON_SETUP.md)** - SQLite database setup for Linode server
+- **[EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md)** - Evaluator-paper dataset documentation
+- **[docs/SQLITE_QUERIES.md](docs/SQLITE_QUERIES.md)** - SQL query examples
 
 ## PubPub export utility
 
