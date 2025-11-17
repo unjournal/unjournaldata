@@ -25,6 +25,9 @@
 *.knit.md
 # R Environment Variables
 .Renviron
+# Python environment files (used for Linode SQLite sync)
+.env
+*.env
 # translation temp files
 po/*~
 # RStudio Connect folder
