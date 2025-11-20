@@ -19,7 +19,9 @@
       "Bash(if [ -f .Renviron ])",
       "Bash(then echo \".Renviron exists\")",
       "Bash(else echo \"No .Renviron file\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(sqlite3:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []
