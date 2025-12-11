@@ -52,9 +52,11 @@ export async function fetchCodaPageContent(docId: string, pageId: string): Promi
   const initData = await initResponse.json() as ExportInitResponse;
   const statusUrl = initData.href;
 
+  console.log(`[Coda Export] Initiated export for page ${pageId}, status URL: ${statusUrl}`);
+
   // Step 2: Poll for completion
-  const maxAttempts = 30;
-  const pollInterval = 1000; // 1 second
+  const maxAttempts = 60; // Increased from 30
+  const pollInterval = 2000; // 2 seconds (increased from 1 second)
   let attempts = 0;
 
   while (attempts < maxAttempts) {
@@ -69,6 +71,7 @@ export async function fetchCodaPageContent(docId: string, pageId: string): Promi
 
     // Handle 404 during initial processing (Coda API quirk)
     if (statusResponse.status === 404) {
+      console.log(`[Coda Export] Attempt ${attempts + 1}/${maxAttempts}: Status 404 (still processing)`);
       attempts++;
       continue;
     }
@@ -80,6 +83,7 @@ export async function fetchCodaPageContent(docId: string, pageId: string): Promi
     }
 
     const statusData = await statusResponse.json() as ExportInitResponse;
+    console.log(`[Coda Export] Attempt ${attempts + 1}/${maxAttempts}: Status = ${statusData.status}`);
 
     if (statusData.status === 'complete' && statusData.downloadLink) {
       // Step 3: Download content
@@ -93,7 +97,9 @@ export async function fetchCodaPageContent(docId: string, pageId: string): Promi
         );
       }
 
-      return await contentResponse.text();
+      const content = await contentResponse.text();
+      console.log(`[Coda Export] Successfully downloaded ${content.length} characters for page ${pageId}`);
+      return content;
     }
 
     if (statusData.status === 'failed') {

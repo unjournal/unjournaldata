@@ -21,7 +21,11 @@
       "Bash(else echo \"No .Renviron file\")",
       "Bash(fi)",
       "Bash(sqlite3:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebSearch",
+      "Bash(npx create-next-app:*)",
+      "Bash(curl:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
