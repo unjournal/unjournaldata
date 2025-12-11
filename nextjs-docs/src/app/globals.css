@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-gray-900;
+  }
+}
+
+@layer components {
+  .academic-prose {
+    @apply prose prose-slate prose-lg max-w-[65ch] mx-auto;
+    @apply prose-headings:font-serif prose-headings:text-gray-900;
+    @apply prose-p:font-sans prose-p:leading-relaxed;
+    @apply prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline;
+  }
+}
