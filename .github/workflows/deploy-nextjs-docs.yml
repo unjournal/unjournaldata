@@ -1,0 +1,72 @@
+name: Deploy Next.js Docs to Vercel
+
+on:
+  # Trigger on changes to nextjs-docs folder
+  push:
+    branches:
+      - main
+    paths:
+      - 'nextjs-docs/**'
+      - '.github/workflows/deploy-nextjs-docs.yml'
+
+  # Manual trigger
+  workflow_dispatch:
+
+  # Optional: scheduled rebuild to refresh ISR content
+  schedule:
+    - cron: '0 6 * * *' # Daily at 6 AM UTC
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./nextjs-docs
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ./nextjs-docs/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js app
+        env:
+          CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
+          CODA_DOC_ID: ${{ secrets.CODA_DOC_ID }}
+        run: npm run build
+
+      # Note: Vercel deployment requires additional secrets:
+      # - VERCEL_TOKEN: Vercel deployment token
+      # - VERCEL_ORG_ID: Vercel organization ID
+      # - VERCEL_PROJECT_ID: Vercel project ID
+      #
+      # Alternatively, use Vercel GitHub Integration for automatic deployments
+      # without needing this workflow. This is the recommended approach.
+      #
+      # To use Vercel GitHub Integration:
+      # 1. Go to vercel.com and import this repository
+      # 2. Set Root Directory to "nextjs-docs"
+      # 3. Add environment variables in Vercel dashboard
+      # 4. Delete or disable this workflow file
+
+      # Uncomment the following step if using vercel-action:
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: ./nextjs-docs
+      #     vercel-args: '--prod'
