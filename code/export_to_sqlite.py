@@ -182,6 +182,9 @@ def setup_database(db_path):
         email TEXT,
         expertise TEXT,
         affiliated_organization TEXT,
+        Position TEXT,
+        expertise_field TEXT,
+        expertise_methods TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
@@ -521,7 +524,9 @@ def main(db_path=None):
             researchers_df = researchers_df.rename(columns={
                 'Name': 'name_text',
                 'expertise_text': 'expertise',
-                'Affiliation': 'affiliated_organization'
+                'Affiliation': 'affiliated_organization',
+                'Expertise Field': 'expertise_field',
+                'Expertise Methods': 'expertise_methods'
             })
 
             # Drop rows with no name
