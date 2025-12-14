@@ -520,6 +520,7 @@ def main(db_path=None):
             # Rename for database consistency
             researchers_df = researchers_df.rename(columns={
                 'Name': 'name_text',
+                'expertise_text': 'expertise',
                 'Affiliation': 'affiliated_organization'
             })
 
