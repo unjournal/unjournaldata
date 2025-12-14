@@ -493,23 +493,46 @@ def main(db_path=None):
             export_stats['evaluator_paper_level'] = 0
 
         # ========================================
-        # 6. EXPORT RESEARCHERS & EVALUATORS
+        # 6. EXPORT RESEARCHERS & EVALUATORS (PUBLIC FIELDS ONLY)
         # ========================================
-        logger.info("\n6. Exporting researchers & evaluators...")
+        logger.info("\n6. Exporting researchers & evaluators (public fields only)...")
 
-        # This requires accessing a different Coda document
-        # For now, skip if not accessible
         try:
-            # TODO: Need the correct document ID for team management
-            # team_doc = Document("TEAM_DOC_ID", coda=coda)
-            # researchers_table = team_doc.get_table("grid-GuykkYMrcn")
-            # researchers_df = pd.DataFrame(researchers_table.to_dict())
-            # export_stats['researchers_evaluators'] = export_table(
-            #     conn, researchers_df, 'researchers_evaluators',
-            #     unique_columns=['name_text']
-            # )
-            logger.info("Skipping researchers_evaluators - requires team management doc ID")
-            export_stats['researchers_evaluators'] = 0
+            # Same document as research/eval doc
+            researchers_table = research_doc.get_table("grid-GuykkYMrcn")
+            researchers_df = pd.DataFrame(researchers_table.to_dict())
+
+            # PRIVACY: Export ONLY public, non-sensitive fields
+            # NEVER export: emails, CV, ORCID, comments, consent, personal details
+            public_columns = [
+                'Name',
+                'expertise_text',
+                'Affiliation',
+                'Position',
+                'Expertise Field',
+                'Expertise Methods'
+            ]
+
+            # Filter to available public columns
+            available_cols = [col for col in public_columns if col in researchers_df.columns]
+            researchers_df = researchers_df[available_cols]
+
+            # Rename for database consistency
+            researchers_df = researchers_df.rename(columns={
+                'Name': 'name_text',
+                'Affiliation': 'affiliated_organization'
+            })
+
+            # Drop rows with no name
+            researchers_df = researchers_df[researchers_df['name_text'].notna()]
+
+            logger.info(f"Exporting {len(researchers_df)} researchers/evaluators (PUBLIC fields only)")
+            logger.info(f"Excluded columns: Email, CV, ORCID, Country, Comments, Consent")
+
+            export_stats['researchers_evaluators'] = export_table(
+                conn, researchers_df, 'researchers_evaluators',
+                unique_columns=['name_text']
+            )
         except Exception as e:
             logger.warning(f"Could not export researchers_evaluators: {e}")
             export_stats['researchers_evaluators'] = 0
