@@ -36,7 +36,7 @@ echo "3. Creating configuration..."
 mkdir -p /etc/datasette
 chown datasette:datasette /etc/datasette
 
-# Create metadata file
+# Create metadata file with authentication configuration
 cat > /etc/datasette/metadata.json << 'EOF'
 {
   "title": "Unjournal Data Explorer",
@@ -45,6 +45,14 @@ cat > /etc/datasette/metadata.json << 'EOF'
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "Coda.io",
   "source_url": "https://github.com/unjournal/unjournaldata",
+  "allow": {
+    "unauthenticated": false
+  },
+  "plugins": {
+    "datasette-auth-passwords": {
+      "admin_password_hash": "REPLACE_WITH_HASH"
+    }
+  },
   "databases": {
     "unjournal_data": {
       "title": "Unjournal Evaluations Database",
@@ -75,20 +83,6 @@ cat > /etc/datasette/metadata.json << 'EOF'
           "description": "Public information about evaluators (no emails or personal data)"
         }
       }
-    }
-  }
-}
-EOF
-
-# Create settings file (with authentication)
-cat > /etc/datasette/settings.json << 'EOF'
-{
-  "allow": {
-    "unauthenticated": false
-  },
-  "plugins": {
-    "datasette-auth-passwords": {
-      "admin_password_hash": "REPLACE_WITH_HASH"
     }
   }
 }
@@ -127,7 +121,6 @@ echo "5. Setting permissions..."
 chown -R datasette:datasette /etc/datasette
 chmod 755 /etc/datasette
 chmod 644 /etc/datasette/metadata.json
-chmod 600 /etc/datasette/settings.json
 
 # Allow datasette user to read the database
 usermod -a -G root datasette
@@ -149,8 +142,8 @@ echo "1. Set a password for the admin user:"
 echo "   datasette hash-password"
 echo "   (Copy the hash)"
 echo ""
-echo "2. Edit the settings file and replace REPLACE_WITH_HASH:"
-echo "   sudo nano /etc/datasette/settings.json"
+echo "2. Edit the metadata file and replace REPLACE_WITH_HASH:"
+echo "   sudo nano /etc/datasette/metadata.json"
 echo ""
 echo "3. Start the service:"
 echo "   sudo systemctl start datasette"

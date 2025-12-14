@@ -35,11 +35,17 @@ datasette hash-password
 ### Configure Authentication
 
 ```bash
-# Edit settings file
-sudo nano /etc/datasette/settings.json
+# Edit metadata file
+sudo nano /etc/datasette/metadata.json
 
-# Replace REPLACE_WITH_HASH with the hash you just generated
-# Should look like: "admin_password_hash": "pbkdf2_sha256$..."
+# Replace REPLACE_WITH_HASH in the "plugins" section with the hash you just generated
+# The key configuration is:
+# "allow": {"unauthenticated": false}  <- This denies access to unauthenticated users
+# "plugins": {
+#   "datasette-auth-passwords": {
+#     "admin_password_hash": "pbkdf2_sha256$..."  <- Your hash here
+#   }
+# }
 ```
 
 ### Start Service
