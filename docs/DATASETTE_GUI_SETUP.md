@@ -78,6 +78,30 @@ http://your-linode-ip:8001
 
 Login with username `admin` and the password you set.
 
+### Changing the Password
+
+To change the admin password after initial setup:
+
+```bash
+# Generate new password hash
+python3 -c "
+from datasette_auth_passwords import hash_password
+pw_hash = hash_password('YOUR_NEW_PASSWORD')
+print(pw_hash)
+"
+
+# Copy the hash output, then edit metadata.json
+sudo nano /etc/datasette/metadata.json
+
+# Replace the admin_password_hash value with your new hash
+# Should look like: "admin_password_hash": "pbkdf2_sha256$480000$..."
+
+# Restart Datasette
+sudo systemctl restart datasette
+```
+
+**Note**: After changing the password, you may need to hard refresh the login page (`Ctrl+Shift+R` or `Cmd+Shift+R`) to avoid CSRF token errors.
+
 ---
 
 ## Using Datasette
@@ -244,16 +268,33 @@ sudo netstat -tlnp | grep 8001
 ### Authentication not working
 
 ```bash
-# Verify password hash in settings
-sudo cat /etc/datasette/settings.json
+# Verify password hash in metadata.json
+sudo cat /etc/datasette/metadata.json
 
-# Regenerate hash
-datasette hash-password
+# Regenerate hash (use Python script since datasette hash-password requires interactive input)
+python3 -c "
+from datasette_auth_passwords import hash_password
+pw_hash = hash_password('YOUR_NEW_PASSWORD')
+print(pw_hash)
+"
 
-# Update settings file
-sudo nano /etc/datasette/settings.json
+# Update metadata.json with new hash
+sudo nano /etc/datasette/metadata.json
+# Replace the admin_password_hash value in the plugins section
+
+# Restart service
 sudo systemctl restart datasette
 ```
+
+### CSRF token error on login
+
+If you see "form-urlencoded POST field did not match cookie":
+
+1. **Hard refresh** the login page: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
+2. **Or** clear browser cookies for the site
+3. **Or** try in an incognito/private window
+
+This happens when the browser caches an old login form after Datasette restarts.
 
 ---
 
