@@ -92,7 +92,7 @@ Published to shinyapps.io
 
 ### Linode SQLite Database (Optional)
 
-**Status:** Operational (as of 2025-11-15)
+**Status:** Operational (as of 2025-12-15)
 
 A separate SQLite database export is available for SQL-based data analysis and offline access.
 
@@ -101,12 +101,12 @@ A separate SQLite database export is available for SQL-based data analysis and o
 **Export Script:** `code/export_to_sqlite.py`
 
 **Database Schema:**
-- `research` - Papers/projects being evaluated (309 papers as of Nov 2025)
+- `research` - Papers/projects being evaluated (323 papers as of Dec 2025)
 - `evaluator_ratings` - Quantitative ratings in long format (859 ratings)
 - `paper_authors` - Author relationships (757 entries)
 - `survey_responses` - Combined academic + applied evaluator surveys (113 responses)
-- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper
-- `researchers_evaluators` - Evaluator pool (requires team management doc access)
+- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper (194 rows)
+- `researchers_evaluators` - Evaluator pool, public fields only (279 evaluators, NO emails/personal data)
 - `export_metadata` - Export history and statistics
 
 **Automated Sync:**
@@ -116,10 +116,7 @@ A separate SQLite database export is available for SQL-based data analysis and o
 - Logs: `/var/log/unjournal/sync_cron.log`
 - Weekly backups: `/var/lib/unjournal/backups/` (30-day retention)
 
-**Setup Documentation:** See `LINODE_CRON_SETUP.md` for complete installation and configuration guide
-
-**Known Issues:**
-- The `evaluator_paper_level` table export may fail with "status_x" column error due to duplicate column names in source CSV. This is non-critical as the core tables (research, evaluator_ratings, paper_authors, survey_responses) export successfully.
+**Setup Documentation:** See `docs/LINODE_CRON_SETUP.md` and `docs/DATASETTE_GUI_SETUP.md` for complete installation and configuration guides
 
 **Sample Queries:**
 ```bash
@@ -142,12 +139,19 @@ ORDER BY num_evaluators DESC;
 ```
 Coda.io (source database)
     ↓
-code/export_to_sqlite.py (runs daily via cron)
+code/export_to_sqlite.py (runs daily at 2:00 AM UTC via cron)
     ↓
 /var/lib/unjournal/unjournal_data.db (SQLite database)
     ↓
-Available for SQL queries and analysis
+    ├─ Datasette GUI (http://45.79.160.157:8001) - password-protected web interface
+    └─ Direct SQL queries and analysis
 ```
+
+**Datasette Web GUI:**
+- **URL**: http://45.79.160.157:8001
+- **Authentication**: Username `admin` (password-protected)
+- **Features**: Browse tables, run SQL queries, export CSV/JSON, share query URLs
+- **Setup**: See `docs/DATASETTE_GUI_SETUP.md`
 
 ### Key R Scripts
 - `code/calibrate-journal-stats.R`: Enriches journal quality rankings with OpenAlex data, creates `data/jql-enriched.csv`
