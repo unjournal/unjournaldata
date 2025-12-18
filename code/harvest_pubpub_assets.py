@@ -624,12 +624,34 @@ def download_asset(session: requests.Session, url: str) -> bytes:
 def harvest(
     output_dir: pathlib.Path,
     hostname: str = "unjournal.pubpub.org",
-    graphql_endpoint: str = "https://api.pubpub.org/graphql",
+    graphql_endpoint: Optional[str] = None,
 ) -> None:
     LOGGER.info("Starting harvest for community %s", hostname)
+    endpoints: List[str] = []
+    if graphql_endpoint:
+        endpoints.append(graphql_endpoint)
+    else:
+        endpoints.append(f"https://{hostname}/api/graphql")
+    if "api.pubpub.org/graphql" not in endpoints:
+        endpoints.append("https://api.pubpub.org/graphql")
 
-    client = GraphQLClient(graphql_endpoint)
-    schema_data = client.execute(INTROSPECTION_QUERY)["__schema"]
+    schema_data = None
+    client = None
+    last_error: Optional[Exception] = None
+    for endpoint in endpoints:
+        try:
+            LOGGER.info("Using GraphQL endpoint %s", endpoint)
+            client = GraphQLClient(endpoint)
+            schema_data = client.execute(INTROSPECTION_QUERY)["__schema"]
+            break
+        except Exception as exc:  # noqa: BLE001
+            LOGGER.warning("GraphQL introspection failed for %s: %s", endpoint, exc)
+            last_error = exc
+            continue
+
+    if not schema_data or not client:
+        raise GraphQLError(f"Unable to introspect PubPub GraphQL schema. Last error: {last_error}")
+
     types_index = {type_def["name"]: type_def for type_def in schema_data.get("types", []) if type_def.get("name")}
 
     community_payload = discover_community_data(client, schema_data, hostname, types_index)
@@ -699,8 +721,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--graphql-endpoint",
-        default="https://api.pubpub.org/graphql",
-        help="GraphQL endpoint to query.",
+        default=None,
+        help="GraphQL endpoint to query (defaults to https://<hostname>/api/graphql).",
     )
     parser.add_argument(
         "--log-level",
@@ -722,4 +744,3 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
 
 if __name__ == "__main__":
     main()
-
