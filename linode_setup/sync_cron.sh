@@ -9,6 +9,7 @@ DB_PATH="/var/lib/unjournal/unjournal_data.db"
 LOG_DIR="/var/log/unjournal"
 LOG_FILE="$LOG_DIR/sync_cron.log"
 ENV_FILE="/var/lib/unjournal/.env"
+PUBPUB_EXPORT_DIR="/var/lib/unjournal/pubpub_exports"
 
 # Ensure log directory exists
 mkdir -p "$LOG_DIR"
@@ -70,6 +71,15 @@ if python3 "$REPO_DIR/code/export_to_sqlite.py" --db-path "$DB_PATH" >> "$LOG_FI
 else
     log "ERROR: Export failed with exit code $?"
     EXIT_CODE=1
+fi
+
+# Step 3: Harvest PubPub Markdown/PDF exports
+log "Harvesting PubPub exports..."
+mkdir -p "$PUBPUB_EXPORT_DIR"
+if python3 "$REPO_DIR/code/harvest_pubpub_assets.py" --output-dir "$PUBPUB_EXPORT_DIR" >> "$LOG_FILE" 2>&1; then
+    log "✓ PubPub exports harvested successfully"
+else
+    log "⚠ PubPub export harvest failed (continuing)"
 fi
 
 # Show database info

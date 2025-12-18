@@ -25,7 +25,9 @@
       "WebSearch",
       "Bash(npx create-next-app:*)",
       "Bash(curl:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ssh root@45.79.160.157 \"sleep 3 && curl -s -I http://localhost:8001/\")",
+      "Bash(ssh:*)"
     ],
     "deny": [],
     "ask": []
