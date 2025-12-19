@@ -50,17 +50,21 @@ jobs:
       
       - name: Update Unjournal data in repository
         # There is a race condition here: if someone else, or another
-        # copy of this workflow, commits and pushes data between initial 
-        # checkout and this push, then the push will fail. If this happens, 
+        # copy of this workflow, commits and pushes data between initial
+        # checkout and this push, then the push will fail. If this happens,
         # just rerun the workflow manually.
-        # 
+        #
         # `diff-index` with the `--exit-code` option returns 0 if there's no
         # difference between the working copy and the HEAD branch.
+        #
+        # Note: We use "git add data/*.csv || true" to ignore errors from
+        # gitignored files like evaluator_survey_responses.csv (which contains
+        # private evaluator feedback and should not be public).
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
           git pull # try to minimize race condition
-          git add data/*.csv
+          git add data/*.csv || true
           git diff-index --exit-code HEAD data/*.csv || git commit -m "Github actions: auto-update data"
           git push
         
