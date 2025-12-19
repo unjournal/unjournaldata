@@ -83,12 +83,12 @@ For SQL-based analysis and offline access, an optional SQLite database export is
 **Database location:** Linode server at `/var/lib/unjournal/unjournal_data.db`
 
 **Database tables:**
-- `research` - Papers/projects being evaluated (~309 papers)
+- `research` - Papers/projects being evaluated (~323 papers as of Dec 2025)
 - `evaluator_ratings` - Quantitative ratings in long format (~859 ratings)
 - `paper_authors` - Author relationships (~757 entries)
 - `survey_responses` - Combined academic + applied evaluator surveys (~113 responses)
-- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper
-- `researchers_evaluators` - Evaluator pool
+- `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper (194 rows)
+- `researchers_evaluators` - Evaluator pool (279 evaluators, public fields only)
 - `export_metadata` - Export history and statistics
 
 **Setup and usage:**
@@ -123,10 +123,15 @@ See [EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md) for detailed priv
 
 ## Documentation
 
+**Main documentation:**
 - **[README.md](README.md)** (this file) - Project overview and quick start
 - **[CLAUDE.md](CLAUDE.md)** - Detailed architecture and developer guide
-- **[LINODE_CRON_SETUP.md](LINODE_CRON_SETUP.md)** - SQLite database setup for Linode server
 - **[EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md)** - Evaluator-paper dataset documentation
+
+**Linode/SQLite setup:**
+- **[LINODE_CRON_SETUP.md](LINODE_CRON_SETUP.md)** - SQLite database setup for Linode server
+- **[docs/DATASETTE_GUI_SETUP.md](docs/DATASETTE_GUI_SETUP.md)** - Datasette web GUI setup
+- **[docs/LINODE_SQLITE_INTERNAL_GUIDE.md](docs/LINODE_SQLITE_INTERNAL_GUIDE.md)** - Internal database management guide
 - **[docs/SQLITE_QUERIES.md](docs/SQLITE_QUERIES.md)** - SQL query examples
 
 ## PubPub export utility

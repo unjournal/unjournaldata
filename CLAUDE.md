@@ -18,10 +18,15 @@ This repository manages [The Unjournal](https://www.unjournal.org) evaluations d
 python3 code/import-unjournal-data.py
 ```
 
-This exports three CSV files to `/data`:
+This exports three primary CSV files to `/data`:
 - `research.csv`: evaluated papers
 - `rsx_evalr_rating.csv`: quantitative ratings by evaluators
 - `paper_authors.csv`: authors per paper
+
+Additional data files generated:
+- `evaluator_paper_level.csv`: wide-format dataset at evaluator-paper level (created by `create_evaluator_paper_dataset.py`)
+- `academic_stream_responses.csv`, `applied_stream_responses.csv`: survey response data
+- `jql70a.csv`, `jql-enriched.csv`: journal quality rankings (external data)
 
 ### Python Environment
 ```bash
@@ -67,9 +72,10 @@ Blog posts are **frozen** (they won't be rebuilt once created). To add a blog po
 The `.github/workflows/import-render-publish.yml` workflow runs daily at 13:30 UTC and on pushes to main:
 
 1. **Data Import**: Runs `code/import-unjournal-data.py` to fetch data from Coda.io
-2. **Data Commit**: Auto-commits updated CSV files to the repository
-3. **Environment Setup**: Installs Python 3.11, R (via renv), Quarto, and system dependencies (JAGS, etc.)
-4. **Dashboard Publish**: Publishes `shinyapp/dashboard` to shinyapps.io using rsconnect
+2. **Evaluator-Paper Dataset**: Runs `code/create_evaluator_paper_dataset.py` to create wide-format dataset with privacy protections
+3. **Data Commit**: Auto-commits updated CSV files to the repository
+4. **Environment Setup**: Installs Python 3.11, R (via renv), Quarto, and system dependencies (JAGS, etc.)
+5. **Dashboard Publish**: Publishes `shinyapp/dashboard` to shinyapps.io using rsconnect
 
 **Required secrets:**
 - `CODA_API_KEY`: Coda.io API access
@@ -83,7 +89,13 @@ Coda.io (source database)
     ↓
 code/import-unjournal-data.py
     ↓
-data/*.csv files (committed to repo)
+data/*.csv files (research.csv, rsx_evalr_rating.csv, paper_authors.csv)
+    ↓
+code/create_evaluator_paper_dataset.py
+    ↓
+data/evaluator_paper_level.csv (wide-format with privacy protections)
+    ↓
+Auto-committed to repository
     ↓
 shinyapp/dashboard/uj-dashboard.qmd (reads CSVs)
     ↓
@@ -116,7 +128,7 @@ A separate SQLite database export is available for SQL-based data analysis and o
 - Logs: `/var/log/unjournal/sync_cron.log`
 - Weekly backups: `/var/lib/unjournal/backups/` (30-day retention)
 
-**Setup Documentation:** See `docs/LINODE_CRON_SETUP.md` and `docs/DATASETTE_GUI_SETUP.md` for complete installation and configuration guides
+**Setup Documentation:** See `LINODE_CRON_SETUP.md` and `docs/DATASETTE_GUI_SETUP.md` for complete installation and configuration guides
 
 **Sample Queries:**
 ```bash
@@ -153,7 +165,17 @@ code/export_to_sqlite.py (runs daily at 2:00 AM UTC via cron)
 - **Features**: Browse tables, run SQL queries, export CSV/JSON, share query URLs
 - **Setup**: See `docs/DATASETTE_GUI_SETUP.md`
 
-### Key R Scripts
+### Key Scripts
+
+**Python Scripts:**
+- `code/import-unjournal-data.py`: Main data import from Coda.io to CSV files
+- `code/create_evaluator_paper_dataset.py`: Creates wide-format evaluator-paper dataset with privacy protections
+- `code/export_to_sqlite.py`: Exports data to SQLite database (used by Linode server)
+- `code/harvest_pubpub_assets.py`: Downloads Markdown/PDF exports from PubPub community
+- `code/analyze_survey_responses.py`: Analyzes evaluator survey data
+- `code/clean_and_merge_survey_data.py`: Processes and combines survey responses
+
+**R Scripts:**
 - `code/calibrate-journal-stats.R`: Enriches journal quality rankings with OpenAlex data, creates `data/jql-enriched.csv`
 - `code/lookup-publication-outcomes.R`: Sourced by calibrate-journal-stats.R
 - `code/create-data-for-DataExplorer.R`: Prepares data for DataExplorer Shiny app (currently not deployed)
@@ -162,18 +184,36 @@ code/export_to_sqlite.py (runs daily at 2:00 AM UTC via cron)
 ### Directory Structure
 - `/code`: Python and R scripts for data processing
 - `/data`: CSV exports from Coda.io and external data sources
-- `/linode_setup`: Automated SQLite sync scripts for Linode server
+- `/docs`: Documentation files for Linode setup, Datasette, and SQL queries
+- `/linode_setup`: Automated SQLite sync scripts and installation scripts for Linode server
 - `/shinyapp/dashboard`: Main Shiny dashboard (Quarto format)
 - `/shinyapp/DataExplorer`: Secondary Shiny app (not currently deployed)
 - `/website`: Quarto website with blog posts (published to gh-pages)
+- `/nextjs-docs`: Next.js documentation site (experimental)
 - `/renv`: R environment management (renv library)
+- `/.github/workflows`: GitHub Actions automation workflows
 
 ## Important Notes
 
-- The dashboard references `code/import-unjournal-data.R` (line 104 of uj-dashboard.qmd) but this file doesn't exist. The actual data import uses the Python script.
-- Data files in `/data` are auto-generated and auto-committed by GitHub Actions. Don't edit them manually.
-- The DataExplorer app deployment is commented out in the GitHub Actions workflow.
-- Website blog posts are frozen to prevent rebuilds.
+- **Data files in `/data` are auto-generated** and auto-committed by GitHub Actions. Don't edit them manually.
+- **The DataExplorer app deployment** is commented out in the GitHub Actions workflow.
+- **Website blog posts are frozen** to prevent rebuilds once published.
+- **Privacy protections**: All publicly shared datasets exclude confidential feedback, COI disclosures, and personal contact information.
+- **Multiple documentation formats**: Root-level `.md` files contain working/analysis documentation; `/docs` contains operational guides.
+
+## Additional Documentation
+
+**Root-level documentation files:**
+- `EVALUATOR_DATASET_README.md`: Detailed documentation for evaluator-paper dataset and privacy protections
+- `LINODE_CRON_SETUP.md`: Setup guide for Linode server automation (SQLite export and cron jobs)
+- `MISSING_DATA_SUMMARY.md`, `PUBPUB_LOOKUP_NEEDED.md`, `WIDE_FORMAT_INTEGRATION_SUMMARY.md`: Working notes and analysis documentation
+- `AGENTS.md`: Agent/automation configuration notes
+
+**Documentation in `/docs` directory:**
+- `docs/DATASETTE_GUI_SETUP.md`: Datasette web GUI installation and configuration
+- `docs/LINODE_SQLITE_INTERNAL_GUIDE.md`: Internal guide for managing the SQLite database on Linode
+- `docs/SQLITE_QUERIES.md`: Example SQL queries for the SQLite database
+- `docs/LINODE_SETUP_FAQ.md`: Frequently asked questions for Linode setup
 
 ## Security & Secrets
 
