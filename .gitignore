@@ -42,5 +42,6 @@ passwords.txt
 # python virtual environment
 .venv/
 shinyapp/dashboard/uj-dashboard_previous_checkme.qmd
-# Note: evaluator_survey_responses.csv is now tracked (needed by GitHub Actions)
+# Private evaluator data
+data/evaluator_survey_responses.csv
 data/survey_responses_preview.csv
