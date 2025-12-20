@@ -24,7 +24,8 @@ This exports three primary CSV files to `/data`:
 - `paper_authors.csv`: authors per paper
 
 Additional data files generated:
-- `evaluator_paper_level.csv`: wide-format dataset at evaluator-paper level (created by `create_evaluator_paper_dataset.py`)
+- `evaluator_paper_level.csv`: wide-format dataset at evaluator-paper level with privacy protections (created by `create_evaluator_paper_dataset.py`)
+- `evaluator_survey_responses.csv`: **PRIVATE** - evaluator survey data (gitignored, not committed to public repo, available only in SQLite database)
 - `academic_stream_responses.csv`, `applied_stream_responses.csv`: survey response data
 - `jql70a.csv`, `jql-enriched.csv`: journal quality rankings (external data)
 
@@ -225,6 +226,8 @@ code/export_to_sqlite.py (runs daily at 2:00 AM UTC via cron)
 - Linode server stores API keys in `/var/lib/unjournal/.env` with 600 permissions
 
 **Protected files in .gitignore:**
-- `.Renviron` - R environment variables
+- `.Renviron` - R environment variables (contains `CODA_API_KEY`)
 - `.env`, `*.env` - Python environment files
 - `passwords.txt` - Any password files
+- `data/evaluator_survey_responses.csv` - Private evaluator feedback (evaluators were promised this would not be public)
+- `data/survey_responses_preview.csv` - Survey preview data
