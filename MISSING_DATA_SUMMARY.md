@@ -1,8 +1,24 @@
 # Missing Ratings and CI Values - Recovery Summary
 
+**Last Updated:** December 2025
+
 ## Overview
 
 This document summarizes the missing rating and confidence interval values in the Unjournal's `rsx_evalr_rating` table and the data recovery process.
+
+## CRITICAL UPDATE (December 2025)
+
+A comprehensive analysis revealed that the gap between form responses and the rsx_evalr_rating table includes entirely MISSING EVALUATIONS, not just missing values for existing evaluations.
+
+**Discovery:**
+- **13 complete evaluations** from form responses were verified as missing from rsx_evalr_rating
+- These represent **115 rating rows** (13 evaluations × ~9 criteria each)
+- **13 "overall" ratings** missing
+- Affects **7 unique published papers**
+
+**Note:** Initial automated extraction found ~75 "missing" evaluations, but most were false positives due to title/name variations (e.g., "Philip Trammell" vs "Phil Trammel", "Evaluator 1" vs "Anon. Evaluator 1"). Manual verification against actual rsx_evalr_rating contents was required.
+
+This is separate from and in addition to the partial missing values documented below.
 
 ## Total Missing Data
 
@@ -106,10 +122,20 @@ This document summarizes the missing rating and confidence interval values in th
 
 ## Files Generated
 
+### Original Files (Partial Missing Values)
 - `data/academic_stream_responses.csv` - Full academic stream form responses (104 rows)
 - `data/applied_stream_responses.csv` - Full applied stream form responses (9 rows)
 - `data/missing_ratings_from_forms.csv` - Recovered ratings ready for import (74 rows)
-- `code/extract_missing_ratings_from_coda_forms.py` - Extraction script
+- `code/extract_missing_ratings_from_coda_forms.py` - Extraction script for partial data
+
+### NEW Files (Completely Missing Evaluations - December 2025)
+- `data/missing_evaluations_verified.csv` - **13 verified complete evaluations** ready for import (115 rows)
+- `data/new_evaluations_from_forms.csv` - Full extraction with false positives (634 rows, not for import)
+- `code/extract_new_evaluations_from_forms_v2.py` - Extraction script (uses correct evaluator identification logic)
+- `docs/CODA_IMPORT_INSTRUCTIONS.md` - Step-by-step import guide
+- `IMPORT_READY.md` - Quick reference for import process
+
+**Combined Total:** 189 rating rows ready to add to rsx_evalr_rating (115 verified new + 74 missing values)
 
 ## Import Instructions for Coda
 
