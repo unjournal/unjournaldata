@@ -4,6 +4,7 @@ This guide explains how to set up automated daily processes on a Linode server:
 1. **CSV Export** - Export Coda data to CSV files (for GitHub)
 2. **SQLite Database** - Export Coda data to local SQLite database
 3. **Dataset Generation** - Create evaluator-paper level dataset
+4. **Missing Evaluations** - Extract missing evaluations from Coda forms (PRIVATE - not committed to GitHub)
 
 Choose the setup that fits your needs.
 
@@ -735,5 +736,397 @@ For issues:
 - Check logs: `/var/log/unjournal/`
 - GitHub Issues: https://github.com/unjournal/unjournaldata/issues
 - Documentation: See `docs/SQLITE_QUERIES.md` for query examples
+
+---
+
+# Part 3: Missing Evaluations Extraction (PRIVATE)
+
+**IMPORTANT:** This extracts potentially unpublished evaluation data from Coda forms. Data is stored **ONLY on your Linode server** and is NOT committed to the public GitHub repository.
+
+## Overview
+
+This automated process:
+- Runs daily after the SQLite export (2:30 AM UTC)
+- Extracts evaluations from Coda forms that don't exist in `rsx_evalr_rating` table
+- Saves results to `/var/lib/unjournal/missing_evaluations/` (private, server-only)
+- Generates a summary for manual review
+- Keeps 30-day history
+
+## Quick Install
+
+Run the automated installation script on your Linode server:
+
+```bash
+# SSH to your Linode server
+ssh root@your-linode-ip
+
+# Navigate to repository
+cd /var/lib/unjournal/unjournaldata
+
+# Pull latest code (to get the installation script)
+git pull origin main
+
+# Run installation
+sudo bash linode_setup/install_missing_evals_cron.sh
+```
+
+The script will:
+1. Create `/var/lib/unjournal/missing_evaluations/` directory
+2. Install the cron script
+3. Verify environment variables (CODA_API_KEY)
+4. Install Python dependencies (codaio, pandas, python-dotenv)
+5. Set up cron job (daily at 2:30 AM UTC)
+6. Run a test extraction
+
+## Manual Installation
+
+If you prefer manual setup:
+
+### 1. Create Directories
+
+```bash
+sudo mkdir -p /var/lib/unjournal/missing_evaluations
+sudo mkdir -p /var/log/unjournal
+```
+
+### 2. Copy Cron Script
+
+```bash
+cd /var/lib/unjournal/unjournaldata
+sudo cp linode_setup/extract_missing_evals_cron.sh /var/lib/unjournal/
+sudo chmod +x /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+### 3. Verify Environment File
+
+```bash
+# Check if .env exists with CODA_API_KEY
+sudo cat /var/lib/unjournal/.env
+
+# If not, create it:
+sudo nano /var/lib/unjournal/.env
+```
+
+Add:
+```bash
+CODA_API_KEY=your-coda-api-key-here
+```
+
+```bash
+# Secure the file
+sudo chmod 600 /var/lib/unjournal/.env
+```
+
+### 4. Install Python Dependencies
+
+```bash
+pip3 install codaio pandas python-dotenv
+```
+
+### 5. Set Up Cron Job
+
+```bash
+sudo crontab -e
+```
+
+Add:
+```cron
+# Extract missing evaluations from Coda forms (daily at 2:30 AM UTC)
+30 2 * * * /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+### 6. Test the Script
+
+```bash
+sudo /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+## Viewing Results
+
+After the cron job runs (or after manual test):
+
+### View Summary
+
+```bash
+cat /var/lib/unjournal/missing_evaluations/LATEST_SUMMARY.txt
+```
+
+Example output:
+```
+Missing Evaluations Extraction Summary
+Generated: 2025-12-30 02:30:15 UTC
+
+Missing Evaluations Found: 13
+Total Rating Rows: 115
+
+Files:
+- Latest CSV: /var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv
+- Timestamped: /var/lib/unjournal/missing_evaluations/new_evaluations_20251230_023015.csv
+- Full output: /var/lib/unjournal/missing_evaluations/extraction_output.txt
+
+Next Steps:
+1. Review the CSV file
+2. Manually verify which evaluations are genuinely missing
+3. Create verified CSV for import to Coda
+4. Import via Coda UI
+```
+
+### View Latest CSV
+
+```bash
+# Preview first 20 rows
+head -20 /var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv
+
+# Count rows
+wc -l /var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv
+
+# Count unique evaluations
+tail -n +2 /var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv | cut -d',' -f1,2 | sort -u | wc -l
+```
+
+### View Logs
+
+```bash
+# Latest run
+tail -50 /var/log/unjournal/extract_missing_evals.log
+
+# All runs today
+grep "$(date +%Y-%m-%d)" /var/log/unjournal/extract_missing_evals.log
+
+# Errors
+grep "ERROR" /var/log/unjournal/extract_missing_evals.log
+```
+
+## Workflow for Importing to Coda
+
+1. **Review the extraction**:
+   ```bash
+   cat /var/lib/unjournal/missing_evaluations/LATEST_SUMMARY.txt
+   ```
+
+2. **Download CSV to your local machine**:
+   ```bash
+   # From your local machine
+   scp root@your-linode-ip:/var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv ~/Downloads/
+   ```
+
+3. **Manually verify** which evaluations are genuinely missing:
+   - Check against published evaluation packages
+   - Exclude unpublished papers
+   - Exclude independent evaluations
+   - Check for name/title variations
+
+4. **Create verified CSV** with only confirmed missing evaluations
+
+5. **Import to Coda**:
+   - Open https://coda.io/d/_d0KBG3dSZCs/Evals-Ratings_su3Mx_O0
+   - Go to "rsx-evalr-rating" table
+   - Click "..." → "Import data" → "From CSV"
+   - Upload your verified CSV
+   - Map columns correctly
+   - Import as "Add new rows"
+
+6. **Verify import**:
+   - Check row counts in Coda
+   - Spot-check a few evaluations
+
+See `IMPORT_READY.md` for detailed import instructions.
+
+## Files and Directories
+
+```
+/var/lib/unjournal/
+├── .env                                    # API keys (private, 600 permissions)
+├── unjournaldata/                          # Git repository
+│   ├── code/
+│   │   └── extract_new_evaluations_from_forms_v2.py
+│   └── linode_setup/
+│       ├── extract_missing_evals_cron.sh
+│       └── install_missing_evals_cron.sh
+├── missing_evaluations/                    # PRIVATE - extraction results
+│   ├── LATEST_SUMMARY.txt                  # Summary of latest extraction
+│   ├── new_evaluations_latest.csv          # Latest extraction (overwritten daily)
+│   ├── new_evaluations_20251230_023015.csv # Timestamped archives (30-day retention)
+│   └── extraction_output.txt               # Full script output
+└── extract_missing_evals_cron.sh           # Cron script
+
+/var/log/unjournal/
+└── extract_missing_evals.log               # Cron execution logs
+```
+
+## Cron Schedule
+
+- **Time**: 2:30 AM UTC daily
+- **After**: SQLite export (which runs at 2:00 AM)
+- **Duration**: ~30-60 seconds
+- **Network**: Requires internet access to reach Coda API
+
+## Manual Execution
+
+Run the script manually anytime:
+
+```bash
+sudo /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+This is useful for:
+- Testing after code updates
+- Immediate extraction without waiting for cron
+- Debugging issues
+
+## Troubleshooting
+
+### Script Fails with "ModuleNotFoundError: codaio"
+
+```bash
+# Install missing Python packages
+pip3 install codaio pandas python-dotenv
+
+# Verify installation
+python3 -c "import codaio; print('OK')"
+```
+
+### Script Fails with "CODA_API_KEY not set"
+
+```bash
+# Check environment file
+sudo cat /var/lib/unjournal/.env
+
+# Should contain:
+CODA_API_KEY=your-actual-key
+
+# Test loading
+source /var/lib/unjournal/.env
+echo $CODA_API_KEY
+```
+
+### No New Evaluations Found
+
+This is normal! It means:
+- All form responses are already in `rsx_evalr_rating`
+- The extraction will still generate a summary with 0 missing evaluations
+
+### Git Pull Fails
+
+Not critical - the script will use existing code if git pull fails. Check:
+
+```bash
+cd /var/lib/unjournal/unjournaldata
+git status
+git pull origin main
+```
+
+### Cron Job Not Running
+
+```bash
+# Check if cron is running
+sudo systemctl status cron
+
+# Check cron logs
+grep "extract_missing_evals" /var/log/syslog
+
+# Verify cron job exists
+sudo crontab -l | grep extract_missing_evals
+```
+
+## Security Notes
+
+**CRITICAL SECURITY:**
+1. **Data stays on server**: Extraction results are NEVER committed to public GitHub
+2. **Private directory**: `/var/lib/unjournal/missing_evaluations/` is only accessible via SSH
+3. **Environment security**: `.env` file has 600 permissions (readable only by owner)
+4. **30-day retention**: Old extractions are auto-deleted after 30 days
+
+**Why this matters:**
+- Form responses may contain evaluations of unpublished papers
+- Evaluator names might not be public yet
+- Some papers may never be published
+- Manual review is required before making data public
+
+## Monitoring
+
+### Check Last Run
+
+```bash
+# View summary
+cat /var/lib/unjournal/missing_evaluations/LATEST_SUMMARY.txt
+
+# Check timestamp
+ls -lh /var/lib/unjournal/missing_evaluations/new_evaluations_latest.csv
+```
+
+### Check History
+
+```bash
+# List all timestamped extractions
+ls -lht /var/lib/unjournal/missing_evaluations/new_evaluations_*.csv
+
+# Count evaluations over time
+for f in /var/lib/unjournal/missing_evaluations/new_evaluations_*.csv; do
+    echo "$f: $(tail -n +2 "$f" | wc -l) rows"
+done
+```
+
+### Email Notifications (Optional)
+
+To receive email when new missing evaluations are found, edit the cron script:
+
+```bash
+sudo nano /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+Add before the final log line:
+
+```bash
+# Send email if new evaluations found
+if [ ${EVAL_COUNT} -gt 0 ]; then
+    echo "Found ${EVAL_COUNT} missing evaluations. Check: ${OUTPUT_DIR}/LATEST_SUMMARY.txt" | \
+        mail -s "Unjournal: ${EVAL_COUNT} Missing Evaluations Found" your-email@example.com
+fi
+```
+
+## Disabling the Cron Job
+
+Temporarily disable:
+
+```bash
+sudo crontab -e
+# Comment out the line with #:
+# 30 2 * * * /var/lib/unjournal/extract_missing_evals_cron.sh
+```
+
+Permanently remove:
+
+```bash
+sudo crontab -e
+# Delete the line, save and exit
+```
+
+## Updating the Extraction Script
+
+The extraction script is updated via git pull in the repository:
+
+```bash
+cd /var/lib/unjournal/unjournaldata
+git pull origin main
+```
+
+The cron job automatically pulls latest code before each run, so updates are picked up automatically.
+
+To force update immediately:
+
+```bash
+cd /var/lib/unjournal/unjournaldata
+git pull origin main
+sudo /var/lib/unjournal/extract_missing_evals_cron.sh  # Test with latest code
+```
+
+## Support
+
+For issues:
+- Check logs: `/var/log/unjournal/extract_missing_evals.log`
+- Check output: `/var/lib/unjournal/missing_evaluations/extraction_output.txt`
+- GitHub Issues: https://github.com/unjournal/unjournaldata/issues
+- See `IMPORT_READY.md` for import instructions
 
 ---
