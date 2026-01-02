@@ -1,0 +1,160 @@
+{
+  "renames": {
+    "jq95bapl": "evalsumevaluationsummarymetrics",
+    "7ap0zmbj": "e1evaluation",
+    "fpujlxtl": "compiledevaluations",
+    "dhwxb3fx": "e2evaluation",
+    "9pdnpn3o": "authorsresponseunjournalevaluations",
+    "01776740": "summarymeasures",
+    "bgh98s2i": "authorsresponseunjournalevaluations2",
+    "7s6czeed": "evalsumevaluationsummarymetrics2",
+    "2sfao90j": "summarymeasures2",
+    "aflv6m1e": "authorsresponseunjournalevaluations3",
+    "accelvax": "evalsumevaluationsummarymetrics3",
+    "nx3yjkdm": "authorsresponseunjournalevaluations4",
+    "oz1qj6ro": "authorsresponseunjournalevaluations5",
+    "y2a1lbzv": "evalsumevaluationsummarymetrics4",
+    "2dli3ws6": "evalsumevaluationsummarymetrics5",
+    "9bwxk8yh": "summarymeasures3"
+  },
+  "moved_to_templates": [
+    "jgms1oox",
+    "6x0oo2x0",
+    "vag4d5h9"
+  ],
+  "details": {
+    "jq95bapl": {
+      "title": "Evaluation Summary and Metrics: ",
+      "suggested_name": "evalsumevaluationsummarymetrics",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/jq95bapl.md"
+    },
+    "7ap0zmbj": {
+      "title": "Evaluation 1 of ",
+      "suggested_name": "e1evaluation",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/7ap0zmbj.md"
+    },
+    "fpujlxtl": {
+      "title": "Compiled evaluations: ",
+      "suggested_name": "compiledevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/fpujlxtl.md"
+    },
+    "dhwxb3fx": {
+      "title": "Evaluation 2 of ",
+      "suggested_name": "e2evaluation",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/dhwxb3fx.md"
+    },
+    "9pdnpn3o": {
+      "title": "Authors' response to Unjournal evaluations of ",
+      "suggested_name": "authorsresponseunjournalevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/9pdnpn3o.md"
+    },
+    "jgms1oox": {
+      "title": "Evaluation [#] of ",
+      "suggested_name": null,
+      "is_template": true,
+      "reason": "Contains template indicator: 'Evaluator name'",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/jgms1oox.md"
+    },
+    "01776740": {
+      "title": "Summary measures",
+      "suggested_name": "summarymeasures",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/01776740.md"
+    },
+    "6x0oo2x0": {
+      "title": null,
+      "suggested_name": null,
+      "is_template": true,
+      "reason": "File too small (< 1000 chars)",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/6x0oo2x0.md"
+    },
+    "bgh98s2i": {
+      "title": "Authors' response to Unjournal evaluations of ",
+      "suggested_name": "authorsresponseunjournalevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/bgh98s2i.md"
+    },
+    "7s6czeed": {
+      "title": "Evaluation Summary and Metrics: ",
+      "suggested_name": "evalsumevaluationsummarymetrics",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/7s6czeed.md"
+    },
+    "2sfao90j": {
+      "title": "Summary Measures",
+      "suggested_name": "summarymeasures",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/2sfao90j.md"
+    },
+    "aflv6m1e": {
+      "title": "Author's response to Unjournal evaluations of ",
+      "suggested_name": "authorsresponseunjournalevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/aflv6m1e.md"
+    },
+    "accelvax": {
+      "title": "Evaluation Summary and Metrics: ",
+      "suggested_name": "evalsumevaluationsummarymetrics",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/accelvax.md"
+    },
+    "vag4d5h9": {
+      "title": "Evaluation [#] of ",
+      "suggested_name": null,
+      "is_template": true,
+      "reason": "Contains template indicator: 'Evaluator name'",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/vag4d5h9.md"
+    },
+    "nx3yjkdm": {
+      "title": "Author's response to Unjournal evaluations of ",
+      "suggested_name": "authorsresponseunjournalevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/nx3yjkdm.md"
+    },
+    "oz1qj6ro": {
+      "title": "Authors' response to Unjournal evaluations of ",
+      "suggested_name": "authorsresponseunjournalevaluations",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/oz1qj6ro.md"
+    },
+    "y2a1lbzv": {
+      "title": "Evaluation Summary and Metrics: ",
+      "suggested_name": "evalsumevaluationsummarymetrics",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/y2a1lbzv.md"
+    },
+    "2dli3ws6": {
+      "title": "Evaluation Summary and Metrics: ",
+      "suggested_name": "evalsumevaluationsummarymetrics",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/2dli3ws6.md"
+    },
+    "9bwxk8yh": {
+      "title": "Summary Measures",
+      "suggested_name": "summarymeasures",
+      "is_template": false,
+      "reason": "Random slug",
+      "path": "/Users/yosemite/githubs/llm-uj-research-eval/unjournal_evaluations/9bwxk8yh.md"
+    }
+  }
+}
