@@ -45,3 +45,7 @@ shinyapp/dashboard/uj-dashboard_previous_checkme.qmd
 # Private evaluator data
 data/evaluator_survey_responses.csv
 data/survey_responses_preview.csv
+
+# Analysis log files
+analysis.log
+*.log
