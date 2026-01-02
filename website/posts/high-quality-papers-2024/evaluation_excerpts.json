@@ -1,0 +1,316 @@
+{
+  "A Welfare Analysis of Policies\nImpacting Climate Change": {
+    "excerpts": [
+      "We organized two evaluations of the paper: \\\"A Welfare Analysis of\nPolicies Impacting Climate Change\\\". Both evaluators are strongly\npositive about this research. According to the first evaluator\n(Emmerling) the papers' main claims include a \\\"clear ranking of\nclimate-oriented policies\\\", and the paper's results \"are immediately\nvery relevant for policymakers when deciding to implement or abandon\ngiven policies.\" Both offer substantive suggestions. Evaluator 2\n(Venmans) provides several requests...",
+      "This is an excellent paper that makes significant contributions to\nclimate policy evaluation. The authors\\' application of the MVPF\nframework to analyze 96 US environmental policies provides valuable\ninsights that traditional cost-per-ton metrics often miss. The key\ncontribution is to develop and meticulously apply the MVPF framework to\na wide range of policies, that take into account all impacts on\nindividuals and the public. This approach gives a very nice sufficient\nstatistic in the overall e...",
+      "Under which policy does a dollar of subsidy create the largest impact on\nwelfare? Similarly, under which environmental tax does a dollar\ncollected \\[...\\] create the lowest impact on welfare? The paper answers\nthese questions by developing the Marginal Value of Public Funds (MVPF).\nThis allows \\[one\\] to rank government policies according to their\nwelfare impacts while respecting a given government budget. \u00a0\\\n\\\nThe authors convincingly claim that their measure of the MVPF allows for\na better ran...",
+      "+----------------------------------+--------------+----------+--------------+---------+----------+\n|                                  | **Evaluator  |          | **Evaluator  |         |          |\n|                                  | 1**          |          | 2**          |         |          |\n|                                  |              |          |              |         |          |\n|                                  | Johannes     |          | Frank        |         |          |\n|    ...",
+      "+-------------------------------+-------------+---------+-----------+-----------+----------+\n|                               | **Evaluator |         |           | **        |          |\n|                               | 1**         |         |           | Evaluator |          |\n|                               |             |         |           | 2**       |          |\n|                               | Johannes    |         |           |           |          |\n|                               | E..."
+    ],
+    "eval_files": [
+      "evalsumwelfareclimatechange.md",
+      "e1welfareclimatechange.md",
+      "e2welfareclimatechange.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Urban Forests: Environmental Health Values and Risks": {
+    "excerpts": [
+      "Understanding the health impacts of tree planting and re-greening is\ncentral to understanding the co-benefits and costs of climate and\nbiodiversity-focused policy. The paper \\\"Urban Forests: Environmental\nHealth Values and Risks\\\"[@nl03a1iedtn] begins to address this question\nin a context in which the climate and biodiversity benefits may be small\ncompared to the more immediate health effects: the re-greening of a mega\ncity.\u00a0 We organized two evaluations of this paper. The two evaluations\nboth r...",
+      "The paper tackles a very interesting and relevant question about the\nenvironmental and health impact of urban forests i.e how human-led\ngreening of urban areas affects well-being through its impact on\npollution and pollen. The paper's strength lies in bringing together\nseveral data sources with high spatial resolution and decomposing the\npolicy impact into vegetation density & greenery, air quality and\nfinally health. Moreover the discussion on health and environment trade\noff is also new and in...",
+      "This is an excellent, thorough, and well-written paper on an important\ntopic of urban greenery and health. The methodology builds on\nwell-established methods and is convincing with ample placebo and\nrobustness checks. The authors could further improve policy impact by\nexpanding on the external validity of these findings by describing,\nexploring, and empirically characterizing the setting and MMP further:\nwhat contributes to its success, what greenery is used, and how is the\ngreenery planted?",
+      "+----------------------------------+-----------------+----------+---------------+-------------------+\n|                                  | **Evaluator 1** |          | **Evaluator   |                   |\n|                                  |                 |          | 2**           |                   |\n|                                  | Anonymous       |          |               |                   |\n|                                  |                 |          | Anonymous     |           ...",
+      "+-------------------------------+-------------+-----------+-----------+--------------+\n|                               | **Evaluator |           | **        |              |\n|                               | 1**         |           | Evaluator |              |\n|                               |             |           | 2**       |              |\n|                               | Anonymous   |           |           |              |\n|                               |             |           | Anony..."
+    ],
+    "eval_files": [
+      "evalsumurbanforests.md",
+      "e2urbanforests.md",
+      "e1urbanforests.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "The Macroeconomic Impact of Climate Change: Global vs. Local Temperature ": {
+    "excerpts": [
+      "If I were reviewing this manuscript for an economics journal, I would\nrecommend revise and resubmit, with only minor revisions. Overall, the\nmanuscript is well written in the sense that, since the reader\nunderstands immediately what is being estimated and why, that they could\nbe lulled into the trap of thinking that the research is \"obvious.\" The\nfinal line before the conclusion is \\\"We conclude that climate change\nposes a substantial threat to the world economy.\\\" But it is the careful\nempirica...",
+      "The manuscript\\'s main claim is that macroeconomic damages from climate\nchange are six times larger than previously thought (around 12% instead\nof 2% reduction in world GDP following 1 degree Celsius of warming).\nThis is because previous work does not account for (or indeed misses the\neffect of) global shifts in warming. The effect of global (rather than\nlocal) warming is proposed to occur through many mechanisms (considered\nvia the top-down rather than bottom-up analysis), while the *warming\nin...",
+      "Overall, the manuscript is well written in the sense that, since the\nreader understands immediately what is being estimated and why, \\[...\\]\nthey could be lulled into the trap of thinking that the research is\n\"obvious.\" The final line before the conclusion is \\\"We conclude that\nclimate change poses a substantial threat to the world economy.\\\" But it\nis the careful empirical construction of the argument, and the\nidentification that a literature has been mechanically missing (netting\nout) the effe...",
+      "The manuscript contains numerous robustness tests, including \\[some...\\]\ninvolving much work (such as re-estimation with a temperature measure\nindependently created than the primary one), and clear explanations\nabout why each was implemented.",
+      "The data and methods used in the estimation of warming damages are\nstate-of-the-art and conducted in a clear and reasonable manner. The use\nof the Berkeley Earth Surface Temperature Database is compared against\nusing National Oceanic and Atmospheric Administration data, to little\ndifference. Literature standard data are taken from ISIMIP, the Penn\nWorld Tables, and Jord\u00e0-Schularick-Taylor Macrohistory database. The\nmethods used are approachable and appropriate - and robust to\nalternative researc..."
+    ],
+    "eval_files": [
+      "e1macroclimatechange.md",
+      "e2macroclimatechange.md",
+      "evalsummacroclimatechange.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Misperceptions and Demand for Democracy under Authoritarianism": {
+    "excerpts": [
+      "This paper makes a valuable contribution to research on authoritarianism\nand democratic resilience by combining an online survey and a\nlarge-scale field experiment in Turkey to test whether correcting\nfactual misperceptions about institutional decline can shift political\nattitudes and electoral behavior. \\\n\\\nThe study is theoretically ambitious, well-powered, and methodologically\ntransparent, with the field experiment demonstrating real-world\nbehavioral effects on opposition vote share. The pape...",
+      "The most important and impactful factual claim made in this paper is\nthat exposure to nonpartisan, factual messages about institutional\ndecline led to a measurable increase in opposition vote share in the\n2023 Turkish presidential election. Specifically, the authors report\nthat treated neighborhoods experienced a 0.8 percentage point increase\nin opposition vote share, which represents a 1.5% increase relative to\nbaseline support levels. This estimate is based on administrative data\nfrom 1,887 ba...",
+      "This claim is impactful because it provides novel real-world evidence\nthat factual, nonpartisan informational interventions can meaningfully\ninfluence electoral behavior in a hybrid regime. It moves beyond\nattitudinal outcomes, demonstrating that even modest corrections of\nmisperceptions can scale to population-level political effects. This is\nan important finding for policymakers and scholars concerned with\ndemocratic backsliding and information resilience under authoritarian\nconditions.",
+      "I am inclined to believe this claim as the field experiment is\nwell-powered, pre-registered, and analyzed using appropriate\ninstrumental variable (2SLS) methods, which lends credibility to the\ncausal inference. The use of administrative ballot-box data reduces\nconcerns about self-report bias, and the authors show that the result is\nrobust across multiple specifications. I am somewhat cautious due to 1)\npotential spillover across adjacent neighborhoods; 2) variation in\ntreatment compliance and de...",
+      "As currently written, there is a bit of a mismatch between the paper's\nconceptual scope and the content of the experimental interventions and\noutcomes. While the paper is framed as an investigation into how\ncorrecting misperceptions about democratic backsliding and media freedom\nshapes support for opposition, the actual treatments focus on\ninstrumental, performance-based framings of institutional decline.\nSpecifically, the democracy treatment highlights how democratic erosion\ncontributed to mism..."
+    ],
+    "eval_files": [
+      "e2demandfordemocracy.md",
+      "evalsumdemandfordemocracy.md",
+      "e1demandfordemocracy.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Does the Squeaky Wheel Get More Grease? The Direct and Indirect Effects of Citizen Participation on Environmental Governance in China": {
+    "excerpts": [
+      "This paper presents the results of a randomised control trial examining\nthe impact of citizens reporting violations of pollution standard (water\nand air) by firms in China. Specifically, if a firm is allocated to a\ntreatment arm and goes on to violate emissions standards, the violation\nis reported to the regulator by a citizen acting on behalf of the\nexperimenters. They broadly find that these reports lead to the\nregulator intervening more often, firms polluting less, and these\neffects being par...",
+      "All prefectures contain some treated firms, but the intensity of\ntreatment (70% or 95% of firms assigned to treatment) varies so that\nthey can assess the \"general equilibrium\" effect of the treatment on\nnon-treated firms in prefectures with a higher (95%) or lower (75%)\nintensity of treatment. This is clearly a very neat experimental design.\nHowever, the motivation for high/low intensity (\"indirect effect\")\nclearly means that the SUTVA assumption across firms does not hold, such\nthat the differe...",
+      "Relatedly, the claim that general equilibrium effects are estimated\nneeds caveating as just local general equilibrium effects are mediated\n(at least as discussed in your paper) by the regulator's capacity\nconstraint. Of course, even including solely these local general\nequilibrium effects is still rather novel. But, a key problem in\nenvironmental pollution and policy (eg carbon markets) is the impact of\n(global) leakage (policy reduces output but relatively inelastic demand\nsimply means that thi...",
+      "Building on the idea of identifying the channels through which effects\noccur, my view is that you generally do a really good job of isolating\nchannels, but this work could be explained better. As well as being\nbetter explained, I would have much appreciated you flagging that you\nwill deal with the potential concerns when you mention the main effects.\nFirst, I was concerned about the potential for data manipulation, yet\nthe paragraph on p26/27 details a range of robust evidence that that is\nnot w...",
+      "\\(1\\) can be explored through comparison to the effect observed in T1D\nand T1C\\*T1D and would appear to not be driving the result (but see\ncomment in the understanding section RE common knowledge); (2) is dealt\nwith through T1C and the evidence regarding whether the business is a\nfinal product producer; (4) seems unlikely given the comparator of\nresults under T1A; (6) is dealt with by the subset of T1A which receive\na threat of central government follow-up. Which leaves (3) and (5). The\nformer i..."
+    ],
+    "eval_files": [
+      "buntaineeval2.md",
+      "buntaineeval1revised.md",
+      "evalsumevaluationsummarymetrics.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Selecting the Most Effective Nudge: Evidence from a Large-Scale Experiment on Immunization": {
+    "excerpts": [
+      "This is an absolutely superb paper tackling a hugely important policy\nquestion. The authors develop a new econometric approach to aggregating\nhigh-dimensional factorial designs in RCTs in order to identify the most\neffective policies, and apply it to the question of increasing childhood\nimmunization rates. I am thoroughly impressed by every aspect of this\npaper: the dataset used, the specific treatment arms used, the policy\nrelevance, and the approach to identifying the best policy.",
+      "This is an absolutely superb paper tackling a hugely important policy\nquestion. The authors develop a new econometric approach to aggregating\nhigh-dimensional factorial designs in RCTs in order to identify the most\neffective policies, and apply it to the question of increasing childhood\nimmunization rates. I am thoroughly impressed by every aspect of this\npaper: the dataset used, the specific treatment arms used, the policy\nrelevance, and the approach to identifying the best policy. The overall\n...",
+      "A key strength of this paper relative to other papers in immunization is\nthe outcome dataset. Most papers use parents' self-reports of\nvaccination status, whereas this paper critically creates a new\nadministrative database to accurately record immunization activity in\nboth treatment and control. This is particularly important when\nevaluating treatments such as reminders because when parents self-report\nvaccinations, this kind of treatment may impact reporting itself\nirrespective of latent treatm...",
+      "Banerjee et al.\u00a0(2010)[@temp_id_20524686987474228] is one of the most\nimportant and influential papers in this literature, illustrating the\nefficacy of incentives in increasing immunization rates. Another\ncomponent of this current paper which I found very compelling was that\nit examines the key policy questions that remained following the results\nof that initial paper regarding the level of incentives over the course\nof the immunization course.",
+      "This paper is also impressive in the scope of its applicability. Not\nonly is Haryana a huge state with many unvaccinated children, but the\ninterventions are easily applicable to other states in India, and in\nfact other low-income countries. With the near universality of mobile\nphones across the developing world, there is no particular aspect of\nthis treatment that does not apply to other settings. What's more, even\nif there is a concern, the overall econometric method here is certainly\nportable,..."
+    ],
+    "eval_files": [
+      "eval1effectivenudge.md",
+      "evalsumeffectivenudge.md",
+      "eval3effectivenudge.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes": {
+    "excerpts": [
+      "This paper studies the long-run effects of therapy on depression, using\ntwo randomized trials of psychotherapy in India. The main result is that\ntherapy reduces the likelihood of depression by 11 percentage points,\nfive years after treatment. The evidence for this claim is strong,\ncoming from follow-up data on randomized controlled trials with no\nevidence of problems in balance or attrition; deviations from the\npre-analysis plan are clearly explained. The paper investigates the\nmechanisms of the...",
+      "-   Consideration of wider outcomes, including nulls for economic\n    outcomes - sheds important light on \\[the\\] **limits of what therapy\n    cannot do**",
+      "The two main policy-relevant findings are **(1) that therapy has\nsustained positive effects in the long run**, thus highlighting therapy\nas relevant for future global health prioritization**, **and **(2) that\ntherapy can be delivered in lower-cost and shorter durations** that are\nimpactful**.** There is existing evidence on the second point, so this\ntriangulation is welcome to see in shaping a robust body of evidence. On\npoint one, future replication will be needed to better understand these\neff...",
+      "-   One of the main results is that, after pooling the 2 trials, the\n    **treatment groups had 0.15 SDs lower PHQ-9 scores relative to the\n    control**,[^3] at a p = 0.08. **This is the result I'm least\n    confident in and most interested in seeing replicated.** While p\n    \\<.1 is a convention for significance in economics, it is not in\n    many medical and epidemiological fields, and I too prefer a more\n    conservative cutoff \\<.05, especially for novel or surprising\n    effects. Important...",
+      "-   Decomposition of PHQ: good to see this. Sometimes in practice\n    specific symptoms are measures with singular or very few items,\n    making these less robust measures overall. It's hard to get a sense\n    of how robust each measure was from the current write-up."
+    ],
+    "eval_files": [
+      "eval2psychotherapy.md",
+      "eval1psychotherapy.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Does Conservation Work in General Equilibrium?": {
+    "excerpts": [
+      "This paper investigates the impacts of conservation policies on\ndeforestation, \\[...\\] explicitly \\[taking\\] into account indirect\ngeneral equilibrium effects. Intuitively, protecting land in certain\nlocations affects local land prices, wages, and agricultural output\nprices that may lead to deforestation elsewhere, given that regional\nmarkets are interconnected -- this is known in the literature as\n'leakage.' Though widely acknowledged as conceptually important, the\nexisting empirical works have...",
+      "+----------------------------------+-----------------+-----------+\n|                                  | **Evaluator 1** |           |\n|                                  |                 |           |\n|                                  | Anonymous       |           |\n+==================================+=================+===========+\n| **Rating category**              | **Rating        | **90% CI  |\n|                                  | (0-100)**       | **        |\n|                              ...",
+      "+-------------------------------+-------------+----------------------------------+\n|                               | **Evaluator |                                  |\n|                               | 1**         |                                  |\n|                               |             |                                  |\n|                               | Anonymous   |                                  |\n+===============================+=============+==================================+\n| ...",
+      "> Clearly an important issue for climate change policies, and for other\n> forms of intervention in other areas of interest (perhaps animal\n> welfare, other GCRs, other forms of pollution) ... if you make 'doing\n> the (bad) thing' harder in one area, you may reduce production drive\n> up prices and lead to 'more of the bad thing' in other areas.\n> Important to measure and quantify this for considering the impact of\n> policies and interventions, and perhaps even charity-driven subsidies\n> to 'not d...",
+      "> This is IMO a key issue in a whole range of environmental issues, and\n> has been poorly dealt with to date (exceptions I would say are the\n> recent AER: I paper on battery recycling, and Sabrina Eisenbarth's\n> slightly older paper in JEEM on fisheries). Leakage is obviously a\n> problem for identification, owing to breaking the SUTVA assumption,\n> but perhaps more importantly is also a problem when we come to think\n> about intervention effectiveness. Perhaps particularly relevant at the\n> momen..."
+    ],
+    "eval_files": [
+      "evalsumconservationequilibrium.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "How Effective Is (More) Money? Randomizing Unconditional Cash Transfer Amounts in the US": {
+    "excerpts": [
+      "Overall, the paper makes a strong contribution to the cash transfer\nliterature for a number of reasons, including the study's multiple\ntreatment arms, its geographic context, its timing during the height of\nthe COVID pandemic, and its measurement of a broad range of outcomes.\nThe study also has some important limitations, including participant\nattrition and challenges in nailing down the mechanism driving the\nsurvey results.",
+      "Does this study change my view of one-time cash transfers as a policy\nsolution to poverty and inequality in wealthy country contexts? It is\nworth noting that cash transfers mechanically make people less poor, at\nleast for some amount of time. The study is limited by its measurement\ntimeframe, but recipients spent significantly more over the period\n(often some months) for which the study has bank account data. These\noutcomes reflect important policy goals in and of themselves.",
+      "The \"How Effective Is (More) Money?\" paper makes a contribution to our\nunderstanding of one-time cash transfers to the poor in wealthy society\ncontexts. The experimental design was strong, with a well-powered sample\nand many important repeated outcome measures. The paper also does a\nreally nice job squeezing every possible ounce of inference out of the\navailable data. Respondent attrition and uncertainty about mechanisms\nare common in field experiments, and scholars can use this paper as a\nguide...",
+      "However, societies' policy choice is not simply a binary yes or no to\ncash transfers. There are other policy tools to increase spending by the\npoor and reduce economic inequality, and their trade-offs relative to\ncash transfers should be compared. This study's findings modestly shift\nmy views away from unconditional one-time cash transfers toward other\npolicy tools that would increase worker bargaining power, like sectoral\nbargaining, other welfare state tools that increase redistribution while\n...",
+      "Overall, I find this paper competently executed. I like the inductive\napproach to theorizing after the findings, the multiple tests for\nmechanism, extensive robustness checks, and the use of transaction-level\ndata to check what participants used the money for. The paper has\nexternal validity limitations, and can be framed better since the\nunconditional cash transfers were given during the Covid pandemic. \\[I\nsuggest\\] several further tests to test the main mechanism, and improve\nthe mediation an..."
+    ],
+    "eval_files": [
+      "e1randomizingcashtransfer.md",
+      "e2randomizingcashtransfer.md",
+      "evalsumrandomizingcashtransfer.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "The wellbeing cost-effectiveness of StrongMinds and Friendship Bench: Combining a systematic review and meta-analysis with charity-related data": {
+    "excerpts": [
+      "We organized two evaluations of the paper: \"The wellbeing cost\neffectiveness of StrongMinds and Friendship Bench: review and\nmeta-analysis with charity-related data\". This paper was suggested by\n*Happier Lives Institute* as part of [our\ninitiative](https://forum.effectivealtruism.org/posts/GxDjyEXCZc3pthkBb/unjournal-evaluating-1-research-output-per-relevant-ea \"null\")\nto evaluate research from impact-focused/effective-altruism-aligned (or\nfunded) organizations; we're grateful for their engageme...",
+      "*See\n\"*[*Metrics*](https://unjournal.pubpub.org/pub/evalsumstrongminds#metrics \"null\")*\"\nbelow for a more detailed breakdown of the evaluators' ratings across\nseveral categories. To see these ratings in the context of all Unjournal\nratings, with some analysis, see our *[*data presentation\nhere.*](https://unjournal.github.io/unjournaldata/chapters/evaluation_data_analysis.html#basic-presentation \"null\")[^3]*\n*",
+      "The paper evaluates the wellbeing cost-effectiveness of two\npsychotherapy interventions in Sub-Saharan Africa, concluding they are\nsubstantially more cost-effective, from a wellbeing perspective, than\ncash transfers. The methodology is comprehensive and transparent. It\ncombines multiple data sources and conservative modelling assumptions.\nWhile robust and transparent, the evaluation relies on project-specific\nchoices that may affect programme rankings. While the conclusions are\nlargely convincin...",
+      "This is a thorough report on the cost-effectiveness of two charities\noffering psychotherapy/ psychoeducation, which are found to be very cost\neffective. The evidence, however, is highly uncertain, both due to the\nquality of the studies and many of the somewhat arbitrary analytical\nchoices. I discuss some of these subjective decisions and chiefly\nrecommend a multiverse approach that transparently maps and compares\nsuch decisions.",
+      "+----------------------------------+-----------------+----------+---------------+-------------------+------------+\n|                                  | **Evaluator 1** |          | **Evaluator   |                   |            |\n|                                  |                 |          | 2**           |                   |            |\n|                                  | Anonymous       |          |               |                   |            |\n|                                  |    ..."
+    ],
+    "eval_files": [
+      "evalsumstrongminds.md",
+      "e2strongminds.md",
+      "e1strongminds.md"
+    ],
+    "has_response": true,
+    "response_file": "authorsresponsestrongminds.md"
+  },
+  "Adaptability and the Pivot Penalty in Science": {
+    "excerpts": [
+      "We organized one evaluation of the paper: \\\"Adaptability and the Pivot\nPenalty in Science and Technology\\\"[@n492f3lvx8a]. From the evaluation:\n\"This paper introduces a measurement framework to quantify how far\nresearchers move from their existing research when producing new works.\n\\[It\\] applies this framework to scientific publications and patents and\ndocuments a phenomenon called the 'pivot penalty' ... the impact of new\nresearch steeply declining the further a researcher moves from their\nprio...",
+      "This paper presents a novel framework for measuring the degree of\ndeparture from prior research in new works, documenting the \\\"pivot\npenalty,\\\" where the impact of research declines as scientists venture\nfurther from their past focus. The strengths include its broad\napplicability, strong data, and policy implications. Concerns include\nunder-explored benefits of pivoting, alternative explanation\\[s\\] such\nas timing of rewards, evolving journal preferences, and the choice of\njournals over fields ...",
+      "+----------------------------------+-----------------+--------------------+\n|                                  | **Evaluator 1** |                    |\n|                                  |                 |                    |\n|                                  | Anonymous       |                    |\n+==================================+=================+====================+\n| **Rating category**              | **Rating        | **90% CI **        |\n|                                  | (0-100)...",
+      "+-------------------------------+-------------+-------------------------------+\n|                               | **Evaluator |                               |\n|                               | 1**         |                               |\n|                               |             |                               |\n|                               | Anonymous   |                               |\n+===============================+=============+===============================+\n| **Judgment**      ...",
+      "+-------------------+--------------------------------+----------------------------+-------------------------+\n|                   | **Main research claim**[^14]   | **Belief in claim**[^15]   | **Suggested robustness  |\n|                   |                                |                            | checks**[^16]           |\n+===================+================================+============================+=========================+\n| **Evaluator 1     | \\[\\\"Pivot penalty\\\": research  | \\[Cla..."
+    ],
+    "eval_files": [
+      "evalsumpivotpenalty.md",
+      "e1pivotpenalty.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "The Comparative Impact of Cash Transfers and a Psychotherapy Program on Psychological and Economic Well-being": {
+    "excerpts": [
+      "1.  The paper advances knowledge and practice on cash and psychotherapy\n    interventions, testing long-term and spillover effects, replicating\n    important earlier studies and specifying conditions for the cash\n    transfer intervention further (lump-sum vs. dispersed/weekly\n    transfers). It does not provide further insight on what would make\n    the psychotherapy intervention work.",
+      "This paper makes important contributions by testing earlier intervention\neffects for their robustness, including additional outcomes, and\nevaluating conditions under which the interventions work: (1) It adds\nfurther evidence on the robustness of cash-transfer interventions having\neffects on both economic and psychological outcomes. (A side finding is\nthat weekly cash transfers over 5 weeks are somewhat more effective in\nincreasing monthly non-durable consumption and revenue than one\nlump-sum.) (...",
+      "-   Robust methods, for instance, a larger sample than the earlier\n    studies it replicates, with over 500 households per group, careful\n    randomization procedure, different data quality checks and smart\n    checks for demand effects.",
+      "2.  **Some short/small clarifications on differences between the\n    pre-analysis plan (PAP) and the paper plan would be important.**",
+      "-   Back-check reports (p 15): Calling participants to verify attendance\n    of sessions 18 months after the intervention is very likely\n    influenced by memory biases, that is, failures to recall all\n    attended sessions. The statement \"Our phone resurvey could not\n    confirm the high rates of participants receiving the entire\n    schedule, with only 35 percent (20 percent) of PM+ (CT&PM+) subjects\n    remembering having received all five sessions\" therefore seems to\n    portray the data on ..."
+    ],
+    "eval_files": [
+      "cashtransferseval1.md",
+      "cashtransferseval2.md",
+      "cashtransfersmetrics.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Building Resilient Education Systems: Evidence from Large-Scale Randomized Trials in Five Countries": {
+    "excerpts": [
+      "The paper studies an important question \\[surrounding the\\]\neffectiveness of low-cost education programs which could reduce learning\nlosses faced by primary \\[school\\] students due to shocks or emergencies\nin five developing countries.",
+      "Provides important evidence on \\[the\\] effectiveness of a low-tech\nintervention to stem learning losses from school closures (likely to\nincrease in coming years) by scaling it up vertically & across diverse\ngeographies",
+      "+----------------------------------+--------------+----------+-------------+---------------+---------+\n|                                  | **Evaluator  |          |             | **Evaluator   |         |\n|                                  | 1**          |          |             | 2**           |         |\n|                                  |              |          |             |               |         |\n|                                  | Anonymous    |          |             | Anonymous  ...",
+      "+-------------------------------+-------------+---------+------------+-----------+----------+\n|                               | **Evaluator |         |            | **        |          |\n|                               | 1**         |         |            | Evaluator |          |\n|                               |             |         |            | 2**       |          |\n|                               | Anonymous   |         |            |           |          |\n|                             ...",
+      "We sought two evaluations of this well-regarded paper, which has since\nreceived the 2024 [ADB-IEA Innovative Policy Research\nAward](https://events.development.asia/learning-events/winners-2024-adb-iea-innovative-policy-research-award \"null\").\nThis paper provides evidence on remote instruction during the COVID-19\npandemic. The authors conducted several powered RCTs in India, Kenya,\nNepal, The Philippines, and Uganda. They find that delivering tutorials\nover the phone can stem learning loss. The a..."
+    ],
+    "eval_files": [
+      "evalsumresilienteducation.md",
+      "e1resilienteducation.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Artificial Intelligence and Economic Growth": {
+    "excerpts": [
+      "Thanks to Seth and Phil for their careful, thorough, and generous\nreading of our paper. They make many excellent points, and we agree with\nthem all.",
+      "So that\\'s part of the explanation as to why, as both reviewers\nindicate, the paper reads to a great extent as a bunch of different\nideas and suggestions, rather than a laser-like focus on a single idea\nthat is worked through thoroughly. We found it intriguing that the\nBaumol-like forces that make some essential tasks hard to automate might\nconstrain the effects of automation. But we also found it fascinating\nthat it is easier than we had guessed to get explosive growth and\nsingularities, even w...",
+      "And now an important mea culpa: we apologize for the embarrassing number\nof typos and for one significant mistake that Phil caught and corrected\n(in the proof of the singularity in Example 3 on page 256). We maintain\na \\\"[corrected\nproof](https://web.stanford.edu/~chadj/AJJ-AIandGrowth.pdf)\\\" on our web\npages that includes all corrections we\\'ve found or received, and we\\'ll\ncontinue to do that.",
+      "As we thought about the topic of artificial intelligence and economic\ngrowth, what stood out most to us is the incredible range of\npossibilities. Both evaluations correctly point out that this remains a\nwide-open area for more research, both on the theory side and certainly\nin terms of using evidence to help convert the possibilities to\nprobabilities. Thanks again for the excellent and insightful\nevaluations.",
+      "In the first four sections of the paper, the authors do a wonderful job\nof outlining a general neoclassical model of automation. They explain\nhow the key parameters of the model determine the impact of automation.\nThey distinguish between two types of economic singularity, and show how\nthe more extreme variety emerges naturally from some parameterizations\nof their model -- something which I believe is an important innovation\nof this paper (including above Nordhaus ([@RePEc:nbr:nberwo:21547]) a\nd..."
+    ],
+    "eval_files": [
+      "aiauthors.md",
+      "aibenzell.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya": {
+    "excerpts": [
+      "*AI generated abstract:* This Unjournal evaluation reviews a very large,\npolicy\u2011relevant RCT in rural Kenya that tests three ways to deliver\nequivalent unconditional cash: a one\u2011time \\$3,000 lump sum; a \\$3,000\ntwo\u2011year \"UBI\"; and a two\u2011year transfer with a promise of ten additional\nyears (\\~\\$15,000) of payments. At \\~23,000 treated adults and an\nestimated \\~\\$70M program cost, the evaluator judges the study\nexceptionally rigorous and useful for governments and NGOs. Core\ntakeaways: no clear re...",
+      "This is an extremely impressive (and costly) RCT that will likely be of\nuse to policymakers when designing the structure of benefits.",
+      "The size of the RCT (and cost of the entire program) bears some\nemphasis; there are some 23,000 treated adults (pg. 11); the cost of\nthis RCT was somewhere in the neighborhood of \\$70 million USD. As such,\nit likely seeks to inform governments about policymaking, since it is\nmore similar to scale to a government program than a standard economics\nRCT. If a government seeks to do UCTs - as indeed, many governments did\nduring the pandemic, and continue to explore beyond the pandemic - it is\nimporta...",
+      "The RCT itself is well done. The analysis is clear; there is a\npre-analysis plan that is linked to in the text. The design itself makes\na great deal of sense; these are important questions and it seems useful\nto have a well-powered RCT seek to answer them.",
+      "We organized two evaluations of the paper: \"Universal Basic Income:\nShort-Term Results from a Long-Term Experiment in\nKenya\"[@{https://econweb.ucsd.edu/~pniehaus/papers/UBI_main_paper.pdf\n}]. The paper presents an important (and impressive) randomized\ncontrolled trial (RCT) that evaluates the impact of different timing\nstructures of unconditional cash transfers (or universal basic income)\nin Kenya.\u200b[^1] Both evaluations agree that the work is likely to make a\ncritical impact on what works in pov..."
+    ],
+    "eval_files": [
+      "eval1universalincome.md",
+      "evalsumuniversalincome.md",
+      "eval2universalincome.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Global potential for natural regeneration in deforested tropical regions": {
+    "excerpts": [
+      "This paper aims to model and predict the global potential for natural\nregeneration in deforested tropical regions for 2016 and 2030,\nrespectively, using a machine learning random forest (RF) approach. The\nstudy's aim and methods are novel and important, given the potential\nbenefits of natural regeneration on carbon sequestration (amongst many\nother ecological and environmental outcomes) and the lack of\npan-tropical analysis. The paper\\'s current estimates are the first we\nhave for understanding ...",
+      "This claim is highly important because it provides the first spatially\nexplicit, high-resolution estimate of the *global biophysical potential*\nfor natural regeneration across the tropics. It quantifies a major,\noften overlooked, cost-effective pathway for achieving large-scale\nforest restoration, which is critical for meeting international climate\nchange mitigation and biodiversity conservation targets (like the Bonn\nChallenge and the Global Biodiversity Framework). By mapping this\npotential, t...",
+      "Based on the significant methodological concerns outlined in the referee\nreport, particularly the unaddressed omission error in the input data\nand the potential conflation of regrowth types, my belief in the\naccuracy of the headline claim -- 215 Mha of potential natural\nregeneration -- is low. A very rough back-of-the-envelope calculation\nattempting to correct for these factors (detailed in the report)\nsuggests a more plausible credible interval for the *purely natural*\nregeneration potential mi...",
+      "The most important implication of the claim, as presented, is that there\nexists a vast, globally significant area where cost-effective natural\nregeneration could be prioritized to meet climate and biodiversity\ngoals, potentially redirecting substantial funding and policy focus\ntowards facilitating this process over more expensive active planting in\nthese regions. While the general principle that natural regeneration is\na crucial and cost-effective tool is undoubtedly true and highly\nrelevant for...",
+      "This paper aims to model and predict the global potential for natural\nregeneration in deforested tropical regions for 2016 and 2030,\nrespectively, using a machine learning random forest (RF) approach. The\nstudy's aim and methods are novel and important, given the potential\nbenefits of natural regeneration on carbon sequestration (amongst many\nother ecological and environmental outcomes) and the lack of\npan-tropical analysis. The paper\\'s current estimates are the first we\nhave for understanding ..."
+    ],
+    "eval_files": [
+      "e2naturalregeneration.md",
+      "evalsumnaturalregeneration.md",
+      "e1naturalregeneration.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Intergenerational Child Mortality Impacts of Deworming: Experimental Evidence from Two Decades of the Kenya Life Panel Survey\n": {
+    "excerpts": [
+      "This is a highly credible and important analysis of the\nintergenerational effects of a Kenyan deworming intervention. Such\neffects are important to document because they could meaningfully affect\nthe cost-benefit analysis of such programs and also teach us about the\nmechanisms through which parents transmit advantage to their children.\nHowever, the analysis would be more credible if the authors were\ntransparent about their deviations from the pre-analysis plan, which\ninclude the addition of (and...",
+      "This is a terrific paper documenting important results. The results are\nhighly credible given the randomized design. The two most important\nimplications are: first, that these de-worming interventions could have\nhigher returns than previously believed, because the benefits extend\nacross generations. Second, it is well known that higher socio-economic\nstatus parents tend to confer this advantage to their children. It is\nalso well-documented that early life health is predictive of adult\nhealth, ed...",
+      "Table A1, documenting the low attrition rates of the KLPS survey waves,\nis very impressive. Very few studies are able to achieve such a high\nfollow-up rate over such a long period. One additional helpful piece of\ninformation would be to show differences in baseline characteristics\nacross respondents and non-respondents by treatment arm.",
+      "In a footnote, the manuscript mentions that marriage quality may be a\nmechanism, and is an area for future research. Given that the results\nshow that both mother's and father's health is equally important in\ngenerating intergenerational health benefits, this seems like a relevant\noutcome to consider for this paper. E.g., if fathers exposed to the\ndeworming program matched with healthier mothers, it is possible that\nthe (untreated) mother's health is the mechanism responsible for the\nimprovement ...",
+      "[^5]: The evaluator was given the following instructions: Identify the\n    most important and impactful factual claim this research makes --\n    e.g., a binary claim or a point estimate or prediction."
+    ],
+    "eval_files": [
+      "e2intergendeworming.md",
+      "e1intergendeworming.md",
+      "evalsumintergendeworming.md"
+    ],
+    "has_response": true,
+    "response_file": "authorsresponseunjournalevaluations44.md"
+  },
+  "Population ethical intuitions.": {
+    "excerpts": [
+      "I have weak confidence in the result: I expect the neutrality and\n(a)symmetry views strongly depend on the context (e.g. on the choice\nset: the possible populations that one could choose). In some contexts,\nsuch as situations where one could avoid a repugnant conclusion, people\nmay hold the asymmetry view more strongly (especially after reflection).\nIn future research, one could investigate such possible context or\nchoice-set dependence.",
+      "The results show that when making axiological-utilitarian judgments\n(i.e. evaluating the state of a population based merely on the welfare\noutcomes and the size of the population), people may be slightly\nnegative utilitarian (depending on the intensity of the happiness\nlevels, at least 1.5 to 3 happy humans should exist for each equally\nintense unhappy human, in order for the state to be positive), their\nintuitions may be a little bit more average than total utilitarian (the\naverage welfare of a...",
+      "To my knowledge, this paper is the first one to study people's\npopulation ethical views. This is not only of academic interest, but is\nalso highly policy relevant, both on a micro-level, concerning people's\nreproductive choices, but especially on a macro-level, concerning\nhumanity's future and survival. To what degree people value future\npeople's existence and welfare has important implications for\nexistential risk mitigation. Should we prioritize decreasing the\nprobability of human extinction, ...",
+      "The study not only has great importance but also great validity. The\nauthors put a lot of effort in avoiding respondent's biases (while they\nsufficiently acknowledge that important biases and framing effects may\nstill be present and hard to avoid). They conducted several surveys to\nstudy the robustness of their results and interpretations. For example,\nthe fact that people's inter-individual and intra-individual comparisons\nstrongly agree (in both studies 1a and 1c, see figures 1and 3), is a\nstr...",
+      "I have only one relevant point of critique, which is my major suggestion\nfor improvement. Above, I wrote: \"people *may be* slightly negative\nutilitarians.\" I think based on studies 1a to 1c, the authors are too\nquick to draw the conclusion that the respondents weigh suffering\nstronger than happiness."
+    ],
+    "eval_files": [
+      "e1popintuitions.md",
+      "evalsumpopintuitions.md",
+      "e2popintuitions.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "Asymmetry in Civic Information: An Experiment on Tax Participation among Informal Firms in Togo": {
+    "excerpts": [
+      "It appears that informing taxpayers what public goods should come from\ntheir taxes leads them to lower their views of government. That seems\nplausible and quite interesting and relevant for the design of future\ntaxpayer education campaigns. In particular, it suggests that designers\nof information campaigns must think carefully about taxpayers'\npotentially high expectations about public goods. On this, see van den\nBoogaard et al \"Enabling Tax Bargaining: Supporting More Meaningful Tax\nTransparenc...",
+      "We organized two evaluations of the paper: \\\"Asymmetry in Civic\nInformation: An Experiment on Tax Participation among Informal Firms in\nTogo\" [@nqhkpdv68za]. Both evaluations are generally positive (journal\ntier ratings approaching 'top field journal'), and also offer critiques\nand suggestions for improvement. Both evaluators provide suggestions for\nthe interpretation of the results and their implications, request more\ndetail, especially about the treatment delivery, and express concerns\nwith sa...",
+      "This paper uses a randomized experiment among informal firms in Togo to\nexplore how civic tax information affects compliance and economic\nactivity. While overall tax participation falls, the intervention leads\nto more accurate self-reporting among larger firms and economic\nexpansion among smaller ones. The findings challenge standard views on\ntax education and offer novel insights into state--firm dynamics in\nlow-capacity settings. With some clarifications, the paper makes a\nvaluable contributio...",
+      "+----------------------------------+---------------+-----------+-----------+---------+\n|                                  | **Evaluator   |           |           | **Eval. |\n|                                  | 1**           |           |           | 2**     |\n|                                  |               |           |           |         |\n|                                  | Anonymous     |           |           | Anon.   |\n+==================================+===============+===========+=...",
+      "+-------------------------------+-------------+---------+------------+-----------+----------+\n|                               | **Evaluator |         |            | **        |          |\n|                               | 1**         |         |            | Evaluator |          |\n|                               |             |         |            | 2**       |          |\n|                               | Anonymous   |         |            |           |          |\n|                             ..."
+    ],
+    "eval_files": [
+      "e2civicasymmetry.md",
+      "evalsumcivicasymmetry.md",
+      "e1civicasymmetry.md"
+    ],
+    "has_response": false,
+    "response_file": ""
+  },
+  "The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the India-UAE Migration Corridor": {
+    "excerpts": [
+      "-   Praises the research for attempting to estimate important welfare\n    impacts of temporary migration",
+      "+---------------------------------+---------------+--------+--------------+------------+-------------------+\n|                                 | **Evaluator   |        |              | *          |                   |\n|                                 | 1**           |        |              | *Evaluator |                   |\n|                                 |               |        |              | 2**        |                   |\n|                                 | (Anonymous)   |        |    ...",
+      "+-----------------------------------+--------------+-------------+------+-----------+----------+-------+\n|                                   | **Evaluator  |             |      | **        |          |       |\n|                                   | 1**          |             |      | Evaluator |          |       |\n|                                   |              |             |      | 2**       |          |       |\n|                                   | \\[Anon.\\]    |             |      |       ...",
+      "This paper serves as a valuable policy discussion on migration in\nhigh-density corridors (such as those between India and the UAE), using\nthe case of guest worker visas. Overall, the paper offers a closer look\nat the non-pecuniary benefits of such programs on workers (e.g., in\nterms of subjective well-being), which is a novel area that is difficult\nto address. The UAE-India migration corridor also comes with historical\ncontext that the authors find challenging to incorporate in their\nanalyses. I...",
+      "[^7]: Are methods clearly justified and explained? Are methods and their\n    underlying assumptions reasonable? Are the results likely to be\n    robust to changes in the assumptions? Have the authors avoided bias\n    and questionable research practices?"
+    ],
+    "eval_files": [
+      "guesteval1.md",
+      "guest.md",
+      "guesteval2.md"
+    ],
+    "has_response": true,
+    "response_file": "authorsresponseunjournalevaluations44.md"
+  }
+}
