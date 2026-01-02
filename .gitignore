@@ -49,3 +49,6 @@ data/survey_responses_preview.csv
 # Analysis log files
 analysis.log
 *.log
+
+# Claude Code local settings (user-specific)
+.claude/settings.local.json
