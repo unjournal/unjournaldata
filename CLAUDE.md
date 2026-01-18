@@ -272,6 +272,27 @@ code/update_bibliometrics.py (runs weekly at 3:00 AM UTC Sunday)
 - `docs/SQLITE_QUERIES.md`: Example SQL queries for the SQLite database
 - `docs/LINODE_SETUP_FAQ.md`: Frequently asked questions for Linode setup
 
+## Recent Changes (January 2026)
+
+### Bibliometrics Pipeline Added
+- **New script**: `code/update_bibliometrics.py` - Fetches paper-level bibliometric data from OpenAlex
+- **Data collected**: Citation counts, FWCI, publication venue, funders, author affiliations, open access status
+- **Output files**: `data/bibliometrics.csv` (current values), `data/bibliometrics_history.csv` (time series)
+- **Automation**: Weekly cron on Linode (Sundays 3:00 AM UTC)
+- **Installation**: `linode_setup/install_bibliometrics_cron.sh`
+
+### Known Issues
+- **Linode git conflicts**: If Linode shows "divergent branches" error, run:
+  ```bash
+  git fetch origin && git reset --hard origin/main
+  ```
+- **Coda column updates**: The script attempts to update Coda but requires these columns to exist in the DOI work view:
+  - `openalex_citations`, `openalex_fwci`, `published_journal`, `journal_tier`, `funders`
+  - If columns don't exist, the script will log warnings but continue with CSV output
+
+### Dependencies Added
+- `pyalex>=0.14` added to `requirements.txt` for OpenAlex API access
+
 ## Security & Secrets
 
 **CRITICAL:** No API keys or secrets are committed to this repository.
