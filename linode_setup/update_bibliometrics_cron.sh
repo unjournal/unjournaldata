@@ -58,7 +58,7 @@ fi
 log "Checking Python dependencies..."
 if ! python3 -c "import pyalex" 2>/dev/null; then
     log "Installing pyalex..."
-    pip3 install pyalex >> "$LOG_FILE" 2>&1
+    pip3 install --break-system-packages pyalex >> "$LOG_FILE" 2>&1 || pip3 install pyalex >> "$LOG_FILE" 2>&1
 fi
 
 # Run bibliometrics update
