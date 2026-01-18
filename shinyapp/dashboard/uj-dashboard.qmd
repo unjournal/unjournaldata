@@ -20,7 +20,6 @@ library(forcats)
 library(gdtools)
 library(gfonts)
 library(ggplot2)
-library(ggiraph)
 library(here)
 library(lubridate)
 library(shiny)
@@ -150,7 +149,7 @@ plotOutput("barplot_proposals")
 Overall assessments for each paper, averaging evaluators' [research quality percentile scores](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#overall-assessment).
 
 ```{r}
-girafeOutput("plot_ratings")
+plotOutput("plot_ratings")
 ```
 
 ### Individual Criteria 
@@ -161,7 +160,7 @@ Detailed evaluations of [different aspects of research quality](https://globalim
 
 
 ```{r}
-girafeOutput("plot_critera")
+plotOutput("plot_critera")
 ```
 
 
@@ -187,7 +186,7 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
 ")
                ))
 
-girafeOutput("plot_comparison")
+plotOutput("plot_comparison")
 ```
 
 
@@ -332,8 +331,8 @@ output$barplot_proposals <- renderPlot({
 })
 
 
-output$plot_ratings <- renderGirafe({
-  ggp <- evals() |>
+output$plot_ratings <- renderPlot({
+  evals() |>
     filter(criteria == "overall") |>
     mutate(
       area = stringr::str_to_title(main_cause_cat_abbrev),
@@ -341,15 +340,13 @@ output$plot_ratings <- renderGirafe({
       area = forcats::fct_rev(area),
     ) |>
     ggplot(aes(y = area, x = middle_rating, color = area)) +
-      ggiraph::geom_point_interactive(
-        aes(tooltip = research)
-      ) +
-      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
+      geom_point() +
+      stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
       theme(
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans"),
-        plot.title = element_text(size = 14, family = "sans")
+        axis.text.y = element_text(size = 12),
+        plot.title = element_text(size = 14)
       ) +
       labs(
         title = "Overall ratings of papers by research area",
@@ -357,11 +354,6 @@ output$plot_ratings <- renderGirafe({
         x = NULL,
         y = NULL
       )
-  
-  girafe(ggobj = ggp, 
-         width_svg = 9,
-         options = list(opts_sizing(rescale = FALSE, width = 1)),
-         fonts = list(sans = "Open Sans"))
 })
 
 
@@ -377,21 +369,19 @@ criteria_plot_data <- reactive({
     filter(! is.na(criteria))
 })
 
-output$plot_critera <- renderGirafe({
-  
-    ggp1 <- criteria_plot_data() |> 
-      filter(scale_0_to_5 == FALSE) |> 
+output$plot_critera <- renderPlot({
+
+    ggp1 <- criteria_plot_data() |>
+      filter(scale_0_to_5 == FALSE) |>
       ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-        ggiraph::geom_point_interactive(
-          aes(tooltip = research)
-        ) +
-        stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
+        geom_point() +
+        stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
         scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
         theme(
           panel.grid.minor.x = element_blank(),
-          axis.text.y = element_text(size = 10, family = "sans"),
-          axis.text.x = element_text(size = 10, family = "sans"),
-          plot.title = element_text(size = 14, family = "sans")
+          axis.text.y = element_text(size = 10),
+          axis.text.x = element_text(size = 10),
+          plot.title = element_text(size = 14)
         ) +
         labs(
           title = "Answers to quantitative evaluation questions",
@@ -400,68 +390,59 @@ output$plot_critera <- renderGirafe({
           y = NULL
         )
 
-  ggp2 <- criteria_plot_data() |> 
-    filter(scale_0_to_5 == TRUE) |> 
+  ggp2 <- criteria_plot_data() |>
+    filter(scale_0_to_5 == TRUE) |>
     ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-    ggiraph::geom_point_interactive(
-      aes(tooltip = research)
-    ) +
-    stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
+    geom_point() +
+    stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
     scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
     theme(
       panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 10, family = "sans"),
-      axis.text.x = element_text(size = 10, family = "sans"),
-      plot.title = element_text(size = 14, family = "sans")
+      axis.text.y = element_text(size = 10),
+      axis.text.x = element_text(size = 10),
+      plot.title = element_text(size = 14)
     ) +
     labs(
       x = NULL,
       y = NULL
     )
-  
-  combined_plot <- cowplot::plot_grid(ggp1, ggp2, nrow = 2, 
-                                      rel_heights = c(6, 3), align = "hv",
-                                      scale = 0.9)
-  
-  girafe(ggobj = combined_plot, 
-         width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1)),
-         fonts = list(sans = "Open Sans"))
+
+  cowplot::plot_grid(ggp1, ggp2, nrow = 2,
+                     rel_heights = c(6, 3), align = "hv",
+                     scale = 0.9)
 })
 
 
-output$plot_comparison <- renderGirafe({
-  ggp <- evals() |> 
+output$plot_comparison <- renderPlot({
+  evals() |>
     filter(
       research %in% input$comparison_papers
-    ) |> 
-    summarize(.by = c(research, criteria), 
-              rating = mean(middle_rating, na.rm = TRUE)) |> 
+    ) |>
+    summarize(.by = c(research, criteria),
+              rating = mean(middle_rating, na.rm = TRUE)) |>
     mutate(
-      rating = ifelse(criteria %in% c("merits_journal", "journal_predict"), 
+      rating = ifelse(criteria %in% c("merits_journal", "journal_predict"),
                       rating * 20, rating),
       criteria = criteria_titles[criteria],
       criteria = factor(criteria, levels = unique(criteria_titles)),
       criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
       criteria = forcats::fct_rev(criteria),
-      criteria = forcats::fct_relevel(criteria, c("Predicted journal tier", 
+      criteria = forcats::fct_relevel(criteria, c("Predicted journal tier",
                                                   "Deserved journal tier")),
-      crit_grp = criteria %in% c("Predicted journal tier", 
+      crit_grp = criteria %in% c("Predicted journal tier",
                                                   "Deserved journal tier")
-    ) |> 
-    filter(! is.na(criteria)) |> 
-    ggplot(aes(x = rating, y = criteria, color = research, 
-               group = interaction(research, crit_grp))) + 
-      ggiraph::geom_point_interactive(
-        aes(tooltip = research)
-      ) +
+    ) |>
+    filter(! is.na(criteria)) |>
+    ggplot(aes(x = rating, y = criteria, color = research,
+               group = interaction(research, crit_grp))) +
+      geom_point() +
       # hack to break the graph into two parts for other vs journal metrics:
-      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") + 
+      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") +
       geom_line(orientation = "y") +
       # If we don't add this explicitly, the graph gets weird numbers on the
       # y axis instead of the criteria, when no papers are selected:
       scale_y_discrete(breaks = criteria_titles) +
-      scale_x_continuous(limits = c(0, 100), position = "top", 
+      scale_x_continuous(limits = c(0, 100), position = "top",
                          breaks = seq(0, 100, 20),
                          sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
       labs(
@@ -471,17 +452,12 @@ output$plot_comparison <- renderGirafe({
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans"),
-        plot.title = element_text(size = 14, family = "sans"),
+        axis.text.y = element_text(size = 12),
+        plot.title = element_text(size = 14),
         legend.position = "top",
         legend.direction = "vertical",
         legend.title = element_blank()
       )
-  
-  girafe(ggobj = ggp, 
-         width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 0.9)),
-         fonts = list(sans = "Open Sans"))
 })
 
 
