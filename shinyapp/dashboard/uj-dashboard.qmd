@@ -147,7 +147,7 @@ plotOutput("barplot_proposals")
 Overall assessments for each paper, averaging evaluators' [research quality percentile scores](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#overall-assessment).
 
 ```{r}
-girafeOutput("plot_ratings")
+girafeOutput("plot_ratings", height = "500px")
 ```
 
 ### Individual Criteria 
@@ -158,7 +158,7 @@ Detailed evaluations of [different aspects of research quality](https://globalim
 
 
 ```{r}
-girafeOutput("plot_critera")
+girafeOutput("plot_critera", height = "700px")
 ```
 
 
@@ -184,7 +184,7 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
 ")
                ))
 
-girafeOutput("plot_comparison")
+girafeOutput("plot_comparison", height = "600px")
 ```
 
 
