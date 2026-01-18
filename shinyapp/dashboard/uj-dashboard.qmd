@@ -17,6 +17,8 @@ library(cowplot)
 library(dplyr)
 conflicts_prefer(dplyr::filter)
 library(forcats)
+library(gdtools)
+library(gfonts)
 library(ggplot2)
 library(ggiraph)
 library(here)
@@ -24,6 +26,9 @@ library(lubridate)
 library(shiny)
 library(stringr)
 library(tidyr)
+
+register_gfont("Open Sans")
+addGFontHtmlDependency(family = "Open Sans")
 # names are display periods; values are relevant starting dates for data
 periods <- c(
   "Ever"      = as.Date("1900-01-01"),
@@ -350,10 +355,10 @@ output$plot_ratings <- renderGirafe({
         y = NULL
       )
   
-  girafe(ggobj = ggp,
+  girafe(ggobj = ggp, 
          width_svg = 9,
-         options = list(opts_sizing(rescale = FALSE, width = 1))
-  )
+         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         fonts = list(sans = "Open Sans"))
 })
 
 
@@ -415,10 +420,10 @@ output$plot_critera <- renderGirafe({
                                       rel_heights = c(6, 3), align = "hv",
                                       scale = 0.9)
   
-  girafe(ggobj = combined_plot,
+  girafe(ggobj = combined_plot, 
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1))
-  )
+         options = list(opts_sizing(rescale = FALSE, width = 1)),
+         fonts = list(sans = "Open Sans"))
 })
 
 
@@ -470,10 +475,10 @@ output$plot_comparison <- renderGirafe({
         legend.title = element_blank()
       )
   
-  girafe(ggobj = ggp,
+  girafe(ggobj = ggp, 
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 0.9))
-  )
+         options = list(opts_sizing(rescale = FALSE, width = 0.9)),
+         fonts = list(sans = "Open Sans"))
 })
 
 
