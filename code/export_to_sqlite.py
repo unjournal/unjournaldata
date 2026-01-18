@@ -232,6 +232,7 @@ def setup_database(db_path):
         cited_by_count INTEGER,
         fwci REAL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(doi, snapshot_date)
     );
 
