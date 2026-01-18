@@ -65,7 +65,8 @@
       "Bash(Rscript:*)",
       "Bash(pip3 install:*)",
       "Bash(gh run list:*)",
-      "Bash(python3 -m pip install:*)"
+      "Bash(python3 -m pip install:*)",
+      "Bash(gh run view:*)"
     ],
     "deny": [],
     "ask": []

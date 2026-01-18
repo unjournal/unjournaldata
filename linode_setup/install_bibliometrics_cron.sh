@@ -34,7 +34,7 @@ echo "✓ Made cron script executable"
 
 # Install pyalex dependency
 echo "Installing Python dependencies..."
-pip3 install pyalex
+pip3 install --break-system-packages pyalex || pip3 install pyalex
 echo "✓ pyalex installed"
 
 # Check if cron job already exists
