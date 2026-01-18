@@ -120,6 +120,8 @@ A separate SQLite database export is available for SQL-based data analysis and o
 - `survey_responses` - Combined academic + applied evaluator surveys (113 responses)
 - `evaluator_paper_level` - Wide-format dataset with all ratings per evaluator-paper (194 rows)
 - `researchers_evaluators` - Evaluator pool, public fields only (279 evaluators, NO emails/personal data)
+- `bibliometrics` - Paper-level bibliometric data from OpenAlex (citations, venue, funders)
+- `bibliometrics_history` - Time series of citation snapshots for tracking growth
 - `export_metadata` - Export history and statistics
 
 **Automated Sync:**
@@ -166,12 +168,66 @@ code/export_to_sqlite.py (runs daily at 2:00 AM UTC via cron)
 - **Features**: Browse tables, run SQL queries, export CSV/JSON, share query URLs
 - **Setup**: See `docs/DATASETTE_GUI_SETUP.md`
 
+### Bibliometrics Pipeline
+
+**Status:** Operational (weekly updates)
+
+Automated system to fetch paper-level bibliometric data from OpenAlex and update both Coda and local storage.
+
+**Script:** `code/update_bibliometrics.py`
+
+**Data collected from OpenAlex:**
+- Citation counts (`cited_by_count`, `fwci`)
+- Publication venue (journal name, type, tier)
+- Funder information
+- Author count and institutional affiliations
+- Open access status
+
+**Output files:**
+- `data/bibliometrics.csv` - Current bibliometric data for all papers with DOIs
+- `data/bibliometrics_history.csv` - Time series of citation snapshots (for tracking growth)
+
+**Automated Sync:**
+- Weekly update at 3:00 AM UTC every Sunday (Linode cron)
+- Cron script: `linode_setup/update_bibliometrics_cron.sh`
+- Installation script: `linode_setup/install_bibliometrics_cron.sh`
+- Logs: `/var/log/unjournal/bibliometrics.log`
+
+**Usage:**
+```bash
+# Run manually (local or Linode)
+python3 code/update_bibliometrics.py
+
+# Dry run (skip Coda update, CSV only)
+python3 code/update_bibliometrics.py --dry-run
+
+# Force update all papers (ignore last_updated threshold)
+python3 code/update_bibliometrics.py --force
+```
+
+**SQLite tables:**
+- `bibliometrics` - Current values per paper
+- `bibliometrics_history` - Time series for citation tracking
+
+**Data Flow (Bibliometrics):**
+```
+OpenAlex API
+    ↓
+code/update_bibliometrics.py (runs weekly at 3:00 AM UTC Sunday)
+    ↓
+├─ data/bibliometrics.csv (current values)
+├─ data/bibliometrics_history.csv (time series)
+├─ Coda database (DOI work view)
+└─ SQLite database (via export_to_sqlite.py)
+```
+
 ### Key Scripts
 
 **Python Scripts:**
 - `code/import-unjournal-data.py`: Main data import from Coda.io to CSV files
 - `code/create_evaluator_paper_dataset.py`: Creates wide-format evaluator-paper dataset with privacy protections
 - `code/export_to_sqlite.py`: Exports data to SQLite database (used by Linode server)
+- `code/update_bibliometrics.py`: Fetches paper-level bibliometrics from OpenAlex, updates Coda and CSV
 - `code/harvest_pubpub_assets.py`: Downloads Markdown/PDF exports from PubPub community
 - `code/analyze_survey_responses.py`: Analyzes evaluator survey data
 - `code/clean_and_merge_survey_data.py`: Processes and combines survey responses
