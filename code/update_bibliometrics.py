@@ -27,6 +27,7 @@ import os
 import sys
 import argparse
 import logging
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 import pandas as pd
@@ -372,8 +373,20 @@ def update_coda(df, dry_run=False):
                     updated_count += 1
                     if updated_count % 10 == 0:
                         logger.info(f"Updated {updated_count} rows so far...")
+                    # Rate limit: Coda allows ~10 requests/second, use 0.5s to be safe
+                    time.sleep(0.5)
                 except Exception as e:
-                    logger.warning(f"Could not update Coda row for {paper_title[:50]}: {e}")
+                    if "429" in str(e):
+                        logger.warning(f"Rate limited, waiting 10 seconds...")
+                        time.sleep(10)
+                        # Retry once
+                        try:
+                            table.update_row(matching_row, cells)
+                            updated_count += 1
+                        except Exception as e2:
+                            logger.warning(f"Retry failed for {paper_title[:50]}: {e2}")
+                    else:
+                        logger.warning(f"Could not update Coda row for {paper_title[:50]}: {e}")
 
         logger.info(f"Updated {updated_count} rows in Coda (skipped {skipped_count})")
 
