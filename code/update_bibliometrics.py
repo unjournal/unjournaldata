@@ -32,7 +32,7 @@ from pathlib import Path
 import pandas as pd
 import pyalex
 from pyalex import Works
-from codaio import Coda, Document
+from codaio import Coda, Document, Cell
 from dotenv import load_dotenv
 
 # Configure pyalex
@@ -324,6 +324,14 @@ def update_coda(df, dry_run=False):
         rows = list(table.rows())
         logger.info(f"Found {len(rows)} rows in Coda research table")
 
+        # Build lookup dict: paper_title -> row object
+        row_lookup = {}
+        for row in rows:
+            row_dict = row.to_dict()
+            title = row_dict.get('label_paper_title')
+            if title:
+                row_lookup[title] = row
+
         updated_count = 0
         skipped_count = 0
         for _, bib_row in df.iterrows():
@@ -333,38 +341,34 @@ def update_coda(df, dry_run=False):
                 continue
 
             # Find matching row in Coda
-            matching_row = None
-            for row in rows:
-                if row.values.get('label_paper_title') == paper_title:
-                    matching_row = row
-                    break
+            matching_row = row_lookup.get(paper_title)
 
             if not matching_row:
                 logger.debug(f"No Coda row found for: {paper_title[:50]}...")
                 skipped_count += 1
                 continue
 
-            # Prepare update data using EXISTING Coda column names
-            update_data = {}
+            # Prepare Cell objects for update using EXISTING Coda column names
+            cells = []
 
             # Citation count
             if pd.notna(bib_row.get('cited_by_count')):
-                update_data['citation count (NB - we can automate this with DOI)'] = int(bib_row['cited_by_count'])
+                cells.append(Cell('citation count (NB - we can automate this with DOI)', int(bib_row['cited_by_count'])))
 
             # Update timestamp
-            update_data['citation count update date'] = datetime.now().strftime('%Y-%m-%d')
+            cells.append(Cell('citation count update date', datetime.now().strftime('%Y-%m-%d')))
 
             # Journal name
             if bib_row.get('published_journal'):
-                update_data['Journal publication title (DOI)'] = bib_row['published_journal']
+                cells.append(Cell('Journal publication title (DOI)', bib_row['published_journal']))
 
             # Funders
             if bib_row.get('funders'):
-                update_data['Funded by (DOI)'] = bib_row['funders']
+                cells.append(Cell('Funded by (DOI)', bib_row['funders']))
 
-            if update_data:
+            if cells:
                 try:
-                    matching_row.update(update_data)
+                    table.update_row(matching_row, cells)
                     updated_count += 1
                     if updated_count % 10 == 0:
                         logger.info(f"Updated {updated_count} rows so far...")
