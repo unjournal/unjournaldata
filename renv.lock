@@ -570,6 +570,18 @@
       ],
       "Hash": "fc0b272e5847c58cd5da9b20eedbd026"
     },
+    "gdtools": {
+      "Package": "gdtools",
+      "Version": "0.3.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "systemfonts"
+      ],
+      "Hash": "0119b5d7d6cae7b094be5a6cb65b4d57"
+    },
     "generics": {
       "Package": "generics",
       "Version": "0.1.3",
