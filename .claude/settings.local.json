@@ -59,7 +59,13 @@
       "Write:*README*",
       "WebFetch(domain:unjournal.pubpub.org)",
       "WebFetch(domain:coda.io)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(xargs:*)",
+      "WebFetch(domain:docs.openalex.org)",
+      "Bash(Rscript:*)",
+      "Bash(pip3 install:*)",
+      "Bash(gh run list:*)",
+      "Bash(python3 -m pip install:*)"
     ],
     "deny": [],
     "ask": []

@@ -199,6 +199,42 @@ def setup_database(db_path):
         error_message TEXT
     );
 
+    -- Bibliometrics (current values from OpenAlex)
+    CREATE TABLE IF NOT EXISTS bibliometrics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        paper_title TEXT,
+        doi TEXT UNIQUE,
+        openalex_id TEXT,
+        cited_by_count INTEGER,
+        fwci REAL,
+        published_journal TEXT,
+        journal_type TEXT,
+        journal_tier INTEGER,
+        funders TEXT,
+        author_count INTEGER,
+        institution_count INTEGER,
+        institutions TEXT,
+        countries TEXT,
+        is_open_access INTEGER,
+        publication_date TEXT,
+        last_updated TEXT,
+        fetch_status TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    -- Bibliometrics history (time series for citation tracking)
+    CREATE TABLE IF NOT EXISTS bibliometrics_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        paper_title TEXT,
+        doi TEXT,
+        snapshot_date TEXT,
+        cited_by_count INTEGER,
+        fwci REAL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(doi, snapshot_date)
+    );
+
     -- Create indexes for better query performance
     CREATE INDEX IF NOT EXISTS idx_ratings_research ON evaluator_ratings(research);
     CREATE INDEX IF NOT EXISTS idx_ratings_evaluator ON evaluator_ratings(evaluator);
@@ -206,6 +242,10 @@ def setup_database(db_path):
     CREATE INDEX IF NOT EXISTS idx_authors_research ON paper_authors(research);
     CREATE INDEX IF NOT EXISTS idx_eval_paper_evaluator ON evaluator_paper_level(evaluator);
     CREATE INDEX IF NOT EXISTS idx_eval_paper_paper ON evaluator_paper_level(paper_title);
+    CREATE INDEX IF NOT EXISTS idx_bibliometrics_doi ON bibliometrics(doi);
+    CREATE INDEX IF NOT EXISTS idx_bibliometrics_paper ON bibliometrics(paper_title);
+    CREATE INDEX IF NOT EXISTS idx_biblio_history_doi ON bibliometrics_history(doi);
+    CREATE INDEX IF NOT EXISTS idx_biblio_history_date ON bibliometrics_history(snapshot_date);
     """
 
     cursor.executescript(schema)
@@ -544,9 +584,41 @@ def main(db_path=None):
             export_stats['researchers_evaluators'] = 0
 
         # ========================================
-        # 7. RECORD EXPORT METADATA
+        # 7. EXPORT BIBLIOMETRICS (if CSV exists)
         # ========================================
-        logger.info("\n7. Recording export metadata...")
+        logger.info("\n7. Exporting bibliometrics...")
+
+        bibliometrics_path = "data/bibliometrics.csv"
+        if os.path.exists(bibliometrics_path):
+            bib_df = pd.read_csv(bibliometrics_path)
+            export_stats['bibliometrics'] = export_table(
+                conn, bib_df, 'bibliometrics',
+                unique_columns=['doi']
+            )
+        else:
+            logger.info(f"Bibliometrics CSV not found at {bibliometrics_path} (will be created by update_bibliometrics.py)")
+            export_stats['bibliometrics'] = 0
+
+        # ========================================
+        # 8. EXPORT BIBLIOMETRICS HISTORY (if CSV exists)
+        # ========================================
+        logger.info("\n8. Exporting bibliometrics history...")
+
+        bib_history_path = "data/bibliometrics_history.csv"
+        if os.path.exists(bib_history_path):
+            bib_hist_df = pd.read_csv(bib_history_path)
+            export_stats['bibliometrics_history'] = export_table(
+                conn, bib_hist_df, 'bibliometrics_history',
+                unique_columns=['doi', 'snapshot_date']
+            )
+        else:
+            logger.info(f"Bibliometrics history CSV not found at {bib_history_path} (will be created by update_bibliometrics.py)")
+            export_stats['bibliometrics_history'] = 0
+
+        # ========================================
+        # 9. RECORD EXPORT METADATA
+        # ========================================
+        logger.info("\n9. Recording export metadata...")
 
         cursor = conn.cursor()
         for table_name, row_count in export_stats.items():
