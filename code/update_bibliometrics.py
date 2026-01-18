@@ -300,7 +300,11 @@ def update_coda(df, dry_run=False):
     """
     Update Coda database with bibliometric data.
 
-    Note: This requires columns to exist in Coda. May need to create them first.
+    Uses existing Coda column names:
+    - "citation count (NB - we can automate this with DOI)" for citations
+    - "citation count update date" for timestamp
+    - "Funded by (DOI)" for funders
+    - "Journal publication title (DOI)" for journal name
     """
     if dry_run:
         logger.info("[DRY RUN] Would update Coda with bibliometric data")
@@ -318,11 +322,14 @@ def update_coda(df, dry_run=False):
 
         # Get all rows to find matching paper titles
         rows = list(table.rows())
+        logger.info(f"Found {len(rows)} rows in Coda research table")
 
         updated_count = 0
+        skipped_count = 0
         for _, bib_row in df.iterrows():
             paper_title = bib_row.get('paper_title')
-            if not paper_title:
+            if not paper_title or bib_row.get('fetch_status') == 'not_found':
+                skipped_count += 1
                 continue
 
             # Find matching row in Coda
@@ -334,40 +341,40 @@ def update_coda(df, dry_run=False):
 
             if not matching_row:
                 logger.debug(f"No Coda row found for: {paper_title[:50]}...")
+                skipped_count += 1
                 continue
 
-            # Prepare update data
-            # Note: Column names must match exactly what exists in Coda
+            # Prepare update data using EXISTING Coda column names
             update_data = {}
 
+            # Citation count
             if pd.notna(bib_row.get('cited_by_count')):
-                update_data['openalex_citations'] = int(bib_row['cited_by_count'])
+                update_data['citation count (NB - we can automate this with DOI)'] = int(bib_row['cited_by_count'])
 
-            if pd.notna(bib_row.get('fwci')):
-                update_data['openalex_fwci'] = float(bib_row['fwci'])
+            # Update timestamp
+            update_data['citation count update date'] = datetime.now().strftime('%Y-%m-%d')
 
+            # Journal name
             if bib_row.get('published_journal'):
-                update_data['published_journal'] = bib_row['published_journal']
+                update_data['Journal publication title (DOI)'] = bib_row['published_journal']
 
-            if pd.notna(bib_row.get('journal_tier')):
-                update_data['journal_tier'] = int(bib_row['journal_tier'])
-
+            # Funders
             if bib_row.get('funders'):
-                update_data['funders'] = bib_row['funders']
+                update_data['Funded by (DOI)'] = bib_row['funders']
 
             if update_data:
                 try:
                     matching_row.update(update_data)
                     updated_count += 1
-                    logger.debug(f"Updated Coda row: {paper_title[:50]}...")
+                    if updated_count % 10 == 0:
+                        logger.info(f"Updated {updated_count} rows so far...")
                 except Exception as e:
-                    # Column might not exist - log and continue
                     logger.warning(f"Could not update Coda row for {paper_title[:50]}: {e}")
 
-        logger.info(f"Updated {updated_count} rows in Coda")
+        logger.info(f"Updated {updated_count} rows in Coda (skipped {skipped_count})")
 
     except Exception as e:
-        logger.error(f"Error updating Coda: {e}")
+        logger.error(f"Error updating Coda: {e}", exc_info=True)
 
 
 def main():
