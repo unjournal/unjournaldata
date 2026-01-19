@@ -352,9 +352,9 @@ def update_coda(df, dry_run=False):
             # Prepare Cell objects for update using EXISTING Coda column names
             cells = []
 
-            # Citation count
+            # Citation count - NOTE: column renamed in Coda
             if pd.notna(bib_row.get('cited_by_count')):
-                cells.append(Cell('citation count (NB - we can automate this with DOI)', int(bib_row['cited_by_count'])))
+                cells.append(Cell('citation count (should be DOI updated)', int(bib_row['cited_by_count'])))
 
             # Update timestamp
             cells.append(Cell('citation count update date', datetime.now().strftime('%Y-%m-%d')))
