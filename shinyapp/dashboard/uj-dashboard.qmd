@@ -17,8 +17,6 @@ library(cowplot)
 library(dplyr)
 conflicts_prefer(dplyr::filter)
 library(forcats)
-library(gdtools)
-library(gfonts)
 library(ggplot2)
 library(ggiraph)
 library(here)
@@ -27,8 +25,7 @@ library(shiny)
 library(stringr)
 library(tidyr)
 
-register_gfont("Open Sans")
-addGFontHtmlDependency(family = "Open Sans")
+# Font registration removed - was causing issues on shinyapps.io
 # names are display periods; values are relevant starting dates for data
 periods <- c(
   "Ever"      = as.Date("1900-01-01"),
@@ -345,8 +342,8 @@ output$plot_ratings <- renderGirafe({
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
       theme(
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans"),
-        plot.title = element_text(size = 14, family = "sans")
+        axis.text.y = element_text(size = 12),
+        plot.title = element_text(size = 14)
       ) +
       labs(
         title = "Overall ratings of papers by research area",
@@ -355,10 +352,9 @@ output$plot_ratings <- renderGirafe({
         y = NULL
       )
   
-  girafe(ggobj = ggp, 
+  girafe(ggobj = ggp,
          width_svg = 9,
-         options = list(opts_sizing(rescale = FALSE, width = 1)),
-         fonts = list(sans = "Open Sans"))
+         options = list(opts_sizing(rescale = FALSE, width = 1)))
 })
 
 
@@ -386,9 +382,9 @@ output$plot_critera <- renderGirafe({
         scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
         theme(
           panel.grid.minor.x = element_blank(),
-          axis.text.y = element_text(size = 10, family = "sans"),
-          axis.text.x = element_text(size = 10, family = "sans"),
-          plot.title = element_text(size = 14, family = "sans")
+          axis.text.y = element_text(size = 10),
+          axis.text.x = element_text(size = 10),
+          plot.title = element_text(size = 14)
         ) +
         labs(
           title = "Answers to quantitative evaluation questions",
@@ -407,23 +403,22 @@ output$plot_critera <- renderGirafe({
     scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
     theme(
       panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 10, family = "sans"),
-      axis.text.x = element_text(size = 10, family = "sans"),
-      plot.title = element_text(size = 14, family = "sans")
+      axis.text.y = element_text(size = 10),
+      axis.text.x = element_text(size = 10),
+      plot.title = element_text(size = 14)
     ) +
     labs(
       x = NULL,
       y = NULL
     )
-  
-  combined_plot <- cowplot::plot_grid(ggp1, ggp2, nrow = 2, 
+
+  combined_plot <- cowplot::plot_grid(ggp1, ggp2, nrow = 2,
                                       rel_heights = c(6, 3), align = "hv",
                                       scale = 0.9)
-  
-  girafe(ggobj = combined_plot, 
+
+  girafe(ggobj = combined_plot,
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1)),
-         fonts = list(sans = "Open Sans"))
+         options = list(opts_sizing(rescale = FALSE, width = 1)))
 })
 
 
@@ -468,17 +463,16 @@ output$plot_comparison <- renderGirafe({
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12, family = "sans"),
-        plot.title = element_text(size = 14, family = "sans"),
+        axis.text.y = element_text(size = 12),
+        plot.title = element_text(size = 14),
         legend.position = "top",
         legend.direction = "vertical",
         legend.title = element_blank()
       )
-  
-  girafe(ggobj = ggp, 
+
+  girafe(ggobj = ggp,
          width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 0.9)),
-         fonts = list(sans = "Open Sans"))
+         options = list(opts_sizing(rescale = FALSE, width = 0.9)))
 })
 
 
