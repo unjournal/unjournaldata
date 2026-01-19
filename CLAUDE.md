@@ -280,15 +280,23 @@ code/update_bibliometrics.py (runs weekly at 3:00 AM UTC Sunday)
 - **Output files**: `data/bibliometrics.csv` (current values), `data/bibliometrics_history.csv` (time series)
 - **Automation**: Weekly cron on Linode (Sundays 3:00 AM UTC)
 - **Installation**: `linode_setup/install_bibliometrics_cron.sh`
+- **Initial run**: 145/153 papers successfully fetched from OpenAlex (8 papers have no DOI or not found)
+
+### Coda Integration
+The bibliometrics script updates these existing Coda columns (in the DOI work view):
+- `citation count (should be DOI updated)` - Total citation count from OpenAlex
+- `citation count update date` - Timestamp of last update
+- `Journal publication title (DOI)` - Journal/venue name
+- `Funded by (DOI)` - Funder information
+
+**Rate limiting**: Script includes 0.5s delay between Coda updates + retry logic for 429 errors.
 
 ### Known Issues
 - **Linode git conflicts**: If Linode shows "divergent branches" error, run:
   ```bash
   git fetch origin && git reset --hard origin/main
   ```
-- **Coda column updates**: The script attempts to update Coda but requires these columns to exist in the DOI work view:
-  - `openalex_citations`, `openalex_fwci`, `published_journal`, `journal_tier`, `funders`
-  - If columns don't exist, the script will log warnings but continue with CSV output
+- **PEP 668 on Ubuntu 24.04**: Linode uses `--break-system-packages` flag for pip installs (already configured in cron script)
 
 ### Dependencies Added
 - `pyalex>=0.14` added to `requirements.txt` for OpenAlex API access
