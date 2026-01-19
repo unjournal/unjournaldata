@@ -1,0 +1,280 @@
+---
+title: "Unjournal Evaluations Data - January 2026"
+description: "Static snapshot of evaluation data while the interactive dashboard is being updated"
+date: "2026-01-19"
+categories: [data, evaluations]
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(stringr)
+library(knitr)
+library(here)
+
+research <- readr::read_csv(here("data/research.csv"), show_col_types = FALSE)
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"), show_col_types = FALSE)
+
+res_ratings <- inner_join(ratings, research,
+                          by = join_by(research == label_paper_title))
+
+my_theme <- theme_minimal() +
+      theme(
+        legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 10),
+        plot.title = element_text(size = 14)
+      )
+theme_set(my_theme)
+
+criteria_titles <- c(
+  "overall"         = "Overall assessment",
+  "adv_knowledge"   = "Advancing our knowledge and practice",
+  "methods"         = "Methods",
+  "logic_comms"     = "Logic and communication",
+  "real_world"      = "Real world relevance",
+  "gp_relevance"    = "Relevance to global priorities",
+  "claims"          = "Claims and evidence",
+  "open_sci"        = "Open, collaborative, replicable science",
+  "merits_journal"  = "Deserved journal tier",
+  "journal_predict" = "Predicted journal tier"
+)
+```
+
+::: {.callout-note}
+This page provides a static snapshot of Unjournal evaluation data while we update the interactive dashboard. Visit the [main dashboard](https://unjournal.shinyapps.io/uj-dashboard) for the interactive version.
+:::
+
+## Summary Statistics
+
+```{r}
+#| label: summary
+#| echo: false
+
+evaled <- research |>
+  filter(status == "50_published evaluations (on PubPub, by Unjournal)")
+
+n_papers <- nrow(evaled)
+n_evals <- n_distinct(select(res_ratings, research, evaluator))
+n_areas <- n_distinct(evaled$main_cause_cat_abbrev, na.rm = TRUE)
+```
+
+- **`r n_evals`** evaluations of **`r n_papers`** papers across **`r n_areas`** research areas
+
+## Research Areas
+
+```{r}
+#| label: areas-plot
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+
+evaled |>
+  filter(!is.na(main_cause_cat_abbrev)) |>
+  mutate(
+    area = str_to_title(main_cause_cat_abbrev),
+    area = fct_infreq(area),
+    area = fct_rev(area)
+  ) |>
+  ggplot(aes(y = area, fill = area)) +
+    geom_bar() +
+    labs(
+      title = "Research areas of evaluated papers",
+      x = "Number of papers",
+      y = NULL
+    )
+```
+
+### Research Areas Table
+
+```{r}
+#| label: areas-table
+#| echo: false
+
+evaled |>
+  filter(!is.na(main_cause_cat_abbrev)) |>
+  count(Area = str_to_title(main_cause_cat_abbrev), name = "Papers") |>
+  arrange(desc(Papers)) |>
+  kable()
+```
+
+## Overall Ratings by Research Area
+
+```{r}
+#| label: ratings-plot
+#| echo: false
+#| fig-width: 9
+#| fig-height: 6
+
+plot_data <- res_ratings |>
+  filter(criteria == "overall") |>
+  filter(!is.na(main_cause_cat_abbrev)) |>
+  mutate(
+    area = str_to_title(main_cause_cat_abbrev),
+    area = fct_infreq(area),
+    area = fct_rev(area)
+  )
+
+means <- plot_data |>
+  summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .by = area)
+
+ggplot(plot_data, aes(y = area, x = middle_rating)) +
+  geom_jitter(aes(color = area), height = 0.2, width = 0, alpha = 0.7, size = 3) +
+  geom_point(data = means, aes(x = mean_rating, y = area),
+             shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
+  scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+  labs(
+    title = "Overall ratings of papers by research area",
+    subtitle = "Points = individual papers, X = area average",
+    x = "Rating (0-100 percentile)",
+    y = NULL
+  )
+```
+
+### Overall Ratings Table
+
+```{r}
+#| label: ratings-table
+#| echo: false
+
+res_ratings |>
+  filter(criteria == "overall") |>
+  select(Paper = research, Area = main_cause_cat_abbrev,
+         Rating = middle_rating, `Lower CI` = lower_CI, `Upper CI` = upper_CI) |>
+  mutate(Area = str_to_title(Area)) |>
+  arrange(desc(Rating)) |>
+  kable(digits = 1)
+```
+
+## Ratings by Evaluation Criteria
+
+```{r}
+#| label: criteria-plot
+#| echo: false
+#| fig-width: 9
+#| fig-height: 7
+
+criteria_data <- res_ratings |>
+  filter(criteria %in% names(criteria_titles)) |>
+  filter(!criteria %in% c("merits_journal", "journal_predict")) |>
+  mutate(
+    criteria_label = criteria_titles[criteria],
+    criteria_label = fct_relevel(criteria_label, "Overall assessment"),
+    criteria_label = fct_rev(criteria_label)
+  )
+
+means <- criteria_data |>
+  group_by(criteria_label) |>
+  summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+
+ggplot(criteria_data, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
+  geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+  geom_point(data = means, aes(x = mean_rating, y = criteria_label),
+             shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
+  scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+  labs(
+    title = "Ratings by evaluation criteria (0-100 scale)",
+    subtitle = "Points = individual ratings, X = criterion average",
+    x = "Rating",
+    y = NULL
+  )
+```
+
+### Criteria Averages Table
+
+```{r}
+#| label: criteria-table
+#| echo: false
+
+res_ratings |>
+  filter(criteria %in% names(criteria_titles)) |>
+  mutate(Criteria = criteria_titles[criteria]) |>
+  group_by(Criteria) |>
+  summarize(
+    `Mean` = mean(middle_rating, na.rm = TRUE),
+    `Median` = median(middle_rating, na.rm = TRUE),
+    `Min` = min(middle_rating, na.rm = TRUE),
+    `Max` = max(middle_rating, na.rm = TRUE),
+    `N` = n()
+  ) |>
+  arrange(desc(Mean)) |>
+  kable(digits = 1)
+```
+
+## Paper Sources
+
+```{r}
+#| label: sources-plot
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+
+evaled |>
+  mutate(
+    Source = case_match(source_main,
+      "internal-NBER"                ~ "Internal (NBER)",
+      "internal-from-syllabus-agenda-policy-database" ~ "Internal",
+      "suggested - internally"       ~ "Internal",
+      "submitted (by author(s))"     ~ "Author",
+      "suggested - externally"       ~ "Third party",
+      "suggested - externally - NGO" ~ "Third party (NGO)",
+      .default = "Unknown"
+    ),
+    Source = fct_infreq(Source),
+    Source = fct_rev(Source)
+  ) |>
+  ggplot(aes(y = Source, fill = Source)) +
+    geom_bar() +
+    labs(
+      title = "Sources of evaluated papers",
+      x = "Number of papers",
+      y = NULL
+    )
+```
+
+### Sources Table
+
+```{r}
+#| label: sources-table
+#| echo: false
+
+evaled |>
+  mutate(
+    Source = case_match(source_main,
+      "internal-NBER"                ~ "Internal (NBER)",
+      "internal-from-syllabus-agenda-policy-database" ~ "Internal",
+      "suggested - internally"       ~ "Internal",
+      "submitted (by author(s))"     ~ "Author",
+      "suggested - externally"       ~ "Third party",
+      "suggested - externally - NGO" ~ "Third party (NGO)",
+      .default = "Unknown"
+    )
+  ) |>
+  count(Source, name = "Papers") |>
+  arrange(desc(Papers)) |>
+  kable()
+```
+
+## All Evaluated Papers
+
+```{r}
+#| label: all-papers
+#| echo: false
+
+evaled |>
+  select(Paper = label_paper_title, Area = main_cause_cat_abbrev,
+         Status = publication_status, Source = source_main) |>
+  mutate(Area = str_to_title(Area)) |>
+  arrange(Paper) |>
+  kable()
+```
+
+---
+
+*Data last updated: `r format(Sys.time(), "%Y-%m-%d %H:%M")`*
