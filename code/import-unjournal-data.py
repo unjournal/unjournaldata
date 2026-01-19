@@ -43,7 +43,7 @@ rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv", index = False)
 
 paper_authors = doc.get_table("grid-bJ5HubGR8H")
 paper_authors = pd.DataFrame(paper_authors.to_dict())
-columns = ['research', 'author', 'author_emails', 'corresponding']
+columns = ['research', 'author', 'author_email', 'corresponding']
 paper_authors = paper_authors[columns]
 paper_authors.to_csv("data/paper_authors.csv", index = False)
 
