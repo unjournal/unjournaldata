@@ -77,3 +77,41 @@ Created `website/posts/dashboard-data-jan2026/index.qmd` with static versions of
 ## Why This Wasn't Caught Earlier
 
 The CSV appears to have numeric-looking values, but `readr::read_csv()` guesses column types. When some rows have non-numeric values (like `"\n"` for missing), it reads the whole column as character. This worked before ggiraph was removed because ggiraph may have been failing silently, but static ggplot2 throws explicit errors.
+
+---
+
+## Display Improvements (January 19, 2026)
+
+### Changes Made
+- **Shortened criteria labels** for better readability:
+  - "Global relevance/usefulness" (was "Relevance to global priorities/usefulness to practitioners")
+  - "Claims and evidence" (was "Claims, strength, and characterization of Evidence")
+  - "Open, replicable science" (was "Open, collaborative, replicable science")
+- **Increased font sizes** in Individual Criteria and Paper comparison plots
+- **Increased plot heights** (600px for criteria, 500px for comparison)
+- **Removed dead link banner** (the "static data page" link that obscured content)
+
+### Commits
+- `6986b2c` - Improve dashboard display: larger fonts, shorter labels, remove dead link
+
+---
+
+## Development Dashboard Created
+
+A separate development dashboard has been created for testing interactive features:
+
+**Location:** `shinyapp/dashboard-dev/uj-dashboard-dev.qmd`
+
+### Features
+- **Plotly interactive hover tooltips** - shows paper names when hovering over data points
+- Uses `plotlyOutput`/`renderPlotly` instead of static `plotOutput`/`renderPlot`
+- Title shows "(Development)" to distinguish from production
+
+### Deployment
+The dev dashboard should be deployed as a separate app on shinyapps.io (e.g., `uj-dashboard-dev`). See `shinyapp/dashboard-dev/README.md` for deployment instructions.
+
+### Background: Lost Interactive Features
+The production dashboard lost interactive hover tooltips when ggiraph was removed (Jan 18, 2026). ggiraph was failing silently on shinyapps.io (no SVG output). The dev dashboard uses plotly as an alternative, which has better shinyapps.io compatibility.
+
+### Commits
+- `b4978cc` - Add development dashboard with plotly interactive features
