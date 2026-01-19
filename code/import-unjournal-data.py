@@ -43,8 +43,23 @@ rsx_evalr_rating.to_csv("data/rsx_evalr_rating.csv", index = False)
 
 paper_authors = doc.get_table("grid-bJ5HubGR8H")
 paper_authors = pd.DataFrame(paper_authors.to_dict())
-columns = ['research', 'author', 'author_email', 'corresponding']
+
+# Robust handling: accept either 'author_email' or 'author_emails' from Coda
+cols = list(paper_authors.columns)
+if 'author_email' in cols:
+    author_email_col = 'author_email'
+elif 'author_emails' in cols:
+    author_email_col = 'author_emails'
+else:
+    raise KeyError("Coda table missing 'author_email' or 'author_emails' column")
+
+columns = ['research', 'author', author_email_col, 'corresponding']
 paper_authors = paper_authors[columns]
+
+# Normalize to 'author_email' for consistent downstream usage
+if author_email_col != 'author_email':
+    paper_authors = paper_authors.rename(columns={author_email_col: 'author_email'})
+
 paper_authors.to_csv("data/paper_authors.csv", index = False)
 
 # Evaluator survey responses (PUBLIC COLUMNS ONLY - NO CONFIDENTIAL DATA)
