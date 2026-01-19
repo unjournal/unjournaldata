@@ -356,24 +356,34 @@ output$barplot_proposals <- renderPlot({
 output$plot_ratings_static <- renderPlot({
   plot_data <- evals() |>
     filter(criteria == "overall") |>
+    filter(!is.na(main_cause_cat_abbrev)) |>
     mutate(
       area = stringr::str_to_title(main_cause_cat_abbrev),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area)
-    ) |>
-    filter(!is.na(area))
+    )
+
+  # Handle empty data case
+
+  if (nrow(plot_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+        theme_void()
+    )
+  }
 
   # Calculate means for crosses
   means <- plot_data |>
-    group_by(area) |>
-    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .by = area)
 
-  ggplot(plot_data, aes(y = area, x = middle_rating, color = area)) +
-    geom_jitter(height = 0.2, width = 0, alpha = 0.7, size = 3) +
+  ggplot(plot_data, aes(y = area, x = middle_rating)) +
+    geom_jitter(aes(color = area), height = 0.2, width = 0, alpha = 0.7, size = 3) +
     geom_point(data = means, aes(x = mean_rating, y = area),
-               shape = 4, size = 4, stroke = 2, color = "black") +
+               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
+      legend.position = "none",
       panel.grid.minor.x = element_blank(),
       axis.text.y = element_text(size = 12),
       plot.title = element_text(size = 14)
@@ -425,6 +435,15 @@ output$plot_criteria_static <- renderPlot({
   plot_data <- criteria_plot_data() |>
     filter(scale_0_to_5 == FALSE)
 
+  # Handle empty data case
+  if (nrow(plot_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+        theme_void()
+    )
+  }
+
   means <- plot_data |>
     group_by(criteria_label) |>
     summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
@@ -432,7 +451,7 @@ output$plot_criteria_static <- renderPlot({
   ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
     geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
     geom_point(data = means, aes(x = mean_rating, y = criteria_label),
-               shape = 4, size = 3, stroke = 2, color = "black") +
+               shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
       panel.grid.minor.x = element_blank(),
@@ -457,7 +476,7 @@ output$plot_criteria_static <- renderPlot({
   ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
     geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
     geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
-               shape = 4, size = 3, stroke = 2, color = "black") +
+               shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
     theme(
       panel.grid.minor.x = element_blank(),
