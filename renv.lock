@@ -903,7 +903,7 @@
     },
     "ggiraph": {
       "Package": "ggiraph",
-      "Version": "0.8.10",
+      "Version": "0.9.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -920,7 +920,7 @@
         "uuid",
         "vctrs"
       ],
-      "Hash": "15748f4335af873289fbdd31610c3f96"
+      "Hash": "ec40c75d8b07af49fbc5e93e69fca81c"
     },
     "ggplot2": {
       "Package": "ggplot2",
