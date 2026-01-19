@@ -66,8 +66,13 @@ criteria_titles <- c(
 #| context: data
 #| include: false
 
-research <- readr::read_csv(here("data/research.csv"))
-ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
+research <- readr::read_csv(here("data/research.csv"), show_col_types = FALSE)
+ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"), show_col_types = FALSE) |>
+  mutate(
+    middle_rating = as.numeric(middle_rating),
+    lower_CI = as.numeric(lower_CI),
+    upper_CI = as.numeric(upper_CI)
+  )
 
 res_ratings <- inner_join(ratings, research,
                           by = join_by(research == label_paper_title))
