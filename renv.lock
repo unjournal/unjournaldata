@@ -1026,7 +1026,7 @@
     },
     "gtable": {
       "Package": "gtable",
-      "Version": "0.3.5",
+      "Version": "0.3.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1037,7 +1037,7 @@
         "lifecycle",
         "rlang"
       ],
-      "Hash": "e18861963cbc65a27736e02b3cd3c4a0"
+      "Hash": "a631a0a9d21f76bd172a6c96a524dffc"
     },
     "haven": {
       "Package": "haven",
@@ -1887,7 +1887,7 @@
     },
     "scales": {
       "Package": "scales",
-      "Version": "1.3.0",
+      "Version": "1.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1903,7 +1903,7 @@
         "rlang",
         "viridisLite"
       ],
-      "Hash": "c19df082ba346b0ffa6f833e92de34d1"
+      "Hash": "4d2ff9f2d40b45b3bc3e7b1c36c12b4c"
     },
     "selectr": {
       "Package": "selectr",
