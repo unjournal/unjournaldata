@@ -16,16 +16,15 @@ library(conflicted)
 library(cowplot)
 library(dplyr)
 conflicts_prefer(dplyr::filter)
+library(DT)
 library(forcats)
 library(ggplot2)
-library(ggiraph)
 library(here)
 library(lubridate)
 library(shiny)
 library(stringr)
 library(tidyr)
 
-# Font registration removed - was causing issues on shinyapps.io
 # names are display periods; values are relevant starting dates for data
 periods <- c(
   "Ever"      = as.Date("1900-01-01"),
@@ -41,9 +40,9 @@ my_theme <- theme_minimal() +
         legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        axis.text.y = element_text(size = 16),
-        axis.text.x = element_text(size = 14),
-        plot.title = element_text(size = 18)
+        axis.text.y = element_text(size = 14),
+        axis.text.x = element_text(size = 12),
+        plot.title = element_text(size = 16)
       )
 ggplot2::theme_set(my_theme)
 
@@ -70,7 +69,7 @@ criteria_titles <- c(
 research <- readr::read_csv(here("data/research.csv"))
 ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"))
 
-res_ratings <- inner_join(ratings, research, 
+res_ratings <- inner_join(ratings, research,
                           by = join_by(research == label_paper_title))
 
 research_areas <- unique(res_ratings$main_cause_cat_abbrev)
@@ -117,7 +116,7 @@ textOutput("papers_evaluated")
 
 #### Column
 
-[Research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers. 
+[Research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers.
 
 ```{r}
 plotOutput("barplot_areas")
@@ -139,23 +138,43 @@ plotOutput("barplot_proposals")
 
 ### Overall Ratings
 
-#### Column
+#### Column {.tabset}
 
-Overall assessments for each paper, averaging evaluators' [research quality percentile scores](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators#overall-assessment).
+##### Plot
+
+Overall assessments for each paper by research area. Points show individual paper ratings; crosses show area averages.
 
 ```{r}
-girafeOutput("plot_ratings")
+plotOutput("plot_ratings_static")
 ```
 
-### Individual Criteria 
+##### Data Table
 
-#### Column
-
-Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators).
-
+Interactive table of overall ratings. Click column headers to sort.
 
 ```{r}
-girafeOutput("plot_critera")
+DTOutput("table_ratings")
+```
+
+
+### Individual Criteria
+
+#### Column {.tabset}
+
+##### Plot
+
+Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators). Crosses show per-question averages.
+
+```{r}
+plotOutput("plot_criteria_static")
+```
+
+##### Data Table
+
+Average ratings by criteria across all papers.
+
+```{r}
+DTOutput("table_criteria")
 ```
 
 
@@ -164,7 +183,7 @@ girafeOutput("plot_critera")
 #### Column
 
 ```{r}
-selectizeInput("comparison_papers", label = "Select papers to compare:", 
+selectizeInput("comparison_papers", label = "Select papers to compare:",
                choices = character(0), multiple = TRUE,
                options = list(
                  render = I("
@@ -172,18 +191,29 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
     // display shortened names of selected papers
     item: function(item, escape) {
       const fullPaperName = item.value;
-      const shortenedName = fullPaperName.length > 30 
-        ? fullPaperName.substring(0, 30) + '...' 
+      const shortenedName = fullPaperName.length > 30
+        ? fullPaperName.substring(0, 30) + '...'
         : fullPaperName;
       return '<div class=\"item\">' + escape(shortenedName) + '</div>';
     }
 }
 ")
                ))
-
-girafeOutput("plot_comparison")
 ```
 
+##### {.tabset}
+
+###### Comparison Plot
+
+```{r}
+plotOutput("plot_comparison_static")
+```
+
+###### Comparison Table
+
+```{r}
+DTOutput("table_comparison")
+```
 
 
 ### Sources
@@ -191,7 +221,7 @@ girafeOutput("plot_comparison")
 #### Column
 
 Papers can be chosen for evaluation by Unjournal staff,
-submitted by authors or by a third party. 
+submitted by authors or by a third party.
 Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). Papers awaiting evaluation or selection are not included.
 
 ```{r}
@@ -206,11 +236,11 @@ plotOutput("barplot_sources")
 
 
 start_date <- reactive({
-  periods[input$period]  
+  periods[input$period]
 })
 
 evals <- reactive({
-  res_ratings |> 
+  res_ratings |>
     filter(
       row_created_date >= start_date(),
       input$research_area == "All" | main_cause_cat_abbrev == input$research_area
@@ -218,8 +248,8 @@ evals <- reactive({
 })
 
 evaled_research <- reactive({
-  research |> 
-    filter(status %in% "50_published evaluations (on PubPub, by Unjournal)") |> 
+  research |>
+    filter(status %in% "50_published evaluations (on PubPub, by Unjournal)") |>
     # this applies the time filter
     semi_join(evals(), by = join_by(label_paper_title == research))
 })
@@ -231,7 +261,7 @@ observe({
 })
 
 proposals <- reactive({
-  research |> 
+  research |>
       filter(
       input$research_area == "All" | main_cause_cat_abbrev == input$research_area
     )
@@ -250,9 +280,9 @@ n_proposals <- reactive(nrow(proposals()))
 output$papers_evaluated <- renderText({
   if (input$research_area == "All") {
     glue::glue("{n_evals()} evaluations of
-    {n_papers()} papers in {n_areas()} distinct research areas")  
+    {n_papers()} papers in {n_areas()} distinct research areas")
   } else {
-    glue::glue("{n_evals()} evaluations of {n_papers()} papers") 
+    glue::glue("{n_evals()} evaluations of {n_papers()} papers")
   }
 })
 
@@ -262,10 +292,6 @@ output$barplot_areas <- renderPlot({
     filter( ! is.na(area)) |>
     mutate(
       area = stringr::str_to_title(area),
-      # Workaround to cope with long area categories. 
-      # TODO: remove once fixed.
-      # area = stringr::str_remove(area, "\\(.*\\)"),
-      # area = stringr::str_remove(area, "\\[.*\\]"),
       area = forcats::fct_infreq(area),
       area = forcats::fct_rev(area),
     ) |>
@@ -308,13 +334,13 @@ output$barplot_proposals <- renderPlot({
           ~ "Evaluation published",
         .default = "Unknown"
       ),
-      Status = forcats::fct_relevel(Status, 
-                                    "Under consideration", 
-                                    "Deprioritized", 
-                                    "Accepted and under evaluation", 
+      Status = forcats::fct_relevel(Status,
+                                    "Under consideration",
+                                    "Deprioritized",
+                                    "Accepted and under evaluation",
                                     "Evaluation published", "Unknown"),
       Status = forcats::fct_rev(Status)
-      
+
     ) |>
     ggplot() +
       geom_bar(aes(y = Status, fill = Status)) +
@@ -326,153 +352,218 @@ output$barplot_proposals <- renderPlot({
 })
 
 
-output$plot_ratings <- renderGirafe({
-  ggp <- evals() |>
+# Static plot for Overall Ratings
+output$plot_ratings_static <- renderPlot({
+  plot_data <- evals() |>
     filter(criteria == "overall") |>
     mutate(
       area = stringr::str_to_title(main_cause_cat_abbrev),
       area = forcats::fct_infreq(area),
-      area = forcats::fct_rev(area),
+      area = forcats::fct_rev(area)
     ) |>
-    ggplot(aes(y = area, x = middle_rating, color = area)) +
-      ggiraph::geom_point_interactive(
-        aes(tooltip = research)
-      ) +
-      stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
-      scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-      theme(
-        panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
-        plot.title = element_text(size = 14)
-      ) +
-      labs(
-        title = "Overall ratings of papers by research area",
-        subtitle = "Crosses show per-area averages",
-        x = NULL,
-        y = NULL
-      )
-  
-  girafe(ggobj = ggp,
-         width_svg = 9,
-         options = list(opts_sizing(rescale = FALSE, width = 1)))
+    filter(!is.na(area))
+
+  # Calculate means for crosses
+  means <- plot_data |>
+    group_by(area) |>
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+
+  ggplot(plot_data, aes(y = area, x = middle_rating, color = area)) +
+    geom_jitter(height = 0.2, width = 0, alpha = 0.7, size = 3) +
+    geom_point(data = means, aes(x = mean_rating, y = area),
+               shape = 4, size = 4, stroke = 2, color = "black") +
+    scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      axis.text.y = element_text(size = 12),
+      plot.title = element_text(size = 14)
+    ) +
+    labs(
+      title = "Overall ratings of papers by research area",
+      subtitle = "Points = individual papers, X = area average",
+      x = "Rating (0-100 percentile)",
+      y = NULL
+    )
+})
+
+# Data table for Overall Ratings
+output$table_ratings <- renderDT({
+  evals() |>
+    filter(criteria == "overall") |>
+    mutate(
+      Area = stringr::str_to_title(main_cause_cat_abbrev)
+    ) |>
+    select(Paper = research, Area, Rating = middle_rating,
+           `Lower CI` = lower_CI, `Upper CI` = upper_CI) |>
+    arrange(desc(Rating)) |>
+    datatable(
+      options = list(
+        pageLength = 15,
+        dom = 'frtip',
+        scrollX = TRUE
+      ),
+      rownames = FALSE
+    ) |>
+    formatRound(columns = c("Rating", "Lower CI", "Upper CI"), digits = 1)
 })
 
 
+# Static plot for Individual Criteria
 criteria_plot_data <- reactive({
   evals() |>
     select(research, criteria, middle_rating) |>
     mutate(
       scale_0_to_5 = criteria %in% c("merits_journal", "journal_predict"),
-      criteria = criteria_titles[criteria],
-      criteria = forcats::fct_relevel(criteria, "Overall assessment"),
-      criteria = forcats::fct_rev(criteria)
+      criteria_label = criteria_titles[criteria],
+      criteria_label = forcats::fct_relevel(criteria_label, "Overall assessment"),
+      criteria_label = forcats::fct_rev(criteria_label)
     ) |>
-    filter(! is.na(criteria))
+    filter(!is.na(criteria_label))
 })
 
-output$plot_critera <- renderGirafe({
-  
-    ggp1 <- criteria_plot_data() |> 
-      filter(scale_0_to_5 == FALSE) |> 
-      ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-        ggiraph::geom_point_interactive(
-          aes(tooltip = research)
-        ) +
-        stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
-        scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-        theme(
-          panel.grid.minor.x = element_blank(),
-          axis.text.y = element_text(size = 10),
-          axis.text.x = element_text(size = 10),
-          plot.title = element_text(size = 14)
-        ) +
-        labs(
-          title = "Answers to quantitative evaluation questions",
-          subtitle = "Crosses show per-question averages",
-          x = NULL,
-          y = NULL
-        )
+output$plot_criteria_static <- renderPlot({
+  plot_data <- criteria_plot_data() |>
+    filter(scale_0_to_5 == FALSE)
 
-  ggp2 <- criteria_plot_data() |> 
-    filter(scale_0_to_5 == TRUE) |> 
-    ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-    ggiraph::geom_point_interactive(
-      aes(tooltip = research)
-    ) +
-    stat_summary(fun = mean, na.rm = TRUE, shape = "cross", size = 2) +
-    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
+  means <- plot_data |>
+    group_by(criteria_label) |>
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+
+  ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
+    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+    geom_point(data = means, aes(x = mean_rating, y = criteria_label),
+               shape = 4, size = 3, stroke = 2, color = "black") +
+    scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
       panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 10),
+      axis.text.y = element_text(size = 9),
       axis.text.x = element_text(size = 10),
       plot.title = element_text(size = 14)
     ) +
     labs(
+      title = "Ratings by evaluation criteria (0-100 scale)",
+      subtitle = "Points = individual ratings, X = criterion average",
       x = NULL,
       y = NULL
     )
 
-  combined_plot <- cowplot::plot_grid(ggp1, ggp2, nrow = 2,
-                                      rel_heights = c(6, 3), align = "hv",
-                                      scale = 0.9)
+  plot_data2 <- criteria_plot_data() |>
+    filter(scale_0_to_5 == TRUE)
 
-  girafe(ggobj = combined_plot,
-         width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 1)))
+  means2 <- plot_data2 |>
+    group_by(criteria_label) |>
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+
+  ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
+    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+    geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
+               shape = 4, size = 3, stroke = 2, color = "black") +
+    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      axis.text.y = element_text(size = 9),
+      axis.text.x = element_text(size = 10)
+    ) +
+    labs(
+      title = "Journal tier ratings (0-5 scale)",
+      x = NULL,
+      y = NULL
+    )
+
+  cowplot::plot_grid(ggp1, ggp2, nrow = 2, rel_heights = c(6, 2.5), align = "v")
+})
+
+# Data table for criteria averages
+output$table_criteria <- renderDT({
+  criteria_plot_data() |>
+    group_by(Criteria = criteria_label) |>
+    summarize(
+      `Mean Rating` = mean(middle_rating, na.rm = TRUE),
+      `Median` = median(middle_rating, na.rm = TRUE),
+      `Min` = min(middle_rating, na.rm = TRUE),
+      `Max` = max(middle_rating, na.rm = TRUE),
+      `N` = n()
+    ) |>
+    arrange(desc(`Mean Rating`)) |>
+    datatable(
+      options = list(
+        pageLength = 12,
+        dom = 't',
+        scrollX = TRUE
+      ),
+      rownames = FALSE
+    ) |>
+    formatRound(columns = c("Mean Rating", "Median", "Min", "Max"), digits = 1)
 })
 
 
-output$plot_comparison <- renderGirafe({
-  ggp <- evals() |> 
-    filter(
-      research %in% input$comparison_papers
-    ) |> 
-    summarize(.by = c(research, criteria), 
-              rating = mean(middle_rating, na.rm = TRUE)) |> 
-    mutate(
-      rating = ifelse(criteria %in% c("merits_journal", "journal_predict"), 
-                      rating * 20, rating),
-      criteria = criteria_titles[criteria],
-      criteria = factor(criteria, levels = unique(criteria_titles)),
-      criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
-      criteria = forcats::fct_rev(criteria),
-      criteria = forcats::fct_relevel(criteria, c("Predicted journal tier", 
-                                                  "Deserved journal tier")),
-      crit_grp = criteria %in% c("Predicted journal tier", 
-                                                  "Deserved journal tier")
-    ) |> 
-    filter(! is.na(criteria)) |> 
-    ggplot(aes(x = rating, y = criteria, color = research, 
-               group = interaction(research, crit_grp))) + 
-      ggiraph::geom_point_interactive(
-        aes(tooltip = research)
-      ) +
-      # hack to break the graph into two parts for other vs journal metrics:
-      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") + 
-      geom_line(orientation = "y") +
-      # If we don't add this explicitly, the graph gets weird numbers on the
-      # y axis instead of the criteria, when no papers are selected:
-      scale_y_discrete(breaks = criteria_titles) +
-      scale_x_continuous(limits = c(0, 100), position = "top", 
-                         breaks = seq(0, 100, 20),
-                         sec.axis = sec_axis(~ . / 20, name = "Journal tier")) +
+# Static comparison plot
+output$plot_comparison_static <- renderPlot({
+  if (length(input$comparison_papers) == 0) {
+    ggplot() +
+      annotate("text", x = 0.5, y = 0.5,
+               label = "Select papers above to compare", size = 6) +
+      theme_void()
+  } else {
+    plot_data <- evals() |>
+      filter(research %in% input$comparison_papers) |>
+      summarize(.by = c(research, criteria),
+                rating = mean(middle_rating, na.rm = TRUE)) |>
+      mutate(
+        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+                        rating * 20, rating),
+        criteria_label = criteria_titles[criteria],
+        criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+      ) |>
+      filter(!is.na(criteria_label))
+
+    ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research)) +
+      geom_point(size = 4) +
+      geom_line(aes(group = research), orientation = "y", alpha = 0.5) +
+      scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
       labs(
-        x = "Percentile rank",
-        y = NULL
+        title = "Paper comparison across criteria",
+        x = "Rating (scaled to 0-100)",
+        y = NULL,
+        color = "Paper"
       ) +
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
-        plot.title = element_text(size = 14),
-        legend.position = "top",
+        axis.text.y = element_text(size = 10),
+        legend.position = "bottom",
         legend.direction = "vertical",
         legend.title = element_blank()
-      )
+      ) +
+      guides(color = guide_legend(ncol = 1))
+  }
+})
 
-  girafe(ggobj = ggp,
-         width_svg = 8,
-         options = list(opts_sizing(rescale = FALSE, width = 0.9)))
+# Comparison data table
+output$table_comparison <- renderDT({
+  if (length(input$comparison_papers) == 0) {
+    data.frame(Message = "Select papers above to compare")
+  } else {
+    evals() |>
+      filter(research %in% input$comparison_papers) |>
+      summarize(.by = c(research, criteria),
+                rating = mean(middle_rating, na.rm = TRUE)) |>
+      mutate(
+        criteria_label = criteria_titles[criteria]
+      ) |>
+      filter(!is.na(criteria_label)) |>
+      select(Paper = research, Criteria = criteria_label, Rating = rating) |>
+      pivot_wider(names_from = Criteria, values_from = Rating) |>
+      datatable(
+        options = list(
+          pageLength = 10,
+          dom = 't',
+          scrollX = TRUE
+        ),
+        rownames = FALSE
+      ) |>
+      formatRound(columns = -1, digits = 1)
+  }
 })
 
 
