@@ -92,7 +92,23 @@ names(research_areas) <- research_areas
 #period + .shiny-input-select .selectize-dropdown {
   width: 150px !important;
 }
+.notice-box {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+.notice-box a {
+  color: #856404;
+  font-weight: bold;
+}
 </style>
+
+<div class="notice-box">
+If visualizations aren't loading, see our <a href="https://unjournal.github.io/unjournaldata/posts/dashboard-data-jan2026/" target="_blank">static data page</a> for tables and plots.
+</div>
 
 ```{r}
 selectInput("period", "Period", names(periods))
