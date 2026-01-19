@@ -330,7 +330,7 @@ output$barplot_proposals <- renderPlot({
 
 output$plot_ratings <- renderPlot({
   evals() |>
-    filter(criteria == "overall") |>
+    filter(criteria == "overall", !is.na(main_cause_cat_abbrev), !is.na(middle_rating)) |>
     mutate(
       area = stringr::str_to_title(main_cause_cat_abbrev),
       area = forcats::fct_infreq(area),
@@ -355,6 +355,7 @@ output$plot_ratings <- renderPlot({
 criteria_plot_data <- reactive({
   evals() |>
     select(research, criteria, middle_rating) |>
+    filter(!is.na(middle_rating)) |>
     mutate(
       scale_0_to_5 = criteria %in% c("merits_journal", "journal_predict"),
       criteria = criteria_titles[criteria],
