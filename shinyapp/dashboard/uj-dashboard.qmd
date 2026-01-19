@@ -288,8 +288,18 @@ output$papers_evaluated <- renderText({
 
 
 output$barplot_areas <- renderPlot({
-  data.frame(area = all_cats()) |>
-    filter( ! is.na(area)) |>
+  plot_data <- data.frame(area = all_cats()) |>
+    filter( ! is.na(area))
+
+  if (nrow(plot_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+        theme_void()
+    )
+  }
+
+  plot_data |>
     mutate(
       area = stringr::str_to_title(area),
       area = forcats::fct_infreq(area),
@@ -309,7 +319,17 @@ output$barplot_areas <- renderPlot({
 
 
 output$barplot_proposals <- renderPlot({
-  proposals() |>
+  plot_data <- proposals()
+
+  if (nrow(plot_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+        theme_void()
+    )
+  }
+
+  plot_data |>
     mutate(
       Status = case_match(status,
         c("03_awaiting authors' consent (if needed) or update",
@@ -469,25 +489,32 @@ output$plot_criteria_static <- renderPlot({
   plot_data2 <- criteria_plot_data() |>
     filter(scale_0_to_5 == TRUE)
 
-  means2 <- plot_data2 |>
-    group_by(criteria_label) |>
-    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+  # Handle empty journal tier data
+  if (nrow(plot_data2) == 0) {
+    ggp2 <- ggplot() +
+      annotate("text", x = 2.5, y = 0.5, label = "No journal tier data", size = 4) +
+      theme_void()
+  } else {
+    means2 <- plot_data2 |>
+      group_by(criteria_label) |>
+      summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
 
-  ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
-    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
-    geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
-               shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
-    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
-    theme(
-      panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 9),
-      axis.text.x = element_text(size = 10)
-    ) +
-    labs(
-      title = "Journal tier ratings (0-5 scale)",
-      x = NULL,
-      y = NULL
-    )
+    ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
+      geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+      geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
+                 shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
+      scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
+      theme(
+        panel.grid.minor.x = element_blank(),
+        axis.text.y = element_text(size = 9),
+        axis.text.x = element_text(size = 10)
+      ) +
+      labs(
+        title = "Journal tier ratings (0-5 scale)",
+        x = NULL,
+        y = NULL
+      )
+  }
 
   cowplot::plot_grid(ggp1, ggp2, nrow = 2, rel_heights = c(6, 2.5), align = "v")
 })
@@ -587,7 +614,17 @@ output$table_comparison <- renderDT({
 
 
 output$barplot_sources <- renderPlot({
-  evaled_research() |>
+  plot_data <- evaled_research()
+
+  if (nrow(plot_data) == 0) {
+    return(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+        theme_void()
+    )
+  }
+
+  plot_data |>
     mutate(
       Source = case_match(source_main,
         "internal-NBER"                ~ "Internal (NBER)",
