@@ -111,9 +111,6 @@ selectInput("research_area", "Research area", names(research_areas))
 textOutput("papers_evaluated")
 ```
 
-::: {.callout-note}
-**Note:** We now have 53 evaluated papers. The interactive visualizations are being updated and will be available shortly.
-:::
 
 ## {.tabset}
 
@@ -340,8 +337,7 @@ output$plot_ratings <- renderPlot({
       area = forcats::fct_rev(area),
     ) |>
     ggplot(aes(y = area, x = middle_rating, color = area)) +
-      geom_point() +
-      stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
+      geom_point(size = 2) +
       scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
       theme(
         panel.grid.minor.x = element_blank(),
@@ -350,7 +346,6 @@ output$plot_ratings <- renderPlot({
       ) +
       labs(
         title = "Overall ratings of papers by research area",
-        subtitle = "Crosses show per-area averages",
         x = NULL,
         y = NULL
       )
@@ -374,8 +369,7 @@ output$plot_critera <- renderPlot({
     ggp1 <- criteria_plot_data() |>
       filter(scale_0_to_5 == FALSE) |>
       ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-        geom_point() +
-        stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
+        geom_point(size = 2) +
         scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
         theme(
           panel.grid.minor.x = element_blank(),
@@ -385,7 +379,6 @@ output$plot_critera <- renderPlot({
         ) +
         labs(
           title = "Answers to quantitative evaluation questions",
-          subtitle = "Crosses show per-question averages",
           x = NULL,
           y = NULL
         )
@@ -393,8 +386,7 @@ output$plot_critera <- renderPlot({
   ggp2 <- criteria_plot_data() |>
     filter(scale_0_to_5 == TRUE) |>
     ggplot(aes(y = criteria, x = middle_rating, color = criteria)) +
-    geom_point() +
-    stat_summary(fun = mean, geom = "point", na.rm = TRUE, shape = 3, size = 3) +
+    geom_point(size = 2) +
     scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
     theme(
       panel.grid.minor.x = element_blank(),
