@@ -48,13 +48,13 @@ ggplot2::theme_set(my_theme)
 
 criteria_titles <- c(
         "overall"         = "Overall assessment",
-        "adv_knowledge"   = "Advancing our knowledge and practice",
+        "adv_knowledge"   = "Advancing knowledge and practice",
         "methods"         = "Methods",
         "logic_comms"     = "Logic and communication",
         "real_world"      = "Real world relevance",
-        "gp_relevance"    = "Relevance to global priorities/usefulness to practitioners",
-        "claims"          = "Claims, strength, and characterization of Evidence",
-        "open_sci"        = "Open, collaborative, replicable science",
+        "gp_relevance"    = "Global relevance/usefulness",
+        "claims"          = "Claims and evidence",
+        "open_sci"        = "Open, replicable science",
         "merits_journal"  = "Deserved journal tier",
         "journal_predict" = "Predicted journal tier"
       )
@@ -97,23 +97,7 @@ names(research_areas) <- research_areas
 #period + .shiny-input-select .selectize-dropdown {
   width: 150px !important;
 }
-.notice-box {
-  background-color: #fff3cd;
-  border: 1px solid #ffc107;
-  border-radius: 4px;
-  padding: 8px 12px;
-  margin: 5px 0;
-  font-size: 0.9em;
-}
-.notice-box a {
-  color: #856404;
-  font-weight: bold;
-}
 </style>
-
-<div class="notice-box">
-If visualizations aren't loading, see our <a href="https://unjournal.github.io/unjournaldata/posts/dashboard-data-jan2026/" target="_blank">static data page</a> for tables and plots.
-</div>
 
 ```{r}
 selectInput("period", "Period", names(periods))
@@ -187,7 +171,7 @@ DTOutput("table_ratings")
 Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators). Crosses show per-question averages.
 
 ```{r}
-plotOutput("plot_criteria_static")
+plotOutput("plot_criteria_static", height = "600px")
 ```
 
 ##### Data Table
@@ -227,7 +211,7 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
 ###### Comparison Plot
 
 ```{r}
-plotOutput("plot_comparison_static")
+plotOutput("plot_comparison_static", height = "500px")
 ```
 
 ###### Comparison Table
@@ -490,15 +474,15 @@ output$plot_criteria_static <- renderPlot({
     summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
 
   ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
-    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
     geom_point(data = means, aes(x = mean_rating, y = criteria_label),
-               shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
+               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
       panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 9),
-      axis.text.x = element_text(size = 10),
-      plot.title = element_text(size = 14)
+      axis.text.y = element_text(size = 12),
+      axis.text.x = element_text(size = 11),
+      plot.title = element_text(size = 15)
     ) +
     labs(
       title = "Ratings by evaluation criteria (0-100 scale)",
@@ -521,14 +505,14 @@ output$plot_criteria_static <- renderPlot({
       summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
 
     ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
-      geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2) +
+      geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
       geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
-                 shape = 4, size = 3, stroke = 2, color = "black", inherit.aes = FALSE) +
+                 shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
       scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
       theme(
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 9),
-        axis.text.x = element_text(size = 10)
+        axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 11)
       ) +
       labs(
         title = "Journal tier ratings (0-5 scale)",
@@ -585,8 +569,8 @@ output$plot_comparison_static <- renderPlot({
       filter(!is.na(criteria_label))
 
     ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research)) +
-      geom_point(size = 4) +
-      geom_line(aes(group = research), orientation = "y", alpha = 0.5) +
+      geom_point(size = 5) +
+      geom_line(aes(group = research), orientation = "y", alpha = 0.5, linewidth = 1) +
       scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
       labs(
         title = "Paper comparison across criteria",
@@ -597,10 +581,13 @@ output$plot_comparison_static <- renderPlot({
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 10),
+        axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 11),
+        plot.title = element_text(size = 15),
         legend.position = "bottom",
         legend.direction = "vertical",
-        legend.title = element_blank()
+        legend.title = element_blank(),
+        legend.text = element_text(size = 10)
       ) +
       guides(color = guide_legend(ncol = 1))
   }
