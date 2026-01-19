@@ -97,6 +97,14 @@ names(research_areas) <- research_areas
 #period + .shiny-input-select .selectize-dropdown {
   width: 150px !important;
 }
+/* Reduce vertical spacing in Paper comparison section */
+.card-body {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+.bslib-card {
+  margin-bottom: 0.5rem !important;
+}
 </style>
 
 ```{r}
@@ -211,7 +219,7 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
 ###### Comparison Plot
 
 ```{r}
-plotOutput("plot_comparison_static", height = "500px")
+plotOutput("plot_comparison_static", height = "600px")
 ```
 
 ###### Comparison Table
@@ -576,18 +584,19 @@ output$plot_comparison_static <- renderPlot({
         title = "Paper comparison across criteria",
         x = "Rating (scaled to 0-100)",
         y = NULL,
-        color = "Paper"
+        color = NULL
       ) +
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
+        axis.text.y = element_text(size = 13),
         axis.text.x = element_text(size = 11),
         plot.title = element_text(size = 15),
-        legend.position = "bottom",
+        legend.position = "top",
         legend.direction = "vertical",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 10)
+        legend.justification = "left",
+        legend.text = element_text(size = 9),
+        legend.key.height = unit(0.8, "lines")
       ) +
       guides(color = guide_legend(ncol = 1))
   }
