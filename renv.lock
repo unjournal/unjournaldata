@@ -924,7 +924,7 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.5.1",
+      "Version": "4.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -945,7 +945,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "44c6a2f8202d5b7e878ea274b1092426"
+      "Hash": "c28390e51a0c65b8f95a0cd609e83e2d"
     },
     "gld": {
       "Package": "gld",
