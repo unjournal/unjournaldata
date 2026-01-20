@@ -564,21 +564,18 @@ output$table_criteria <- renderDT({
 })
 
 
-# Interactive comparison plot (native plotly for proper dual axes)
+# Interactive comparison plot with dual x-axes
+# Uses ggplot2 for reliable vertical layout, then adds secondary axis via plotly
 output$plot_comparison <- renderPlotly({
   if (length(input$comparison_papers) == 0) {
-    plotly::plot_ly() |>
-      plotly::add_annotations(
-        text = "Select papers above to compare",
-        x = 0.5, y = 0.5, xref = "paper", yref = "paper",
-        showarrow = FALSE, font = list(size = 18)
-      ) |>
-      plotly::layout(
-        xaxis = list(visible = FALSE),
-        yaxis = list(visible = FALSE)
-      )
+    plotly::ggplotly(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5,
+                 label = "Select papers above to compare", size = 6) +
+        theme_void()
+    )
   } else {
-    # Define criteria order (top to bottom)
+    # Define criteria order (Overall at top, Predicted journal tier at bottom)
     criteria_order <- c(
       "Overall assessment",
       "Advancing knowledge and practice",
@@ -600,100 +597,68 @@ output$plot_comparison <- renderPlotly({
         # Scale journal tier (0-5) to 0-100 for consistent plotting
         rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
                         rating * 20, rating),
-        criteria_label = criteria_titles[criteria]
+        criteria_label = criteria_titles[criteria],
+        # Set factor levels so Overall is at top, Predicted at bottom
+        criteria_label = factor(criteria_label, levels = rev(criteria_order))
       ) |>
-      filter(!is.na(criteria_label)) |>
-      # Create numeric y position based on criteria order (1 = top, 10 = bottom)
-      mutate(y_pos = match(criteria_label, criteria_order))
+      filter(!is.na(criteria_label))
 
-    # Get unique papers for colors
-    papers <- unique(plot_data$research)
-    colors <- scales::hue_pal()(length(papers))
+    # Create ggplot with proper vertical layout
+    gg <- ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research,
+                                 text = paste0(research, "<br>Rating: ", round(rating_scaled, 1)))) +
+      geom_point(size = 4) +
+      geom_line(aes(group = research), orientation = "y", alpha = 0.6, linewidth = 1.2) +
+      scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20),
+                         sec.axis = sec_axis(~ . / 20, name = "Journal tier",
+                                            breaks = 1:5)) +
+      labs(
+        title = NULL,
+        x = "Percentile rank",
+        y = NULL,
+        color = NULL
+      ) +
+      theme_minimal() +
+      theme(
+        panel.grid.major.y = element_line(color = "grey85"),
+        panel.grid.minor.x = element_blank(),
+        axis.text.y = element_text(size = 13),
+        axis.text.x = element_text(size = 12),
+        axis.title.x.bottom = element_text(size = 13, margin = margin(t = 8)),
+        axis.title.x.top = element_text(size = 13, margin = margin(b = 8)),
+        legend.position = "top",
+        legend.text = element_text(size = 11),
+        legend.box.margin = margin(b = -5)
+      ) +
+      guides(color = guide_legend(nrow = 2))
 
-    # Build plot with native plotly
-    p <- plotly::plot_ly()
+    # Convert to plotly - note: sec_axis may not convert perfectly,
+    # so we add the secondary axis manually via layout
+    p <- plotly::ggplotly(gg, tooltip = "text")
 
-    for (i in seq_along(papers)) {
-      paper_data <- plot_data |>
-        filter(research == papers[i]) |>
-        arrange(y_pos)
-
-      # Add line (connecting points top to bottom)
-      p <- p |> plotly::add_trace(
-        data = paper_data,
-        x = ~rating_scaled,
-        y = ~criteria_label,
-        type = "scatter",
-        mode = "lines",
-        line = list(color = colors[i], width = 2),
-        showlegend = FALSE,
-        hoverinfo = "skip"
-      )
-
-      # Add points
-      p <- p |> plotly::add_trace(
-        data = paper_data,
-        x = ~rating_scaled,
-        y = ~criteria_label,
-        type = "scatter",
-        mode = "markers",
-        marker = list(color = colors[i], size = 12),
-        name = papers[i],
-        text = ~paste0(research, "<br>Rating: ", round(rating_scaled, 1)),
-        hoverinfo = "text"
-      )
-    }
-
-    # Add invisible trace on bottom axis to force it to show
-    p <- p |> plotly::add_trace(
-      x = c(20, 100),
-      y = c(criteria_order[1], criteria_order[1]),
-      type = "scatter",
-      mode = "markers",
-      marker = list(opacity = 0),
-      xaxis = "x2",
-      showlegend = FALSE,
-      hoverinfo = "skip"
-    )
-
+    # Add secondary x-axis at top showing Journal tier scale
     p |> plotly::layout(
-      title = list(text = "Paper comparison across criteria", font = list(size = 18)),
-      xaxis = list(
-        title = list(text = "Percentile rank", font = list(size = 14)),
-        range = c(20, 100),
-        tickvals = seq(20, 100, 20),
-        tickfont = list(size = 13),
-        side = "top",
-        showgrid = TRUE,
-        gridcolor = "lightgray"
-      ),
-      xaxis2 = list(
-        title = list(text = "Journal tier", font = list(size = 14)),
-        overlaying = "x",
-        side = "bottom",
-        range = c(20, 100),
-        tickvals = seq(20, 100, 20),
-        ticktext = c("1", "2", "3", "4", "5"),
-        tickfont = list(size = 13),
-        showgrid = FALSE
-      ),
-      yaxis = list(
-        title = "",
-        categoryorder = "array",
-        categoryarray = rev(criteria_order),
-        tickfont = list(size = 13),
-        showgrid = TRUE,
-        gridcolor = "lightgray"
-      ),
+      hoverlabel = list(bgcolor = "white", font = list(size = 12)),
       legend = list(
         orientation = "h",
         x = 0.5,
-        y = 1.12,
         xanchor = "center",
+        y = 1.02,
         font = list(size = 11)
       ),
-      margin = list(t = 80, l = 220, b = 60),
-      hoverlabel = list(bgcolor = "white", font = list(size = 13))
+      margin = list(t = 50, l = 200, b = 50, r = 20),
+      xaxis = list(
+        title = list(text = "Percentile rank", font = list(size = 13)),
+        side = "bottom"
+      ),
+      xaxis2 = list(
+        title = list(text = "Journal tier", font = list(size = 13)),
+        overlaying = "x",
+        side = "top",
+        range = c(0, 100),
+        tickvals = c(20, 40, 60, 80, 100),
+        ticktext = c("1", "2", "3", "4", "5"),
+        showgrid = FALSE
+      )
     )
   }
 })
