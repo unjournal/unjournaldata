@@ -188,8 +188,6 @@ DTOutput("table_criteria")
 
 #### Column
 
-Compare selected papers across all evaluation criteria. Top axis shows percentile rank (0-100), bottom axis shows journal tier (0-5).
-
 ```{r}
 selectizeInput("comparison_papers", label = "Select papers to compare:",
                choices = character(0), multiple = TRUE,
@@ -577,114 +575,61 @@ output$plot_comparison <- renderPlotly({
         theme_void()
     )
   } else {
-    # Define criteria order (top to bottom in plot)
-    criteria_order <- c(
-      "Overall assessment",
-      "Advancing knowledge and practice",
-      "Methods",
-      "Logic and communication",
-      "Real world relevance",
-      "Global relevance/usefulness",
-      "Claims and evidence",
-      "Open, replicable science",
-      "Deserved journal tier",
-      "Predicted journal tier"
-    )
-
     plot_data <- evals() |>
       filter(research %in% input$comparison_papers) |>
       summarize(.by = c(research, criteria),
                 rating = mean(middle_rating, na.rm = TRUE)) |>
       mutate(
         # Scale journal tier (0-5) to 0-100 for consistent plotting
-        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+        rating = ifelse(criteria %in% c("merits_journal", "journal_predict"),
                         rating * 20, rating),
-        criteria_label = criteria_titles[criteria],
-        # Factor levels: first item appears at TOP of plot
-        criteria_label = factor(criteria_label, levels = criteria_order)
+        criteria = criteria_titles[criteria],
+        criteria = factor(criteria, levels = unique(criteria_titles)),
+        # Reorder: Overall at top, journal tiers at bottom
+        criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
+        criteria = forcats::fct_rev(criteria),
+        criteria = forcats::fct_relevel(criteria, c("Predicted journal tier",
+                                                    "Deserved journal tier")),
+        # Group for line breaks: separate journal tiers from other criteria
+        crit_grp = criteria %in% c("Predicted journal tier", "Deserved journal tier")
       ) |>
-      filter(!is.na(criteria_label)) |>
-      # Sort by research and criteria order to ensure lines connect properly
-      arrange(research, criteria_label)
+      filter(!is.na(criteria))
 
-    # Calculate median across ALL papers for reference
-    all_medians <- res_ratings |>
-      summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
-      mutate(
-        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
-                        rating * 20, rating),
-        criteria_label = criteria_titles[criteria],
-        criteria_label = factor(criteria_label, levels = criteria_order)
-      ) |>
-      filter(!is.na(criteria_label)) |>
-      summarize(.by = criteria_label, median_all = median(rating_scaled, na.rm = TRUE))
-
-    # Calculate median for selected research area (if not "All")
-    if (input$research_area != "All") {
-      area_medians <- res_ratings |>
-        filter(main_cause_cat_abbrev == input$research_area) |>
-        summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
-        mutate(
-          rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
-                          rating * 20, rating),
-          criteria_label = criteria_titles[criteria],
-          criteria_label = factor(criteria_label, levels = criteria_order)
-        ) |>
-        filter(!is.na(criteria_label)) |>
-        summarize(.by = criteria_label, median_area = median(rating_scaled, na.rm = TRUE))
-
-      all_medians <- left_join(all_medians, area_medians, by = "criteria_label")
-    }
-
-    gg <- ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research,
-                                 text = paste0(research, "<br>Rating: ", round(rating_scaled, 1)))) +
-      # Add median reference line for all papers (grey)
-      geom_point(data = all_medians, aes(x = median_all, y = criteria_label,
-                 text = paste0("All papers median: ", round(median_all, 1))),
-                 shape = "|", size = 6, color = "grey40", inherit.aes = FALSE) +
-      geom_line(aes(group = research), alpha = 0.5, linewidth = 1) +
+    gg <- ggplot(plot_data, aes(x = rating, y = criteria, color = research,
+                                 group = interaction(research, crit_grp),
+                                 text = research)) +
       geom_point(size = 4) +
+      # White line to visually separate journal tier from other criteria
+      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") +
+      geom_line(orientation = "y", alpha = 0.7, linewidth = 1) +
+      scale_y_discrete(breaks = criteria_titles) +
       scale_x_continuous(
-        name = "Percentile rank",
         limits = c(0, 100),
-        breaks = seq(0, 100, 20),
         position = "top",
+        breaks = seq(0, 100, 20),
         sec.axis = sec_axis(~ . / 20, name = "Journal tier", breaks = 0:5)
       ) +
-      scale_y_discrete(limits = rev(criteria_order)) +
       labs(
         title = "Paper comparison across criteria",
-        y = NULL,
-        color = NULL
+        x = "Percentile rank",
+        y = NULL
       ) +
       theme(
-        panel.grid.major.y = element_line(color = "grey90"),
+        panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 11),
-        axis.text.x = element_text(size = 10),
-        axis.title.x.top = element_text(size = 11),
-        axis.title.x.bottom = element_text(size = 11),
+        axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 11),
         plot.title = element_text(size = 14),
         legend.position = "top",
-        legend.direction = "horizontal",
-        legend.text = element_text(size = 9),
-        plot.margin = margin(5, 10, 5, 5)
-      ) +
-      guides(color = guide_legend(nrow = 2))
-
-    # Add area median if research area selected
-    if (input$research_area != "All" && "median_area" %in% names(all_medians)) {
-      gg <- gg +
-        geom_point(data = all_medians, aes(x = median_area, y = criteria_label,
-                   text = paste0(input$research_area, " median: ", round(median_area, 1))),
-                   shape = "|", size = 6, color = "steelblue", inherit.aes = FALSE)
-    }
+        legend.direction = "vertical",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 10)
+      )
 
     plotly::ggplotly(gg, tooltip = "text") |>
       plotly::layout(
         hoverlabel = list(bgcolor = "white"),
-        legend = list(orientation = "h", y = 1.15, x = 0.5, xanchor = "center"),
-        margin = list(t = 80)
+        legend = list(orientation = "v", y = 1.2, x = 0, xanchor = "left")
       )
   }
 })
