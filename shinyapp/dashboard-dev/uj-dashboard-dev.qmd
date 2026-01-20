@@ -41,9 +41,10 @@ my_theme <- theme_minimal() +
         legend.position = "none",
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
-        axis.text.y = element_text(size = 14),
-        axis.text.x = element_text(size = 12),
-        plot.title = element_text(size = 16)
+        axis.text.y = element_text(size = 16),
+        axis.text.x = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        axis.title = element_text(size = 14)
       )
 ggplot2::theme_set(my_theme)
 
@@ -207,13 +208,11 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
                ))
 ```
 
-##### {.tabset}
-
-###### Comparison Plot
-
 ```{r}
-plotlyOutput("plot_comparison", height = "500px")
+plotlyOutput("plot_comparison", height = "650px")
 ```
+
+##### {.tabset}
 
 ###### Comparison Table
 
@@ -572,7 +571,7 @@ output$plot_comparison <- renderPlotly({
       plotly::add_annotations(
         text = "Select papers above to compare",
         x = 0.5, y = 0.5, xref = "paper", yref = "paper",
-        showarrow = FALSE, font = list(size = 16)
+        showarrow = FALSE, font = list(size = 18)
       ) |>
       plotly::layout(
         xaxis = list(visible = FALSE),
@@ -638,48 +637,63 @@ output$plot_comparison <- renderPlotly({
         y = ~criteria_label,
         type = "scatter",
         mode = "markers",
-        marker = list(color = colors[i], size = 10),
+        marker = list(color = colors[i], size = 12),
         name = papers[i],
         text = ~paste0(research, "<br>Rating: ", round(rating_scaled, 1)),
         hoverinfo = "text"
       )
     }
 
+    # Add invisible trace on bottom axis to force it to show
+    p <- p |> plotly::add_trace(
+      x = c(20, 100),
+      y = c(criteria_order[1], criteria_order[1]),
+      type = "scatter",
+      mode = "markers",
+      marker = list(opacity = 0),
+      xaxis = "x2",
+      showlegend = FALSE,
+      hoverinfo = "skip"
+    )
+
     p |> plotly::layout(
-      title = list(text = "Paper comparison across criteria", x = 0.5),
+      title = list(text = "Paper comparison across criteria", font = list(size = 18)),
       xaxis = list(
-        title = "Percentile rank",
-        range = c(0, 100),
-        tickvals = seq(0, 100, 20),
+        title = list(text = "Percentile rank", font = list(size = 14)),
+        range = c(20, 100),
+        tickvals = seq(20, 100, 20),
+        tickfont = list(size = 13),
         side = "top",
         showgrid = TRUE,
         gridcolor = "lightgray"
       ),
       xaxis2 = list(
-        title = "Journal tier",
+        title = list(text = "Journal tier", font = list(size = 14)),
         overlaying = "x",
         side = "bottom",
-        range = c(0, 100),
-        tickvals = seq(0, 100, 20),
-        ticktext = as.character(0:5),
+        range = c(20, 100),
+        tickvals = seq(20, 100, 20),
+        ticktext = c("1", "2", "3", "4", "5"),
+        tickfont = list(size = 13),
         showgrid = FALSE
       ),
       yaxis = list(
         title = "",
         categoryorder = "array",
         categoryarray = rev(criteria_order),
+        tickfont = list(size = 13),
         showgrid = TRUE,
         gridcolor = "lightgray"
       ),
       legend = list(
-        orientation = "v",
-        x = 0,
-        y = 1.15,
-        xanchor = "left",
-        font = list(size = 10)
+        orientation = "h",
+        x = 0.5,
+        y = 1.12,
+        xanchor = "center",
+        font = list(size = 11)
       ),
-      margin = list(t = 100, l = 200),
-      hoverlabel = list(bgcolor = "white")
+      margin = list(t = 80, l = 220, b = 60),
+      hoverlabel = list(bgcolor = "white", font = list(size = 13))
     )
   }
 })
