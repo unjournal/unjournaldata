@@ -76,6 +76,9 @@ ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"), show_col_types = F
     upper_CI = as.numeric(upper_CI)
   )
 
+# Load evaluator-paper level data for statistics
+eval_paper_level <- readr::read_csv(here("data/evaluator_paper_level.csv"), show_col_types = FALSE)
+
 res_ratings <- inner_join(ratings, research,
                           by = join_by(research == label_paper_title))
 
@@ -231,6 +234,85 @@ Many come from our [internal project to evaluate NBER papers](https://globalimpa
 
 ```{r}
 plotOutput("barplot_sources")
+```
+
+
+### Statistics
+
+#### Column
+
+##### Row {height=25%}
+
+```{r}
+#| content: valuebox
+#| title: "Papers Evaluated"
+list(
+  icon = "journal-text",
+  color = "primary",
+  value = textOutput("stat_papers_count", inline = TRUE)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Total Evaluations"
+list(
+  icon = "clipboard-check",
+  color = "info",
+  value = textOutput("stat_evals_count", inline = TRUE)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "Avg Hours/Evaluation"
+list(
+  icon = "clock",
+  color = "success",
+  value = textOutput("stat_avg_hours", inline = TRUE)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: "% Anonymous Evaluators"
+list(
+  icon = "person-fill-lock",
+  color = "warning",
+  value = textOutput("stat_anon_pct", inline = TRUE)
+)
+```
+
+##### Row
+
+###### Column
+
+**Evaluator Anonymity**
+
+Percentage of evaluators who chose to remain anonymous vs. those who are publicly named.
+
+```{r}
+plotlyOutput("plot_anonymity", height = "280px")
+```
+
+###### Column
+
+**Time Spent on Evaluations**
+
+Distribution of hours evaluators reported spending on each evaluation (self-reported data, n=33).
+
+```{r}
+plotlyOutput("plot_time_spent", height = "280px")
+```
+
+##### Row
+
+**Evaluations Over Time**
+
+Cumulative number of evaluations published by date.
+
+```{r}
+plotlyOutput("plot_evals_timeline", height = "250px")
 ```
 
 
@@ -768,6 +850,126 @@ output$barplot_sources <- renderPlot({
         x = NULL,
         y = NULL
       )
+})
+
+
+# ============================================
+# Statistics Tab Outputs
+# ============================================
+
+# Calculate anonymity: evaluators starting with "Evaluator " are anonymous
+anonymity_data <- reactive({
+  unique_evaluators <- ratings |>
+    filter(!is.na(evaluator)) |>
+    distinct(evaluator) |>
+    mutate(
+      is_anonymous = str_detect(evaluator, "^Evaluator \\d+$")
+    )
+
+  list(
+    total = nrow(unique_evaluators),
+    anonymous = sum(unique_evaluators$is_anonymous),
+    named = sum(!unique_evaluators$is_anonymous),
+    pct_anonymous = round(100 * sum(unique_evaluators$is_anonymous) / nrow(unique_evaluators), 1)
+  )
+})
+
+# Value box outputs
+output$stat_papers_count <- renderText({
+  n_papers()
+})
+
+output$stat_evals_count <- renderText({
+  n_evals()
+})
+
+output$stat_avg_hours <- renderText({
+  hours_data <- eval_paper_level$hours_spent_manual_impute
+  hours_data <- hours_data[!is.na(hours_data)]
+  if (length(hours_data) > 0) {
+    paste0(round(mean(hours_data), 1), " hrs")
+  } else {
+    "N/A"
+  }
+})
+
+output$stat_anon_pct <- renderText({
+  paste0(anonymity_data()$pct_anonymous, "%")
+})
+
+# Anonymity pie chart
+output$plot_anonymity <- renderPlotly({
+  anon <- anonymity_data()
+
+  plot_data <- data.frame(
+    category = c("Anonymous", "Named"),
+    count = c(anon$anonymous, anon$named),
+    color = c("#FFC107", "#17A2B8")
+  )
+
+  plot_ly(plot_data, labels = ~category, values = ~count, type = 'pie',
+          textinfo = 'label+percent',
+          textposition = 'inside',
+          marker = list(colors = plot_data$color),
+          hoverinfo = 'label+value') |>
+    layout(
+      showlegend = TRUE,
+      legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.1),
+      margin = list(t = 20, b = 40, l = 20, r = 20)
+    )
+})
+
+# Time spent histogram
+output$plot_time_spent <- renderPlotly({
+  hours_data <- eval_paper_level |>
+    filter(!is.na(hours_spent_manual_impute)) |>
+    select(hours = hours_spent_manual_impute)
+
+  if (nrow(hours_data) == 0) {
+    return(
+      plot_ly() |>
+        add_annotations(text = "No time data available", x = 0.5, y = 0.5,
+                        xref = "paper", yref = "paper", showarrow = FALSE)
+    )
+  }
+
+  plot_ly(hours_data, x = ~hours, type = "histogram",
+          marker = list(color = "#28A745", line = list(color = "white", width = 1)),
+          hovertemplate = "Hours: %{x}<br>Count: %{y}<extra></extra>") |>
+    layout(
+      xaxis = list(title = "Hours spent", tickfont = list(size = 11)),
+      yaxis = list(title = "Number of evaluations", tickfont = list(size = 11)),
+      bargap = 0.1,
+      margin = list(t = 20, b = 50, l = 50, r = 20)
+    )
+})
+
+# Evaluations over time
+output$plot_evals_timeline <- renderPlotly({
+  # Get unique evaluation dates from ratings
+  eval_dates <- ratings |>
+    filter(!is.na(row_created_date)) |>
+    mutate(date = as.Date(row_created_date)) |>
+    distinct(research, evaluator, date) |>
+    arrange(date) |>
+    mutate(cumulative = row_number())
+
+  if (nrow(eval_dates) == 0) {
+    return(
+      plot_ly() |>
+        add_annotations(text = "No date data available", x = 0.5, y = 0.5,
+                        xref = "paper", yref = "paper", showarrow = FALSE)
+    )
+  }
+
+  plot_ly(eval_dates, x = ~date, y = ~cumulative, type = "scatter", mode = "lines",
+          line = list(color = "#007BFF", width = 2),
+          hovertemplate = "Date: %{x}<br>Total evaluations: %{y}<extra></extra>") |>
+    layout(
+      xaxis = list(title = "Date", tickfont = list(size = 11)),
+      yaxis = list(title = "Cumulative evaluations", tickfont = list(size = 11)),
+      margin = list(t = 20, b = 50, l = 60, r = 20)
+    )
 })
 
 
