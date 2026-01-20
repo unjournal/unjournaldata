@@ -90,7 +90,12 @@ jobs:
           cache-version: 2 # increment this to invalidate the renv cache
         env:
           GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
-      
+
+      - name: Install plotly (not in renv.lock)
+        run: |
+          install.packages("plotly")
+        shell: Rscript {0}
+
       - name: Publish dashboard to shinyapps.io
         env:
           RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
