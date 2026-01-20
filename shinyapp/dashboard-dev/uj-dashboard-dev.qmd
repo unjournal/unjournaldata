@@ -565,72 +565,122 @@ output$table_criteria <- renderDT({
 })
 
 
-# Interactive comparison plot (plotly)
+# Interactive comparison plot (native plotly for proper dual axes)
 output$plot_comparison <- renderPlotly({
   if (length(input$comparison_papers) == 0) {
-    plotly::ggplotly(
-      ggplot() +
-        annotate("text", x = 0.5, y = 0.5,
-                 label = "Select papers above to compare", size = 6) +
-        theme_void()
-    )
+    plotly::plot_ly() |>
+      plotly::add_annotations(
+        text = "Select papers above to compare",
+        x = 0.5, y = 0.5, xref = "paper", yref = "paper",
+        showarrow = FALSE, font = list(size = 16)
+      ) |>
+      plotly::layout(
+        xaxis = list(visible = FALSE),
+        yaxis = list(visible = FALSE)
+      )
   } else {
+    # Define criteria order (top to bottom)
+    criteria_order <- c(
+      "Overall assessment",
+      "Advancing knowledge and practice",
+      "Methods",
+      "Logic and communication",
+      "Real world relevance",
+      "Global relevance/usefulness",
+      "Claims and evidence",
+      "Open, replicable science",
+      "Deserved journal tier",
+      "Predicted journal tier"
+    )
+
     plot_data <- evals() |>
       filter(research %in% input$comparison_papers) |>
       summarize(.by = c(research, criteria),
                 rating = mean(middle_rating, na.rm = TRUE)) |>
       mutate(
         # Scale journal tier (0-5) to 0-100 for consistent plotting
-        rating = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
                         rating * 20, rating),
-        criteria = criteria_titles[criteria],
-        criteria = factor(criteria, levels = unique(criteria_titles)),
-        # Reorder: Overall at top, journal tiers at bottom
-        criteria = forcats::fct_relevel(criteria, c("Overall assessment")),
-        criteria = forcats::fct_rev(criteria),
-        criteria = forcats::fct_relevel(criteria, c("Predicted journal tier",
-                                                    "Deserved journal tier")),
-        # Group for line breaks: separate journal tiers from other criteria
-        crit_grp = criteria %in% c("Predicted journal tier", "Deserved journal tier")
+        criteria_label = criteria_titles[criteria]
       ) |>
-      filter(!is.na(criteria))
+      filter(!is.na(criteria_label)) |>
+      # Create numeric y position based on criteria order (1 = top, 10 = bottom)
+      mutate(y_pos = match(criteria_label, criteria_order))
 
-    gg <- ggplot(plot_data, aes(x = rating, y = criteria, color = research,
-                                 group = interaction(research, crit_grp),
-                                 text = research)) +
-      geom_point(size = 4) +
-      # White line to visually separate journal tier from other criteria
-      geom_hline(yintercept = 2.5, linewidth = 6, color = "white") +
-      geom_line(orientation = "y", alpha = 0.7, linewidth = 1) +
-      scale_y_discrete(breaks = criteria_titles) +
-      scale_x_continuous(
-        limits = c(0, 100),
-        position = "top",
-        breaks = seq(0, 100, 20),
-        sec.axis = sec_axis(~ . / 20, name = "Journal tier", breaks = 0:5)
-      ) +
-      labs(
-        title = "Paper comparison across criteria",
-        x = "Percentile rank",
-        y = NULL
-      ) +
-      theme(
-        panel.grid.major.y = element_line(color = "grey80"),
-        panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 11),
-        plot.title = element_text(size = 14),
-        legend.position = "top",
-        legend.direction = "vertical",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 10)
+    # Get unique papers for colors
+    papers <- unique(plot_data$research)
+    colors <- scales::hue_pal()(length(papers))
+
+    # Build plot with native plotly
+    p <- plotly::plot_ly()
+
+    for (i in seq_along(papers)) {
+      paper_data <- plot_data |>
+        filter(research == papers[i]) |>
+        arrange(y_pos)
+
+      # Add line (connecting points top to bottom)
+      p <- p |> plotly::add_trace(
+        data = paper_data,
+        x = ~rating_scaled,
+        y = ~criteria_label,
+        type = "scatter",
+        mode = "lines",
+        line = list(color = colors[i], width = 2),
+        showlegend = FALSE,
+        hoverinfo = "skip"
       )
 
-    plotly::ggplotly(gg, tooltip = "text") |>
-      plotly::layout(
-        hoverlabel = list(bgcolor = "white"),
-        legend = list(orientation = "v", y = 1.2, x = 0, xanchor = "left")
+      # Add points
+      p <- p |> plotly::add_trace(
+        data = paper_data,
+        x = ~rating_scaled,
+        y = ~criteria_label,
+        type = "scatter",
+        mode = "markers",
+        marker = list(color = colors[i], size = 10),
+        name = papers[i],
+        text = ~paste0(research, "<br>Rating: ", round(rating_scaled, 1)),
+        hoverinfo = "text"
       )
+    }
+
+    p |> plotly::layout(
+      title = list(text = "Paper comparison across criteria", x = 0.5),
+      xaxis = list(
+        title = "Percentile rank",
+        range = c(0, 100),
+        tickvals = seq(0, 100, 20),
+        side = "top",
+        showgrid = TRUE,
+        gridcolor = "lightgray"
+      ),
+      xaxis2 = list(
+        title = "Journal tier",
+        overlaying = "x",
+        side = "bottom",
+        range = c(0, 100),
+        tickvals = seq(0, 100, 20),
+        ticktext = as.character(0:5),
+        showgrid = FALSE
+      ),
+      yaxis = list(
+        title = "",
+        categoryorder = "array",
+        categoryarray = rev(criteria_order),
+        showgrid = TRUE,
+        gridcolor = "lightgray"
+      ),
+      legend = list(
+        orientation = "v",
+        x = 0,
+        y = 1.15,
+        xanchor = "left",
+        font = list(size = 10)
+      ),
+      margin = list(t = 100, l = 200),
+      hoverlabel = list(bgcolor = "white")
+    )
   }
 })
 
