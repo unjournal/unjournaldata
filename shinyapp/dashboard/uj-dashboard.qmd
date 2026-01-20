@@ -196,8 +196,6 @@ DTOutput("table_criteria")
 
 #### Column
 
-Compare selected papers against each other and median values. Grey | marks show the median across all papers; blue | marks show the median for the selected research area.
-
 ```{r}
 selectizeInput("comparison_papers", label = "Select papers to compare:",
                choices = character(0), multiple = TRUE,
@@ -217,15 +215,13 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
                ))
 ```
 
-##### {.tabset}
-
-###### Comparison Plot
-
 ```{r}
-plotlyOutput("plot_comparison", height = "600px")
+plotlyOutput("plot_comparison", height = "550px")
 ```
 
-###### Comparison Table
+#### Column {width=30%}
+
+##### Comparison Table
 
 ```{r}
 DTOutput("table_comparison")
@@ -574,16 +570,45 @@ output$table_criteria <- renderDT({
 })
 
 
-# Interactive comparison plot (plotly)
+# Interactive comparison plot with dual x-axes using native plotly
 output$plot_comparison <- renderPlotly({
   if (length(input$comparison_papers) == 0) {
-    plotly::ggplotly(
-      ggplot() +
-        annotate("text", x = 0.5, y = 0.5,
-                 label = "Select papers above to compare", size = 6) +
-        theme_void()
-    )
+    plotly::plot_ly() |>
+      plotly::add_annotations(
+        text = "Select papers above to compare",
+        x = 0.5, y = 0.5, xref = "paper", yref = "paper",
+        showarrow = FALSE, font = list(size = 16)
+      ) |>
+      plotly::layout(xaxis = list(visible = FALSE), yaxis = list(visible = FALSE))
   } else {
+    # Define criteria order (Overall at top, Predicted journal tier at bottom)
+    criteria_order <- c(
+      "Overall assessment",
+      "Advancing knowledge",
+      "Methods",
+      "Logic & communication",
+      "Real world relevance",
+      "Global relevance",
+      "Claims & evidence",
+      "Open science",
+      "Deserved journal tier",
+      "Predicted journal tier"
+    )
+
+    # Map criteria codes to short labels
+    criteria_short <- c(
+      "overall"         = "Overall assessment",
+      "adv_knowledge"   = "Advancing knowledge",
+      "methods"         = "Methods",
+      "logic_comms"     = "Logic & communication",
+      "real_world"      = "Real world relevance",
+      "gp_relevance"    = "Global relevance",
+      "claims"          = "Claims & evidence",
+      "open_sci"        = "Open science",
+      "merits_journal"  = "Deserved journal tier",
+      "journal_predict" = "Predicted journal tier"
+    )
+
     plot_data <- evals() |>
       filter(research %in% input$comparison_papers) |>
       summarize(.by = c(research, criteria),
@@ -591,83 +616,98 @@ output$plot_comparison <- renderPlotly({
       mutate(
         rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
                         rating * 20, rating),
-        criteria_label = criteria_titles[criteria],
-        criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+        criteria_label = criteria_short[criteria]
       ) |>
       filter(!is.na(criteria_label))
 
-    # Calculate median across ALL papers for reference
-    all_medians <- res_ratings |>
-      summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
-      mutate(
-        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
-                        rating * 20, rating),
-        criteria_label = criteria_titles[criteria],
-        criteria_label = factor(criteria_label, levels = rev(criteria_titles))
-      ) |>
-      filter(!is.na(criteria_label)) |>
-      summarize(.by = criteria_label, median_all = median(rating_scaled, na.rm = TRUE))
+    # Get unique papers and assign colors
+    papers <- unique(plot_data$research)
+    colors <- scales::hue_pal()(length(papers))
 
-    # Calculate median for selected research area (if not "All")
-    if (input$research_area != "All") {
-      area_medians <- res_ratings |>
-        filter(main_cause_cat_abbrev == input$research_area) |>
-        summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
-        mutate(
-          rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
-                          rating * 20, rating),
-          criteria_label = criteria_titles[criteria],
-          criteria_label = factor(criteria_label, levels = rev(criteria_titles))
-        ) |>
-        filter(!is.na(criteria_label)) |>
-        summarize(.by = criteria_label, median_area = median(rating_scaled, na.rm = TRUE))
+    # Create the plot
+    p <- plotly::plot_ly()
 
-      all_medians <- left_join(all_medians, area_medians, by = "criteria_label")
-    }
+    # Add traces for each paper
+    for (i in seq_along(papers)) {
+      paper_data <- plot_data |>
+        filter(research == papers[i]) |>
+        # Sort by criteria order for proper line connections
+        mutate(y_order = match(criteria_label, criteria_order)) |>
+        arrange(y_order)
 
-    gg <- ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research,
-                                 text = paste0(research, "<br>Rating: ", round(rating_scaled, 1)))) +
-      # Add median reference line for all papers (grey)
-      geom_point(data = all_medians, aes(x = median_all, y = criteria_label,
-                 text = paste0("All papers median: ", round(median_all, 1))),
-                 shape = "|", size = 6, color = "grey40", inherit.aes = FALSE) +
-      geom_point(size = 5) +
-      geom_line(aes(group = research), orientation = "y", alpha = 0.5, linewidth = 1) +
-      scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
-      labs(
-        title = "Paper comparison across criteria",
-        subtitle = "Grey | = median (all papers)",
-        x = "Rating (scaled to 0-100)",
-        y = NULL,
-        color = "Paper"
-      ) +
-      theme(
-        panel.grid.major.y = element_line(color = "grey80"),
-        panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 11),
-        plot.title = element_text(size = 15),
-        legend.position = "bottom",
-        legend.direction = "vertical",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 10)
-      ) +
-      guides(color = guide_legend(ncol = 1))
-
-    # Add area median if research area selected
-    if (input$research_area != "All" && "median_area" %in% names(all_medians)) {
-      gg <- gg +
-        geom_point(data = all_medians, aes(x = median_area, y = criteria_label,
-                   text = paste0(input$research_area, " median: ", round(median_area, 1))),
-                   shape = "|", size = 6, color = "steelblue", inherit.aes = FALSE) +
-        labs(subtitle = paste0("Grey | = all papers median, Blue | = ", input$research_area, " median"))
-    }
-
-    plotly::ggplotly(gg, tooltip = "text") |>
-      plotly::layout(
-        hoverlabel = list(bgcolor = "white"),
-        legend = list(orientation = "v", y = -0.2)
+      # Add connecting line
+      p <- p |> plotly::add_trace(
+        data = paper_data,
+        x = ~rating_scaled,
+        y = ~criteria_label,
+        type = "scatter",
+        mode = "lines",
+        line = list(color = colors[i], width = 2),
+        showlegend = FALSE,
+        hoverinfo = "skip"
       )
+
+      # Add points
+      p <- p |> plotly::add_trace(
+        data = paper_data,
+        x = ~rating_scaled,
+        y = ~criteria_label,
+        type = "scatter",
+        mode = "markers",
+        marker = list(color = colors[i], size = 10),
+        name = substr(papers[i], 1, 40),
+        text = ~paste0(research, "<br>Rating: ", round(rating_scaled, 1)),
+        hoverinfo = "text"
+      )
+    }
+
+    # Configure layout with dual x-axes
+    p |> plotly::layout(
+      xaxis = list(
+        title = list(text = "Percentile rank", font = list(size = 12)),
+        range = c(0, 105),
+        tickvals = seq(0, 100, 20),
+        tickfont = list(size = 11),
+        side = "bottom",
+        showgrid = TRUE,
+        gridcolor = "rgba(200,200,200,0.3)"
+      ),
+      xaxis2 = list(
+        title = list(text = "Journal tier", font = list(size = 12)),
+        overlaying = "x",
+        side = "top",
+        range = c(0, 105),
+        tickvals = c(20, 40, 60, 80, 100),
+        ticktext = c("1", "2", "3", "4", "5"),
+        tickfont = list(size = 11),
+        showgrid = FALSE,
+        zeroline = FALSE
+      ),
+      yaxis = list(
+        title = "",
+        categoryorder = "array",
+        categoryarray = rev(criteria_order),
+        tickfont = list(size = 11),
+        showgrid = TRUE,
+        gridcolor = "rgba(200,200,200,0.3)"
+      ),
+      legend = list(
+        orientation = "h",
+        x = 0.5,
+        y = 1.15,
+        xanchor = "center",
+        font = list(size = 10)
+      ),
+      margin = list(t = 80, l = 150, b = 50, r = 20),
+      hoverlabel = list(bgcolor = "white", font = list(size = 11))
+    ) |>
+    # Add invisible trace to force xaxis2 to show
+    plotly::add_trace(
+      x = c(0, 100), y = c(criteria_order[1], criteria_order[1]),
+      type = "scatter", mode = "markers",
+      marker = list(opacity = 0), xaxis = "x2",
+      showlegend = FALSE, hoverinfo = "skip"
+    )
   }
 })
 
