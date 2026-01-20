@@ -115,3 +115,25 @@ The production dashboard lost interactive hover tooltips when ggiraph was remove
 
 ### Commits
 - `b4978cc` - Add development dashboard with plotly interactive features
+
+---
+
+## Plotly Integration into Production Dashboard (January 19, 2026)
+
+After testing in the dev dashboard, plotly interactive features have been integrated into the main production dashboard.
+
+### Changes Made
+- **Overall Ratings plot**: Now uses plotly - hover over points to see paper names
+- **Individual Criteria plot**: Now uses plotly - hover to see paper names
+- **Paper Comparison plot**: Now uses plotly with:
+  - Hover tooltips showing paper name and rating
+  - **Median reference lines**: Grey | marks show median across all papers; Blue | marks show median for the selected research area (when not "All")
+
+### Technical Details
+- Replaced `renderPlot` with `renderPlotly` for all three interactive plots
+- Uses `ggplotly(gg, tooltip = "text")` pattern to preserve ggplot2 aesthetics
+- For Individual Criteria, uses `plotly::subplot()` to combine the two stacked plots
+- For Paper Comparison, calculates medians from `res_ratings` data
+
+### Dependencies
+- Added `library(plotly)` to setup chunk (already installed in GitHub Actions workflow)

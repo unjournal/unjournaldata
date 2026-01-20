@@ -188,6 +188,8 @@ DTOutput("table_criteria")
 
 #### Column
 
+Compare selected papers against each other and median values. Grey | marks show the median across all papers; blue | marks show the median for the selected research area.
+
 ```{r}
 selectizeInput("comparison_papers", label = "Select papers to compare:",
                choices = character(0), multiple = TRUE,
@@ -587,13 +589,47 @@ output$plot_comparison <- renderPlotly({
       ) |>
       filter(!is.na(criteria_label))
 
+    # Calculate median across ALL papers for reference
+    all_medians <- res_ratings |>
+      summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
+      mutate(
+        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+                        rating * 20, rating),
+        criteria_label = criteria_titles[criteria],
+        criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+      ) |>
+      filter(!is.na(criteria_label)) |>
+      summarize(.by = criteria_label, median_all = median(rating_scaled, na.rm = TRUE))
+
+    # Calculate median for selected research area (if not "All")
+    if (input$research_area != "All") {
+      area_medians <- res_ratings |>
+        filter(main_cause_cat_abbrev == input$research_area) |>
+        summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
+        mutate(
+          rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+                          rating * 20, rating),
+          criteria_label = criteria_titles[criteria],
+          criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+        ) |>
+        filter(!is.na(criteria_label)) |>
+        summarize(.by = criteria_label, median_area = median(rating_scaled, na.rm = TRUE))
+
+      all_medians <- left_join(all_medians, area_medians, by = "criteria_label")
+    }
+
     gg <- ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research,
                                  text = paste0(research, "<br>Rating: ", round(rating_scaled, 1)))) +
+      # Add median reference line for all papers (dashed grey)
+      geom_point(data = all_medians, aes(x = median_all, y = criteria_label,
+                 text = paste0("All papers median: ", round(median_all, 1))),
+                 shape = "|", size = 6, color = "grey40", inherit.aes = FALSE) +
       geom_point(size = 5) +
       geom_line(aes(group = research), orientation = "y", alpha = 0.5, linewidth = 1) +
       scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
       labs(
         title = "Paper comparison across criteria",
+        subtitle = "Grey | = median (all papers)",
         x = "Rating (scaled to 0-100)",
         y = NULL,
         color = "Paper"
@@ -610,6 +646,15 @@ output$plot_comparison <- renderPlotly({
         legend.text = element_text(size = 10)
       ) +
       guides(color = guide_legend(ncol = 1))
+
+    # Add area median if research area selected
+    if (input$research_area != "All" && "median_area" %in% names(all_medians)) {
+      gg <- gg +
+        geom_point(data = all_medians, aes(x = median_area, y = criteria_label,
+                   text = paste0(input$research_area, " median: ", round(median_area, 1))),
+                   shape = "|", size = 6, color = "steelblue", inherit.aes = FALSE) +
+        labs(subtitle = paste0("Grey | = all papers median, Blue | = ", input$research_area, " median"))
+    }
 
     plotly::ggplotly(gg, tooltip = "text") |>
       plotly::layout(

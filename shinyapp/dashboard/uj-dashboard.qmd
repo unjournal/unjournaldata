@@ -21,6 +21,7 @@ library(forcats)
 library(ggplot2)
 library(here)
 library(lubridate)
+library(plotly)
 library(shiny)
 library(stringr)
 library(tidyr)
@@ -155,10 +156,10 @@ plotOutput("barplot_proposals")
 
 ##### Plot
 
-Overall assessments for each paper by research area. Points show individual paper ratings; crosses show area averages.
+Overall assessments for each paper by research area. **Hover over points to see paper names.** Crosses show area averages.
 
 ```{r}
-plotOutput("plot_ratings_static")
+plotlyOutput("plot_ratings", height = "500px")
 ```
 
 ##### Data Table
@@ -176,10 +177,10 @@ DTOutput("table_ratings")
 
 ##### Plot
 
-Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators). Crosses show per-question averages.
+Detailed evaluations of [different aspects of research quality](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/evaluation/guidelines-for-evaluators). **Hover over points to see paper names.** Crosses show per-question averages.
 
 ```{r}
-plotOutput("plot_criteria_static", height = "600px")
+plotlyOutput("plot_criteria", height = "600px")
 ```
 
 ##### Data Table
@@ -194,6 +195,8 @@ DTOutput("table_criteria")
 ### Paper comparison
 
 #### Column
+
+Compare selected papers against each other and median values. Grey | marks show the median across all papers; blue | marks show the median for the selected research area.
 
 ```{r}
 selectizeInput("comparison_papers", label = "Select papers to compare:",
@@ -219,7 +222,7 @@ selectizeInput("comparison_papers", label = "Select papers to compare:",
 ###### Comparison Plot
 
 ```{r}
-plotOutput("plot_comparison_static", height = "600px")
+plotlyOutput("plot_comparison", height = "600px")
 ```
 
 ###### Comparison Table
@@ -385,8 +388,8 @@ output$barplot_proposals <- renderPlot({
 })
 
 
-# Static plot for Overall Ratings
-output$plot_ratings_static <- renderPlot({
+# Interactive plot for Overall Ratings (plotly)
+output$plot_ratings <- renderPlotly({
   plot_data <- evals() |>
     filter(criteria == "overall") |>
     filter(!is.na(main_cause_cat_abbrev)) |>
@@ -397,12 +400,13 @@ output$plot_ratings_static <- renderPlot({
     )
 
   # Handle empty data case
-
   if (nrow(plot_data) == 0) {
     return(
-      ggplot() +
-        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
-        theme_void()
+      plotly::ggplotly(
+        ggplot() +
+          annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+          theme_void()
+      )
     )
   }
 
@@ -410,9 +414,9 @@ output$plot_ratings_static <- renderPlot({
   means <- plot_data |>
     summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .by = area)
 
-  ggplot(plot_data, aes(y = area, x = middle_rating)) +
+  gg <- ggplot(plot_data, aes(y = area, x = middle_rating, text = research)) +
     geom_jitter(aes(color = area), height = 0.2, width = 0, alpha = 0.7, size = 3) +
-    geom_point(data = means, aes(x = mean_rating, y = area),
+    geom_point(data = means, aes(x = mean_rating, y = area, text = "Area average"),
                shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
@@ -423,10 +427,13 @@ output$plot_ratings_static <- renderPlot({
     ) +
     labs(
       title = "Overall ratings of papers by research area",
-      subtitle = "Points = individual papers, X = area average",
+      subtitle = "Hover over points to see paper names. X = area average",
       x = "Rating (0-100 percentile)",
       y = NULL
     )
+
+  plotly::ggplotly(gg, tooltip = "text") |>
+    plotly::layout(hoverlabel = list(bgcolor = "white"))
 })
 
 # Data table for Overall Ratings
@@ -464,16 +471,19 @@ criteria_plot_data <- reactive({
     filter(!is.na(criteria_label))
 })
 
-output$plot_criteria_static <- renderPlot({
+# Interactive plot for Individual Criteria (plotly)
+output$plot_criteria <- renderPlotly({
   plot_data <- criteria_plot_data() |>
     filter(scale_0_to_5 == FALSE)
 
   # Handle empty data case
   if (nrow(plot_data) == 0) {
     return(
-      ggplot() +
-        annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
-        theme_void()
+      plotly::ggplotly(
+        ggplot() +
+          annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
+          theme_void()
+      )
     )
   }
 
@@ -481,12 +491,14 @@ output$plot_criteria_static <- renderPlot({
     group_by(criteria_label) |>
     summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
 
-  ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
+  ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label,
+                                 text = research)) +
     geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
-    geom_point(data = means, aes(x = mean_rating, y = criteria_label),
+    geom_point(data = means, aes(x = mean_rating, y = criteria_label, text = "Criterion average"),
                shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
     scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
     theme(
+      legend.position = "none",
       panel.grid.minor.x = element_blank(),
       axis.text.y = element_text(size = 12),
       axis.text.x = element_text(size = 11),
@@ -494,7 +506,7 @@ output$plot_criteria_static <- renderPlot({
     ) +
     labs(
       title = "Ratings by evaluation criteria (0-100 scale)",
-      subtitle = "Points = individual ratings, X = criterion average",
+      subtitle = "Hover to see paper names. X = criterion average",
       x = NULL,
       y = NULL
     )
@@ -504,32 +516,38 @@ output$plot_criteria_static <- renderPlot({
 
   # Handle empty journal tier data
   if (nrow(plot_data2) == 0) {
-    ggp2 <- ggplot() +
-      annotate("text", x = 2.5, y = 0.5, label = "No journal tier data", size = 4) +
-      theme_void()
-  } else {
-    means2 <- plot_data2 |>
-      group_by(criteria_label) |>
-      summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
-
-    ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label)) +
-      geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
-      geom_point(data = means2, aes(x = mean_rating, y = criteria_label),
-                 shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
-      scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
-      theme(
-        panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 11)
-      ) +
-      labs(
-        title = "Journal tier ratings (0-5 scale)",
-        x = NULL,
-        y = NULL
-      )
+    p1 <- plotly::ggplotly(ggp1, tooltip = "text")
+    return(p1 |> plotly::layout(hoverlabel = list(bgcolor = "white")))
   }
 
-  cowplot::plot_grid(ggp1, ggp2, nrow = 2, rel_heights = c(6, 2.5), align = "v")
+  means2 <- plot_data2 |>
+    group_by(criteria_label) |>
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+
+  ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label,
+                                  text = research)) +
+    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
+    geom_point(data = means2, aes(x = mean_rating, y = criteria_label, text = "Criterion average"),
+               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
+    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
+    theme(
+      legend.position = "none",
+      panel.grid.minor.x = element_blank(),
+      axis.text.y = element_text(size = 12),
+      axis.text.x = element_text(size = 11)
+    ) +
+    labs(
+      title = "Journal tier ratings (0-5 scale)",
+      x = NULL,
+      y = NULL
+    )
+
+  # Create plotly versions and combine with subplot
+  p1 <- plotly::ggplotly(ggp1, tooltip = "text")
+  p2 <- plotly::ggplotly(ggp2, tooltip = "text")
+
+  plotly::subplot(p1, p2, nrows = 2, heights = c(0.7, 0.3), shareX = FALSE) |>
+    plotly::layout(hoverlabel = list(bgcolor = "white"))
 })
 
 # Data table for criteria averages
@@ -556,13 +574,15 @@ output$table_criteria <- renderDT({
 })
 
 
-# Static comparison plot
-output$plot_comparison_static <- renderPlot({
+# Interactive comparison plot (plotly)
+output$plot_comparison <- renderPlotly({
   if (length(input$comparison_papers) == 0) {
-    ggplot() +
-      annotate("text", x = 0.5, y = 0.5,
-               label = "Select papers above to compare", size = 6) +
-      theme_void()
+    plotly::ggplotly(
+      ggplot() +
+        annotate("text", x = 0.5, y = 0.5,
+                 label = "Select papers above to compare", size = 6) +
+        theme_void()
+    )
   } else {
     plot_data <- evals() |>
       filter(research %in% input$comparison_papers) |>
@@ -576,29 +596,78 @@ output$plot_comparison_static <- renderPlot({
       ) |>
       filter(!is.na(criteria_label))
 
-    ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research)) +
+    # Calculate median across ALL papers for reference
+    all_medians <- res_ratings |>
+      summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
+      mutate(
+        rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+                        rating * 20, rating),
+        criteria_label = criteria_titles[criteria],
+        criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+      ) |>
+      filter(!is.na(criteria_label)) |>
+      summarize(.by = criteria_label, median_all = median(rating_scaled, na.rm = TRUE))
+
+    # Calculate median for selected research area (if not "All")
+    if (input$research_area != "All") {
+      area_medians <- res_ratings |>
+        filter(main_cause_cat_abbrev == input$research_area) |>
+        summarize(.by = criteria, rating = mean(middle_rating, na.rm = TRUE)) |>
+        mutate(
+          rating_scaled = ifelse(criteria %in% c("merits_journal", "journal_predict"),
+                          rating * 20, rating),
+          criteria_label = criteria_titles[criteria],
+          criteria_label = factor(criteria_label, levels = rev(criteria_titles))
+        ) |>
+        filter(!is.na(criteria_label)) |>
+        summarize(.by = criteria_label, median_area = median(rating_scaled, na.rm = TRUE))
+
+      all_medians <- left_join(all_medians, area_medians, by = "criteria_label")
+    }
+
+    gg <- ggplot(plot_data, aes(x = rating_scaled, y = criteria_label, color = research,
+                                 text = paste0(research, "<br>Rating: ", round(rating_scaled, 1)))) +
+      # Add median reference line for all papers (grey)
+      geom_point(data = all_medians, aes(x = median_all, y = criteria_label,
+                 text = paste0("All papers median: ", round(median_all, 1))),
+                 shape = "|", size = 6, color = "grey40", inherit.aes = FALSE) +
       geom_point(size = 5) +
       geom_line(aes(group = research), orientation = "y", alpha = 0.5, linewidth = 1) +
       scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
       labs(
         title = "Paper comparison across criteria",
+        subtitle = "Grey | = median (all papers)",
         x = "Rating (scaled to 0-100)",
         y = NULL,
-        color = NULL
+        color = "Paper"
       ) +
       theme(
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.minor.x = element_blank(),
-        axis.text.y = element_text(size = 13),
+        axis.text.y = element_text(size = 12),
         axis.text.x = element_text(size = 11),
         plot.title = element_text(size = 15),
-        legend.position = "top",
+        legend.position = "bottom",
         legend.direction = "vertical",
-        legend.justification = "left",
-        legend.text = element_text(size = 9),
-        legend.key.height = unit(0.8, "lines")
+        legend.title = element_blank(),
+        legend.text = element_text(size = 10)
       ) +
       guides(color = guide_legend(ncol = 1))
+
+    # Add area median if research area selected
+    if (input$research_area != "All" && "median_area" %in% names(all_medians)) {
+      gg <- gg +
+        geom_point(data = all_medians, aes(x = median_area, y = criteria_label,
+                   text = paste0(input$research_area, " median: ", round(median_area, 1))),
+                   shape = "|", size = 6, color = "steelblue", inherit.aes = FALSE) +
+        labs(subtitle = paste0("Grey | = all papers median, Blue | = ", input$research_area, " median"))
+    }
+
+    plotly::ggplotly(gg, tooltip = "text") |>
+      plotly::layout(
+        hoverlabel = list(bgcolor = "white"),
+        legend = list(orientation = "v", y = -0.2)
+      )
   }
 })
 
