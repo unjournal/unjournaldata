@@ -22,6 +22,7 @@ library(ggplot2)
 library(here)
 library(lubridate)
 library(plotly)  # For interactive hover tooltips
+conflicts_prefer(plotly::layout)  # Fix conflict with graphics::layout
 library(shiny)
 library(stringr)
 library(tidyr)
@@ -95,12 +96,58 @@ names(research_areas) <- research_areas
 <style>
 .selectize-input {
   white-space: nowrap;
+  padding-right: 40px !important;  /* More space for dropdown arrow */
+  min-width: 100px;
+}
+.selectize-input .item {
+  max-width: calc(100% - 30px) !important;  /* Prevent text from overlapping arrow */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 5px;
+}
+/* Fix the dropdown caret position */
+.selectize-control.single .selectize-input::after {
+  right: 12px !important;  /* Move arrow away from text */
 }
 .selectize-dropdown {
   width: 450px !important;
+  z-index: 9999 !important;  /* Ensure dropdown appears above chart */
 }
 #period + .shiny-input-select .selectize-dropdown {
   width: 150px !important;
+}
+/* Force ALL selectize dropdowns to be tall */
+.selectize-dropdown {
+  z-index: 99999 !important;
+}
+.selectize-dropdown-content {
+  max-height: 350px !important;
+  overflow-y: auto !important;
+}
+/* Ensure nothing clips the dropdown */
+.card, .card-body, .bslib-card, .tab-content, .tab-pane, .bslib-grid,
+.bslib-grid-item, .html-fill-container, .html-fill-item {
+  overflow: visible !important;
+}
+/* Style dropdown items */
+.selectize-dropdown .option {
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #f0f0f0;
+}
+.selectize-dropdown .option:hover {
+  background-color: #e8f4fc;
+}
+/* Compact the Graph/Table radio buttons */
+#comparison_view .radio {
+  margin-bottom: 5px !important;
+  margin-top: 0 !important;
+}
+#comparison_view label {
+  padding-left: 20px;
+}
+/* Make comparison table more compact */
+.dataTables_wrapper {
+  font-size: 0.85em;
 }
 </style>
 
@@ -122,27 +169,36 @@ textOutput("papers_evaluated")
 ## {.tabset}
 
 
-### Research areas
+### Process overview
 
-#### Column
+#### Column {width=33%}
+
+**Research areas**
 
 [Research areas](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/what-specific-areas-do-we-cover) of evaluated papers.
 
 ```{r}
-plotOutput("barplot_areas")
+plotOutput("barplot_areas", height = "400px")
 ```
 
+#### Column {width=34%}
 
-### Proposed papers
+**Pipeline status**
 
-#### Column
-
-Current status of all papers proposed for evaluation. We
-don't currently record when papers were proposed, so this plot ignores the
-time period chosen above.
+Current status of all papers proposed for evaluation.
 
 ```{r}
-plotOutput("barplot_proposals")
+plotOutput("barplot_proposals", height = "400px")
+```
+
+#### Column {width=33%}
+
+**Sources**
+
+Papers can be chosen for evaluation by Unjournal staff, submitted by authors or by a third party.
+
+```{r}
+plotOutput("barplot_sources", height = "400px")
 ```
 
 
@@ -190,129 +246,101 @@ DTOutput("table_criteria")
 
 ### Paper comparison
 
-#### Column
+#### Column {width=75%}
+
+##### Row {height=15%}
 
 ```{r}
-selectizeInput("comparison_papers", label = "Select papers to compare:",
-               choices = character(0), multiple = TRUE,
+selectizeInput("comparison_papers", label = "Select papers to compare (click to see full list):",
+               choices = character(0), multiple = TRUE, width = "100%",
                options = list(
+                 maxOptions = 100,
+                 dropdownParent = "body",
                  render = I("
 {
-    // display shortened names of selected papers
     item: function(item, escape) {
       const fullPaperName = item.value;
-      const shortenedName = fullPaperName.length > 30
-        ? fullPaperName.substring(0, 30) + '...'
+      const shortenedName = fullPaperName.length > 40
+        ? fullPaperName.substring(0, 40) + '...'
         : fullPaperName;
       return '<div class=\"item\">' + escape(shortenedName) + '</div>';
     }
 }
-")
+"),
+                 onInitialize = I("function() { this.$dropdown_content.css('max-height', '350px'); }")
                ))
 ```
 
-```{r}
-plotlyOutput("plot_comparison", height = "550px")
-```
-
-#### Column {width=30%}
-
-##### Comparison Table
+##### Row {height=85%}
 
 ```{r}
-DTOutput("table_comparison")
+uiOutput("comparison_output")
 ```
 
+#### Column {width=25%}
 
-### Sources
-
-#### Column
-
-Papers can be chosen for evaluation by Unjournal staff,
-submitted by authors or by a third party.
-Many come from our [internal project to evaluate NBER papers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/policies-projects-evaluation-workflow/considering-projects/direct-evaluation-track#the-case-for-this-direct-evaluation). Papers awaiting evaluation or selection are not included.
+**View:**
 
 ```{r}
-plotOutput("barplot_sources")
+radioButtons("comparison_view", NULL,
+             choices = c("Graph" = "graph", "Table" = "table"),
+             selected = "graph")
 ```
+
+**Instructions:**
+
+Click the dropdown above to select papers for comparison. The dropdown shows all evaluated papers - you can type to search.
 
 
 ### Statistics
 
 #### Column
 
-##### Row {height=25%}
+##### Row {height=18%}
 
 ```{r}
-#| content: valuebox
-#| title: "Papers Evaluated"
-list(
-  icon = "journal-text",
-  color = "primary",
-  value = textOutput("stat_papers_count", inline = TRUE)
-)
+uiOutput("stat_summary_cards")
 ```
+
+##### Row {height=40%}
+
+###### Column {width=50%}
+
+::: {style="margin-top: 8px;"}
+**Research Pipeline** - Papers by status
+:::
 
 ```{r}
-#| content: valuebox
-#| title: "Total Evaluations"
-list(
-  icon = "clipboard-check",
-  color = "info",
-  value = textOutput("stat_evals_count", inline = TRUE)
-)
+plotlyOutput("plot_pipeline_donut", height = "280px")
 ```
+
+###### Column {width=50%}
+
+::: {style="margin-top: 8px;"}
+**Time Spent on Evaluations** (self-reported)
+:::
 
 ```{r}
-#| content: valuebox
-#| title: "Avg Hours/Evaluation"
-list(
-  icon = "clock",
-  color = "success",
-  value = textOutput("stat_avg_hours", inline = TRUE)
-)
+uiOutput("hours_stats_summary")
+plotlyOutput("plot_time_spent", height = "240px")
 ```
 
-```{r}
-#| content: valuebox
-#| title: "% Anonymous Evaluators"
-list(
-  icon = "person-fill-lock",
-  color = "warning",
-  value = textOutput("stat_anon_pct", inline = TRUE)
-)
-```
+##### Row {height=42%}
 
-##### Row
-
-###### Column
-
-**Evaluator Anonymity**
-
-Percentage of evaluators who chose to remain anonymous vs. those who are publicly named.
-
-```{r}
-plotlyOutput("plot_anonymity", height = "280px")
-```
-
-###### Column
-
-**Time Spent on Evaluations**
-
-Distribution of hours evaluators reported spending on each evaluation (self-reported data, n=33).
-
-```{r}
-plotlyOutput("plot_time_spent", height = "280px")
-```
-
-##### Row
+###### Column {width=50%}
 
 **Evaluations Over Time**
 
-Cumulative number of evaluations published by date.
+```{r}
+plotlyOutput("plot_evals_timeline", height = "280px")
+```
+
+###### Column {width=50%}
+
+**Evaluation Streams** (academic uses full criteria)
 
 ```{r}
-plotlyOutput("plot_evals_timeline", height = "250px")
+plotlyOutput("plot_eval_streams", height = "280px")
 ```
 
 
@@ -459,52 +487,100 @@ output$barplot_proposals <- renderPlot({
 })
 
 
-# Interactive plot for Overall Ratings (plotly)
+# Interactive plot for Overall Ratings (native plotly to avoid ggplotly conversion issues)
 output$plot_ratings <- renderPlotly({
   plot_data <- evals() |>
     filter(criteria == "overall") |>
     filter(!is.na(main_cause_cat_abbrev)) |>
     mutate(
-      area = stringr::str_to_title(main_cause_cat_abbrev),
-      area = forcats::fct_infreq(area),
-      area = forcats::fct_rev(area)
+      area = stringr::str_to_title(main_cause_cat_abbrev)
     )
 
   # Handle empty data case
   if (nrow(plot_data) == 0) {
     return(
-      plotly::ggplotly(
-        ggplot() +
-          annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
-          theme_void()
-      )
+      plotly::plot_ly() |>
+        plotly::add_annotations(
+          text = "No data available",
+          x = 0.5, y = 0.5, xref = "paper", yref = "paper",
+          showarrow = FALSE, font = list(size = 16)
+        ) |>
+        plotly::layout(xaxis = list(visible = FALSE), yaxis = list(visible = FALSE))
     )
   }
 
-  # Calculate means for crosses
-  means <- plot_data |>
-    summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .by = area)
+  # Get area order by frequency
+  area_counts <- plot_data |> count(area, sort = TRUE)
+  area_order <- rev(area_counts$area)
 
-  gg <- ggplot(plot_data, aes(y = area, x = middle_rating, text = research)) +
-    geom_jitter(aes(color = area), height = 0.2, width = 0, alpha = 0.7, size = 3) +
-    geom_point(data = means, aes(x = mean_rating, y = area, text = "Area average"),
-               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
-    scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-    theme(
-      legend.position = "none",
-      panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 12),
-      plot.title = element_text(size = 14)
-    ) +
-    labs(
-      title = "Overall ratings of papers by research area",
-      subtitle = "Hover over points to see paper names. X = area average",
-      x = "Rating (0-100 percentile)",
-      y = NULL
+  # Calculate means for each area
+  means <- plot_data |>
+    group_by(area) |>
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .groups = "drop")
+
+  # Add jitter to y-coordinates for visual spread
+  set.seed(42)
+  plot_data <- plot_data |>
+    mutate(
+      y_jitter = as.numeric(factor(area, levels = area_order)) + runif(n(), -0.2, 0.2)
     )
 
-  plotly::ggplotly(gg, tooltip = "text") |>
-    plotly::layout(hoverlabel = list(bgcolor = "white"))
+  # Assign colors by area
+  n_areas <- length(area_order)
+  colors <- scales::hue_pal()(n_areas)
+  names(colors) <- area_order
+
+  # Create the plot
+  p <- plotly::plot_ly()
+
+  # Add points for each area
+  for (i in seq_along(area_order)) {
+    area_data <- plot_data |> filter(area == area_order[i])
+    p <- p |> plotly::add_trace(
+      data = area_data,
+      x = ~middle_rating,
+      y = ~y_jitter,
+      type = "scatter",
+      mode = "markers",
+      marker = list(color = colors[area_order[i]], size = 10, opacity = 0.7),
+      text = ~research,
+      hoverinfo = "text",
+      showlegend = FALSE
+    )
+  }
+
+  # Add mean markers (X shapes)
+  means <- means |> mutate(y_pos = as.numeric(factor(area, levels = area_order)))
+  p <- p |> plotly::add_trace(
+    data = means,
+    x = ~mean_rating,
+    y = ~y_pos,
+    type = "scatter",
+    mode = "markers",
+    marker = list(symbol = "x", size = 12, color = "black", line = list(width = 2)),
+    text = ~paste0(area, " average: ", round(mean_rating, 1)),
+    hoverinfo = "text",
+    showlegend = FALSE
+  )
+
+  # Configure layout
+  p |> plotly::layout(
+    title = list(text = "Overall ratings of papers by research area", font = list(size = 14)),
+    xaxis = list(
+      title = "Rating (0-100 percentile)",
+      range = c(0, 100),
+      tickvals = seq(0, 100, 20),
+      tickfont = list(size = 11)
+    ),
+    yaxis = list(
+      title = "",
+      tickvals = seq_along(area_order),
+      ticktext = area_order,
+      tickfont = list(size = 12)
+    ),
+    hoverlabel = list(bgcolor = "white"),
+    margin = list(l = 150, t = 50)
+  )
 })
 
 # Data table for Overall Ratings
@@ -542,8 +618,7 @@ criteria_plot_data <- reactive({
     filter(!is.na(criteria_label))
 })
 
-# Interactive plot for Individual Criteria (plotly)
-# Note: Using subplot to combine the two criteria plots
+# Interactive plot for Individual Criteria (native plotly to avoid ggplotly conversion issues)
 output$plot_criteria <- renderPlotly({
   plot_data <- criteria_plot_data() |>
     filter(scale_0_to_5 == FALSE)
@@ -551,75 +626,193 @@ output$plot_criteria <- renderPlotly({
   # Handle empty data case
   if (nrow(plot_data) == 0) {
     return(
-      plotly::ggplotly(
-        ggplot() +
-          annotate("text", x = 0.5, y = 0.5, label = "No data available", size = 6) +
-          theme_void()
-      )
+      plotly::plot_ly() |>
+        plotly::add_annotations(
+          text = "No data available",
+          x = 0.5, y = 0.5, xref = "paper", yref = "paper",
+          showarrow = FALSE, font = list(size = 16)
+        ) |>
+        plotly::layout(xaxis = list(visible = FALSE), yaxis = list(visible = FALSE))
     )
   }
 
+  # Get criteria order
+  criteria_order <- c(
+    "Overall assessment",
+    "Advancing knowledge and practice",
+    "Methods",
+    "Logic and communication",
+    "Real world relevance",
+    "Global relevance/usefulness",
+    "Claims and evidence",
+    "Open, replicable science"
+  )
+  criteria_order <- rev(criteria_order)  # Reverse for bottom-to-top display
+
+  # Calculate means
   means <- plot_data |>
     group_by(criteria_label) |>
-    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .groups = "drop")
 
-  ggp1 <- ggplot(plot_data, aes(y = criteria_label, x = middle_rating, color = criteria_label,
-                                 text = research)) +
-    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
-    geom_point(data = means, aes(x = mean_rating, y = criteria_label, text = "Criterion average"),
-               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
-    scale_x_continuous(breaks = seq(0, 100, 20), limits = c(0, 100)) +
-    theme(
-      legend.position = "none",
-      panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 12),
-      axis.text.x = element_text(size = 11),
-      plot.title = element_text(size = 15)
-    ) +
-    labs(
-      title = "Ratings by evaluation criteria (0-100 scale)",
-      subtitle = "Hover to see paper names. X = criterion average",
-      x = NULL,
-      y = NULL
+  # Add jitter to y-coordinates
+  set.seed(42)
+  plot_data <- plot_data |>
+    mutate(
+      y_jitter = as.numeric(factor(criteria_label, levels = criteria_order)) + runif(n(), -0.2, 0.2)
     )
 
+  # Assign colors by criteria
+  n_criteria <- length(criteria_order)
+  colors <- scales::hue_pal()(n_criteria)
+  names(colors) <- criteria_order
+
+  # Create the plot for 0-100 scale criteria
+  p1 <- plotly::plot_ly()
+
+  for (i in seq_along(criteria_order)) {
+    crit_data <- plot_data |> filter(criteria_label == criteria_order[i])
+    if (nrow(crit_data) > 0) {
+      p1 <- p1 |> plotly::add_trace(
+        data = crit_data,
+        x = ~middle_rating,
+        y = ~y_jitter,
+        type = "scatter",
+        mode = "markers",
+        marker = list(color = colors[criteria_order[i]], size = 8, opacity = 0.6),
+        text = ~research,
+        hoverinfo = "text",
+        showlegend = FALSE
+      )
+    }
+  }
+
+  # Add mean markers
+  means <- means |>
+    filter(criteria_label %in% criteria_order) |>
+    mutate(y_pos = as.numeric(factor(criteria_label, levels = criteria_order)))
+
+  if (nrow(means) > 0) {
+    p1 <- p1 |> plotly::add_trace(
+      data = means,
+      x = ~mean_rating,
+      y = ~y_pos,
+      type = "scatter",
+      mode = "markers",
+      marker = list(symbol = "x", size = 10, color = "black", line = list(width = 2)),
+      text = ~paste0(criteria_label, " avg: ", round(mean_rating, 1)),
+      hoverinfo = "text",
+      showlegend = FALSE
+    )
+  }
+
+  # Configure layout for p1 (annotations added in final subplot layout)
+  p1 <- p1 |> plotly::layout(
+    xaxis = list(
+      title = "",
+      range = c(0, 100),
+      tickvals = seq(0, 100, 20),
+      tickfont = list(size = 12)
+    )
+  )
+
+  # Now handle journal tier data (0-5 scale)
   plot_data2 <- criteria_plot_data() |>
     filter(scale_0_to_5 == TRUE)
 
-  # Handle empty journal tier data
   if (nrow(plot_data2) == 0) {
-    p1 <- plotly::ggplotly(ggp1, tooltip = "text")
     return(p1 |> plotly::layout(hoverlabel = list(bgcolor = "white")))
   }
 
+  journal_criteria <- c("Predicted journal tier", "Deserved journal tier")
+  journal_criteria <- rev(journal_criteria)
+
   means2 <- plot_data2 |>
     group_by(criteria_label) |>
-    summarize(mean_rating = mean(middle_rating, na.rm = TRUE))
+    summarize(mean_rating = mean(middle_rating, na.rm = TRUE), .groups = "drop")
 
-  ggp2 <- ggplot(plot_data2, aes(y = criteria_label, x = middle_rating, color = criteria_label,
-                                  text = research)) +
-    geom_jitter(height = 0.2, width = 0, alpha = 0.6, size = 2.5) +
-    geom_point(data = means2, aes(x = mean_rating, y = criteria_label, text = "Criterion average"),
-               shape = 4, size = 4, stroke = 2, color = "black", inherit.aes = FALSE) +
-    scale_x_continuous(breaks = seq(0, 5), limits = c(0, 5)) +
-    theme(
-      legend.position = "none",
-      panel.grid.minor.x = element_blank(),
-      axis.text.y = element_text(size = 12),
-      axis.text.x = element_text(size = 11)
-    ) +
-    labs(
-      title = "Journal tier ratings (0-5 scale)",
-      x = NULL,
-      y = NULL
+  set.seed(43)
+  plot_data2 <- plot_data2 |>
+    mutate(
+      y_jitter = as.numeric(factor(criteria_label, levels = journal_criteria)) + runif(n(), -0.2, 0.2)
     )
 
-  # Create plotly versions and combine with subplot
-  p1 <- plotly::ggplotly(ggp1, tooltip = "text")
-  p2 <- plotly::ggplotly(ggp2, tooltip = "text")
+  journal_colors <- scales::hue_pal()(length(journal_criteria))
+  names(journal_colors) <- journal_criteria
 
-  plotly::subplot(p1, p2, nrows = 2, heights = c(0.7, 0.3), shareX = FALSE) |>
-    plotly::layout(hoverlabel = list(bgcolor = "white"))
+  # Create second plot for journal tiers
+  p2 <- plotly::plot_ly()
+
+  for (i in seq_along(journal_criteria)) {
+    crit_data <- plot_data2 |> filter(criteria_label == journal_criteria[i])
+    if (nrow(crit_data) > 0) {
+      p2 <- p2 |> plotly::add_trace(
+        data = crit_data,
+        x = ~middle_rating,
+        y = ~y_jitter,
+        type = "scatter",
+        mode = "markers",
+        marker = list(color = journal_colors[journal_criteria[i]], size = 8, opacity = 0.6),
+        text = ~research,
+        hoverinfo = "text",
+        showlegend = FALSE
+      )
+    }
+  }
+
+  # Add means for journal tiers
+  means2 <- means2 |>
+    filter(criteria_label %in% journal_criteria) |>
+    mutate(y_pos = as.numeric(factor(criteria_label, levels = journal_criteria)))
+
+  if (nrow(means2) > 0) {
+    p2 <- p2 |> plotly::add_trace(
+      data = means2,
+      x = ~mean_rating,
+      y = ~y_pos,
+      type = "scatter",
+      mode = "markers",
+      marker = list(symbol = "x", size = 10, color = "black", line = list(width = 2)),
+      text = ~paste0(criteria_label, " avg: ", round(mean_rating, 1)),
+      hoverinfo = "text",
+      showlegend = FALSE
+    )
+  }
+
+  # Combine using subplot first, then apply axis settings
+  # Create explicit gap between plots using domain settings
+  plotly::subplot(p1, p2, nrows = 2, heights = c(0.65, 0.35), shareX = FALSE) |>
+    plotly::layout(
+      hoverlabel = list(bgcolor = "white"),
+      margin = list(l = 220, t = 50, b = 40),
+      # Override yaxis (top plot - 0-100 scale criteria) - domain from 42% to 100%
+      yaxis = list(
+        title = "",
+        tickvals = seq_along(criteria_order),
+        ticktext = criteria_order,
+        tickfont = list(size = 14),
+        domain = c(0.42, 1)
+      ),
+      # Override yaxis2 (bottom plot - journal tiers) - domain from 0% to 28%
+      yaxis2 = list(
+        title = "",
+        tickvals = c(1, 2),
+        ticktext = c("Deserved journal tier", "Predicted journal tier"),
+        tickfont = list(size = 14),
+        domain = c(0, 0.28)
+      ),
+      xaxis2 = list(
+        title = "",
+        range = c(0, 5),
+        tickvals = seq(0, 5),
+        tickfont = list(size = 12)
+      ),
+      annotations = list(
+        list(text = "Ratings by evaluation criteria (0-100 scale)", x = 0.5, y = 1.02,
+             xref = "paper", yref = "paper", showarrow = FALSE, font = list(size = 15, color = "#333")),
+        list(text = "Journal tier ratings (0-5 scale)", x = 0.5, y = 0.33,
+             xref = "paper", yref = "paper", showarrow = FALSE, font = list(size = 15, color = "#333"))
+      )
+    )
 })
 
 # Data table for criteria averages
@@ -737,25 +930,26 @@ output$plot_comparison <- renderPlotly({
       )
     }
 
-    # Configure layout with dual x-axes
+    # Configure layout with dual x-axes - Journal tier bottom, Percentile top
+    # Start at 20 (tier 1) to reduce whitespace
     p |> plotly::layout(
       xaxis = list(
-        title = list(text = "Percentile rank", font = list(size = 12)),
-        range = c(0, 105),
-        tickvals = seq(0, 100, 20),
-        tickfont = list(size = 11),
+        title = list(text = "Journal tier", font = list(size = 14)),
+        range = c(15, 105),
+        tickvals = c(20, 40, 60, 80, 100),
+        ticktext = c("1", "2", "3", "4", "5"),
+        tickfont = list(size = 13),
         side = "bottom",
         showgrid = TRUE,
         gridcolor = "rgba(200,200,200,0.3)"
       ),
       xaxis2 = list(
-        title = list(text = "Journal tier", font = list(size = 12)),
+        title = list(text = "Percentile rank", font = list(size = 14)),
         overlaying = "x",
         side = "top",
-        range = c(0, 105),
-        tickvals = c(20, 40, 60, 80, 100),
-        ticktext = c("1", "2", "3", "4", "5"),
-        tickfont = list(size = 11),
+        range = c(15, 105),
+        tickvals = seq(20, 100, 20),
+        tickfont = list(size = 13),
         showgrid = FALSE,
         zeroline = FALSE
       ),
@@ -763,23 +957,23 @@ output$plot_comparison <- renderPlotly({
         title = "",
         categoryorder = "array",
         categoryarray = rev(criteria_order),
-        tickfont = list(size = 11),
+        tickfont = list(size = 13),
         showgrid = TRUE,
         gridcolor = "rgba(200,200,200,0.3)"
       ),
       legend = list(
         orientation = "h",
         x = 0.5,
-        y = 1.15,
+        y = 1.1,
         xanchor = "center",
-        font = list(size = 10)
+        font = list(size = 11)
       ),
-      margin = list(t = 80, l = 150, b = 50, r = 20),
-      hoverlabel = list(bgcolor = "white", font = list(size = 11))
+      margin = list(t = 60, l = 170, b = 50, r = 20),
+      hoverlabel = list(bgcolor = "white", font = list(size = 12))
     ) |>
     # Add invisible trace to force xaxis2 to show
     plotly::add_trace(
-      x = c(0, 100), y = c(criteria_order[1], criteria_order[1]),
+      x = c(20, 100), y = c(criteria_order[1], criteria_order[1]),
       type = "scatter", mode = "markers",
       marker = list(opacity = 0), xaxis = "x2",
       showlegend = FALSE, hoverinfo = "skip"
@@ -804,13 +998,23 @@ output$table_comparison <- renderDT({
       pivot_wider(names_from = Criteria, values_from = Rating) |>
       datatable(
         options = list(
-          pageLength = 10,
-          dom = 't',
-          scrollX = TRUE
+          pageLength = 15,
+          dom = 'ft',
+          scrollX = TRUE,
+          scrollY = "500px"
         ),
         rownames = FALSE
       ) |>
       formatRound(columns = -1, digits = 1)
+  }
+})
+
+# Conditional output for comparison view (graph or table)
+output$comparison_output <- renderUI({
+  if (input$comparison_view == "graph") {
+    plotlyOutput("plot_comparison", height = "600px")
+  } else {
+    DTOutput("table_comparison")
   }
 })
 
@@ -857,66 +1061,82 @@ output$barplot_sources <- renderPlot({
 # Statistics Tab Outputs
 # ============================================
 
-# Calculate anonymity: evaluators starting with "Evaluator " are anonymous
+# Calculate anonymity: based on evaluations (paper-evaluator pairs), not unique evaluators
 anonymity_data <- reactive({
-  unique_evaluators <- ratings |>
-    filter(!is.na(evaluator)) |>
-    distinct(evaluator) |>
+  # Count distinct evaluations (paper-evaluator pairs)
+  evaluations <- ratings |>
+    filter(!is.na(evaluator), evaluator != "") |>
+    distinct(research, evaluator) |>
+    # Filter out obvious data quality issues (paper titles parsed as evaluator names)
+    filter(!str_detect(evaluator, "^https?://"),
+           !str_detect(evaluator, "^\\d{4}"),  # Years
+           nchar(evaluator) < 100) |>  # Names shouldn't be super long
     mutate(
-      is_anonymous = str_detect(evaluator, "^Evaluator \\d+$")
+      # Match: "Evaluator N", "Anon. evaluator N", "Anon. Evaluator N", "Anonymous_N", etc.
+      is_anonymous = str_detect(evaluator, regex("^(Evaluator|Anon|Anonymous)", ignore_case = TRUE))
     )
 
   list(
-    total = nrow(unique_evaluators),
-    anonymous = sum(unique_evaluators$is_anonymous),
-    named = sum(!unique_evaluators$is_anonymous),
-    pct_anonymous = round(100 * sum(unique_evaluators$is_anonymous) / nrow(unique_evaluators), 1)
+    total = nrow(evaluations),
+    anonymous = sum(evaluations$is_anonymous),
+    named = sum(!evaluations$is_anonymous),
+    pct_anonymous = round(100 * sum(evaluations$is_anonymous) / nrow(evaluations), 1)
   )
 })
 
-# Value box outputs
-output$stat_papers_count <- renderText({
-  n_papers()
-})
-
-output$stat_evals_count <- renderText({
-  n_evals()
-})
-
-output$stat_avg_hours <- renderText({
+# Statistics summary cards
+output$stat_summary_cards <- renderUI({
+  # Calculate average hours
   hours_data <- eval_paper_level$hours_spent_manual_impute
   hours_data <- hours_data[!is.na(hours_data)]
-  if (length(hours_data) > 0) {
-    paste0(round(mean(hours_data), 1), " hrs")
-  } else {
-    "N/A"
-  }
-})
+  avg_hours <- if (length(hours_data) > 0) round(mean(hours_data), 1) else NA
 
-output$stat_anon_pct <- renderText({
-  paste0(anonymity_data()$pct_anonymous, "%")
-})
-
-# Anonymity pie chart
-output$plot_anonymity <- renderPlotly({
   anon <- anonymity_data()
 
-  plot_data <- data.frame(
-    category = c("Anonymous", "Named"),
-    count = c(anon$anonymous, anon$named),
-    color = c("#FFC107", "#17A2B8")
-  )
+  # Inline styles for cards
+  card_style <- "border-radius: 12px; padding: 20px; color: white; text-align: center; flex: 1; min-width: 180px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+  value_style <- "font-size: 2.2em; font-weight: bold; margin: 8px 0;"
+  label_style <- "font-size: 0.95em; opacity: 0.9;"
 
-  plot_ly(plot_data, labels = ~category, values = ~count, type = 'pie',
-          textinfo = 'label+percent',
-          textposition = 'inside',
-          marker = list(colors = plot_data$color),
-          hoverinfo = 'label+value') |>
-    layout(
-      showlegend = TRUE,
-      legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.1),
-      margin = list(t = 20, b = 40, l = 20, r = 20)
+  div(
+    style = "display: flex; flex-wrap: wrap; gap: 15px; padding: 10px;",
+    div(style = paste0(card_style, "background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);"),
+        div(style = label_style, "Papers Evaluated"),
+        div(style = value_style, n_papers())
+    ),
+    div(style = paste0(card_style, "background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);"),
+        div(style = label_style, "Total Evaluations"),
+        div(style = value_style, n_evals())
+    ),
+    div(style = paste0(card_style, "background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);"),
+        div(style = label_style, "Avg Hours/Evaluation"),
+        div(style = value_style, if (!is.na(avg_hours)) paste0(avg_hours, " hrs") else "N/A")
+    ),
+    div(style = paste0(card_style, "background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);"),
+        div(style = label_style, "% Anonymous Evals"),
+        div(style = value_style, paste0(anon$pct_anonymous, "%"))
     )
+  )
+})
+
+# Hours stats summary
+output$hours_stats_summary <- renderUI({
+  hours_data <- eval_paper_level$hours_spent_manual_impute
+  hours_data <- hours_data[!is.na(hours_data)]
+
+  if (length(hours_data) == 0) {
+    return(div("No data available"))
+  }
+
+  n <- length(hours_data)
+  med <- round(median(hours_data), 1)
+  q1 <- round(quantile(hours_data, 0.25), 1)
+  q3 <- round(quantile(hours_data, 0.75), 1)
+  rng <- paste0(round(min(hours_data), 1), "-", round(max(hours_data), 1))
+
+  div(style = "font-size: 0.85em; color: #666; margin-bottom: 5px;",
+      paste0("n=", n, " | Median: ", med, " hrs | IQR: ", q1, "-", q3, " | Range: ", rng)
+  )
 })
 
 # Time spent histogram
@@ -938,9 +1158,9 @@ output$plot_time_spent <- renderPlotly({
           hovertemplate = "Hours: %{x}<br>Count: %{y}<extra></extra>") |>
     layout(
       xaxis = list(title = "Hours spent", tickfont = list(size = 11)),
-      yaxis = list(title = "Number of evaluations", tickfont = list(size = 11)),
+      yaxis = list(title = "Count", tickfont = list(size = 11)),
       bargap = 0.1,
-      margin = list(t = 20, b = 50, l = 50, r = 20)
+      margin = list(t = 10, b = 40, l = 40, r = 10)
     )
 })
 
@@ -969,6 +1189,113 @@ output$plot_evals_timeline <- renderPlotly({
       xaxis = list(title = "Date", tickfont = list(size = 11)),
       yaxis = list(title = "Cumulative evaluations", tickfont = list(size = 11)),
       margin = list(t = 20, b = 50, l = 60, r = 20)
+    )
+})
+
+# Pipeline donut chart (like Squarespace)
+output$plot_pipeline_donut <- renderPlotly({
+  # Use full research dataset (not filtered by period/area)
+  # Categorize papers into pipeline stages based on status
+  pipeline_data <- research |>
+    filter(!is.na(status)) |>
+    mutate(
+      stage = case_when(
+        str_detect(status, "50_published") ~ "Evaluated",
+        str_detect(status, regex("seeking.*evaluator|awaiting_evaluation", ignore_case = TRUE)) ~ "Evaluating",
+        str_detect(status, regex("deprioritized|rejected|blocked|Not a paper", ignore_case = TRUE)) ~ "Deprioritized",
+        TRUE ~ "Prioritizing"
+      )
+    ) |>
+    # Only show active pipeline (exclude deprioritized for the donut)
+    filter(stage != "Deprioritized") |>
+    count(stage)
+
+  if (nrow(pipeline_data) == 0) {
+    return(
+      plot_ly() |>
+        add_annotations(text = "No pipeline data", x = 0.5, y = 0.5,
+                        xref = "paper", yref = "paper", showarrow = FALSE)
+    )
+  }
+
+  # Add colors and factor ordering
+  pipeline_data <- pipeline_data |>
+    mutate(
+      stage = factor(stage, levels = c("Evaluated", "Evaluating", "Prioritizing")),
+      color = case_when(
+        stage == "Evaluated" ~ "#7BAFD4",
+        stage == "Evaluating" ~ "#1D5A8A",
+        stage == "Prioritizing" ~ "#4A8C5C",
+        TRUE ~ "#999999"
+      )
+    ) |>
+    arrange(stage)
+
+  total_papers <- sum(pipeline_data$n)
+
+  plot_ly(pipeline_data,
+          labels = ~stage,
+          values = ~n,
+          type = 'pie',
+          hole = 0.5,
+          textinfo = 'value',
+          textposition = 'inside',
+          insidetextfont = list(color = 'white', size = 12),
+          marker = list(colors = pipeline_data$color,
+                        line = list(color = 'white', width = 2)),
+          hovertemplate = "%{label}<br>%{value} papers<br>%{percent}<extra></extra>") |>
+    layout(
+      showlegend = TRUE,
+      legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.15,
+                    font = list(size = 11)),
+      margin = list(t = 10, b = 50, l = 10, r = 10),
+      annotations = list(
+        list(text = as.character(total_papers),
+             x = 0.5, y = 0.5,
+             font = list(size = 20, color = "#333"),
+             showarrow = FALSE)
+      )
+    )
+})
+
+# Evaluation streams pie chart
+output$plot_eval_streams <- renderPlotly({
+  stream_data <- eval_paper_level |>
+    filter(!is.na(evaluation_stream)) |>
+    count(evaluation_stream) |>
+    mutate(
+      stream_label = case_when(
+        evaluation_stream == "academic" ~ "Academic",
+        evaluation_stream == "applied" ~ "Applied",
+        TRUE ~ as.character(evaluation_stream)
+      ),
+      color = case_when(
+        evaluation_stream == "academic" ~ "#3498db",
+        evaluation_stream == "applied" ~ "#e74c3c",
+        TRUE ~ "#95a5a6"
+      )
+    )
+
+  if (nrow(stream_data) == 0) {
+    return(
+      plot_ly() |>
+        add_annotations(text = "No stream data", x = 0.5, y = 0.5,
+                        xref = "paper", yref = "paper", showarrow = FALSE)
+    )
+  }
+
+  plot_ly(stream_data,
+          labels = ~stream_label,
+          values = ~n,
+          type = 'pie',
+          textinfo = 'label+value',
+          textposition = 'inside',
+          marker = list(colors = stream_data$color),
+          hovertemplate = "%{label}<br>%{value} evaluations<br>%{percent}<extra></extra>") |>
+    layout(
+      showlegend = TRUE,
+      legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.1),
+      margin = list(t = 20, b = 40, l = 20, r = 20)
     )
 })
 
