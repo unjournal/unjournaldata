@@ -1,0 +1,161 @@
+---
+title: "Where Are Unjournal Papers Hosted? A Multi-Platform Analysis"
+author: "David Reinstein with Claude Code assistance"
+date: "2026-02-24"
+categories: [data, infrastructure, open-science]
+execute:
+  echo: false
+  warning: false
+  message: false
+freeze: auto
+---
+
+We analyzed where the 315 papers in The Unjournal's database are hosted across academic platforms and repositories. Understanding this distribution helps us identify opportunities for improving discoverability and integrating with scholarly infrastructure initiatives like [COAR Notify](https://notify.coar-repositories.org/).
+
+## Key Findings
+
+- **315 papers** analyzed (56 with published evaluations, 259 in our pipeline)
+- **Average of 2.3 hosting locations** per paper
+- **26 papers (8%)** are on COAR Notify-enabled platforms (arXiv, OSF)
+- **72 papers** appear across **47 institutional repositories**
+
+## Where Are Papers Hosted?
+
+```{r}
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(knitr)
+
+# Data from our analysis
+hosts <- data.frame(
+  Platform = c("NBER", "PubMed (index)", "PubMed Central", "RePEc (index)",
+               "SSRN", "arXiv", "Nature", "Institutional Repos", "OSF", "EconStor"),
+  Papers = c(66, 58, 40, 39, 26, 18, 11, 72, 8, 6),
+  Pct = c("21%", "18%", "13%", "12%", "8%", "6%", "3%", "23%", "3%", "2%"),
+  Hosts_Papers = c("Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
+  COAR_Status = c("Could implement", "N/A (index)", "Potential", "N/A (index)",
+                  "Potential", "Enabled", "Via Crossref", "Via DSpace/EPrints", "Enabled", "In COAR directory")
+)
+```
+
+```{r}
+#| label: hosts-table
+
+kable(hosts,
+      col.names = c("Platform", "Papers", "%", "Hosts Papers?", "COAR Status"),
+      caption = "Top hosting platforms for Unjournal papers")
+```
+
+### An Important Distinction: Hosts vs. Indexes
+
+Not all platforms that list papers actually *host* them:
+
+- **Platforms that host papers** (store the PDFs): NBER, arXiv, SSRN, OSF, institutional repositories, PubMed Central
+- **Indexes** (link to papers hosted elsewhere): RePEc, PubMed, DBLP
+
+This distinction matters for infrastructure integration. [COAR Notify](https://coar-notify.net/), for example, can only integrate with platforms that actually host papers, since notifications need to link to the actual content.
+
+## Repositories vs. Working Paper Series
+
+A common question: what's the difference between a "repository" and a "working paper series"?
+
+| Aspect | Repository | Working Paper Series |
+|--------|-----------|---------------------|
+| Examples | arXiv, Zenodo, OSF | NBER, CEPR, IZA |
+| Who can deposit | Open to anyone (within scope) | Selective/affiliated authors |
+| Hosts papers? | Yes | Yes |
+| Could implement COAR? | Yes | Yes |
+
+**Both host papers.** The difference is governance (open vs. selective), not technical capability. NBER, for instance, hosts PDFs and assigns DOIs just like arXiv does.
+
+## COAR Notify: Current State and Opportunities
+
+[COAR Notify](https://notify.coar-repositories.org/) is a protocol enabling repositories and review services to exchange notifications about peer review activities. This is directly relevant for The Unjournal as an overlay review service.
+
+### Current COAR Readiness
+
+```{r}
+#| label: coar-table
+
+coar_data <- data.frame(
+  Status = c("Already COAR-enabled", "Potential targets", "Would need custom work", "Not applicable (indexes)"),
+  Platforms = c("arXiv, OSF", "SSRN, PubMed Central, EconStor", "NBER, institutional repos", "RePEc, PubMed"),
+  Papers = c("26 (8%)", "72 (23%)", "138 (44%)", "97 (31%)")
+)
+
+kable(coar_data,
+      col.names = c("COAR Status", "Platforms", "Papers"),
+      caption = "COAR Notify readiness of platforms hosting Unjournal papers")
+```
+
+### Strategic Pathways
+
+Rather than reaching out to each institution individually, there are aggregation strategies:
+
+1. **Platform-level adoption**: DSpace 8 now includes COAR Notify. If universities upgrade, dozens of institutional repositories gain COAR support simultaneously.
+
+2. **Hub repositories**: [EconStor](https://www.econstor.eu/) (operated by ZBW, the German economics library) partners with 800+ institutions and is already in COAR's directory.
+
+3. **Economics profession coordination**: Organizations like the AEA and NBER have coordinated infrastructure changes before.
+
+## Institutional Repository Distribution
+
+Our papers appear across 47 different university repositories:
+
+**UK institutions** (25 papers): LSE, Cambridge, Oxford, Exeter, Warwick, Edinburgh, and others
+
+**European institutions** (18 papers): Radboud, Copenhagen, Göttingen, Lund, Lausanne, and others
+
+**US institutions** (15 papers): Chicago, Harvard, UC system (eScholarship), Minnesota, and others
+
+**Asia-Pacific institutions** (8 papers): Monash, NUS, Hong Kong universities
+
+Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.
+
+## Comparison: Evaluated Papers vs. Full Pipeline
+
+```{r}
+#| label: comparison-table
+
+comparison <- data.frame(
+  Platform = c("NBER", "SSRN", "arXiv", "OSF", "PubMed Central", "Institutional repos"),
+  Evaluated = c("17 (30%)", "3 (5%)", "4 (7%)", "2 (4%)", "2 (4%)", "~10"),
+  All = c("66 (21%)", "26 (8%)", "18 (6%)", "8 (3%)", "40 (13%)", "72")
+)
+
+kable(comparison,
+      col.names = c("Platform", "56 Evaluated Papers", "315 All Papers"),
+      caption = "Platform distribution: evaluated papers vs. full pipeline")
+```
+
+The broader pipeline shows more diversity in hosting platforms, with notably more papers in PubMed Central and SSRN than among the currently evaluated set.
+
+## Data Limitations
+
+Our analysis used OpenAlex, Semantic Scholar, and CrossRef APIs. Some limitations:
+
+- **RePEc under-counted**: OpenAlex links only ~25% of NBER papers to their RePEc entries (actual coverage is nearly 100%)
+- **Newer papers**: May not yet be fully indexed
+- **Personal websites**: Cannot be automatically discovered
+
+The actual multi-platform presence is likely 20-30% higher than reported.
+
+## Implications for The Unjournal
+
+1. **Immediate integration**: 26 papers on arXiv/OSF can benefit from COAR Notify now
+
+2. **Author guidance**: Encouraging deposits on arXiv, OSF, or Zenodo (in addition to NBER/SSRN) would expand COAR coverage
+
+3. **Strategic partnerships**: EconStor/ZBW is a natural partner for economics overlay review
+
+4. **Platform advocacy**: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem
+
+## Methodology
+
+We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold >0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The analysis code and raw data are available in our [data repository](https://github.com/unjournal/unjournaldata).
+
+---
+
+*This analysis was conducted in February 2026 to support discussions with [COAR](https://www.coar-repositories.org/) about infrastructure integration for overlay peer review.*
