@@ -25,7 +25,9 @@ We analyzed where the 315 papers in The Unjournal's database are hosted across a
 
 - **Half (50%) of papers** appear on 2 or more platforms
 - **73 papers** appear across **47 institutional repositories**
-- More diversity in platforms: notably more in PubMed Central, SSRN, and IZA
+- More diversity in platforms: notably more in PubMed Central and IZA
+
+**Update: SSRN is much more prevalent than initially detected.** A deep-dive analysis in February 2026 found that **22 of our 57 evaluated papers (39%)** are available on SSRN — far more than the 3 papers with SSRN as their primary URL. Many NBER and other papers are cross-posted to SSRN but linked via their original source.
 
 ## Multi-Platform Presence
 
@@ -81,14 +83,15 @@ The table below shows how many papers appear on each platform, **counting all ho
 
 # Data from our analysis (counting all hosting locations, papers may appear multiple times)
 # Includes both detected counts and estimated actuals (accounting for API under-reporting)
+# SSRN counts updated Feb 2026 after deep-dive cross-referencing analysis
 hosts <- data.frame(
   Platform = c("NBER", "Institutional Repos", "PubMed (index)", "PubMed Central",
                "RePEc (index)", "SSRN", "arXiv", "OSF", "Nature portfolio",
                "EconStor", "IZA", "CEPR", "Other*"),
-  Eval_Detected = c(17, 7, 4, 2, 14, 3, 4, 3, 1, 0, 0, 0, 15),
-  Eval_Est = c("17", "10-15", "4", "2", "25-30†", "4-5", "4", "3", "1", "0-1", "0", "0", "15"),
-  All_Detected = c(66, 73, 58, 40, 39, 26, 18, 14, 18, 5, 5, 1, 113),
-  All_Est = c("66", "90-110", "58", "40", "80-100†", "30-35", "18", "14", "18", "6-8", "5", "1", "113"),
+  Eval_Detected = c(17, 7, 4, 2, 14, 22, 4, 3, 1, 0, 0, 0, 15),
+  Eval_Est = c("17", "10-15", "4", "2", "25-30†", "22+", "4", "3", "1", "0-1", "0", "0", "15"),
+  All_Detected = c(66, 73, 58, 40, 39, 35, 18, 14, 18, 5, 5, 1, 113),
+  All_Est = c("66", "90-110", "58", "40", "80-100†", "40-50", "18", "14", "18", "6-8", "5", "1", "113"),
   Hosts_Papers = c("Yes", "Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Various"),
   COAR_Status = c("Could implement", "Via DSpace/EPrints", "N/A (index)", "Potential", "N/A (index)",
                   "Potential", "Enabled", "Enabled", "Via Crossref", "In COAR directory",
@@ -218,9 +221,34 @@ The actual multi-platform presence is likely 20-30% higher than reported.
 
 5. **Platform advocacy**: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem and increases coverage for institutional repositories
 
+## Deep Dive: SSRN Cross-Posting
+
+A February 2026 analysis revealed that SSRN hosts significantly more Unjournal papers than our primary URL data suggested. Many papers — especially those from NBER — are cross-posted to SSRN but linked via their original source.
+
+**Key findings:**
+
+- **22 of 57 evaluated papers (39%)** are available on SSRN
+- **35+ papers total** across the full database are on SSRN
+- **11 NBER papers** we evaluated are also cross-posted to SSRN
+- **8 papers** hosted on personal/institutional sites are also on SSRN
+
+Examples of evaluated papers available on both NBER and SSRN:
+
+| Paper | Primary Host | SSRN ID |
+|-------|-------------|---------|
+| Cash Transfers for Child Development (India) | NBER | [4709146](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146) |
+| Artificial Intelligence and Economic Growth | NBER | [3053718](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718) |
+| Stagnation and Scientific Incentives | NBER | [3539319](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3539319) |
+| Guest Worker Programs: India-UAE | NBER | [4483655](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4483655) |
+| Effects of Emigration on Rural Labor Markets | NBER | [3053719](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053719) |
+
+The full mapping of SSRN cross-posts is available in our data repository as `ssrn_crosspost_mapping.csv`.
+
+**Implications for COAR Notify:** SSRN is listed as "Potential" for COAR integration. If SSRN implements COAR Notify, nearly 40% of our evaluated papers could immediately benefit from repository notifications — a much larger footprint than previously understood.
+
 ## Methodology
 
-We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold >0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The analysis code and raw data are available in our [data repository](https://github.com/unjournal/unjournaldata).
+We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold >0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The SSRN cross-posting analysis used targeted web searches to verify availability on SSRN for papers hosted elsewhere. The analysis code and raw data are available in our [data repository](https://github.com/unjournal/unjournaldata).
 
 ---
 
