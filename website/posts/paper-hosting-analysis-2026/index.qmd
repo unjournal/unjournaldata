@@ -14,11 +14,18 @@ We analyzed where the 315 papers in The Unjournal's database are hosted across a
 
 ## Key Findings
 
-- **315 papers** analyzed (56 with published evaluations, 259 in our pipeline)
-- **Average of 2.3 hosting locations** per paper — most papers appear on multiple platforms
+**For our 57 evaluated papers** (where COAR Notify could link evaluations to repositories):
+
+- **7 papers (12%)** are on COAR-enabled platforms (arXiv, OSF) — ready for integration now
+- **17 papers (30%)** are on NBER, which could implement COAR Notify
+- **15 papers (26%)** are hosted only on organization websites or published journals — no clear COAR path
+- **Average 2.3 hosting locations** per paper — many appear on multiple platforms
+
+**For the full database (315 papers including 258 in pipeline):**
+
 - **Half (50%) of papers** appear on 2 or more platforms
-- **26 papers (8%)** are on COAR Notify-enabled platforms (arXiv, OSF)
-- **72 papers** appear across **47 institutional repositories**
+- **73 papers** appear across **47 institutional repositories**
+- More diversity in platforms: notably more in PubMed Central, SSRN, and IZA
 
 ## Multi-Platform Presence
 
@@ -58,7 +65,7 @@ This pattern reflects how successful academic papers accumulate presence across:
 
 ### Implications for COAR Integration
 
-Multi-platform presence has strategic implications for **papers we have evaluated** (56 papers currently). COAR Notify would allow us to notify repositories when we publish an evaluation of a paper they host — this is relevant for evaluated papers, not papers still in our consideration pipeline.
+Multi-platform presence has strategic implications for **papers we have evaluated** (57 papers currently). COAR Notify would allow us to notify repositories when we publish an evaluation of a paper they host — this is relevant for evaluated papers, not papers still in our consideration pipeline.
 
 1. **Notification efficiency**: An evaluated paper might be hosted on multiple COAR-enabled repositories, each of which could be notified about our evaluation
 2. **Version tracking**: Different platforms may host different versions (submitted, accepted, published) — COAR Notify metadata could clarify which version was evaluated
@@ -73,14 +80,19 @@ The table below shows how many papers appear on each platform, **counting all ho
 #| include: false
 
 # Data from our analysis (counting all hosting locations, papers may appear multiple times)
+# Includes both detected counts and estimated actuals (accounting for API under-reporting)
 hosts <- data.frame(
-  Platform = c("NBER", "PubMed (index)", "PubMed Central", "RePEc (index)",
-               "SSRN", "arXiv", "Nature", "Institutional Repos", "OSF", "EconStor"),
-  Papers = c(66, 58, 40, 39, 26, 18, 11, 72, 8, 6),
-  Pct = c("21%", "18%", "13%", "12%", "8%", "6%", "3%", "23%", "3%", "2%"),
-  Hosts_Papers = c("Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
-  COAR_Status = c("Could implement", "N/A (index)", "Potential", "N/A (index)",
-                  "Potential", "Enabled", "Via Crossref", "Via DSpace/EPrints", "Enabled", "In COAR directory")
+  Platform = c("NBER", "Institutional Repos", "PubMed (index)", "PubMed Central",
+               "RePEc (index)", "SSRN", "arXiv", "OSF", "Nature portfolio",
+               "EconStor", "IZA", "CEPR", "Other*"),
+  Eval_Detected = c(17, 7, 4, 2, 14, 3, 4, 3, 1, 0, 0, 0, 15),
+  Eval_Est = c("17", "10-15", "4", "2", "25-30†", "4-5", "4", "3", "1", "0-1", "0", "0", "15"),
+  All_Detected = c(66, 73, 58, 40, 39, 26, 18, 14, 18, 5, 5, 1, 113),
+  All_Est = c("66", "90-110", "58", "40", "80-100†", "30-35", "18", "14", "18", "6-8", "5", "1", "113"),
+  Hosts_Papers = c("Yes", "Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Various"),
+  COAR_Status = c("Could implement", "Via DSpace/EPrints", "N/A (index)", "Potential", "N/A (index)",
+                  "Potential", "Enabled", "Enabled", "Via Crossref", "In COAR directory",
+                  "Could implement", "Could implement", "—")
 )
 ```
 
@@ -88,9 +100,16 @@ hosts <- data.frame(
 #| label: hosts-table
 
 kable(hosts,
-      col.names = c("Platform", "Papers", "%", "Hosts Papers?", "COAR Status"),
-      caption = "Platform appearances across 315 papers (counting all hosting locations; papers may appear on multiple platforms)")
+      col.names = c("Platform", "57 Evaluated (detected)", "57 Evaluated (est.)",
+                    "315 All (detected)", "315 All (est.)", "Hosts Papers?", "COAR Status"),
+      caption = "Platform appearances (counting all hosting locations; papers may appear on multiple platforms)")
 ```
+
+**Notes on the table:**
+
+- *†RePEc estimates:* OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.
+- *Institutional repos estimate:* Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.
+- **Other*** includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.
 
 ### An Important Distinction: Hosts vs. Indexes
 
@@ -124,15 +143,18 @@ A common question: what's the difference between a "repository" and a "working p
 #| label: coar-table
 
 coar_data <- data.frame(
-  Status = c("Already COAR-enabled", "Potential targets", "Would need custom work", "Not applicable (indexes)"),
-  Platforms = c("arXiv, OSF", "SSRN, PubMed Central, EconStor", "NBER, institutional repos", "RePEc, PubMed"),
-  Papers = c("26 (8%)", "72 (23%)", "138 (44%)", "97 (31%)")
+  Status = c("Already COAR-enabled", "Potential targets", "Would need custom work", "Not applicable (indexes)", "Other hosting"),
+  Platforms = c("arXiv, OSF", "SSRN, PubMed Central, EconStor", "NBER, IZA, CEPR, institutional repos", "RePEc, PubMed", "Org websites, journals, personal"),
+  Evaluated = c("7 (12%)", "5 (9%)", "24 (42%)", "18 (32%)*", "15 (26%)"),
+  All = c("32 (10%)", "71 (23%)", "144 (46%)", "97 (31%)*", "113 (36%)")
 )
 
 kable(coar_data,
-      col.names = c("COAR Status", "Platforms", "Papers"),
+      col.names = c("COAR Status", "Platforms", "57 Evaluated", "315 All Papers"),
       caption = "COAR Notify readiness of platforms hosting Unjournal papers")
 ```
+
+*Note: Papers may appear in multiple categories since many are on 2+ platforms. The "indexes" category (RePEc, PubMed) counts papers that appear there but doesn't reflect COAR potential since indexes don't host papers.*
 
 ### Strategic Pathways
 
@@ -158,27 +180,17 @@ Our papers appear across 47 different university repositories:
 
 Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.
 
-## Comparison: Evaluated Papers vs. Full Pipeline
+## Key Differences: Evaluated Papers vs. Full Pipeline
 
-This comparison matters because **only evaluated papers can currently benefit from COAR Notify** — we would notify repositories about our published evaluations of these papers.
+The main hosting table above shows both groups side-by-side. Key differences:
 
-```{r}
-#| label: comparison-table
+**COAR-ready evaluated papers**: Among our 57 evaluated papers, approximately 7 (12%) are on COAR-enabled platforms (4 on arXiv, 3 on OSF). These papers could immediately benefit from COAR Notify integration.
 
-comparison <- data.frame(
-  Platform = c("NBER", "SSRN", "arXiv", "OSF", "PubMed Central", "Institutional repos"),
-  Evaluated = c("17 (30%)", "3 (5%)", "4 (7%)", "2 (4%)", "2 (4%)", "~10"),
-  All = c("66 (21%)", "26 (8%)", "18 (6%)", "8 (3%)", "40 (13%)", "72")
-)
+**Pipeline shows more diversity**: The broader pipeline has notably more papers in PubMed Central (40 vs. 2) and institutional repositories (73 vs. 7), reflecting a broader range of research fields beyond economics.
 
-kable(comparison,
-      col.names = c("Platform", "56 Evaluated Papers", "315 All Papers"),
-      caption = "Platform appearances: evaluated papers vs. full pipeline (counting all hosting locations)")
-```
+**Working paper series**: NBER dominates our evaluated papers (30%), while the pipeline includes more representation from IZA (5 papers) and one CEPR paper. These economics working paper series could potentially implement COAR Notify.
 
-**Key observation for COAR**: Among our 56 evaluated papers, approximately 6 (11%) are on COAR-enabled platforms (4 on arXiv, 2 on OSF). These papers could immediately benefit from COAR Notify integration.
-
-The broader pipeline shows more diversity in hosting platforms, with notably more papers in PubMed Central and SSRN than among the currently evaluated set.
+**"Other" hosting**: 15 evaluated papers (26%) and 113 pipeline papers (36%) are hosted only on organization websites, personal hosting, or published journals not in major indexes. This represents a significant portion that wouldn't benefit from platform-level COAR integration.
 
 ## Data Limitations
 
@@ -192,7 +204,7 @@ The actual multi-platform presence is likely 20-30% higher than reported.
 
 ## Implications for The Unjournal
 
-**For our 56 evaluated papers:**
+**For our 57 evaluated papers:**
 
 1. **Immediate integration**: Papers we've evaluated that are hosted on arXiv or OSF (COAR-enabled platforms) could benefit from COAR Notify now — repositories could be notified of our published evaluations
 
