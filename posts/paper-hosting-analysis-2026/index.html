@@ -167,8 +167,9 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Half (50%) of papers</strong> appear on 2 or more platforms</li>
 <li><strong>73 papers</strong> appear across <strong>47 institutional repositories</strong></li>
-<li>More diversity in platforms: notably more in PubMed Central, SSRN, and IZA</li>
+<li>More diversity in platforms: notably more in PubMed Central and IZA</li>
 </ul>
+<p><strong>Update: SSRN is much more prevalent than initially detected.</strong> A deep-dive analysis in February 2026 found that <strong>22 of our 57 evaluated papers (39%)</strong> are available on SSRN — far more than the 3 papers with SSRN as their primary URL. Many NBER and other papers are cross-posted to SSRN but linked via their original source.</p>
 </section>
 <section id="multi-platform-presence" class="level2">
 <h2 class="anchored" data-anchor-id="multi-platform-presence">Multi-Platform Presence</h2>
@@ -309,10 +310,10 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">SSRN</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">4-5</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: left;">30-35</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">22+</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">40-50</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Potential</td>
 </tr>
@@ -551,9 +552,59 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Platform advocacy</strong>: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem and increases coverage for institutional repositories</p></li>
 </ol>
 </section>
+<section id="deep-dive-ssrn-cross-posting" class="level2">
+<h2 class="anchored" data-anchor-id="deep-dive-ssrn-cross-posting">Deep Dive: SSRN Cross-Posting</h2>
+<p>A February 2026 analysis revealed that SSRN hosts significantly more Unjournal papers than our primary URL data suggested. Many papers — especially those from NBER — are cross-posted to SSRN but linked via their original source.</p>
+<p><strong>Key findings:</strong></p>
+<ul>
+<li><strong>22 of 57 evaluated papers (39%)</strong> are available on SSRN</li>
+<li><strong>35+ papers total</strong> across the full database are on SSRN</li>
+<li><strong>11 NBER papers</strong> we evaluated are also cross-posted to SSRN</li>
+<li><strong>8 papers</strong> hosted on personal/institutional sites are also on SSRN</li>
+</ul>
+<p>Examples of evaluated papers available on both NBER and SSRN:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Paper</th>
+<th>Primary Host</th>
+<th>SSRN ID</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cash Transfers for Child Development (India)</td>
+<td>NBER</td>
+<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146">4709146</a></td>
+</tr>
+<tr class="even">
+<td>Artificial Intelligence and Economic Growth</td>
+<td>NBER</td>
+<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718">3053718</a></td>
+</tr>
+<tr class="odd">
+<td>Stagnation and Scientific Incentives</td>
+<td>NBER</td>
+<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3539319">3539319</a></td>
+</tr>
+<tr class="even">
+<td>Guest Worker Programs: India-UAE</td>
+<td>NBER</td>
+<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4483655">4483655</a></td>
+</tr>
+<tr class="odd">
+<td>Effects of Emigration on Rural Labor Markets</td>
+<td>NBER</td>
+<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053719">3053719</a></td>
+</tr>
+</tbody>
+</table>
+<p>The full mapping of SSRN cross-posts is available in our data repository as <code>ssrn_crosspost_mapping.csv</code>.</p>
+<p><strong>Implications for COAR Notify:</strong> SSRN is listed as “Potential” for COAR integration. If SSRN implements COAR Notify, nearly 40% of our evaluated papers could immediately benefit from repository notifications — a much larger footprint than previously understood.</p>
+</section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold &gt;0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The analysis code and raw data are available in our <a href="https://github.com/unjournal/unjournaldata">data repository</a>.</p>
+<p>We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold &gt;0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The SSRN cross-posting analysis used targeted web searches to verify availability on SSRN for papers hosted elsewhere. The analysis code and raw data are available in our <a href="https://github.com/unjournal/unjournaldata">data repository</a>.</p>
 <hr>
 <p><em>This analysis was conducted in February 2026 to support discussions with <a href="https://www.coar-repositories.org/">COAR</a> about infrastructure integration for overlay peer review.</em></p>
 
