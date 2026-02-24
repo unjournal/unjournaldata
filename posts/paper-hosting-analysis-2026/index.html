@@ -158,8 +158,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
 <p><strong>For our 57 evaluated papers</strong> (where COAR Notify could link evaluations to repositories):</p>
 <ul>
-<li><strong>7 papers (12%)</strong> are on COAR-enabled platforms (arXiv, OSF) — ready for integration now</li>
+<li><strong>22 papers (39%)</strong> are on SSRN — a major potential integration point if SSRN implements COAR Notify</li>
 <li><strong>17 papers (30%)</strong> are on NBER, which could implement COAR Notify</li>
+<li><strong>7 papers (12%)</strong> are on COAR-enabled platforms (arXiv, OSF) — ready for integration now</li>
 <li><strong>15 papers (26%)</strong> are hosted only on organization websites or published journals — no clear COAR path</li>
 <li><strong>Average 2.3 hosting locations</strong> per paper — many appear on multiple platforms</li>
 </ul>
@@ -167,9 +168,10 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Half (50%) of papers</strong> appear on 2 or more platforms</li>
 <li><strong>73 papers</strong> appear across <strong>47 institutional repositories</strong></li>
+<li><strong>35+ papers</strong> are on SSRN (many cross-posted from NBER or other sources)</li>
 <li>More diversity in platforms: notably more in PubMed Central and IZA</li>
 </ul>
-<p><strong>Update: SSRN is much more prevalent than initially detected.</strong> A deep-dive analysis in February 2026 found that <strong>22 of our 57 evaluated papers (39%)</strong> are available on SSRN — far more than the 3 papers with SSRN as their primary URL. Many NBER and other papers are cross-posted to SSRN but linked via their original source.</p>
+<p><em>Note on SSRN:</em> Many papers are cross-posted to SSRN even when their primary URL points elsewhere (e.g., NBER, personal sites). Our analysis found 22 evaluated papers on SSRN — far more than the 3 with SSRN as their primary link.</p>
 </section>
 <section id="multi-platform-presence" class="level2">
 <h2 class="anchored" data-anchor-id="multi-platform-presence">Multi-Platform Presence</h2>
@@ -386,6 +388,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p><strong>Notes on the table:</strong></p>
 <ul>
+<li><em>SSRN cross-posting:</em> Many NBER papers are cross-posted to SSRN. Of our 22 evaluated papers on SSRN, 11 have NBER as their primary URL. Examples include “Cash Transfers for Child Development” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146">SSRN 4709146</a>), “AI and Economic Growth” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718">SSRN 3053718</a>), and “Stagnation and Scientific Incentives” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3539319">SSRN 3539319</a>). Full mapping available in <code>data/ssrn_crosspost_mapping.csv</code>.</li>
 <li><em>†RePEc estimates:</em> OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.</li>
 <li><em>Institutional repos estimate:</em> Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.</li>
 <li><strong>Other</strong>* includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.</li>
@@ -451,10 +454,10 @@ ul.task-list li input[type="checkbox"] {
 <table class="caption-top table table-sm table-striped small">
 <caption>COAR Notify readiness of platforms hosting Unjournal papers</caption>
 <colgroup>
-<col style="width: 27%">
-<col style="width: 41%">
-<col style="width: 14%">
-<col style="width: 16%">
+<col style="width: 35%">
+<col style="width: 40%">
+<col style="width: 11%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -472,10 +475,10 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">32 (10%)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Potential targets</td>
-<td style="text-align: left;">SSRN, PubMed Central, EconStor</td>
-<td style="text-align: left;">5 (9%)</td>
-<td style="text-align: left;">71 (23%)</td>
+<td style="text-align: left;">Potential targets (SSRN, PMC, EconStor)</td>
+<td style="text-align: left;">SSRN (22 evaluated), PubMed Central, EconStor</td>
+<td style="text-align: left;">24 (42%)</td>
+<td style="text-align: left;">77 (24%)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Would need custom work</td>
@@ -542,65 +545,16 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="implications-for-the-unjournal">Implications for The Unjournal</h2>
 <p><strong>For our 57 evaluated papers:</strong></p>
 <ol type="1">
-<li><p><strong>Immediate integration</strong>: Papers we’ve evaluated that are hosted on arXiv or OSF (COAR-enabled platforms) could benefit from COAR Notify now — repositories could be notified of our published evaluations</p></li>
+<li><p><strong>SSRN is a major opportunity</strong>: 22 evaluated papers (39%) are on SSRN. If SSRN implements COAR Notify, this single integration would cover more of our papers than any other platform except NBER.</p></li>
+<li><p><strong>Immediate integration</strong>: 7 papers on arXiv or OSF (COAR-enabled platforms) could benefit from COAR Notify now — repositories could be notified of our published evaluations</p></li>
 <li><p><strong>Multi-platform notifications</strong>: Since evaluated papers often appear on multiple platforms, a single evaluation could potentially trigger notifications to several repositories</p></li>
 </ol>
 <p><strong>For future evaluations:</strong></p>
-<ol start="3" type="1">
+<ol start="4" type="1">
 <li><p><strong>Author guidance</strong>: Encouraging authors to deposit on arXiv, OSF, or Zenodo (in addition to NBER/SSRN) would expand COAR coverage for future evaluations</p></li>
 <li><p><strong>Strategic partnerships</strong>: EconStor/ZBW is a natural partner for economics overlay review — they’re already in the COAR directory</p></li>
 <li><p><strong>Platform advocacy</strong>: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem and increases coverage for institutional repositories</p></li>
 </ol>
-</section>
-<section id="deep-dive-ssrn-cross-posting" class="level2">
-<h2 class="anchored" data-anchor-id="deep-dive-ssrn-cross-posting">Deep Dive: SSRN Cross-Posting</h2>
-<p>A February 2026 analysis revealed that SSRN hosts significantly more Unjournal papers than our primary URL data suggested. Many papers — especially those from NBER — are cross-posted to SSRN but linked via their original source.</p>
-<p><strong>Key findings:</strong></p>
-<ul>
-<li><strong>22 of 57 evaluated papers (39%)</strong> are available on SSRN</li>
-<li><strong>35+ papers total</strong> across the full database are on SSRN</li>
-<li><strong>11 NBER papers</strong> we evaluated are also cross-posted to SSRN</li>
-<li><strong>8 papers</strong> hosted on personal/institutional sites are also on SSRN</li>
-</ul>
-<p>Examples of evaluated papers available on both NBER and SSRN:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Paper</th>
-<th>Primary Host</th>
-<th>SSRN ID</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Cash Transfers for Child Development (India)</td>
-<td>NBER</td>
-<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146">4709146</a></td>
-</tr>
-<tr class="even">
-<td>Artificial Intelligence and Economic Growth</td>
-<td>NBER</td>
-<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718">3053718</a></td>
-</tr>
-<tr class="odd">
-<td>Stagnation and Scientific Incentives</td>
-<td>NBER</td>
-<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3539319">3539319</a></td>
-</tr>
-<tr class="even">
-<td>Guest Worker Programs: India-UAE</td>
-<td>NBER</td>
-<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4483655">4483655</a></td>
-</tr>
-<tr class="odd">
-<td>Effects of Emigration on Rural Labor Markets</td>
-<td>NBER</td>
-<td><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053719">3053719</a></td>
-</tr>
-</tbody>
-</table>
-<p>The full mapping of SSRN cross-posts is available in our data repository as <code>ssrn_crosspost_mapping.csv</code>.</p>
-<p><strong>Implications for COAR Notify:</strong> SSRN is listed as “Potential” for COAR integration. If SSRN implements COAR Notify, nearly 40% of our evaluated papers could immediately benefit from repository notifications — a much larger footprint than previously understood.</p>
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
