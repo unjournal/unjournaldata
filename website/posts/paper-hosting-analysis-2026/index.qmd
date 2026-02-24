@@ -15,20 +15,64 @@ We analyzed where the 315 papers in The Unjournal's database are hosted across a
 ## Key Findings
 
 - **315 papers** analyzed (56 with published evaluations, 259 in our pipeline)
-- **Average of 2.3 hosting locations** per paper
+- **Average of 2.3 hosting locations** per paper — most papers appear on multiple platforms
+- **Half (50%) of papers** appear on 2 or more platforms
 - **26 papers (8%)** are on COAR Notify-enabled platforms (arXiv, OSF)
 - **72 papers** appear across **47 institutional repositories**
 
-## Where Are Papers Hosted?
+## Multi-Platform Presence
+
+A central finding of this analysis is that **papers typically exist on multiple platforms simultaneously**. This redundancy is valuable for discoverability but also means that COAR Notify integration could reach the same paper through multiple channels.
 
 ```{r}
-#| label: setup
+#| label: multihost-setup
 #| include: false
 
 library(dplyr)
 library(knitr)
 
-# Data from our analysis
+multihost <- data.frame(
+  Hosts = c("1 platform", "2 platforms", "3 platforms", "4 platforms", "5+ platforms"),
+  Papers = c(157, 59, 33, 30, 35),
+  Pct = c("50%", "19%", "10%", "10%", "11%")
+)
+```
+
+```{r}
+#| label: multihost-table
+
+kable(multihost,
+      col.names = c("Number of Hosting Locations", "Papers", "%"),
+      caption = "Distribution of papers by number of hosting platforms")
+```
+
+### What Multi-Platform Hosting Looks Like
+
+Papers with the most hosting locations (8+ platforms) tend to be high-impact research that gets deposited in institutional repositories, indexed by multiple services, and published in prominent journals. For example:
+
+- **"A synthesis of evidence for policy from behavioural science during COVID-19"** (11 platforms): Nature, PubMed, LSE Research Online, Zurich Open Repository, eScholarship (UC system), and others
+- **"Moral expansiveness around the world"** (11 platforms): SAGE journal, Edinburgh Research Explorer, Queen's University Belfast, HAL, and others
+- **"Monetary incentives increase COVID-19 vaccinations"** (9 platforms): Science, PubMed, SERVAL (Lausanne), edoc (Basel), PubMed Central, and others
+
+This pattern reflects how successful academic papers accumulate presence across: (1) the publisher's platform, (2) PubMed/PubMed Central for life sciences, (3) the authors' institutional repositories, and (4) discipline-specific indexes.
+
+### Implications for COAR Integration
+
+Multi-platform presence has strategic implications for **papers we have evaluated** (56 papers currently). COAR Notify would allow us to notify repositories when we publish an evaluation of a paper they host — this is relevant for evaluated papers, not papers still in our consideration pipeline.
+
+1. **Notification efficiency**: An evaluated paper might be hosted on multiple COAR-enabled repositories, each of which could be notified about our evaluation
+2. **Version tracking**: Different platforms may host different versions (submitted, accepted, published) — COAR Notify metadata could clarify which version was evaluated
+3. **Reach optimization**: Focusing on high-coverage platforms (like arXiv or institutional repository networks) maximizes visibility for our evaluations
+
+## Where Are Papers Hosted?
+
+The table below shows how many papers appear on each platform, **counting all hosting locations** (not just primary URLs). Since half of our papers appear on 2+ platforms, the same paper may be counted under multiple rows.
+
+```{r}
+#| label: setup
+#| include: false
+
+# Data from our analysis (counting all hosting locations, papers may appear multiple times)
 hosts <- data.frame(
   Platform = c("NBER", "PubMed (index)", "PubMed Central", "RePEc (index)",
                "SSRN", "arXiv", "Nature", "Institutional Repos", "OSF", "EconStor"),
@@ -45,7 +89,7 @@ hosts <- data.frame(
 
 kable(hosts,
       col.names = c("Platform", "Papers", "%", "Hosts Papers?", "COAR Status"),
-      caption = "Top hosting platforms for Unjournal papers")
+      caption = "Platform appearances across 315 papers (counting all hosting locations; papers may appear on multiple platforms)")
 ```
 
 ### An Important Distinction: Hosts vs. Indexes
@@ -116,6 +160,8 @@ Many of these use DSpace or EPrints, platforms that support or are developing CO
 
 ## Comparison: Evaluated Papers vs. Full Pipeline
 
+This comparison matters because **only evaluated papers can currently benefit from COAR Notify** — we would notify repositories about our published evaluations of these papers.
+
 ```{r}
 #| label: comparison-table
 
@@ -127,8 +173,10 @@ comparison <- data.frame(
 
 kable(comparison,
       col.names = c("Platform", "56 Evaluated Papers", "315 All Papers"),
-      caption = "Platform distribution: evaluated papers vs. full pipeline")
+      caption = "Platform appearances: evaluated papers vs. full pipeline (counting all hosting locations)")
 ```
+
+**Key observation for COAR**: Among our 56 evaluated papers, approximately 6 (11%) are on COAR-enabled platforms (4 on arXiv, 2 on OSF). These papers could immediately benefit from COAR Notify integration.
 
 The broader pipeline shows more diversity in hosting platforms, with notably more papers in PubMed Central and SSRN than among the currently evaluated set.
 
@@ -144,13 +192,19 @@ The actual multi-platform presence is likely 20-30% higher than reported.
 
 ## Implications for The Unjournal
 
-1. **Immediate integration**: 26 papers on arXiv/OSF can benefit from COAR Notify now
+**For our 56 evaluated papers:**
 
-2. **Author guidance**: Encouraging deposits on arXiv, OSF, or Zenodo (in addition to NBER/SSRN) would expand COAR coverage
+1. **Immediate integration**: Papers we've evaluated that are hosted on arXiv or OSF (COAR-enabled platforms) could benefit from COAR Notify now — repositories could be notified of our published evaluations
 
-3. **Strategic partnerships**: EconStor/ZBW is a natural partner for economics overlay review
+2. **Multi-platform notifications**: Since evaluated papers often appear on multiple platforms, a single evaluation could potentially trigger notifications to several repositories
 
-4. **Platform advocacy**: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem
+**For future evaluations:**
+
+3. **Author guidance**: Encouraging authors to deposit on arXiv, OSF, or Zenodo (in addition to NBER/SSRN) would expand COAR coverage for future evaluations
+
+4. **Strategic partnerships**: EconStor/ZBW is a natural partner for economics overlay review — they're already in the COAR directory
+
+5. **Platform advocacy**: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem and increases coverage for institutional repositories
 
 ## Methodology
 
