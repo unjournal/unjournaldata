@@ -156,12 +156,18 @@ ul.task-list li input[type="checkbox"] {
 <p>We analyzed where the 315 papers in The Unjournal’s database are hosted across academic platforms and repositories. Understanding this distribution helps us identify opportunities for improving discoverability and integrating with scholarly infrastructure initiatives like <a href="https://notify.coar-repositories.org/">COAR Notify</a>.</p>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<p><strong>For our 57 evaluated papers</strong> (where COAR Notify could link evaluations to repositories):</p>
 <ul>
-<li><strong>315 papers</strong> analyzed (56 with published evaluations, 259 in our pipeline)</li>
-<li><strong>Average of 2.3 hosting locations</strong> per paper — most papers appear on multiple platforms</li>
+<li><strong>7 papers (12%)</strong> are on COAR-enabled platforms (arXiv, OSF) — ready for integration now</li>
+<li><strong>17 papers (30%)</strong> are on NBER, which could implement COAR Notify</li>
+<li><strong>15 papers (26%)</strong> are hosted only on organization websites or published journals — no clear COAR path</li>
+<li><strong>Average 2.3 hosting locations</strong> per paper — many appear on multiple platforms</li>
+</ul>
+<p><strong>For the full database (315 papers including 258 in pipeline):</strong></p>
+<ul>
 <li><strong>Half (50%) of papers</strong> appear on 2 or more platforms</li>
-<li><strong>26 papers (8%)</strong> are on COAR Notify-enabled platforms (arXiv, OSF)</li>
-<li><strong>72 papers</strong> appear across <strong>47 institutional repositories</strong></li>
+<li><strong>73 papers</strong> appear across <strong>47 institutional repositories</strong></li>
+<li>More diversity in platforms: notably more in PubMed Central, SSRN, and IZA</li>
 </ul>
 </section>
 <section id="multi-platform-presence" class="level2">
@@ -220,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="implications-for-coar-integration" class="level3">
 <h3 class="anchored" data-anchor-id="implications-for-coar-integration">Implications for COAR Integration</h3>
-<p>Multi-platform presence has strategic implications for <strong>papers we have evaluated</strong> (56 papers currently). COAR Notify would allow us to notify repositories when we publish an evaluation of a paper they host — this is relevant for evaluated papers, not papers still in our consideration pipeline.</p>
+<p>Multi-platform presence has strategic implications for <strong>papers we have evaluated</strong> (57 papers currently). COAR Notify would allow us to notify repositories when we publish an evaluation of a paper they host — this is relevant for evaluated papers, not papers still in our consideration pipeline.</p>
 <ol type="1">
 <li><strong>Notification efficiency</strong>: An evaluated paper might be hosted on multiple COAR-enabled repositories, each of which could be notified about our evaluation</li>
 <li><strong>Version tracking</strong>: Different platforms may host different versions (submitted, accepted, published) — COAR Notify metadata could clarify which version was evaluated</li>
@@ -234,12 +240,23 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Platform appearances across 315 papers (counting all hosting locations; papers may appear on multiple platforms)</caption>
+<caption>Platform appearances (counting all hosting locations; papers may appear on multiple platforms)</caption>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 15%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Platform</th>
-<th style="text-align: right;">Papers</th>
-<th style="text-align: left;">%</th>
+<th style="text-align: right;">57 Evaluated (detected)</th>
+<th style="text-align: left;">57 Evaluated (est.)</th>
+<th style="text-align: right;">315 All (detected)</th>
+<th style="text-align: left;">315 All (est.)</th>
 <th style="text-align: left;">Hosts Papers?</th>
 <th style="text-align: left;">COAR Status</th>
 </tr>
@@ -247,78 +264,131 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">NBER</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: left;">17</td>
 <td style="text-align: right;">66</td>
-<td style="text-align: left;">21%</td>
+<td style="text-align: left;">66</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Could implement</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PubMed (index)</td>
-<td style="text-align: right;">58</td>
-<td style="text-align: left;">18%</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">N/A (index)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PubMed Central</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: left;">13%</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: left;">Potential</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">RePEc (index)</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: left;">12%</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">N/A (index)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SSRN</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: left;">8%</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: left;">Potential</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">arXiv</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: left;">6%</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: left;">Enabled</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Nature</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">3%</td>
-<td style="text-align: left;">Yes</td>
-<td style="text-align: left;">Via Crossref</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Institutional Repos</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: left;">23%</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">10-15</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: left;">90-110</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Via DSpace/EPrints</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">OSF</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">3%</td>
+<td style="text-align: left;">PubMed (index)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: left;">58</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">N/A (index)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PubMed Central</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Potential</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RePEc (index)</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">25-30†</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">80-100†</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">N/A (index)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SSRN</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">4-5</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">30-35</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Potential</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">arXiv</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">18</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Enabled</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">OSF</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Enabled</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nature portfolio</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Via Crossref</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">EconStor</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">2%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">6-8</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">In COAR directory</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IZA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Could implement</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CEPR</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Could implement</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other*</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: left;">113</td>
+<td style="text-align: left;">Various</td>
+<td style="text-align: left;">—</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<p><strong>Notes on the table:</strong></p>
+<ul>
+<li><em>†RePEc estimates:</em> OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.</li>
+<li><em>Institutional repos estimate:</em> Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.</li>
+<li><strong>Other</strong>* includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.</li>
+</ul>
 <section id="an-important-distinction-hosts-vs.-indexes" class="level3">
 <h3 class="anchored" data-anchor-id="an-important-distinction-hosts-vs.-indexes">An Important Distinction: Hosts vs.&nbsp;Indexes</h3>
 <p>Not all platforms that list papers actually <em>host</em> them:</p>
@@ -379,38 +449,56 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>COAR Notify readiness of platforms hosting Unjournal papers</caption>
+<colgroup>
+<col style="width: 27%">
+<col style="width: 41%">
+<col style="width: 14%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">COAR Status</th>
 <th style="text-align: left;">Platforms</th>
-<th style="text-align: left;">Papers</th>
+<th style="text-align: left;">57 Evaluated</th>
+<th style="text-align: left;">315 All Papers</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Already COAR-enabled</td>
 <td style="text-align: left;">arXiv, OSF</td>
-<td style="text-align: left;">26 (8%)</td>
+<td style="text-align: left;">7 (12%)</td>
+<td style="text-align: left;">32 (10%)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Potential targets</td>
 <td style="text-align: left;">SSRN, PubMed Central, EconStor</td>
-<td style="text-align: left;">72 (23%)</td>
+<td style="text-align: left;">5 (9%)</td>
+<td style="text-align: left;">71 (23%)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Would need custom work</td>
-<td style="text-align: left;">NBER, institutional repos</td>
-<td style="text-align: left;">138 (44%)</td>
+<td style="text-align: left;">NBER, IZA, CEPR, institutional repos</td>
+<td style="text-align: left;">24 (42%)</td>
+<td style="text-align: left;">144 (46%)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Not applicable (indexes)</td>
 <td style="text-align: left;">RePEc, PubMed</td>
-<td style="text-align: left;">97 (31%)</td>
+<td style="text-align: left;">18 (32%)*</td>
+<td style="text-align: left;">97 (31%)*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other hosting</td>
+<td style="text-align: left;">Org websites, journals, personal</td>
+<td style="text-align: left;">15 (26%)</td>
+<td style="text-align: left;">113 (36%)</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<p><em>Note: Papers may appear in multiple categories since many are on 2+ platforms. The “indexes” category (RePEc, PubMed) counts papers that appear there but doesn’t reflect COAR potential since indexes don’t host papers.</em></p>
 </section>
 <section id="strategic-pathways" class="level3">
 <h3 class="anchored" data-anchor-id="strategic-pathways">Strategic Pathways</h3>
@@ -431,57 +519,13 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Asia-Pacific institutions</strong> (8 papers): Monash, NUS, Hong Kong universities</p>
 <p>Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.</p>
 </section>
-<section id="comparison-evaluated-papers-vs.-full-pipeline" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-evaluated-papers-vs.-full-pipeline">Comparison: Evaluated Papers vs.&nbsp;Full Pipeline</h2>
-<p>This comparison matters because <strong>only evaluated papers can currently benefit from COAR Notify</strong> — we would notify repositories about our published evaluations of these papers.</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Platform appearances: evaluated papers vs.&nbsp;full pipeline (counting all hosting locations)</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Platform</th>
-<th style="text-align: left;">56 Evaluated Papers</th>
-<th style="text-align: left;">315 All Papers</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">NBER</td>
-<td style="text-align: left;">17 (30%)</td>
-<td style="text-align: left;">66 (21%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SSRN</td>
-<td style="text-align: left;">3 (5%)</td>
-<td style="text-align: left;">26 (8%)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">arXiv</td>
-<td style="text-align: left;">4 (7%)</td>
-<td style="text-align: left;">18 (6%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">OSF</td>
-<td style="text-align: left;">2 (4%)</td>
-<td style="text-align: left;">8 (3%)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PubMed Central</td>
-<td style="text-align: left;">2 (4%)</td>
-<td style="text-align: left;">40 (13%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Institutional repos</td>
-<td style="text-align: left;">~10</td>
-<td style="text-align: left;">72</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><strong>Key observation for COAR</strong>: Among our 56 evaluated papers, approximately 6 (11%) are on COAR-enabled platforms (4 on arXiv, 2 on OSF). These papers could immediately benefit from COAR Notify integration.</p>
-<p>The broader pipeline shows more diversity in hosting platforms, with notably more papers in PubMed Central and SSRN than among the currently evaluated set.</p>
+<section id="key-differences-evaluated-papers-vs.-full-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="key-differences-evaluated-papers-vs.-full-pipeline">Key Differences: Evaluated Papers vs.&nbsp;Full Pipeline</h2>
+<p>The main hosting table above shows both groups side-by-side. Key differences:</p>
+<p><strong>COAR-ready evaluated papers</strong>: Among our 57 evaluated papers, approximately 7 (12%) are on COAR-enabled platforms (4 on arXiv, 3 on OSF). These papers could immediately benefit from COAR Notify integration.</p>
+<p><strong>Pipeline shows more diversity</strong>: The broader pipeline has notably more papers in PubMed Central (40 vs.&nbsp;2) and institutional repositories (73 vs.&nbsp;7), reflecting a broader range of research fields beyond economics.</p>
+<p><strong>Working paper series</strong>: NBER dominates our evaluated papers (30%), while the pipeline includes more representation from IZA (5 papers) and one CEPR paper. These economics working paper series could potentially implement COAR Notify.</p>
+<p><strong>“Other” hosting</strong>: 15 evaluated papers (26%) and 113 pipeline papers (36%) are hosted only on organization websites, personal hosting, or published journals not in major indexes. This represents a significant portion that wouldn’t benefit from platform-level COAR integration.</p>
 </section>
 <section id="data-limitations" class="level2">
 <h2 class="anchored" data-anchor-id="data-limitations">Data Limitations</h2>
@@ -495,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="implications-for-the-unjournal" class="level2">
 <h2 class="anchored" data-anchor-id="implications-for-the-unjournal">Implications for The Unjournal</h2>
-<p><strong>For our 56 evaluated papers:</strong></p>
+<p><strong>For our 57 evaluated papers:</strong></p>
 <ol type="1">
 <li><p><strong>Immediate integration</strong>: Papers we’ve evaluated that are hosted on arXiv or OSF (COAR-enabled platforms) could benefit from COAR Notify now — repositories could be notified of our published evaluations</p></li>
 <li><p><strong>Multi-platform notifications</strong>: Since evaluated papers often appear on multiple platforms, a single evaluation could potentially trigger notifications to several repositories</p></li>
