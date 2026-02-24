@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="David Reinstein with Claude Code assistance">
+<meta name="dcterms.date" content="2026-02-24">
 
-<title>Blog Posts – The Unjournal Data Blog</title>
+<title>Where Are Unjournal Papers Hosted? A Multi-Platform Analysis – The Unjournal Data Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,77 +70,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">The Unjournal Data Blog</span>
     </a>
   </div>
@@ -151,7 +93,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./posts.html" aria-current="page"> 
+    <a class="nav-link" href="../../posts.html"> 
 <span class="menu-text">Blog Posts</span></a>
   </li>  
   <li class="nav-item compact">
@@ -169,237 +111,339 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Blog Posts</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Where Are Unjournal Papers Hosted? A Multi-Platform Analysis</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">data</div>
+                <div class="quarto-category">infrastructure</div>
+                <div class="quarto-category">open-science</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>David Reinstein with Claude Code assistance </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 24, 2026</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="MjAyNA==">2024 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YW5hbHlzaXM=">analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZGF0YQ==">data <span class="quarto-category-count">(5)</span></div><div class="category" data-category="ZXZhbHVhdGlvbnM=">evaluations <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZXZhbHVhdG9ycw==">evaluators <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aGlnaGxpZ2h0cw==">highlights <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW5mcmFzdHJ1Y3R1cmU=">infrastructure <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b3Blbi1zY2llbmNl">open-science <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHJvY2Vzcw==">process <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3VydmV5">survey <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZGF0YSUyQ2luZnJhc3RydWN0dXJlJTJDb3Blbi1zY2llbmNl" data-listing-date-sort="1771909200000" data-listing-file-modified-sort="1771945993598" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="874">
-<div class="thumbnail"><a href="./posts/paper-hosting-analysis-2026/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/paper-hosting-analysis-2026/index.html" class="no-external">Where Are Unjournal Papers Hosted? A Multi-Platform Analysis</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YQ=='); return false;">data</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mcmFzdHJ1Y3R1cmU='); return false;">infrastructure</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zY2llbmNl'); return false;">open-science</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/paper-hosting-analysis-2026/index.html" class="no-external">
-We analyzed where the 315 papers in The Unjournal’s database are hosted across academic platforms and repositories. Understanding this distribution helps us identify…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/paper-hosting-analysis-2026/index.html" class="no-external">
-<div class="listing-date">
-Feb 24, 2026
-</div>
-<div class="listing-author">
-David Reinstein with Claude Code assistance
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="ZGF0YSUyQ2V2YWx1YXRpb25z" data-listing-date-sort="1768798800000" data-listing-file-modified-sort="1768839611348" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1322">
-<div class="thumbnail"><a href="./posts/dashboard-data-jan2026/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/dashboard-data-jan2026/index_files/figure-html/areas-plot-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/dashboard-data-jan2026/index.html" class="no-external">Unjournal Evaluations Data - January 2026</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YQ=='); return false;">data</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZXZhbHVhdGlvbnM='); return false;">evaluations</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/dashboard-data-jan2026/index.html" class="no-external">
-<p>Static snapshot of evaluation data while the interactive dashboard is being updated</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/dashboard-data-jan2026/index.html" class="no-external">
-<div class="listing-date">
-Jan 19, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="ZGF0YSUyQ2FuYWx5c2lzJTJDaGlnaGxpZ2h0cyUyQzIwMjQ=" data-listing-date-sort="1766984400000" data-listing-file-modified-sort="1768839611349" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3230">
-<div class="thumbnail"><a href="./posts/high-quality-papers-2024/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/high-quality-papers-2024/visualizations/quality_scatter.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/high-quality-papers-2024/index.html" class="no-external">Exceptional Research from The Unjournal: Papers Evaluated in 2024-2025</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YQ=='); return false;">data</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('YW5hbHlzaXM='); return false;">analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aGlnaGxpZ2h0cw=='); return false;">highlights</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('MjAyNA=='); return false;">2024</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/high-quality-papers-2024/index.html" class="no-external">
-The Unjournal is revolutionizing academic peer review by providing public, rigorous evaluations of research that matters for global priorities—before it’s locked behind…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/high-quality-papers-2024/index.html" class="no-external">
-<div class="listing-date">
-Dec 29, 2025
-</div>
-<div class="listing-author">
-David Reinstein with Claude Code assistance
-</div>
-</a>
+<p>We analyzed where the 315 papers in The Unjournal’s database are hosted across academic platforms and repositories. Understanding this distribution helps us identify opportunities for improving discoverability and integrating with scholarly infrastructure initiatives like <a href="https://notify.coar-repositories.org/">COAR Notify</a>.</p>
+<section id="key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
+<ul>
+<li><strong>315 papers</strong> analyzed (56 with published evaluations, 259 in our pipeline)</li>
+<li><strong>Average of 2.3 hosting locations</strong> per paper</li>
+<li><strong>26 papers (8%)</strong> are on COAR Notify-enabled platforms (arXiv, OSF)</li>
+<li><strong>72 papers</strong> appear across <strong>47 institutional repositories</strong></li>
+</ul>
+</section>
+<section id="where-are-papers-hosted" class="level2">
+<h2 class="anchored" data-anchor-id="where-are-papers-hosted">Where Are Papers Hosted?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Top hosting platforms for Unjournal papers</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Platform</th>
+<th style="text-align: right;">Papers</th>
+<th style="text-align: left;">%</th>
+<th style="text-align: left;">Hosts Papers?</th>
+<th style="text-align: left;">COAR Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NBER</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: left;">21%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Could implement</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PubMed (index)</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: left;">18%</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">N/A (index)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PubMed Central</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">13%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Potential</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RePEc (index)</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">12%</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">N/A (index)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SSRN</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">8%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Potential</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">arXiv</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">6%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Enabled</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nature</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">3%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Via Crossref</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Institutional Repos</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: left;">23%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Via DSpace/EPrints</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OSF</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">3%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Enabled</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EconStor</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">2%</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">In COAR directory</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZXZhbHVhdG9ycyUyQ3Byb2Nlc3MlMkNzdXJ2ZXk=" data-listing-date-sort="1762923600000" data-listing-file-modified-sort="1768839611348" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1388">
-<div class="thumbnail"><a href="./posts/evaluator-survey-insights/index.html" class="no-external">
+<section id="an-important-distinction-hosts-vs.-indexes" class="level3">
+<h3 class="anchored" data-anchor-id="an-important-distinction-hosts-vs.-indexes">An Important Distinction: Hosts vs.&nbsp;Indexes</h3>
+<p>Not all platforms that list papers actually <em>host</em> them:</p>
+<ul>
+<li><strong>Platforms that host papers</strong> (store the PDFs): NBER, arXiv, SSRN, OSF, institutional repositories, PubMed Central</li>
+<li><strong>Indexes</strong> (link to papers hosted elsewhere): RePEc, PubMed, DBLP</li>
+</ul>
+<p>This distinction matters for infrastructure integration. <a href="https://coar-notify.net/">COAR Notify</a>, for example, can only integrate with platforms that actually host papers, since notifications need to link to the actual content.</p>
+</section>
+</section>
+<section id="repositories-vs.-working-paper-series" class="level2">
+<h2 class="anchored" data-anchor-id="repositories-vs.-working-paper-series">Repositories vs.&nbsp;Working Paper Series</h2>
+<p>A common question: what’s the difference between a “repository” and a “working paper series”?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 27%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Repository</th>
+<th>Working Paper Series</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Examples</td>
+<td>arXiv, Zenodo, OSF</td>
+<td>NBER, CEPR, IZA</td>
+</tr>
+<tr class="even">
+<td>Who can deposit</td>
+<td>Open to anyone (within scope)</td>
+<td>Selective/affiliated authors</td>
+</tr>
+<tr class="odd">
+<td>Hosts papers?</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>Could implement COAR?</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Both host papers.</strong> The difference is governance (open vs.&nbsp;selective), not technical capability. NBER, for instance, hosts PDFs and assigns DOIs just like arXiv does.</p>
+</section>
+<section id="coar-notify-current-state-and-opportunities" class="level2">
+<h2 class="anchored" data-anchor-id="coar-notify-current-state-and-opportunities">COAR Notify: Current State and Opportunities</h2>
+<p><a href="https://notify.coar-repositories.org/">COAR Notify</a> is a protocol enabling repositories and review services to exchange notifications about peer review activities. This is directly relevant for The Unjournal as an overlay review service.</p>
+<section id="current-coar-readiness" class="level3">
+<h3 class="anchored" data-anchor-id="current-coar-readiness">Current COAR Readiness</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>COAR Notify readiness of platforms hosting Unjournal papers</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">COAR Status</th>
+<th style="text-align: left;">Platforms</th>
+<th style="text-align: left;">Papers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Already COAR-enabled</td>
+<td style="text-align: left;">arXiv, OSF</td>
+<td style="text-align: left;">26 (8%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Potential targets</td>
+<td style="text-align: left;">SSRN, PubMed Central, EconStor</td>
+<td style="text-align: left;">72 (23%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Would need custom work</td>
+<td style="text-align: left;">NBER, institutional repos</td>
+<td style="text-align: left;">138 (44%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not applicable (indexes)</td>
+<td style="text-align: left;">RePEc, PubMed</td>
+<td style="text-align: left;">97 (31%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="strategic-pathways" class="level3">
+<h3 class="anchored" data-anchor-id="strategic-pathways">Strategic Pathways</h3>
+<p>Rather than reaching out to each institution individually, there are aggregation strategies:</p>
+<ol type="1">
+<li><p><strong>Platform-level adoption</strong>: DSpace 8 now includes COAR Notify. If universities upgrade, dozens of institutional repositories gain COAR support simultaneously.</p></li>
+<li><p><strong>Hub repositories</strong>: <a href="https://www.econstor.eu/">EconStor</a> (operated by ZBW, the German economics library) partners with 800+ institutions and is already in COAR’s directory.</p></li>
+<li><p><strong>Economics profession coordination</strong>: Organizations like the AEA and NBER have coordinated infrastructure changes before.</p></li>
+</ol>
+</section>
+</section>
+<section id="institutional-repository-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="institutional-repository-distribution">Institutional Repository Distribution</h2>
+<p>Our papers appear across 47 different university repositories:</p>
+<p><strong>UK institutions</strong> (25 papers): LSE, Cambridge, Oxford, Exeter, Warwick, Edinburgh, and others</p>
+<p><strong>European institutions</strong> (18 papers): Radboud, Copenhagen, Göttingen, Lund, Lausanne, and others</p>
+<p><strong>US institutions</strong> (15 papers): Chicago, Harvard, UC system (eScholarship), Minnesota, and others</p>
+<p><strong>Asia-Pacific institutions</strong> (8 papers): Monash, NUS, Hong Kong universities</p>
+<p>Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.</p>
+</section>
+<section id="comparison-evaluated-papers-vs.-full-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-evaluated-papers-vs.-full-pipeline">Comparison: Evaluated Papers vs.&nbsp;Full Pipeline</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Platform distribution: evaluated papers vs.&nbsp;full pipeline</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Platform</th>
+<th style="text-align: left;">56 Evaluated Papers</th>
+<th style="text-align: left;">315 All Papers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NBER</td>
+<td style="text-align: left;">17 (30%)</td>
+<td style="text-align: left;">66 (21%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SSRN</td>
+<td style="text-align: left;">3 (5%)</td>
+<td style="text-align: left;">26 (8%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">arXiv</td>
+<td style="text-align: left;">4 (7%)</td>
+<td style="text-align: left;">18 (6%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OSF</td>
+<td style="text-align: left;">2 (4%)</td>
+<td style="text-align: left;">8 (3%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PubMed Central</td>
+<td style="text-align: left;">2 (4%)</td>
+<td style="text-align: left;">40 (13%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Institutional repos</td>
+<td style="text-align: left;">~10</td>
+<td style="text-align: left;">72</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The broader pipeline shows more diversity in hosting platforms, with notably more papers in PubMed Central and SSRN than among the currently evaluated set.</p>
+</section>
+<section id="data-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="data-limitations">Data Limitations</h2>
+<p>Our analysis used OpenAlex, Semantic Scholar, and CrossRef APIs. Some limitations:</p>
+<ul>
+<li><strong>RePEc under-counted</strong>: OpenAlex links only ~25% of NBER papers to their RePEc entries (actual coverage is nearly 100%)</li>
+<li><strong>Newer papers</strong>: May not yet be fully indexed</li>
+<li><strong>Personal websites</strong>: Cannot be automatically discovered</li>
+</ul>
+<p>The actual multi-platform presence is likely 20-30% higher than reported.</p>
+</section>
+<section id="implications-for-the-unjournal" class="level2">
+<h2 class="anchored" data-anchor-id="implications-for-the-unjournal">Implications for The Unjournal</h2>
+<ol type="1">
+<li><p><strong>Immediate integration</strong>: 26 papers on arXiv/OSF can benefit from COAR Notify now</p></li>
+<li><p><strong>Author guidance</strong>: Encouraging deposits on arXiv, OSF, or Zenodo (in addition to NBER/SSRN) would expand COAR coverage</p></li>
+<li><p><strong>Strategic partnerships</strong>: EconStor/ZBW is a natural partner for economics overlay review</p></li>
+<li><p><strong>Platform advocacy</strong>: Supporting DSpace/EPrints COAR adoption helps the broader ecosystem</p></li>
+</ol>
+</section>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<p>We queried OpenAlex, Semantic Scholar, and CrossRef APIs for each paper, using title matching (threshold &gt;0.80) and DOI lookup where available. Results were cross-referenced and deduplicated. The analysis code and raw data are available in our <a href="https://github.com/unjournal/unjournaldata">data repository</a>.</p>
+<hr>
+<p><em>This analysis was conducted in February 2026 to support discussions with <a href="https://www.coar-repositories.org/">COAR</a> about infrastructure integration for overlay peer review.</em></p>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/evaluator-survey-insights/index.html" class="no-external">Inside The Unjournal: What Evaluators Tell Us</a>
-</h3>
-<div class="listing-categories">
+</section>
 
-<div class="listing-category" onclick="window.quartoListingCategory('ZXZhbHVhdG9ycw=='); return false;">evaluators</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHJvY2Vzcw=='); return false;">process</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('c3VydmV5'); return false;">survey</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/evaluator-survey-insights/index.html" class="no-external">
-<p>Analyzing 100+ evaluator survey responses about time spent, experience levels, and feedback on The Unjournal process.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/evaluator-survey-insights/index.html" class="no-external">
-<div class="listing-date">
-Nov 12, 2025
-</div>
-<div class="listing-author">
-David Reinstein with Claude Code assistance
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZGF0YSUyQ2FuYWx5c2lz" data-listing-date-sort="1760500800000" data-listing-file-modified-sort="1768839611353" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="31" data-listing-word-count-sort="6115">
-<div class="thumbnail"><a href="./posts/uj-data-update-2025/index.html" class="no-external">
-
-<p class="card-img-top"><img src="posts/uj-data-update-2025/index_files/figure-html/fig-scree-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/uj-data-update-2025/index.html" class="no-external">Unjournal data update: Deeper analysis with more evaluations</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YQ=='); return false;">data</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('YW5hbHlzaXM='); return false;">analysis</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/uj-data-update-2025/index.html" class="no-external">
-*Inspired by earlier work from David Hugh-Jones
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/uj-data-update-2025/index.html" class="no-external">
-<div class="listing-date">
-Oct 15, 2025
-</div>
-<div class="listing-author">
-Orchestrated by David Reinstein with Claude Code assistance*
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="ZGF0YQ==" data-listing-date-sort="1721880000000" data-listing-file-modified-sort="1768839611353" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2949">
-<div class="thumbnail"><a href="./posts/uj-data-first-look/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/uj-data-first-look/index.html" class="no-external">A first look at Unjournal’s data</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YQ=='); return false;">data</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/uj-data-first-look/index.html" class="no-external">
-The Unjournal is an organization aiming to change how scientific research is evaluated. We carry out journal-independent evaluation of research papers.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/uj-data-first-look/index.html" class="no-external">
-<div class="listing-date">
-Jul 25, 2024
-</div>
-<div class="listing-author">
-David Hugh-Jones
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
