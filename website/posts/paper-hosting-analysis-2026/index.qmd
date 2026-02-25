@@ -26,10 +26,10 @@ We analyzed where the 315 papers in The Unjournal's database are hosted across a
 
 - **Half (50%) of papers** appear on 2 or more platforms
 - **73 papers** appear across **47 institutional repositories**
-- **35+ papers** are on SSRN (many cross-posted from NBER or other sources)
+- **49 papers** are on SSRN (many cross-posted from NBER or other sources)
 - More diversity in platforms: notably more in PubMed Central and IZA
 
-*Note on SSRN:* Many papers are cross-posted to SSRN even when their primary URL points elsewhere (e.g., NBER, personal sites). Our analysis found 22 evaluated papers on SSRN — far more than the 3 with SSRN as their primary link.
+*Note on SSRN:* Many papers are cross-posted to SSRN even when their primary URL points elsewhere (e.g., NBER, personal sites). Our analysis found 22 evaluated papers and 27 pipeline papers on SSRN — far more than the 16 with SSRN as their primary link.
 
 ## Multi-Platform Presence
 
@@ -92,8 +92,8 @@ hosts <- data.frame(
                "EconStor", "IZA", "CEPR", "Other*"),
   Eval_Detected = c(17, 7, 4, 2, 14, 22, 4, 3, 1, 0, 0, 0, 15),
   Eval_Est = c("17", "10-15", "4", "2", "25-30†", "22+", "4", "3", "1", "0-1", "0", "0", "15"),
-  All_Detected = c(66, 73, 58, 40, 39, 35, 18, 14, 18, 5, 5, 1, 113),
-  All_Est = c("66", "90-110", "58", "40", "80-100†", "40-50", "18", "14", "18", "6-8", "5", "1", "113"),
+  All_Detected = c(66, 73, 58, 40, 39, 49, 18, 14, 18, 5, 5, 1, 113),
+  All_Est = c("66", "90-110", "58", "40", "80-100†", "50-60", "18", "14", "18", "6-8", "5", "1", "113"),
   Hosts_Papers = c("Yes", "Yes", "No", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Various"),
   COAR_Status = c("Could implement", "Via DSpace/EPrints", "N/A (index)", "Potential", "N/A (index)",
                   "Potential", "Enabled", "Enabled", "Via Crossref", "In COAR directory",
@@ -112,7 +112,7 @@ kable(hosts,
 
 **Notes on the table:**
 
-- *SSRN cross-posting:* Many NBER papers are cross-posted to SSRN. Of our 22 evaluated papers on SSRN, 11 have NBER as their primary URL. Examples include "Cash Transfers for Child Development" ([SSRN 4709146](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146)), "AI and Economic Growth" ([SSRN 3053718](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718)), and "Stagnation and Scientific Incentives" ([SSRN 3539319](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3539319)). Full mapping available in `data/ssrn_crosspost_mapping.csv`.
+- *SSRN cross-posting:* Many NBER papers are cross-posted to SSRN. Of our 49 total papers on SSRN, only 16 have SSRN as primary URL — the rest are cross-posted from NBER or other sources. Examples include "Cash Transfers for Child Development" ([SSRN 4709146](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146)), "AI and Economic Growth" ([SSRN 3053718](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718)), and pipeline papers like "Longer-run Economic Consequences of Pandemics" ([SSRN 3594164](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3594164)). Full mapping available in `data/ssrn_crosspost_mapping.csv`.
 - *†RePEc estimates:* OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.
 - *Institutional repos estimate:* Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.
 - **Other*** includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.
@@ -150,9 +150,9 @@ A common question: what's the difference between a "repository" and a "working p
 
 coar_data <- data.frame(
   Status = c("Already COAR-enabled", "Potential targets (SSRN, PMC, EconStor)", "Would need custom work", "Not applicable (indexes)", "Other hosting"),
-  Platforms = c("arXiv, OSF", "SSRN (22 evaluated), PubMed Central, EconStor", "NBER, IZA, CEPR, institutional repos", "RePEc, PubMed", "Org websites, journals, personal"),
+  Platforms = c("arXiv, OSF", "SSRN (49 papers), PubMed Central, EconStor", "NBER, IZA, CEPR, institutional repos", "RePEc, PubMed", "Org websites, journals, personal"),
   Evaluated = c("7 (12%)", "24 (42%)", "24 (42%)", "18 (32%)*", "15 (26%)"),
-  All = c("32 (10%)", "77 (24%)", "144 (46%)", "97 (31%)*", "113 (36%)")
+  All = c("32 (10%)", "91 (29%)", "144 (46%)", "97 (31%)*", "113 (36%)")
 )
 
 kable(coar_data,
