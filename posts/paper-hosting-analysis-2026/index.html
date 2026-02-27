@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>For the full database (315 papers including 258 in pipeline):</strong></p>
 <ul>
 <li><strong>Half (50%) of papers</strong> appear on 2 or more platforms</li>
-<li><strong>73 papers</strong> appear across <strong>47 institutional repositories</strong></li>
+<li><strong>100-150 papers</strong> (est.) appear in institutional repositories (only 40 as primary URL, but most papers are cross-posted to authors’ university repos)</li>
 <li><strong>49 papers</strong> are on SSRN (many cross-posted from NBER or other sources)</li>
 <li>More diversity in platforms: notably more in PubMed Central and IZA</li>
 </ul>
@@ -276,10 +276,10 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Institutional Repos</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">10-15</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: left;">90-110</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">25-35‡</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">100-150‡</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Via DSpace/EPrints</td>
 </tr>
@@ -389,6 +389,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Notes on the table:</strong></p>
 <ul>
 <li><em>SSRN cross-posting:</em> Many NBER papers are cross-posted to SSRN. Of our 49 total papers on SSRN, only 16 have SSRN as primary URL — the rest are cross-posted from NBER or other sources. Examples include “Cash Transfers for Child Development” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146">SSRN 4709146</a>), “AI and Economic Growth” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718">SSRN 3053718</a>), and pipeline papers like “Longer-run Economic Consequences of Pandemics” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3594164">SSRN 3594164</a>). Full mapping available in <code>data/ssrn_crosspost_mapping.csv</code>.</li>
+<li><em>‡Institutional repos estimates:</em> Only 40 papers have institutional repos as their primary URL, but papers hosted on NBER, SSRN, or personal sites are typically also deposited in the authors’ institutional repositories. Based on DOI coverage and author affiliations, we estimate 100-150 papers (30-45% of database) are actually present in institutional repos.</li>
 <li><em>†RePEc estimates:</em> OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.</li>
 <li><em>Institutional repos estimate:</em> Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.</li>
 <li><strong>Other</strong>* includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.</li>
@@ -516,12 +517,86 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="institutional-repository-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="institutional-repository-distribution">Institutional Repository Distribution</h2>
-<p>Our papers appear across 47 different university repositories:</p>
-<p><strong>UK institutions</strong> (25 papers): LSE, Cambridge, Oxford, Exeter, Warwick, Edinburgh, and others</p>
-<p><strong>European institutions</strong> (18 papers): Radboud, Copenhagen, Göttingen, Lund, Lausanne, and others</p>
-<p><strong>US institutions</strong> (15 papers): Chicago, Harvard, UC system (eScholarship), Minnesota, and others</p>
-<p><strong>Asia-Pacific institutions</strong> (8 papers): Monash, NUS, Hong Kong universities</p>
-<p>Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.</p>
+<p>“Institutional repositories” encompasses both the <strong>software platforms</strong> universities use and the <strong>specific university repositories</strong> themselves. Understanding both is important for COAR Notify integration strategy.</p>
+<section id="repository-software-platforms" class="level3">
+<h3 class="anchored" data-anchor-id="repository-software-platforms">Repository Software Platforms</h3>
+<p>Universities run institutional repositories using various software platforms. Platform-level COAR adoption would enable many repositories simultaneously:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Repository software platforms and their COAR Notify potential</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 53%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Platform</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Typical Users</th>
+<th style="text-align: left;">COAR Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">DSpace</td>
+<td style="text-align: left;">Open-source</td>
+<td style="text-align: left;">2000+ institutions globally (MIT, Cambridge, Edinburgh…)</td>
+<td style="text-align: left;">DSpace 8 includes COAR Notify!</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EPrints</td>
+<td style="text-align: left;">Open-source</td>
+<td style="text-align: left;">500+ institutions, strong in UK (LSE, Southampton, White Rose consortium…)</td>
+<td style="text-align: left;">Community developing support</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PURE (Elsevier)</td>
+<td style="text-align: left;">Commercial</td>
+<td style="text-align: left;">Nordic/Dutch universities (Copenhagen, Lund, Radboud…)</td>
+<td style="text-align: left;">Would need Elsevier buy-in</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Digital Commons</td>
+<td style="text-align: left;">Commercial</td>
+<td style="text-align: left;">US universities, especially liberal arts colleges</td>
+<td style="text-align: left;">Would need vendor buy-in</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Figshare</td>
+<td style="text-align: left;">Commercial</td>
+<td style="text-align: left;">Newer entrant (Monash, some UK universities)</td>
+<td style="text-align: left;">Would need vendor buy-in</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HAL</td>
+<td style="text-align: left;">National (France)</td>
+<td style="text-align: left;">All French research institutions (single integration = national coverage)</td>
+<td style="text-align: left;">Potential - national coordination</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="specific-university-repositories" class="level3">
+<h3 class="anchored" data-anchor-id="specific-university-repositories">Specific University Repositories</h3>
+<p>Based on primary URL analysis, approximately <strong>40 papers</strong> have institutional repositories as their primary host. However, the actual number is likely <strong>100-150 papers</strong> (30-45% of database) when accounting for cross-posting — papers hosted on NBER, SSRN, or personal sites are typically also deposited in the authors’ institutional repositories.</p>
+<p><strong>UK institutions:</strong> LSE Research Online, Cambridge Apollo, Oxford ORA, Warwick WRAP, Edinburgh Research Explorer, White Rose (Leeds/Sheffield/York consortium), UCL Discovery, Exeter ORE</p>
+<p><strong>European institutions:</strong> Radboud Repository, Copenhagen CURIS, Göttingen, Lund LUP, Lausanne SERVAL, Basel edoc, HAL (all French institutions), Zurich Open Repository</p>
+<p><strong>US institutions:</strong> eScholarship (UC system — 10 campuses with single integration), Harvard DASH, UChicago Knowledge, Minnesota Conservancy, Stanford SearchWorks</p>
+<p><strong>Asia-Pacific institutions:</strong> Monash, NUS ScholarBank, HKU Hub, University of Melbourne</p>
+</section>
+<section id="strategic-implications" class="level3">
+<h3 class="anchored" data-anchor-id="strategic-implications">Strategic Implications</h3>
+<ol type="1">
+<li><strong>Platform-level wins multiply reach</strong>: DSpace 8 adoption spreading means dozens of repositories gain COAR support simultaneously</li>
+<li><strong>Consortium repositories</strong>: White Rose (3 UK universities), eScholarship (10 UC campuses), HAL (all French research) — single integrations with multiplicative effect</li>
+<li><strong>Commercial platforms need vendor buy-in</strong>: PURE and Digital Commons require Elsevier and bepress cooperation respectively</li>
+</ol>
+</section>
 </section>
 <section id="key-differences-evaluated-papers-vs.-full-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="key-differences-evaluated-papers-vs.-full-pipeline">Key Differences: Evaluated Papers vs.&nbsp;Full Pipeline</h2>
