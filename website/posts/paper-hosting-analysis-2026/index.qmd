@@ -207,6 +207,21 @@ kable(software_data,
       caption = "Repository software platforms and their COAR Notify potential")
 ```
 
+**Distribution among Unjournal papers:** Of the ~40 papers with institutional repositories as their primary URL, we can identify the underlying platform for 18:
+
+- **EPrints**: 11 papers (2 evaluated, 9 pipeline) — LSE Research Online, Southampton, Edinburgh Research Explorer
+- **DSpace**: 5 papers (all pipeline) — Cambridge Apollo, MIT DSpace, various European universities
+- **PURE**: 1 paper (pipeline) — Radboud Repository
+- **eScholarship**: 1 paper (evaluated) — UC system custom platform
+
+The remaining ~22 papers use platforms that aren't easily identifiable from URLs (including custom university systems). When accounting for cross-posting, estimated actual platform distribution is:
+
+- **DSpace**: ~40-60 papers (DSpace 8's COAR Notify support makes this a major opportunity)
+- **EPrints**: ~20-30 papers (strong UK presence)
+- **PURE**: ~15-25 papers (Nordic/Dutch universities)
+- **HAL**: ~5-10 papers (French institutions)
+- **Other/custom**: ~10-20 papers
+
 ### Specific University Repositories
 
 Based on primary URL analysis, approximately **40 papers** have institutional repositories as their primary host. However, the actual number is likely **100-150 papers** (30-45% of database) when accounting for cross-posting — papers hosted on NBER, SSRN, or personal sites are typically also deposited in the authors' institutional repositories.
@@ -231,7 +246,7 @@ The main hosting table above shows both groups side-by-side. Key differences:
 
 **COAR-ready evaluated papers**: Among our 57 evaluated papers, approximately 7 (12%) are on COAR-enabled platforms (4 on arXiv, 3 on OSF). These papers could immediately benefit from COAR Notify integration.
 
-**Pipeline shows more diversity**: The broader pipeline has notably more papers in PubMed Central (40 vs. 2) and institutional repositories (73 vs. 7), reflecting a broader range of research fields beyond economics.
+**Pipeline shows more diversity**: The broader pipeline has notably more papers in PubMed Central (40 vs. 2), reflecting a broader range of research fields beyond economics. Institutional repository presence is similar across both groups when accounting for cross-posting.
 
 **Working paper series**: NBER dominates our evaluated papers (30%), while the pipeline includes more representation from IZA (5 papers) and one CEPR paper. These economics working paper series could potentially implement COAR Notify.
 
