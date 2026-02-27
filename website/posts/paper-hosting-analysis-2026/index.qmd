@@ -25,7 +25,7 @@ We analyzed where the 315 papers in The Unjournal's database are hosted across a
 **For the full database (315 papers including 258 in pipeline):**
 
 - **Half (50%) of papers** appear on 2 or more platforms
-- **73 papers** appear across **47 institutional repositories**
+- **100-150 papers** (est.) appear in institutional repositories (only 40 as primary URL, but most papers are cross-posted to authors' university repos)
 - **49 papers** are on SSRN (many cross-posted from NBER or other sources)
 - More diversity in platforms: notably more in PubMed Central and IZA
 
@@ -91,10 +91,10 @@ hosts <- data.frame(
   Platform = c("Other*", "Institutional Repos", "NBER", "PubMed (index)", "SSRN",
                "PubMed Central", "RePEc (index)", "arXiv", "Nature portfolio",
                "OSF", "EconStor", "IZA", "CEPR"),
-  Eval_Detected = c(15, 7, 17, 4, 22, 2, 14, 4, 1, 3, 0, 0, 0),
-  Eval_Est = c("15", "10-15", "17", "4", "22+", "2", "25-30†", "4", "1", "3", "0-1", "0", "0"),
-  All_Detected = c(113, 73, 66, 58, 49, 40, 39, 18, 18, 14, 5, 5, 1),
-  All_Est = c("113", "90-110", "66", "58", "50-60", "40", "80-100†", "18", "18", "14", "6-8", "5", "1"),
+  Eval_Detected = c(15, 8, 17, 4, 22, 2, 14, 4, 1, 3, 0, 0, 0),
+  Eval_Est = c("15", "25-35‡", "17", "4", "22+", "2", "25-30†", "4", "1", "3", "0-1", "0", "0"),
+  All_Detected = c(113, 40, 66, 58, 49, 40, 39, 18, 18, 14, 5, 5, 1),
+  All_Est = c("113", "100-150‡", "66", "58", "50-60", "40", "80-100†", "18", "18", "14", "6-8", "5", "1"),
   Hosts_Papers = c("Various", "Yes", "Yes", "No", "Yes", "Yes", "No", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes"),
   COAR_Status = c("—", "Via DSpace/EPrints", "Could implement", "N/A (index)", "Potential",
                   "Potential", "N/A (index)", "Enabled", "Via Crossref", "Enabled",
@@ -114,6 +114,7 @@ kable(hosts,
 **Notes on the table:**
 
 - *SSRN cross-posting:* Many NBER papers are cross-posted to SSRN. Of our 49 total papers on SSRN, only 16 have SSRN as primary URL — the rest are cross-posted from NBER or other sources. Examples include "Cash Transfers for Child Development" ([SSRN 4709146](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146)), "AI and Economic Growth" ([SSRN 3053718](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718)), and pipeline papers like "Longer-run Economic Consequences of Pandemics" ([SSRN 3594164](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3594164)). Full mapping available in `data/ssrn_crosspost_mapping.csv`.
+- *‡Institutional repos estimates:* Only 40 papers have institutional repos as their primary URL, but papers hosted on NBER, SSRN, or personal sites are typically also deposited in the authors' institutional repositories. Based on DOI coverage and author affiliations, we estimate 100-150 papers (30-45% of database) are actually present in institutional repos.
 - *†RePEc estimates:* OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.
 - *Institutional repos estimate:* Many smaller university repositories are not fully indexed by OpenAlex/Semantic Scholar.
 - **Other*** includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.
@@ -175,17 +176,54 @@ Rather than reaching out to each institution individually, there are aggregation
 
 ## Institutional Repository Distribution
 
-Our papers appear across 47 different university repositories:
+"Institutional repositories" encompasses both the **software platforms** universities use and the **specific university repositories** themselves. Understanding both is important for COAR Notify integration strategy.
 
-**UK institutions** (25 papers): LSE, Cambridge, Oxford, Exeter, Warwick, Edinburgh, and others
+### Repository Software Platforms
 
-**European institutions** (18 papers): Radboud, Copenhagen, Göttingen, Lund, Lausanne, and others
+Universities run institutional repositories using various software platforms. Platform-level COAR adoption would enable many repositories simultaneously:
 
-**US institutions** (15 papers): Chicago, Harvard, UC system (eScholarship), Minnesota, and others
+```{r}
+#| label: software-platforms
 
-**Asia-Pacific institutions** (8 papers): Monash, NUS, Hong Kong universities
+software_data <- data.frame(
+  Platform = c("DSpace", "EPrints", "PURE (Elsevier)", "Digital Commons", "Figshare", "HAL"),
+  Type = c("Open-source", "Open-source", "Commercial", "Commercial", "Commercial", "National (France)"),
+  Usage = c("2000+ institutions globally (MIT, Cambridge, Edinburgh...)",
+            "500+ institutions, strong in UK (LSE, Southampton, White Rose consortium...)",
+            "Nordic/Dutch universities (Copenhagen, Lund, Radboud...)",
+            "US universities, especially liberal arts colleges",
+            "Newer entrant (Monash, some UK universities)",
+            "All French research institutions (single integration = national coverage)"),
+  COAR_Status = c("DSpace 8 includes COAR Notify!",
+                  "Community developing support",
+                  "Would need Elsevier buy-in",
+                  "Would need vendor buy-in",
+                  "Would need vendor buy-in",
+                  "Potential - national coordination")
+)
 
-Many of these use DSpace or EPrints, platforms that support or are developing COAR Notify integration.
+kable(software_data,
+      col.names = c("Platform", "Type", "Typical Users", "COAR Status"),
+      caption = "Repository software platforms and their COAR Notify potential")
+```
+
+### Specific University Repositories
+
+Based on primary URL analysis, approximately **40 papers** have institutional repositories as their primary host. However, the actual number is likely **100-150 papers** (30-45% of database) when accounting for cross-posting — papers hosted on NBER, SSRN, or personal sites are typically also deposited in the authors' institutional repositories.
+
+**UK institutions:** LSE Research Online, Cambridge Apollo, Oxford ORA, Warwick WRAP, Edinburgh Research Explorer, White Rose (Leeds/Sheffield/York consortium), UCL Discovery, Exeter ORE
+
+**European institutions:** Radboud Repository, Copenhagen CURIS, Göttingen, Lund LUP, Lausanne SERVAL, Basel edoc, HAL (all French institutions), Zurich Open Repository
+
+**US institutions:** eScholarship (UC system — 10 campuses with single integration), Harvard DASH, UChicago Knowledge, Minnesota Conservancy, Stanford SearchWorks
+
+**Asia-Pacific institutions:** Monash, NUS ScholarBank, HKU Hub, University of Melbourne
+
+### Strategic Implications
+
+1. **Platform-level wins multiply reach**: DSpace 8 adoption spreading means dozens of repositories gain COAR support simultaneously
+2. **Consortium repositories**: White Rose (3 UK universities), eScholarship (10 UC campuses), HAL (all French research) — single integrations with multiplicative effect
+3. **Commercial platforms need vendor buy-in**: PURE and Digital Commons require Elsevier and bepress cooperation respectively
 
 ## Key Differences: Evaluated Papers vs. Full Pipeline
 
