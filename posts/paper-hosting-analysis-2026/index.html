@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>For the full database (315 papers including 258 in pipeline):</strong></p>
 <ul>
 <li><strong>Half (50%) of papers</strong> appear on 2 or more platforms</li>
-<li><strong>11 papers verified</strong> in institutional repositories via OpenAlex (3 evaluated, 8 pipeline) — actual numbers likely higher but difficult to verify systematically</li>
+<li><strong>19 papers verified</strong> in institutional repositories via OpenAlex (3 evaluated, 16 pipeline) — DSpace is the most common platform (11 papers)</li>
 <li><strong>49 papers</strong> are on SSRN (many cross-posted from NBER or other sources)</li>
 <li>More diversity in platforms: notably more in PubMed Central and IZA</li>
 </ul>
@@ -278,8 +278,8 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">Institutional Repos</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">3‡</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">11+‡</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">19+‡</td>
 <td style="text-align: left;">Yes</td>
 <td style="text-align: left;">Via DSpace/EPrints</td>
 </tr>
@@ -389,7 +389,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Notes on the table:</strong></p>
 <ul>
 <li><em>SSRN cross-posting:</em> Many NBER papers are cross-posted to SSRN. Of our 49 total papers on SSRN, only 16 have SSRN as primary URL — the rest are cross-posted from NBER or other sources. Examples include “Cash Transfers for Child Development” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4709146">SSRN 4709146</a>), “AI and Economic Growth” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3053718">SSRN 3053718</a>), and pipeline papers like “Longer-run Economic Consequences of Pandemics” (<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3594164">SSRN 3594164</a>). Full mapping available in <code>data/ssrn_crosspost_mapping.csv</code>.</li>
-<li><em>‡Institutional repos (verified via OpenAlex):</em> We queried OpenAlex for papers with DOIs and found 3 evaluated papers and 8 pipeline papers in institutional repositories. Actual numbers are likely higher since OpenAlex doesn’t fully index all repositories, and ~100 papers lack DOIs. Primary platforms: DSpace (9 papers), eScholarship (3), PURE (1), HAL (1).</li>
+<li><em>‡Institutional repos (verified via OpenAlex):</em> We comprehensively queried OpenAlex for all 57 evaluated papers and 150 pipeline papers using both DOI and title search. Found 3 evaluated and 16 pipeline papers in institutional repositories. Primary platforms: DSpace (11), UK repos (4), EU repos (4), eScholarship (3), HAL (2), PURE (1).</li>
 <li><em>†RePEc estimates:</em> OpenAlex links only ~25% of NBER papers to their RePEc entries; actual RePEc coverage of NBER papers is nearly 100%. Our detected counts significantly underestimate RePEc presence.</li>
 <li><strong>Other</strong>* includes: organization websites (e.g., Rethink Priorities, ALLFED), personal hosting (Squarespace, Dropbox), published OA journals not in major indexes, and ResearchGate. These 15 evaluated papers and 113 pipeline papers are hosted somewhere but not on the major platforms listed above.</li>
 </ul>
@@ -579,21 +579,72 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p><strong>Verified institutional repo presence (via OpenAlex):</strong> We queried OpenAlex for all papers with DOIs to identify which appear in institutional repositories. Of 108 papers with DOIs checked:</p>
+<p><strong>Verified institutional repo presence (via OpenAlex):</strong> We comprehensively queried OpenAlex for all 57 evaluated papers and 150 pipeline papers (using both DOI lookup and title search). Results:</p>
 <ul>
-<li><strong>3 evaluated papers</strong> and <strong>8 pipeline papers</strong> appear in institutional repositories</li>
-<li><strong>DSpace</strong>: 9 papers total (most common platform)</li>
-<li><strong>eScholarship (UC)</strong>: 3 papers</li>
-<li><strong>Other institutional repos</strong>: 2 papers (Warwick WRAP, Edinburgh Research Explorer)</li>
-<li><strong>PURE</strong>: 1 paper</li>
-<li><strong>HAL</strong>: 1 paper</li>
-<li><strong>EPrints</strong>: Not detected via OpenAlex (though 2 papers have EPrints URLs as primary host)</li>
+<li><strong>3 evaluated papers</strong> found in institutional repositories</li>
+<li><strong>16 pipeline papers</strong> found in institutional repositories</li>
+<li><strong>19 papers total</strong> with verified institutional repo presence</li>
 </ul>
-<p><em>Caveats:</em> OpenAlex doesn’t index all institutional repositories, and ~100 papers in our database lack DOIs. Actual institutional repo presence is likely higher but difficult to verify systematically. The primary URL analysis shows only ~4 papers hosted directly on institutional repo platforms (2 EPrints, 1 DSpace, 1 eScholarship).</p>
+<p><strong>By platform:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>Evaluated</th>
+<th>Pipeline</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DSpace</td>
+<td>3</td>
+<td>8</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>UK inst. repos (Warwick, Edinburgh, etc.)</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>EU inst. repos (Radboud, Lund, etc.)</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>eScholarship (UC)</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>HAL (France)</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>PURE</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>US inst. repos</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note:</em> Some papers appear in multiple repositories. For example, “Monetary incentives increase COVID-19 vaccinations” was found in DSpace, UChicago Knowledge, Lund LUP, and Lausanne SERVAL simultaneously.</p>
 </section>
 <section id="specific-university-repositories" class="level3">
 <h3 class="anchored" data-anchor-id="specific-university-repositories">Specific University Repositories</h3>
-<p>Based on primary URL analysis, only <strong>~4 papers</strong> have institutional repositories as their primary host. Via OpenAlex cross-referencing, we verified <strong>11 papers</strong> (3 evaluated, 8 pipeline) appear in institutional repositories — though actual numbers are likely higher since OpenAlex doesn’t fully index all repositories.</p>
+<p>Based on our OpenAlex verification, papers appear in these specific institutional repositories:</p>
 <p><strong>UK institutions:</strong> LSE Research Online, Cambridge Apollo, Oxford ORA, Warwick WRAP, Edinburgh Research Explorer, White Rose (Leeds/Sheffield/York consortium), UCL Discovery, Exeter ORE</p>
 <p><strong>European institutions:</strong> Radboud Repository, Copenhagen CURIS, Göttingen, Lund LUP, Lausanne SERVAL, Basel edoc, HAL (all French institutions), Zurich Open Repository</p>
 <p><strong>US institutions:</strong> eScholarship (UC system — 10 campuses with single integration), Harvard DASH, UChicago Knowledge, Minnesota Conservancy, Stanford SearchWorks</p>
