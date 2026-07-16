@@ -36,6 +36,8 @@ As of July 2026, we have refreshed the public sources and are using a more conse
 
 These are workflow-coverage figures, not findings about the effect of evaluations. For each candidate, we now preserve PDF snapshots and hashes, check that the before and after documents are versions of the same paper and are in the right order, and create page- and section-level change cards. Any claim that evaluator feedback contributed to a change still requires human review.
 
+We completed a first careful review of the five candidates on July 16. This found one reasonably specific content alignment between a suggestion and a later paper change, two weaker correspondences, and two cases with no supported match. Even the strongest case does not establish attribution: the paper added a relevant analysis, but we do not have an author response or revision memo saying that the evaluation prompted it. The [interactive analysis](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#preliminary-case-review-july-16-2026) gives the case-level details, including one apparent match that was rejected after manual checking showed the relevant material was already present in the earlier paper.
+
 ## Ongoing work
 
 This is an evolving project. We plan to extend coverage, refine the document checks, and link observed revisions to specific evaluator suggestions only where the evidence is sufficiently clear. Automated and model-assisted checks are used to organize the review, rather than to make the final call. The table will be updated as new data are reviewed.
