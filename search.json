@@ -18,14 +18,21 @@
     "href": "posts/do-authors-respond-2026/index.html#what-we-found-so-far",
     "title": "Do authors update their papers after Unjournal evaluations?",
     "section": "What we found so far",
-    "text": "What we found so far\nBased on manual coding of 57 tracked evaluations (last updated April 2026):\n\n19 papers received a formal or informal author response to the evaluation\n16 papers received a formal written response\n5 papers show clear evidence of substantive updating in response to the evaluation\n7 authors stated their intention to update\n15 papers show at least some positive signal — evidence of updating, a stated intention, or minor revisions\n\nThe remaining 35 papers are either too recent for follow-up or pending assessment.\nTo supplement the manual coding, we also ran automated PDF comparison on a subset of 34 paper pairs, detecting line-level changes between pre- and post-evaluation versions. Six papers showed substantial revisions (more than 50 net line changes); one paper had over 3,000 net line changes post-evaluation — consistent with a major revision."
+    "text": "What we found so far\nBased on manual coding of 57 tracked evaluations (the results snapshot below was last updated in April 2026):\n\n19 papers received a formal or informal author response to the evaluation\n16 papers received a formal written response\n5 papers show clear evidence of substantive updating after the evaluation, with evidence linking the two\n7 authors stated their intention to update\n15 papers show at least some positive signal — evidence of updating, a stated intention, or minor revisions\n\nThe remaining 35 papers are either too recent for follow-up or pending assessment. These categories describe the evidence we found; they do not establish that an evaluation caused a later revision."
+  },
+  {
+    "objectID": "posts/do-authors-respond-2026/index.html#improving-the-comparison-checks",
+    "href": "posts/do-authors-respond-2026/index.html#improving-the-comparison-checks",
+    "title": "Do authors update their papers after Unjournal evaluations?",
+    "section": "Improving the comparison checks",
+    "text": "Improving the comparison checks\nThe earlier automated comparison was useful for finding candidate cases, but it was not enough to support causal claims. A newer PDF or a large text difference can reflect an unrelated revision, a different document, or a timing mismatch.\nAs of July 2026, we have refreshed the public sources and are using a more conservative workflow:\n\n30 current public paper versions have been captured;\nnine have a preserved before-and-after comparison record; and\nfive currently pass preliminary document, identity, and timing checks and are awaiting focused review.\n\nThese are workflow-coverage figures, not findings about the effect of evaluations. For each candidate, we now preserve PDF snapshots and hashes, check that the before and after documents are versions of the same paper and are in the right order, and create page- and section-level change cards. Any claim that evaluator feedback contributed to a change still requires human review."
   },
   {
     "objectID": "posts/do-authors-respond-2026/index.html#ongoing-work",
     "href": "posts/do-authors-respond-2026/index.html#ongoing-work",
     "title": "Do authors update their papers after Unjournal evaluations?",
     "section": "Ongoing work",
-    "text": "Ongoing work\nThis is an evolving project. We plan to continue extending coverage to more papers, refining the automated change-detection pipeline, and ultimately linking observed revisions to specific evaluator suggestions. We also intend to complement the automated and manual coding with further human “sentry” checks and structured discussion of the findings. The table is updated as new data comes in.\nThe methodology combines two sources: (a) manual assessment by Unjournal staff of author responses and paper revisions, and (b) automated PDF-comparison that detects line-level changes between before- and after-evaluation versions."
+    "text": "Ongoing work\nThis is an evolving project. We plan to extend coverage, refine the document checks, and link observed revisions to specific evaluator suggestions only where the evidence is sufficiently clear. Automated and model-assisted checks are used to organize the review, rather than to make the final call. The table will be updated as new data are reviewed.\nThe methodology combines manual assessment of author responses and paper revisions with automated PDF comparison. The detailed evidence table and the historical exploratory LLM screen are available in the interactive analysis."
   },
   {
     "objectID": "posts/high-quality-papers-2024/index.html",

@@ -158,21 +158,31 @@ ul.task-list li input[type="checkbox"] {
 <p><strong><a href="https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence">Did Authors Respond to Unjournal Evaluations? (interactive table and analysis)</a></strong></p>
 <section id="what-we-found-so-far" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-found-so-far">What we found so far</h2>
-<p>Based on manual coding of 57 tracked evaluations (last updated April 2026):</p>
+<p>Based on manual coding of 57 tracked evaluations (the results snapshot below was last updated in April 2026):</p>
 <ul>
 <li><strong>19 papers</strong> received a formal or informal author response to the evaluation</li>
 <li><strong>16 papers</strong> received a formal written response</li>
-<li><strong>5 papers</strong> show clear evidence of substantive updating in response to the evaluation</li>
+<li><strong>5 papers</strong> show clear evidence of substantive updating after the evaluation, with evidence linking the two</li>
 <li><strong>7 authors</strong> stated their intention to update</li>
 <li><strong>15 papers</strong> show at least some positive signal — evidence of updating, a stated intention, or minor revisions</li>
 </ul>
-<p>The remaining 35 papers are either too recent for follow-up or pending assessment.</p>
-<p>To supplement the manual coding, we also ran automated PDF comparison on a subset of 34 paper pairs, detecting line-level changes between pre- and post-evaluation versions. Six papers showed substantial revisions (more than 50 net line changes); one paper had over 3,000 net line changes post-evaluation — consistent with a major revision.</p>
+<p>The remaining 35 papers are either too recent for follow-up or pending assessment. These categories describe the evidence we found; they do not establish that an evaluation caused a later revision.</p>
+</section>
+<section id="improving-the-comparison-checks" class="level2">
+<h2 class="anchored" data-anchor-id="improving-the-comparison-checks">Improving the comparison checks</h2>
+<p>The earlier automated comparison was useful for finding candidate cases, but it was not enough to support causal claims. A newer PDF or a large text difference can reflect an unrelated revision, a different document, or a timing mismatch.</p>
+<p>As of July 2026, we have refreshed the public sources and are using a more conservative workflow:</p>
+<ul>
+<li>30 current public paper versions have been captured;</li>
+<li>nine have a preserved before-and-after comparison record; and</li>
+<li>five currently pass preliminary document, identity, and timing checks and are awaiting focused review.</li>
+</ul>
+<p>These are workflow-coverage figures, not findings about the effect of evaluations. For each candidate, we now preserve PDF snapshots and hashes, check that the before and after documents are versions of the same paper and are in the right order, and create page- and section-level change cards. Any claim that evaluator feedback contributed to a change still requires human review.</p>
 </section>
 <section id="ongoing-work" class="level2">
 <h2 class="anchored" data-anchor-id="ongoing-work">Ongoing work</h2>
-<p>This is an evolving project. We plan to continue extending coverage to more papers, refining the automated change-detection pipeline, and ultimately linking observed revisions to specific evaluator suggestions. We also intend to complement the automated and manual coding with further human “sentry” checks and structured discussion of the findings. The table is updated as new data comes in.</p>
-<p>The methodology combines two sources: (a) manual assessment by Unjournal staff of author responses and paper revisions, and (b) automated PDF-comparison that detects line-level changes between before- and after-evaluation versions.</p>
+<p>This is an evolving project. We plan to extend coverage, refine the document checks, and link observed revisions to specific evaluator suggestions only where the evidence is sufficiently clear. Automated and model-assisted checks are used to organize the review, rather than to make the final call. The table will be updated as new data are reviewed.</p>
+<p>The methodology combines manual assessment of author responses and paper revisions with automated PDF comparison. The detailed evidence table and the historical exploratory LLM screen are available in the <a href="https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence">interactive analysis</a>.</p>
 
 
 </section>
