@@ -38,6 +38,8 @@ These are workflow-coverage figures, not findings about the effect of evaluation
 
 We completed a careful review of seven candidates by July 17. This found two reasonably specific content alignments between suggestions and later paper changes, three weaker correspondences, and two cases with no supported match. Even the strongest cases do not establish attribution: the papers added relevant analyses, but we do not have author responses or revision memos saying that the evaluations prompted them. The [interactive analysis](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#preliminary-case-review-july-16-2026) gives the case-level details, including one apparent match that was rejected after manual checking showed the relevant material was already present in the earlier paper.
 
+We also audited all 17 cases where the recorded input and current public PDF were byte-identical. Eight now support a limited “no observed public document change as of July 17, 2026” finding. Five remain unresolved because we could not bind the local file to the exact evaluated draft. Four were invalid comparisons: a later or corrected version existed elsewhere, or there was no completed evaluation. We do not interpret an unchanged public PDF as evidence that authors ignored the evaluation.
+
 ## Ongoing work
 
 This is an evolving project. We plan to extend coverage, refine the document checks, and link observed revisions to specific evaluator suggestions only where the evidence is sufficiently clear. Automated and model-assisted checks are used to organize the review, rather than to make the final call. The table will be updated as new data are reviewed.
