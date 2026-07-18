@@ -4,6 +4,10 @@ author: "The Unjournal"
 date: "2026-04-17"
 categories: [impact, evaluations, data]
 freeze: true
+format:
+  html:
+    comments:
+      hypothesis: true
 ---
 
 A key question for any evaluation process is whether it actually changes anything. Do researchers engage with the feedback they receive — and do they revise their work as a result?
@@ -12,17 +16,23 @@ We have begun tracking this systematically across our portfolio. The results so 
 
 **[Did Authors Respond to Unjournal Evaluations? (interactive table and analysis)](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence)**
 
+::: {.callout-note}
+## Comment or flag a correction
+
+Select text and open the Hypothes.is annotation sidebar from the upper-right edge of the page to leave an inline comment. We especially welcome corrections to document/version matching, missing public revisions, or our interpretation of whether a change reflects a suggestion. A free Hypothes.is account is required to post.
+:::
+
 ## What we found so far
 
-Based on manual coding of 57 tracked evaluations (the results snapshot below was last updated in April 2026):
+The April 2026 tracking file covers 57 evaluations, but adjustment status had been assessed for 22 rather than the full set. Within that partly assessed snapshot:
 
-- **19 papers** received a formal or informal author response to the evaluation
-- **16 papers** received a formal written response
-- **5 papers** show clear evidence of substantive updating after the evaluation, with evidence linking the two
-- **7 authors** stated their intention to update
-- **15 papers** show at least some positive signal — evidence of updating, a stated intention, or minor revisions
+- **19 papers** have a recorded formal or informal author response to the evaluation
+- **16 papers** have a recorded formal written response
+- **5 papers** are coded as showing clear evidence of substantive updating after the evaluation
+- **7 authors** are coded as stating an intention to update
+- **15 papers** are coded as showing at least some positive signal — evidence of updating, a stated intention, or minor revisions
 
-The remaining 35 papers are either too recent for follow-up or pending assessment. These categories describe the evidence we found; they do not establish that an evaluation caused a later revision.
+The remaining 35 papers did not yet have an assessed adjustment status. Response status was also incomplete: 37 entries were blank in the April data. These categories describe recorded evidence; they do not establish that an evaluation caused a later revision. Completing and re-validating the full-set staff assessment remains an ongoing goal.
 
 ## Improving the comparison checks
 
@@ -44,6 +54,6 @@ We also audited all 17 cases where the initially selected input and public PDF w
 
 ## Ongoing work
 
-This is an evolving project. The next priority is to extend exact before-and-after coverage beyond the nine reviewed comparisons and recover the one known revised endpoint that is not publicly available. Automated and model-assisted checks are used to organize the review; source provenance, aligned document comparison, and cautious human adjudication determine what we report. The table will be updated as new evidence is reviewed.
+This is an evolving project. The next priorities are to complete and re-validate staff assessment across all 57 tracked evaluations, extend exact before-and-after coverage beyond the nine reviewed comparisons, and recover the one known revised endpoint that is not publicly available. Automated and model-assisted checks are used to organize the review; source provenance, aligned document comparison, and cautious human adjudication determine what we report. The table will be updated as new evidence is reviewed.
 
-The methodology combines manual assessment of author responses and paper revisions with automated PDF comparison. The detailed evidence table and the historical exploratory LLM screen are available in the [interactive analysis](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence).
+The methodology combines partly completed staff tracking of author responses and paper revisions with automated PDF comparison. The detailed evidence table and the historical exploratory LLM screen are available in the [interactive analysis](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence).
