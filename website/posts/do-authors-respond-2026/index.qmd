@@ -52,8 +52,36 @@ We also repaired two stale endpoint selections. One produced the clearest result
 
 We also audited all 17 cases where the initially selected input and public PDF were byte-identical. Thirteen now support the limited finding “no observed public document change as of July 18, 2026.” For each of these, we found either a pre-evaluation archived PDF or distinctive page, table, figure, or quotation evidence that binds the evaluation to the unchanged official document. Of the other four, two were repaired into the comparisons described above, one revised endpoint remains unavailable, and one record had no completed evaluation. We do not interpret an unchanged public PDF as evidence that authors ignored the evaluation.
 
+## Overall rates — and the denominator that matters
+
+Across 22 reviewed public endpoints, the mutually exclusive outcomes are:
+
+- **13 (59%)** with no observed public document change;
+- **3 (14%)** with a later version but no supported substantive implementation of the evaluated suggestions;
+- **3 (14%)** with weaker correspondences;
+- **2 (9%)** with reasonably specific alignments but no confirmed attribution; and
+- **1 (5%)** with an explicit public author link between the evaluation and a correction.
+
+Thus six of 22 (27%) show at least some correspondence, three of 22 (14%) show a specific or explicit alignment, and one of 22 (5%) has direct public documentation. Conditional on the nine papers that genuinely had a later public version, the corresponding rates are six of nine (67%), three of nine (33%), and one of nine (11%). Three of nine updated papers had no supported substantive implementation in the versions reviewed.
+
+These are small-sample descriptive rates, not portfolio-wide estimates. “No observed public document change” is different from “the paper was updated without implementing the suggestions.” The latter is still not evidence that authors ignored the feedback: they may have considered and rejected it, responded privately, or revised work we have not found. Percentages are rounded; the counts are primary.
+
+We have also strengthened paper identity checks. Normalized DOIs anchor the record where available, and reviewed title aliases can be recorded explicitly. This helps follow a paper through retitling without treating every similar title as the same work.
+
+## Early patterns by field and type of suggestion
+
+The field comparisons are too small for strong conclusions. In the 22 reviewed endpoints, all three environment papers had a later version, compared with three of six development-economics papers, one of two technology/AI papers, one of four innovation/meta-science papers, and one of six global-health papers. These differences are partly driven by which public versions could be recovered. Conditional response comparisons are even thinner: most fields contain only one or three updated papers.
+
+The type of evaluation point looks more informative, though still only suggestive. The clearest case was a precise proof error that authors publicly acknowledged and corrected. Two closely specified requests for additional analyses aligned with later additions, without confirmed attribution. Three robustness, confounding, or measurement concerns had weaker correspondences. Broad requests about theory, mechanisms, welfare, framing, or interpretation were not clearly implemented in three deeply reviewed cases. Concrete requests may be easier to act on and easier to verify; this does not by itself show that specificity caused the response.
+
+## A pilot look at later related work
+
+We separately searched for later work extending three updated papers where the reviewed version showed no supported substantive implementation. We checked the [July 2026 AER version of the climate-policy welfare paper](https://www.aeaweb.org/articles?id=10.1257%2Faer.20250166), the [May 2025 Nature version of the pivot-penalty paper](https://www.nature.com/articles/s41586-025-09048-1), and the [August 2025 NBER revision of the zero-sum paper](https://www.nber.org/papers/w31663). Each is a continuation or final version of the same paper rather than separate later work. Targeted title and author searches did not identify a clearly attributable later extension by the overlapping author team that implements the unmatched suggestions.
+
+This is a pilot “not identified” result, not evidence that no such work exists. Related-work tracking needs a separate protocol: record search dates and queries, require meaningful author overlap and an intellectual link, and distinguish the same paper, a later extension, and unrelated work on a similar topic.
+
 ## Ongoing work
 
-This is an evolving project. The next priorities are to complete and re-validate staff assessment across all 57 tracked evaluations, extend exact before-and-after coverage beyond the nine reviewed comparisons, and recover the one known revised endpoint that is not publicly available. Automated and model-assisted checks are used to organize the review; source provenance, aligned document comparison, and cautious human adjudication determine what we report. The table will be updated as new evidence is reviewed.
+This is an evolving project. The next priorities are to complete and re-validate staff assessment across all 57 tracked evaluations, extend exact before-and-after coverage beyond the nine reviewed comparisons, recover the one known revised endpoint that is not publicly available, and code validated suggestions into a common aspect taxonomy. Automated and model-assisted checks are used to organize the review; source provenance, aligned document comparison, and cautious human adjudication determine what we report. The table will be updated as new evidence is reviewed.
 
 The methodology combines partly completed staff tracking of author responses and paper revisions with automated PDF comparison. The detailed evidence table and the historical exploratory LLM screen are available in the [interactive analysis](https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence).
