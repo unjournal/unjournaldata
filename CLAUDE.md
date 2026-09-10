@@ -84,7 +84,6 @@ The `.github/workflows/import-render-publish.yml` workflow runs daily at 14:30 U
 **Required secrets:**
 - `RSCONNECT_USER`, `RSCONNECT_TOKEN`, `RSCONNECT_SECRET`: Shinyapps.io credentials
 - `AIRTABLE_API_KEY`: (used by dashboard)
-- `RENV_GITHUB_PAT`: GitHub PAT for renv package installation
 
 ### Historical data flow (moved to the private repository)
 ```

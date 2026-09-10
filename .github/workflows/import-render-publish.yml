@@ -86,7 +86,8 @@ jobs:
         with:
           cache-version: 3 # clean cache after switching the package mirror
         env:
-          GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
+          # Short-lived token is sufficient for the one public GitHub package.
+          GITHUB_PAT: ${{ github.token }}
           # Avoid intermittent PPM archive failures for versions pinned in renv.lock.
           RENV_CONFIG_REPOS_OVERRIDE: https://cloud.r-project.org
 
