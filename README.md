@@ -1,7 +1,11 @@
 # unjournaldata
 
-This is the repository for
-[Unjournal](https://www.unjournal.org) evaluations, meta-analysis, and meta-science.
+This is the public presentation repository for
+[Unjournal](https://www.unjournal.org) evaluation meta-analysis and meta-science.
+
+The private `unjournal/unjournal-database` repository owns Coda ingestion,
+validation, SQLite, bibliometrics operations, and internal data. This repository
+owns the public Shiny dashboard, Quarto website, and public analysis code.
 
 Outputs and reports from here are published at <https://unjournal.github.io/unjournaldata>.
 
@@ -11,30 +15,32 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 ### Data Pipeline Overview
 
 ```
-Coda.io (source database)
-    ↓
-GitHub Actions (daily + on push to main)
-    ├→ code/import-unjournal-data.py → CSV files (data/*.csv)
-    ├→ code/create_evaluator_paper_dataset.py → evaluator_paper_level.csv (with privacy protections)
-    └→ Shiny dashboard deployment → https://unjournal.shinyapps.io/uj-dashboard
-
-Optional: Linode Server (daily at 2 AM UTC)
-    └→ code/export_to_sqlite.py → SQLite database
-       (reads evaluator_paper_level.csv + direct Coda export)
+Private unjournal-database repository
+    └→ privacy-checked public_export/ bundle on this repo's public-data branch
+        ↓
+This repository verifies schemas, hashes, and privacy constraints
+        ↓
+Shiny dashboard deployment → https://unjournal.shinyapps.io/uj-dashboard
 ```
 
 ### GitHub Actions Workflow
 
 A single GitHub Action (`.github/workflows/import-render-publish.yml`):
 
-1. **Exports data from Coda** to CSV files in the `/data` folder via `code/import-unjournal-data.py`
-2. **Creates evaluator-paper dataset** with privacy protections via `code/create_evaluator_paper_dataset.py`
-3. **Deploys the [Shiny](https://shiny.posit.co) dashboard** at <https://unjournal.shinyapps.io/uj-dashboard>
+1. Checks out the explicit `public_export/` bundle from this repository's
+   dedicated `public-data` branch
+2. Verifies its file set, schemas, hashes, and privacy constraints
+3. Updates the three managed public CSV files
+4. Deploys the [Shiny](https://shiny.posit.co) dashboard at <https://unjournal.shinyapps.io/uj-dashboard>
 
 This action is automatically run:
 
 * when the "main" branch is pushed to
-* once daily at 13:30 UTC
+* once daily at 14:30 UTC, after the private data build
+
+The private repository holds the write-enabled deploy key used to update the
+`public-data` branch. This public repository has no credential that can read the
+private repository.
 
 
 ## How it works: website and blog posts
@@ -58,13 +64,16 @@ created on GitHub, but directly on developer machines.
 
 ### CSV Files (Primary Data Format)
 
-The files in the `/data` folder are imported from Coda:
+The dashboard-managed files in `/data` come only from the private repository's
+privacy-checked public export:
 
-* `paper_authors.csv`: Lists of authors per paper.
 * `research.csv`: evaluated papers.
-* `rsx_evalr_rating.csv`: quantitative ratings given by each evaluator for each
-  paper.
-* `evaluator_paper_level.csv`: Combined dataset at evaluator-paper level with privacy protections (no confidential feedback, COI info, or personal contact information).
+* `rsx_evalr_rating.csv`: quantitative ratings with generic evaluator labels
+  scoped to each paper.
+* `evaluator_paper_level.csv`: evaluation stream and hours-spent values used for
+  aggregate statistics, with paper/evaluator identifiers removed.
+
+See [PUBLIC_DATA.md](PUBLIC_DATA.md) for the enforced boundary.
 
 There's also some data from other sources:
 
@@ -76,7 +85,11 @@ There's also some data from other sources:
   citedness information from [Openalex](https://openalex.org), and
   our own meta-ranking of journals, via `code/calibrate-journal-stats.R`.
 
-### SQLite Database (Optional)
+### SQLite Database (moved)
+
+> SQLite and Linode operations now belong to the private
+> `unjournal/unjournal-database` repository. The material below is retained
+> temporarily as migration history and is not authoritative.
 
 For SQL-based analysis and offline access, an optional SQLite database export is available.
 
@@ -115,26 +128,32 @@ All publicly shared datasets follow strict privacy protections:
 - **NO personal contact information**
 - **NO internal pseudonyms** or private identifiers
 
-Public evaluator identifiers only:
-- Names if evaluator chose to use their name (e.g., "Ioannis Bournakis")
-- Generic "Evaluator 1", "Evaluator 2" for anonymous evaluations
+Public rating identifiers use only per-paper generic labels such as
+`Evaluator 1` and `Evaluator 2`; they are not stable across papers.
 
-See [EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md) for detailed privacy documentation.
+See [PUBLIC_DATA.md](PUBLIC_DATA.md) for the enforced privacy boundary.
 
 ## Documentation
 
 **Main documentation:**
 - **[README.md](README.md)** (this file) - Project overview and quick start
 - **[CLAUDE.md](CLAUDE.md)** - Detailed architecture and developer guide
-- **[EVALUATOR_DATASET_README.md](EVALUATOR_DATASET_README.md)** - Evaluator-paper dataset documentation
+- **[PUBLIC_DATA.md](PUBLIC_DATA.md)** - Public export schema and privacy boundary
 
-**Linode/SQLite setup:**
+**Historical Linode/SQLite material:**
+
+These files are retained temporarily for migration reference. Their canonical
+versions are in the private database repository.
 - **[LINODE_CRON_SETUP.md](LINODE_CRON_SETUP.md)** - SQLite database setup for Linode server
 - **[docs/DATASETTE_GUI_SETUP.md](docs/DATASETTE_GUI_SETUP.md)** - Datasette web GUI setup
 - **[docs/LINODE_SQLITE_INTERNAL_GUIDE.md](docs/LINODE_SQLITE_INTERNAL_GUIDE.md)** - Internal database management guide
 - **[docs/SQLITE_QUERIES.md](docs/SQLITE_QUERIES.md)** - SQL query examples
 
-## PubPub export utility
+## PubPub export utility (moved)
+
+The canonical harvester is now in the private `unjournal-database` repository.
+The commands below are historical and will not work from this repository after
+the consolidation.
 
 The repository includes `code/harvest_pubpub_assets.py`, a standalone script
 that downloads fresh Markdown and PDF exports for every pub in a PubPub
@@ -190,4 +209,3 @@ community (``unjournal.pubpub.org`` by default).
 * If you encounter transient network issues, the script will retry each
   download a few times. Re-running the command typically resolves failures
   caused by temporary connectivity errors.
-

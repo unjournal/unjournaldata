@@ -45,9 +45,6 @@ options(huxtable.long_minus = TRUE)
 research <- readr::read_csv(here("data/research.csv"), show_col_types = FALSE)
 ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"),
                            show_col_types = FALSE)
-paper_authors <- readr::read_csv(here("data/paper_authors.csv"),
-                                 show_col_types = FALSE)
-
 n_papers <- n_distinct(ratings$research)
 n_evals <- n_distinct(ratings$research, ratings$evaluator)
 

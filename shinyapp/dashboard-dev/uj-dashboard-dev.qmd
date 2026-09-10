@@ -1066,15 +1066,12 @@ anonymity_data <- reactive({
   # Count distinct evaluations (paper-evaluator pairs)
   evaluations <- ratings |>
     filter(!is.na(evaluator), evaluator != "") |>
-    distinct(research, evaluator) |>
+    distinct(research, evaluator, .keep_all = TRUE) |>
     # Filter out obvious data quality issues (paper titles parsed as evaluator names)
     filter(!str_detect(evaluator, "^https?://"),
            !str_detect(evaluator, "^\\d{4}"),  # Years
            nchar(evaluator) < 100) |>  # Names shouldn't be super long
-    mutate(
-      # Match: "Evaluator N", "Anon. evaluator N", "Anon. Evaluator N", "Anonymous_N", etc.
-      is_anonymous = str_detect(evaluator, regex("^(Evaluator|Anon|Anonymous)", ignore_case = TRUE))
-    )
+    mutate(is_anonymous = coalesce(as.logical(evaluator_is_anonymous), FALSE))
 
   list(
     total = nrow(evaluations),
@@ -1301,4 +1298,3 @@ output$plot_eval_streams <- renderPlotly({
 
 
 ```
-

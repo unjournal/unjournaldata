@@ -1,14 +1,13 @@
 on:
   schedule:
-    # time is in UTC i.e. GMT London
-    # * is a special character in YAML so you have to quote this string
-    - cron: '30 13 * * *'
+    # Run after the private database repository publishes its checked bundle.
+    - cron: '30 14 * * *'
   push:
     branches:
       - main
   workflow_dispatch:
 
-name: Import, Render and Publish
+name: Publish Dashboard from Sanitized Data
 
 # you need these permissions to publish to GitHub pages
 permissions: 
@@ -23,30 +22,31 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
       
-      - name: Set up Python 3.11 and install requirements
+      - name: Check out privacy-checked data export
+        uses: actions/checkout@v4
+        with:
+          ref: public-data
+          path: .data-source
+          sparse-checkout: public_export
+          lfs: false
+
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip' # caching pip dependencies
-      - run: pip install -r requirements.txt
 
-      - name: Import Unjournal data
-        run: |
-          python3 code/import-unjournal-data.py
-        env:
-          CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
-
-      - name: Create evaluator-paper level dataset
-        run: |
-          python3 code/create_evaluator_paper_dataset.py
-        env:
-          CODA_API_KEY: ${{ secrets.CODA_API_KEY }}
+      - name: Verify and install sanitized public data
+        run: python3 code/install_public_export.py --source .data-source/public_export
                 
       - name: Upload Unjournal data as artifact
         uses: actions/upload-artifact@v4
         with:
           name: unjournal-data
-          path: data
+          path: |
+            data/research.csv
+            data/rsx_evalr_rating.csv
+            data/evaluator_paper_level.csv
+            data/public_export_manifest.json
       
       - name: Update Unjournal data in repository
         # There is a race condition here: if someone else, or another
@@ -57,15 +57,12 @@ jobs:
         # `diff-index` with the `--exit-code` option returns 0 if there's no
         # difference between the working copy and the HEAD branch.
         #
-        # Note: We use "git add data/*.csv || true" to ignore errors from
-        # gitignored files like evaluator_survey_responses.csv (which contains
-        # private evaluator feedback and should not be public).
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "Github Actions"
           git pull # try to minimize race condition
-          git add data/*.csv || true
-          git diff-index --exit-code HEAD data/*.csv || git commit -m "Github actions: auto-update data"
+          git add data/research.csv data/rsx_evalr_rating.csv data/evaluator_paper_level.csv data/public_export_manifest.json
+          git diff --cached --quiet || git commit -m "Update sanitized public data"
           git push
         
       - name: Set up Quarto
@@ -87,9 +84,12 @@ jobs:
       - name: Setup dependencies with renv
         uses: r-lib/actions/setup-renv@v2
         with:
-          cache-version: 2 # increment this to invalidate the renv cache
+          cache-version: 3 # clean cache after switching the package mirror
         env:
-          GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
+          # Short-lived token is sufficient for the one public GitHub package.
+          GITHUB_PAT: ${{ github.token }}
+          # Avoid intermittent PPM archive failures for versions pinned in renv.lock.
+          RENV_CONFIG_REPOS_OVERRIDE: https://cloud.r-project.org
 
       - name: Install plotly (not in renv.lock)
         run: |
@@ -128,5 +128,3 @@ jobs:
       #                          server = "shinyapps.io",
       #                          forceUpdate = TRUE)
       #   shell: Rscript {0}
-
-
