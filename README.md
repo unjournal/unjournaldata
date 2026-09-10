@@ -16,7 +16,7 @@ Outputs and reports from here are published at <https://unjournal.github.io/unjo
 
 ```
 Private unjournal-database repository
-    └→ privacy-checked public_export/ bundle
+    └→ privacy-checked public_export/ bundle on this repo's public-data branch
         ↓
 This repository verifies schemas, hashes, and privacy constraints
         ↓
@@ -27,7 +27,8 @@ Shiny dashboard deployment → https://unjournal.shinyapps.io/uj-dashboard
 
 A single GitHub Action (`.github/workflows/import-render-publish.yml`):
 
-1. Checks out the private repository's explicit `public_export/` bundle using a read-only deploy key
+1. Checks out the explicit `public_export/` bundle from this repository's
+   dedicated `public-data` branch
 2. Verifies its file set, schemas, hashes, and privacy constraints
 3. Updates the three managed public CSV files
 4. Deploys the [Shiny](https://shiny.posit.co) dashboard at <https://unjournal.shinyapps.io/uj-dashboard>
@@ -36,6 +37,10 @@ This action is automatically run:
 
 * when the "main" branch is pushed to
 * once daily at 14:30 UTC, after the private data build
+
+The private repository holds the write-enabled deploy key used to update the
+`public-data` branch. This public repository has no credential that can read the
+private repository.
 
 
 ## How it works: website and blog posts

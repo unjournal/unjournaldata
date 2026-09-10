@@ -1,6 +1,6 @@
 on:
   schedule:
-    # Run after the private database repository's 13:30 UTC data build.
+    # Run after the private database repository publishes its checked bundle.
     - cron: '30 14 * * *'
   push:
     branches:
@@ -25,8 +25,7 @@ jobs:
       - name: Check out privacy-checked data export
         uses: actions/checkout@v4
         with:
-          repository: unjournal/unjournal-database
-          ssh-key: ${{ secrets.UNJOURNAL_DATABASE_DEPLOY_KEY }}
+          ref: public-data
           path: .data-source
           sparse-checkout: public_export
           lfs: false
@@ -126,4 +125,3 @@ jobs:
       #                          server = "shinyapps.io",
       #                          forceUpdate = TRUE)
       #   shell: Rscript {0}
-
