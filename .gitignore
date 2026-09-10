@@ -45,6 +45,30 @@ shinyapp/dashboard/uj-dashboard_previous_checkme.qmd
 # Private evaluator data
 data/evaluator_survey_responses.csv
 data/survey_responses_preview.csv
+data/academic_stream_responses.csv
+data/applied_stream_responses.csv
+data/author_survey_responses.csv
+data/paper_authors.csv
+data/evaluator_paper_level_changes_only.csv
+data/evaluator_paper_level_updated.csv
+data/missing_evaluations_verified.csv
+data/missing_ratings_from_forms.csv
+data/new_evaluations_from_forms.csv
+data/ratings_for_paste_ordered.csv
+data/specific_missing_ratings_for_paste.csv
+data/specific_missing_ratings_found.csv
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Rendered dashboard output
+shinyapp/dashboard/*.html
+shinyapp/dashboard/*_data/
+shinyapp/dashboard/*_files/
+shinyapp/dashboard-dev/*.html
+shinyapp/dashboard-dev/*_data/
+shinyapp/dashboard-dev/*_files/
 
 # Analysis log files
 analysis.log
