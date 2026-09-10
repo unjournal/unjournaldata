@@ -84,9 +84,11 @@ jobs:
       - name: Setup dependencies with renv
         uses: r-lib/actions/setup-renv@v2
         with:
-          cache-version: 2 # increment this to invalidate the renv cache
+          cache-version: 3 # clean cache after switching the package mirror
         env:
           GITHUB_PAT: ${{ secrets.RENV_GITHUB_PAT }}
+          # Avoid intermittent PPM archive failures for versions pinned in renv.lock.
+          RENV_CONFIG_REPOS_OVERRIDE: https://cloud.r-project.org
 
       - name: Install plotly (not in renv.lock)
         run: |
