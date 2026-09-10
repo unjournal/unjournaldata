@@ -4,7 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This repository manages [The Unjournal](https://www.unjournal.org) evaluations data, meta-analysis, and dashboards. It automatically exports data from Coda.io and publishes interactive dashboards and a static website.
+This public repository manages [The Unjournal](https://www.unjournal.org)
+dashboard, website, and public analysis code. The private
+`unjournal/unjournal-database` repository owns Coda ingestion, SQLite,
+bibliometrics operations, Linode automation, and internal data.
+
+> **Architecture boundary (September 2026):** This repository must not import
+> directly from Coda or copy the private repository's `data/` directory. It
+> accepts only the three-file `public_export/` bundle documented in
+> `PUBLIC_DATA.md`, verified by `code/install_public_export.py`. Sections below
+> describing direct Coda, SQLite, or Linode operation are historical and should
+> not be used after the migration.
 
 **Main outputs:**
 - Shiny dashboard: https://unjournal.shinyapps.io/uj-dashboard
@@ -12,22 +22,14 @@ This repository manages [The Unjournal](https://www.unjournal.org) evaluations d
 
 ## Key Commands
 
-### Data Import
+### Public data installation
 ```bash
-# Import data from Coda.io (requires CODA_API_KEY environment variable)
-python3 code/import-unjournal-data.py
+python3 code/install_public_export.py --source <public_export_dir>
 ```
 
-This exports three primary CSV files to `/data`:
-- `research.csv`: evaluated papers
-- `rsx_evalr_rating.csv`: quantitative ratings by evaluators
-- `paper_authors.csv`: authors per paper
-
-Additional data files generated:
-- `evaluator_paper_level.csv`: wide-format dataset at evaluator-paper level with privacy protections (created by `create_evaluator_paper_dataset.py`)
-- `evaluator_survey_responses.csv`: **PRIVATE** - evaluator survey data (gitignored, not committed to public repo, available only in SQLite database)
-- `academic_stream_responses.csv`, `applied_stream_responses.csv`: survey response data
-- `jql70a.csv`, `jql-enriched.csv`: journal quality rankings (external data)
+The managed files are `research.csv`, anonymized `rsx_evalr_rating.csv`, and a
+reduced `evaluator_paper_level.csv` containing only stream and hours-spent
+values. Never add raw form exports or author-contact data here.
 
 ### Python Environment
 ```bash
@@ -70,21 +72,20 @@ Blog posts are **frozen** (they won't be rebuilt once created). To add a blog po
 ## Architecture
 
 ### Automated Pipeline (GitHub Actions)
-The `.github/workflows/import-render-publish.yml` workflow runs daily at 13:30 UTC and on pushes to main:
+The `.github/workflows/import-render-publish.yml` workflow runs daily at 14:30 UTC and on pushes to main:
 
-1. **Data Import**: Runs `code/import-unjournal-data.py` to fetch data from Coda.io
-2. **Evaluator-Paper Dataset**: Runs `code/create_evaluator_paper_dataset.py` to create wide-format dataset with privacy protections
-3. **Data Commit**: Auto-commits updated CSV files to the repository
-4. **Environment Setup**: Installs Python 3.11, R (via renv), Quarto, and system dependencies (JAGS, etc.)
-5. **Dashboard Publish**: Publishes `shinyapp/dashboard` to shinyapps.io using rsconnect
+1. Checks out only `public_export/` from this repository's dedicated
+   `public-data` branch
+2. Verifies the exact file set, schemas, hashes, and privacy constraints
+3. Auto-commits the three managed public CSV files
+4. Installs R, Quarto, and system dependencies
+5. Publishes `shinyapp/dashboard` to shinyapps.io
 
 **Required secrets:**
-- `CODA_API_KEY`: Coda.io API access
 - `RSCONNECT_USER`, `RSCONNECT_TOKEN`, `RSCONNECT_SECRET`: Shinyapps.io credentials
 - `AIRTABLE_API_KEY`: (used by dashboard)
-- `RENV_GITHUB_PAT`: GitHub PAT for renv package installation
 
-### Data Flow
+### Historical data flow (moved to the private repository)
 ```
 Coda.io (source database)
     ↓
@@ -102,6 +103,9 @@ shinyapp/dashboard/uj-dashboard.qmd (reads CSVs)
     ↓
 Published to shinyapps.io
 ```
+
+The current public workflow starts with the checked `public_export/` bundle on
+the `public-data` branch. It does not receive a private-repository credential.
 
 ### Linode SQLite Database (Optional)
 
