@@ -1,0 +1,43 @@
+{
+  "files": {
+    "evaluator_paper_level.csv": {
+      "columns": [
+        "evaluation_stream",
+        "hours_spent_manual_impute"
+      ],
+      "rows": 211,
+      "sha256": "a5229a96a9bc29910e7d011dd51c4b91a7690dd0eae62438423599cf510b0833"
+    },
+    "research.csv": {
+      "columns": [
+        "label_paper_title",
+        "status",
+        "research_url",
+        "doi",
+        "main_cause_cat",
+        "main_cause_cat_abbrev",
+        "publication_status",
+        "source_main"
+      ],
+      "rows": 337,
+      "sha256": "249439f4e74f30b9094b5152b7a8ae37a10437ad83a2c0d1f173e5254a5c61bf"
+    },
+    "rsx_evalr_rating.csv": {
+      "columns": [
+        "research",
+        "evaluator",
+        "criteria",
+        "middle_rating",
+        "lower_CI",
+        "upper_CI",
+        "confidence_level",
+        "row_created_date",
+        "evaluator_is_anonymous"
+      ],
+      "rows": 1039,
+      "sha256": "880dff1fbd83820f2749d41ec5a0c1dd90e119dd47a871adb05a1d902afff035"
+    }
+  },
+  "schema_version": 1,
+  "source": "unjournal/unjournal-database"
+}
