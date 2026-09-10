@@ -74,19 +74,19 @@ Blog posts are **frozen** (they won't be rebuilt once created). To add a blog po
 ### Automated Pipeline (GitHub Actions)
 The `.github/workflows/import-render-publish.yml` workflow runs daily at 14:30 UTC and on pushes to main:
 
-1. Checks out only `public_export/` from the private database repository using a read-only deploy key
+1. Checks out only `public_export/` from this repository's dedicated
+   `public-data` branch
 2. Verifies the exact file set, schemas, hashes, and privacy constraints
 3. Auto-commits the three managed public CSV files
 4. Installs R, Quarto, and system dependencies
 5. Publishes `shinyapp/dashboard` to shinyapps.io
 
 **Required secrets:**
-- `UNJOURNAL_DATABASE_DEPLOY_KEY`: read-only access to the private public-export bundle
 - `RSCONNECT_USER`, `RSCONNECT_TOKEN`, `RSCONNECT_SECRET`: Shinyapps.io credentials
 - `AIRTABLE_API_KEY`: (used by dashboard)
 - `RENV_GITHUB_PAT`: GitHub PAT for renv package installation
 
-### Data Flow
+### Historical data flow (moved to the private repository)
 ```
 Coda.io (source database)
     ↓
@@ -104,6 +104,9 @@ shinyapp/dashboard/uj-dashboard.qmd (reads CSVs)
     ↓
 Published to shinyapps.io
 ```
+
+The current public workflow starts with the checked `public_export/` bundle on
+the `public-data` branch. It does not receive a private-repository credential.
 
 ### Linode SQLite Database (Optional)
 
