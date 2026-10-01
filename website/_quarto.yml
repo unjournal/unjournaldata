@@ -1,11 +1,17 @@
 project:
   type: website
+  resources:
+    - llms.txt
 
 website:
   title: "The Unjournal Data Blog"
-  description: "News and insights from The Unjournal"
-  site-url: https://unjournal.github.io
+  description: "Analysis and updates on The Unjournal's evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation."
+  # Must include the /unjournaldata/ path, or sitemap.xml and canonical URLs
+  # point at https://unjournal.github.io/ (2026-10-01 fix).
+  site-url: https://unjournal.github.io/unjournaldata/
   repo-url: https://github.com/unjournal/unjournaldata/
+  open-graph: true
+  twitter-card: true
   navbar:
     right:
       - posts.qmd
@@ -21,5 +27,6 @@ format:
     code-tools: false
     citations-hover: true
     footnotes-hover: true
+    canonical-url: true
 
 

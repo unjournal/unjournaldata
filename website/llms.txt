@@ -1,0 +1,20 @@
+# The Unjournal Data Blog
+
+> Analysis and updates on The Unjournal's evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation.
+
+By The Unjournal (https://unjournal.org), a nonprofit that commissions public expert evaluations of impactful research. Published evaluations: https://unjournal.pubpub.org. About: https://info.unjournal.org
+
+## Pages
+
+- [The Unjournal data blog – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/)
+- [Authors on Unjournal evaluations: what the survey shows – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/author-survey-2026/): Results from our author survey — quantitative ratings, qualitative feedback, and candid perspectives on what works and what needs improving.
+- [Unjournal Evaluations Data - January 2026 – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/dashboard-data-jan2026/): Static snapshot of evaluation data while the interactive dashboard is being updated
+- [Do authors update their papers after Unjournal evaluations? – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/do-authors-respond-2026/)
+- [Inside The Unjournal: What Evaluators Tell Us – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/evaluator-survey-insights/): Analyzing 100+ evaluator survey responses about time spent, experience levels, and feedback on The Unjournal process.
+- [Exceptional Research from The Unjournal: Papers Evaluated in 2024-2025 – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/high-quality-papers-2024/)
+- [Where Are Unjournal Papers Hosted? A Multi-Platform Analysis – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/paper-hosting-analysis-2026/)
+- [A first look at Unjournal’s data – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/uj-data-first-look/)
+- [Unjournal data update: Deeper analysis with more evaluations – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts/uj-data-update-2025/)
+- [Blog Posts – The Unjournal Data Blog](https://unjournal.github.io/unjournaldata/posts.html)
+
+Full, current page list: https://unjournal.github.io/unjournaldata/sitemap.xml (this file is static; add new posts here when publishing).
