@@ -1,1 +1,1 @@
-Sitemap: https://unjournal.github.io/sitemap.xml
+Sitemap: https://unjournal.github.io/unjournaldata/sitemap.xml
