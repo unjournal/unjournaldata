@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Unjournal Ratings Reanalysis</title>
+<meta name="description" content="What The Unjournal's evaluator ratings and 90% intervals tell us about scale use, agreement, calibration and redundancy, and what to change in the evaluation form. AI-generated working draft, open for comment.">
+<script src="https://hypothes.is/embed.js" async></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* layout: one reading column (~44rem) with wide tables and figures allowed to scroll in their own boxes; folds for detail, tooltips for terms */
+:root{
+  --bg:#f7f6f2; --panel:#ffffff; --fg:#1d2126; --muted:#5a6068; --rule:#d8d4ca;
+  --accent:#20618f; --accent-soft:#e3edf5; --warn:#8a5a00; --warn-soft:#fbf1dc;
+  --tipbg:#1d2126; --tipfg:#f7f6f2; --tbl:#efede6; --good:#2c6e49;
+  --font-body:"Literata",Georgia,"Times New Roman",serif;
+  --font-ui:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  --font-mono:"JetBrains Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171b; --panel:#1b1f24; --fg:#e7e4dc; --muted:#a6aaa4; --rule:#353b42;
+  --accent:#86b9df; --accent-soft:#1f2c38; --warn:#e2b45c; --warn-soft:#2e2615;
+  --tipbg:#e7e4dc; --tipfg:#14171b; --tbl:#20252b; --good:#7fc39b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171b; --panel:#1b1f24; --fg:#e7e4dc; --muted:#a6aaa4; --rule:#353b42;
+  --accent:#86b9df; --accent-soft:#1f2c38; --warn:#e2b45c; --warn-soft:#2e2615;
+  --tipbg:#e7e4dc; --tipfg:#14171b; --tbl:#20252b; --good:#7fc39b; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6;padding-block:24px 80px;padding-inline:16px}
+main{max-width:44rem;margin:0 auto;min-width:0}
+h1,h2,h3,h4{font-family:var(--font-ui);line-height:1.25;text-wrap:balance}
+h1{font-size:1.9rem;margin:.2rem 0 .4rem;letter-spacing:-.01em}
+h2{font-size:1.35rem;margin:2.6rem 0 .7rem;padding-top:.6rem;border-top:2px solid var(--rule)}
+h3{font-size:1.08rem;margin:1.8rem 0 .5rem}
+p,li{max-width:66ch}
+p{margin:.75rem 0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--font-ui);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.lede{font-size:1.08rem;color:var(--fg)}
+.notice{font-family:var(--font-ui);font-size:.9rem;line-height:1.5;background:var(--warn-soft);border:1px solid var(--rule);border-left:4px solid var(--warn);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
+.notice p{margin:.35rem 0}
+.box{font-family:var(--font-ui);font-size:.92rem;line-height:1.5;background:var(--accent-soft);border:1px solid var(--rule);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
+.box p,.box li{margin:.35rem 0}
+nav.toc{font-family:var(--font-ui);font-size:.9rem;background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc ol{margin:.3rem 0;padding-left:1.3rem}
+nav.toc li{margin:.15rem 0}
+.findings{list-style:none;padding:0;margin:1rem 0;display:grid;gap:.6rem}
+.findings>li{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.7rem .9rem;max-width:none}
+.findings>li>strong{font-family:var(--font-ui)}
+details{background:var(--panel);border:1px solid var(--rule);border-radius:4px;margin:.8rem 0;padding:0 .9rem}
+details[open]{padding-bottom:.6rem}
+summary{cursor:pointer;font-family:var(--font-ui);font-size:.9rem;font-weight:600;padding:.55rem 0;color:var(--accent)}
+summary:focus-visible,.tip:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details details{background:var(--bg)}
+.findings details{margin:.5rem 0 0;font-size:.95rem}
+.tip{position:relative;border-bottom:1px dotted var(--accent);cursor:help;white-space:normal}
+.tip .tt{display:none;position:absolute;left:0;top:calc(100% + 6px);z-index:20;width:min(20rem,80vw);background:var(--tipbg);color:var(--tipfg);font-family:var(--font-ui);font-size:.82rem;line-height:1.45;padding:.55rem .7rem;border-radius:4px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-weight:400;text-transform:none;letter-spacing:0}
+.tip:hover .tt,.tip:focus .tt,.tip:focus-within .tt{display:block}
+.scroll{overflow-x:auto;margin:1rem 0;border:1px solid var(--rule);border-radius:4px;background:var(--panel)}
+table{border-collapse:collapse;font-family:var(--font-ui);font-size:.82rem;font-variant-numeric:tabular-nums;width:100%}
+th,td{padding:.38rem .55rem;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{background:var(--tbl);font-weight:600;vertical-align:bottom}
+td.l,th.l{text-align:left;white-space:normal}
+caption{caption-side:bottom;text-align:left;font-size:.78rem;color:var(--muted);padding:.4rem .55rem}
+figure{margin:1.2rem 0}
+figure img{max-width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:4px;background:#fff}
+figcaption{font-family:var(--font-ui);font-size:.82rem;color:var(--muted);margin-top:.35rem;max-width:66ch}
+.calc{font-family:var(--font-ui);background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.9rem 1rem;margin:1rem 0}
+.calc label{display:block;font-size:.85rem;font-weight:600;margin:.4rem 0 .2rem}
+.calc input[type=range]{width:100%}
+.calc .out{font-size:.95rem;line-height:1.5;margin-top:.5rem}
+.calc .big{font-family:var(--font-mono);font-weight:600}
+.bar{height:12px;background:var(--tbl);border-radius:3px;overflow:hidden;margin:.25rem 0 .5rem}
+.bar>span{display:block;height:100%;background:var(--accent)}
+code,.mono{font-family:var(--font-mono);font-size:.86em}
+.tag{font-family:var(--font-ui);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.1rem .4rem;border-radius:3px;border:1px solid var(--rule);color:var(--muted);margin-left:.3rem;white-space:nowrap}
+.tag.fix{color:var(--good);border-color:var(--good)}
+.tag.chg{color:var(--warn);border-color:var(--warn)}
+.q{font-family:var(--font-ui);font-size:.92rem;border-left:3px solid var(--accent);padding:.3rem .8rem;margin:.6rem 0}
+footer{font-family:var(--font-ui);font-size:.82rem;color:var(--muted);margin-top:3rem;border-top:1px solid var(--rule);padding-top:1rem}
+@media (max-width:520px){body{font-size:16px}h1{font-size:1.55rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+
+<p class="eyebrow">The Unjournal · evaluation data · version 2 · 16 October 2026</p>
+<h1>What the ratings tell us: scales, agreement, intervals, and what to change</h1>
+<p class="lede">A reanalysis of the numbers our evaluators give: 114 evaluations of 59 papers, roughly 1,000 ratings. We ask what the numbers mean, how much evaluators agree, whether their stated uncertainty is realistic, which questions earn their place on the form, and what we should change.</p>
+
+<div class="notice" role="note">
+<p><strong>AI-generated working draft.</strong> This page was produced by AI from a combination of human prompting (David Reinstein), a GPT-5 Pro Deep Research report, and analysis and writing by Claude (Claude Fable 5.1 for the first analysis, Claude Opus 5.5 for this integrated version, with some checking runs delegated to cheaper Claude agents). A person has directed it but has not yet checked every number or sentence.</p>
+<p><strong>Please comment.</strong> Select any text to annotate it with <a href="https://web.hypothes.is/">Hypothes.is</a> (the sidebar opens on the right; a free account is needed to post). We'll be commenting here ourselves, and we'll adjust, correct and improve the page in response. Expect it to change.</p>
+<p>Earlier version (16 October, first Claude-only pass): <a href="v1/">v1</a>. What changed is listed <a href="#changes">below</a>. Code and public data: <a href="https://github.com/unjournal/unjournaldata">unjournal/unjournaldata</a>.</p>
+</div>
+
+<nav class="toc" aria-label="Contents">
+<strong>Contents</strong>
+<ol>
+<li><a href="#summary">Main findings in plain terms</a></li>
+<li><a href="#data">The data, and problems in it</a></li>
+<li><a href="#scales">How evaluators use the scales</a></li>
+<li><a href="#reliability">How much do evaluators agree?</a></li>
+<li><a href="#intervals">Are the 90% intervals realistic?</a></li>
+<li><a href="#tiers">The two journal-tier questions</a></li>
+<li><a href="#overall">What the overall rating is built from</a></li>
+<li><a href="#measures">Which questions earn their place</a></li>
+<li><a href="#llm">How LLM ratings compare</a></li>
+<li><a href="#recs">What to change</a></li>
+<li><a href="#questions">Open questions</a></li>
+<li><a href="#changes">What changed from v1, and where this came from</a></li>
+</ol>
+</nav>
+
+<h2 id="summary">Main findings in plain terms</h2>
+<p>Each finding has a fold with how we got it. Dotted underlines are terms with a short definition on hover or tap.</p>
+
+<ol class="findings">
+<li><strong>Two experts rating the same paper typically differ by about 10 points on our 0 to 100 scales, and often by much more.</strong> On the overall rating, the median gap is 9.5 points, one pair in five differs by more than 20, and the largest gap is 40. On "open science" the median gap is 19.
+<details><summary>How we got this</summary><p>For each paper with two or three evaluations, we took every pair of evaluations and the absolute difference of their midpoints on each criterion (54 pairs for overall, 382 pairs pooled over eight criteria). Full table in <a href="#reliability">section 4</a>.</p></details></li>
+
+<li><strong>A single evaluation carries roughly half signal, half noise on overall and methods; much less on the other criteria.</strong> Averaging our usual two evaluations makes the paper-level number noticeably more reliable, but for "advancing knowledge" and "open science" even the average is mostly noise.
+<details><summary>How we got this</summary><p>We estimated how much ratings vary <em>between</em> papers versus <em>within</em> a paper (between evaluators). For overall, the spread of evaluators around a paper's mean (about 11 points) is about the same as the spread of papers' means around the grand mean (about 10 points). Krippendorff's alpha and the <span class="tip" tabindex="0">intraclass correlation<span class="tt" role="tooltip">The share of total rating variance that is due to real differences between papers, rather than to evaluators disagreeing about the same paper. 0.5 means half and half.</span></span> are both about 0.45 for overall and 0.50 for methods, against 0.22 for advancing knowledge and 0.06 for open science. Details in <a href="#reliability">section 4</a>.</p></details></li>
+
+<li><strong>Evaluators' 90% intervals are too narrow for the disagreement we see, by a factor of about two.</strong> A co-evaluator's best guess lands inside your 90% interval about half the time; if everyone's intervals were realistic it would be about 70%. Nearly a quarter of evaluator pairs give intervals that don't overlap at all.
+<details><summary>How we got this, and an important caveat</summary><p>We can't check intervals against "the truth", because there is no ground-truth percentile. What we can check is whether the intervals are consistent with how much evaluators disagree. Under a simple model (both evaluators aim at the same target and make independent errors whose size matches their own stated interval) the expected hit rate is about 70% for our data. The observed rate is 51%. The caveat, which GPT-5 Pro's report stresses: if evaluators are answering slightly different questions (different reference groups, different ideas of what "open science" means) the hit rate would also be low. We can't fully separate "too confident" from "measuring different things", but either way the published intervals understate how much a second expert would differ. Details in <a href="#intervals">section 5</a>.</p></details></li>
+
+<li><strong>Ratings sit high on the scale: 90% of overall ratings are above 50.</strong> This is partly expected, because we select promising and relevant work, so it is not by itself proof of leniency. There are some signs of leniency too (anonymous evaluators rate about 5 points lower than named ones on the same paper).
+<details><summary>Why this is hard to interpret</summary><p>The percentile scale asks where a paper sits among "all serious research in the same area" the evaluator has seen recently. If we evaluated a random sample of such research, ratings would be spread evenly from 0 to 100. We don't: papers are suggested and selected. So a well-calibrated evaluator could reasonably give mostly 70s and 80s. To tell selection from leniency we'd need <a href="#recs">anchor papers</a> that everyone rates. Section <a href="#scales">3</a>.</p></details></li>
+
+<li><strong>The overall rating moves mostly with methods, logic and communication, and advancing knowledge.</strong> Together these three account for about 84% of the explained variation in overall. Relevance to global priorities accounts for a modest share (roughly 10 to 15%) that it mostly shares with advancing knowledge; open science accounts for almost none.
+<details><summary>What "accounts for" means here</summary><p>We regressed each evaluator's overall rating on their own six sub-ratings (96 evaluations with all six). The sub-ratings explain 74% of the variation in overall. We split that 74% among the sub-ratings using a <span class="tip" tabindex="0">Shapley decomposition<span class="tt" role="tooltip">Adds the predictors to the regression in every possible order and averages how much each one raises R². It shares overlapping explanatory power fairly between correlated predictors, instead of giving it all to whichever one the regression happens to pick.</span></span>. In v1 we wrote that relevance "gets zero weight". That was too strong. Relevance's <em>unique</em> contribution, after knowing the other ratings, is near zero and statistically indistinguishable from zero, but relevance does correlate with overall (about 0.45 to 0.5). Section <a href="#overall">7</a>.</p></details></li>
+
+<li><strong>The "should" and "will" journal-tier answers are often identical, but this may partly be a data artifact.</strong> 61% of evaluations entered in 2024 give the same number to both, against 25% of those entered in 2025. Both questions remain on the form, and we think both should stay.
+<details><summary>More</summary><p>On average, "should" (merit) and "will" (prediction) are almost the same number. The 2024 entries were mostly older evaluations transferred from PubPub, so we're checking whether one value was sometimes copied into the other. Section <a href="#tiers">6</a>.</p></details></li>
+
+<li><strong>There are some fixable data problems.</strong> The three most recent evaluation packages (May to September 2026) are missing from the ratings data. Twelve ratings have an impossible interval (midpoint outside its own interval). Since 2025 the "real-world relevance" field almost always equals the "global relevance" field, which looks like an import artifact. And the "within-rater" correlations in our 2025 post partly pooled different people.
+<details><summary>Why this matters</summary><p>None of these is large, but some quietly bias analyses. Treating two copies of one field as two questions inflates their correlation, and grouping by "Evaluator 1" across papers mixes different people. Section <a href="#data">2</a>.</p></details></li>
+
+<li><strong>Frontier LLMs agree with a single human evaluator about as well as a second human does on overall, methods and journal tier.</strong> They are not on the same scale as humans, though. GPT-5 Pro rates about 6 points higher and compresses its ratings; Claude Opus 4.6 rates about 8 lower. All the models we tested disagree with humans on open science.
+<details><summary>How we compared</summary><p>For papers with two human evaluations, we compared how well a model's rating tracks one randomly chosen human, with how well the other human does (rank correlation, averaged over 200 random choices). This is fairer than comparing a model with the human <em>average</em>, which is easier to track. Section <a href="#llm">9</a>.</p></details></li>
+</ol>
+
+<div class="box">
+<p><strong>If you only read one thing:</strong> the most useful cheap changes are (1) show evaluators how much experts typically disagree, right next to the sliders, and warn on very narrow or impossible intervals; (2) replace the open-science percentile with a short checklist; (3) report reliability in percentile points, not just coefficients; (4) fix the data pipeline before doing fancier statistics. Full list in <a href="#recs">section 10</a>.</p>
+</div>
+
+<h2 id="data">The data, and problems in it</h2>
+
+<p>We use the public ratings export: per-paper evaluator labels ("Evaluator 1", "Evaluator 2" within each paper), so no one is identifiable and no one can be followed across papers. A few aggregate checks on repeat evaluators used the private database, with names hashed and only counts reported.</p>
+
+<div class="scroll"><table>
+<caption>Coverage. "Share of evaluations" is out of 114. Claims and evidence was added in 2025; real-world relevance was dropped from the current form.</caption>
+<thead><tr><th>Criterion</th><th>Scale</th><th>Ratings</th><th>Share of evaluations</th><th>With a 90% interval</th></tr></thead>
+<tbody>
+<tr><td>Overall assessment</td><td>0–100</td><td>110</td><td>97%</td><td>88%</td></tr>
+<tr><td>Claims and evidence</td><td>0–100</td><td>47</td><td>41%</td><td>98%</td></tr>
+<tr><td>Methods</td><td>0–100</td><td>107</td><td>95%</td><td>90%</td></tr>
+<tr><td>Advancing knowledge</td><td>0–100</td><td>108</td><td>96%</td><td>89%</td></tr>
+<tr><td>Logic and communication</td><td>0–100</td><td>110</td><td>97%</td><td>89%</td></tr>
+<tr><td>Open science</td><td>0–100</td><td>108</td><td>96%</td><td>88%</td></tr>
+<tr><td>Real-world relevance</td><td>0–100</td><td>98</td><td>87%</td><td>90%</td></tr>
+<tr><td>Global-priorities relevance</td><td>0–100</td><td>107</td><td>95%</td><td>89%</td></tr>
+<tr><td>Journal tier: should</td><td>0–5</td><td>96</td><td>85%</td><td>81%</td></tr>
+<tr><td>Journal tier: will</td><td>0–5</td><td>88</td><td>78%</td><td>83%</td></tr>
+</tbody></table></div>
+
+<p>About 58% of evaluations are anonymous. Most papers have two evaluations; a few have one or three.</p>
+
+<h3>Problems we found</h3>
+<p>These are worth fixing before anything more sophisticated. A Claude session is working on the pipeline ones now.</p>
+<ol>
+<li><strong>Missing recent evaluations.</strong> The three evaluation packages published on PubPub since February 2026 (on scanner-data price elasticities, the "Yellow Vests" carbon-tax paper, and a technical report on the value of existential-risk mitigation) have no ratings in the database. Evaluations submitted through the new form are stored on our server but were never copied into the ratings table. We added the existential-risk evaluation's seven ratings by hand for this analysis.</li>
+<li><strong>Impossible intervals.</strong> Twelve ratings have the midpoint outside the evaluator's own interval or the bounds reversed. Examples: overall 83 with interval [93, 100]; methods 75 with [88, 33]; a journal tier of 4.0 with interval [25, 5] (probably 2.5). The new form already enforces lower ≤ midpoint ≤ upper, so these come from older entry routes. Fifteen intervals have zero width (five of them "open science 100 [100, 100]").</li>
+<li><strong>Real-world relevance copied from global relevance.</strong> Within an evaluation, the two are identical in 22 of 48 cases entered in 2024, but in 41 of 43 entered in 2025 and all 7 in 2026. The current form has no real-world question, so the import seems to fill it from global relevance. Any analysis that treats them as two questions (including our v1) overstates how similar they are.</li>
+<li><strong>Duplicates and split titles.</strong> 28 rows are duplicates (same paper, evaluator label and criterion, identical values), mostly from re-entry batches. Two papers appear under two slightly different titles (case and apostrophe differences), with one evaluation under each, so a naive analysis treats them as four single-evaluation papers. We merged them here.</li>
+<li><strong>"Within-rater" correlations in the 2025 post.</strong> GPT-5 Pro's report flagged this and we confirmed it. The 2025 post computed correlations across papers "within each evaluator", grouping by the evaluator label. Of the seven labels with three or more papers, two were the generic "Evaluator 1" and "Evaluator 2", each covering 14 papers rated by different people. They supplied 56% of the paper observations behind the reported figures.
+<details><summary>What the corrected numbers look like</summary><p>Restricting to the five evaluators who were named (and so genuinely the same person across papers), the headline correlations fall: real-world with global relevance from 0.69 to 0.56, methods with overall from 0.55 to 0.46, logic with overall from 0.55 to 0.47. The same pairs still lead. But this rests on five people with three to seven papers each, so it is very imprecise. The right fix is to run evaluator-level analysis privately with a stable hashed evaluator key, and publish only aggregates.</p></details></li>
+</ol>
+
+<h2 id="scales">How evaluators use the scales</h2>
+
+<figure><img src="fig_distributions.png" alt="Histograms of midpoint ratings for eight criteria; most mass is between 60 and 100, medians 75 to 85." loading="lazy">
+<figcaption>Midpoint ratings by criterion. The orange line is the median.</figcaption></figure>
+
+<div class="scroll"><table>
+<thead><tr><th>Criterion</th><th>Mean</th><th>Median</th><th>Share ≥ 80</th><th>Share ≤ 30</th><th>On a multiple of 5</th></tr></thead>
+<tbody>
+<tr><td>Overall</td><td>75</td><td>77</td><td>47%</td><td>2%</td><td>77%</td></tr>
+<tr><td>Claims and evidence</td><td>73</td><td>80</td><td>53%</td><td>4%</td><td>69%</td></tr>
+<tr><td>Methods</td><td>71</td><td>75</td><td>41%</td><td>5%</td><td>81%</td></tr>
+<tr><td>Advancing knowledge</td><td>73</td><td>80</td><td>51%</td><td>6%</td><td>78%</td></tr>
+<tr><td>Logic and communication</td><td>75</td><td>80</td><td>49%</td><td>3%</td><td>79%</td></tr>
+<tr><td>Open science</td><td>73</td><td>80</td><td>50%</td><td>7%</td><td>79%</td></tr>
+<tr><td>Real-world relevance</td><td>77</td><td>84</td><td>53%</td><td>4%</td><td>73%</td></tr>
+<tr><td>Global-priorities relevance</td><td>78</td><td>85</td><td>65%</td><td>3%</td><td>82%</td></tr>
+</tbody></table></div>
+
+<p>Three things stand out.</p>
+<ol>
+<li><strong>High placement.</strong> As discussed above, this mixes selection (we pick promising work) with possible leniency. The relevance questions are highest, which fits selection: we choose papers partly <em>because</em> they're relevant to global priorities.</li>
+<li><strong><span class="tip" tabindex="0">Heaping<span class="tt" role="tooltip">Answers bunching on round numbers. If 77% of ratings are multiples of 5, the scale is effectively used in 5-point steps, so a difference of 2 or 3 points between papers means little.</span></span> on round numbers.</strong> Three-quarters of ratings are multiples of 5. That's normal for this kind of question; it tells us the practical resolution of the scale is about 5 points. Summaries shouldn't report decimals.</li>
+<li><strong>Evaluators do differentiate between criteria.</strong> Only 2 of 109 evaluations give the same number on every criterion; the median spread within an evaluation is 25 points.</li>
+</ol>
+
+<h3>Interval shapes</h3>
+<p>The median 90% interval is 20 points wide (10 to 40 for the middle 80% of intervals). Intervals get narrower as the midpoint rises: median width 30 for midpoints at or below 50, 20 for 50 to 85, and 11 above 85. Some of that is the ceiling at 100. Two-thirds of intervals are symmetric around the midpoint; when they aren't, the longer tail is usually below.</p>
+<figure><img src="fig_width_vs_midpoint.png" alt="Scatter of interval width against midpoint; widths shrink from about 30 to about 11 as midpoints rise above 85." loading="lazy">
+<figcaption>Stated interval width against the midpoint. The orange line is the median width in each 10-point band.</figcaption></figure>
+
+<h2 id="reliability">How much do evaluators agree?</h2>
+
+<p>The usual summary is a reliability coefficient such as <span class="tip" tabindex="0">Krippendorff's alpha<span class="tt" role="tooltip">α = 1 − (observed disagreement ÷ disagreement expected by chance). It handles missing ratings and different numbers of raters per paper. We use the "interval" version, which treats a 10-point gap as twice as bad as a 5-point gap.</span></span>, with labels like "0.667 is acceptable". GPT-5 Pro's report makes a good case that these labels hide more than they show. Here are three more concrete ways to read the same numbers.</p>
+
+<h3>Reading 1: how much of chance-level disagreement is left</h3>
+<p>Alpha is defined as one minus the ratio of observed disagreement to the disagreement you'd expect if ratings were shuffled at random across papers. So <strong>1 − α is the share of chance-level disagreement that remains</strong>. That makes differences between alphas easier to compare.</p>
+
+<div class="calc" id="alphacalc">
+<label for="a1">Alpha A: <span class="big" id="a1v">0.40</span></label>
+<input type="range" id="a1" min="0" max="1" step="0.01" value="0.40">
+<div class="bar" aria-hidden="true"><span id="a1b"></span></div>
+<label for="a2">Alpha B: <span class="big" id="a2v">0.50</span></label>
+<input type="range" id="a2" min="0" max="1" step="0.01" value="0.50">
+<div class="bar" aria-hidden="true"><span id="a2b"></span></div>
+<div class="out" id="aout" aria-live="polite"></div>
+</div>
+
+<h3>Reading 2: the gap in percentile points</h3>
+<p>This is the most concrete reading. It answers "if I asked a second expert, how far off would they typically be?"</p>
+
+<div class="scroll"><table>
+<caption>All pairs of evaluations of the same paper. "1 − α" is residual disagreement as a share of chance level. Alpha's 95% interval is from resampling papers; note how wide these are.</caption>
+<thead><tr><th>Criterion</th><th>Pairs</th><th>Median gap</th><th>Mean gap</th><th>Gap &gt; 20</th><th>Gap &gt; 30</th><th>α [95% interval]</th><th>1 − α</th></tr></thead>
+<tbody>
+<tr><td>Overall</td><td>54</td><td>9.5</td><td>11.7</td><td>20%</td><td>7%</td><td>0.45 [0.10, 0.67]</td><td>55%</td></tr>
+<tr><td>Claims and evidence</td><td>20</td><td>10.5</td><td>15.8</td><td>25%</td><td>15%</td><td>0.43 [0.00, 0.74]</td><td>57%</td></tr>
+<tr><td>Methods</td><td>52</td><td>10</td><td>13.7</td><td>25%</td><td>10%</td><td>0.50 [0.09, 0.71]</td><td>50%</td></tr>
+<tr><td>Advancing knowledge</td><td>54</td><td>10</td><td>18.7</td><td>31%</td><td>22%</td><td>0.22 [−0.03, 0.48]</td><td>78%</td></tr>
+<tr><td>Logic and communication</td><td>55</td><td>10</td><td>13.7</td><td>22%</td><td>13%</td><td>0.30 [−0.05, 0.60]</td><td>70%</td></tr>
+<tr><td>Open science</td><td>51</td><td>19</td><td>22.1</td><td>39%</td><td>25%</td><td>0.06 [−0.34, 0.45]</td><td>94%</td></tr>
+<tr><td>Real-world relevance</td><td>44</td><td>8</td><td>14.6</td><td>27%</td><td>16%</td><td>0.40 [0.01, 0.70]</td><td>60%</td></tr>
+<tr><td>Global-priorities relevance</td><td>52</td><td>10</td><td>16.1</td><td>29%</td><td>13%</td><td>0.32 [−0.12, 0.63]</td><td>68%</td></tr>
+<tr><td>Journal tier: should</td><td>45</td><td>0.5 tier</td><td>0.74</td><td colspan="2" class="l">&gt; 1 tier apart: 22%</td><td>0.31 [0.05, 0.54]</td><td>69%</td></tr>
+<tr><td>Journal tier: will</td><td>40</td><td>0.55 tier</td><td>0.62</td><td colspan="2" class="l">&gt; 1 tier apart: 17%</td><td>0.41 [0.14, 0.64]</td><td>59%</td></tr>
+</tbody></table></div>
+
+<p>The median gap is about 10 points almost everywhere; what differs between criteria is the tail. On advancing knowledge, one pair in five is more than 30 points apart (the largest gap is 65), which suggests evaluators sometimes read the question quite differently. GPT-5 Pro's report suggests why: the guidance packs novelty, practical value, relevance and usefulness to other researchers into one slider.</p>
+
+<details><summary>Why median gap ≈ 10 everywhere but alpha differs so much</summary>
+<p>Alpha compares disagreement with the spread of ratings across papers. Open science has a moderately large gap and also a smallish real spread between papers (about 6 points once rater noise is removed), so alpha is near zero. Methods has a similar typical gap but a larger real spread between papers (about 13 points), so alpha is higher. A small gap can still mean low reliability if papers barely differ on that criterion.</p>
+</details>
+
+<figure><img src="fig_reliability.png" alt="Bar chart of Krippendorff's alpha by criterion with wide bootstrap intervals; highest about 0.5 for methods, near zero for open science." loading="lazy">
+<figcaption>Alpha by criterion with 95% intervals from resampling papers. The dashed line is the conventional 0.667. The intervals overlap a lot: with about 50 papers we can't rank most criteria confidently.</figcaption></figure>
+
+<h3>Reading 3: signal and noise, and what averaging buys</h3>
+<p>If we think of each rating as <em>the paper's true standing plus this evaluator's error</em>, a reliability of r means true differences between papers account for a share r of the variation and evaluator error for 1 − r. At 0.5 they're equal. This is a model, not a mechanical translation of alpha, but for our data the <span class="tip" tabindex="0">ICC<span class="tt" role="tooltip">Intraclass correlation: the share of rating variance due to differences between papers. Estimated here from a one-way random-effects model; numerically close to alpha for our data.</span></span> and alpha come out almost identical.</p>
+<p>The useful consequence: the number we publish is usually the <em>average</em> of two evaluations, and averaging cancels some independent error. The formula is r<sub>k</sub> = k·r / (1 + (k − 1)·r).</p>
+
+<div class="calc" id="sbcalc">
+<label for="r1">Reliability of a single evaluation: <span class="big" id="r1v">0.45</span></label>
+<input type="range" id="r1" min="0.01" max="0.99" step="0.01" value="0.45">
+<label for="kk">Number of evaluators averaged: <span class="big" id="kkv">2</span></label>
+<input type="range" id="kk" min="1" max="8" step="1" value="2">
+<div class="out" id="sbout" aria-live="polite"></div>
+<p style="font-size:.8rem;color:var(--muted);margin:.5rem 0 0">Assumes evaluators are interchangeable and their errors independent. If evaluators share a bias (same reference group, same blind spot), averaging helps less than this.</p>
+</div>
+
+<div class="scroll"><table>
+<caption>Single-evaluation reliability (ICC) and implied reliability of the mean of 2 or 3 evaluations, under the model above.</caption>
+<thead><tr><th>Criterion</th><th>One evaluation</th><th>Mean of 2</th><th>Mean of 3</th><th>Evaluators for 0.8</th></tr></thead>
+<tbody>
+<tr><td>Methods</td><td>0.50</td><td>0.67</td><td>0.75</td><td>4</td></tr>
+<tr><td>Overall</td><td>0.45</td><td>0.62</td><td>0.71</td><td>5</td></tr>
+<tr><td>Claims and evidence</td><td>0.44</td><td>0.61</td><td>0.70</td><td>5</td></tr>
+<tr><td>Real-world relevance</td><td>0.41</td><td>0.58</td><td>0.67</td><td>6</td></tr>
+<tr><td>Journal tier: will</td><td>0.38</td><td>0.55</td><td>0.65</td><td>7</td></tr>
+<tr><td>Global-priorities relevance</td><td>0.33</td><td>0.49</td><td>0.59</td><td>8</td></tr>
+<tr><td>Journal tier: should</td><td>0.30</td><td>0.46</td><td>0.56</td><td>9</td></tr>
+<tr><td>Logic and communication</td><td>0.30</td><td>0.46</td><td>0.56</td><td>9</td></tr>
+<tr><td>Advancing knowledge</td><td>0.18</td><td>0.31</td><td>0.40</td><td>18</td></tr>
+<tr><td>Open science</td><td>0.06</td><td>0.12</td><td>0.17</td><td>58</td></tr>
+</tbody></table></div>
+
+<details><summary>Is this good or bad, compared with journal peer review?</summary>
+<p>It's roughly in line with what's been found for journal and grant peer review, where agreement between referees on overall recommendations is commonly in the 0.2 to 0.5 range. We haven't done a careful literature comparison here, and that would be a good addition. The more useful point for us is practical: two evaluations give a reasonably informative average on overall and methods, and a weak one elsewhere.</p>
+</details>
+
+<details><summary>Do some areas agree more than others?</summary>
+<p>On overall, alpha is 0.69 in environment (6 papers) and 0.16 in global health (13 papers), and slightly negative in development economics (11 papers). These cells are tiny and the intervals would be enormous, so we wouldn't read much into them. Agreement on overall was similar for evaluations entered in 2024 (0.47) and from 2025 on (0.42), so we see no sign that the percentile wording or calibration tool changed agreement yet.</p>
+</details>
+
+<h2 id="intervals">Are the 90% intervals realistic?</h2>
+
+<p>We ask evaluators for a 90% <span class="tip" tabindex="0">credible interval<span class="tt" role="tooltip">A range the evaluator believes has a 90% chance of containing the "true" value. Here, the guidelines define the true value as the percentile they'd assign "with complete evidence, knowledge, and wisdom".</span></span> on each rating. There's no observable true percentile to check these against. GPT-5 Pro's report is right that comparing with another evaluator's midpoint is not literally a calibration test. We'll call it <strong>cross-evaluator coverage</strong>: how often does evaluator B's best guess fall inside evaluator A's 90% interval?</p>
+
+<p>On its own, a coverage rate doesn't tell you much, because even perfectly calibrated evaluators wouldn't cover each other 90% of the time. So we compare it with what we'd expect if the intervals matched the evaluators' actual error.</p>
+
+<details open><summary>The benchmark, step by step</summary>
+<ol>
+<li>Suppose each evaluator's midpoint is the true value plus an error, and their 90% interval reflects the size of that error honestly. An interval of ±10 then implies a typical error (standard deviation) of about 6 points (10 ÷ 1.645).</li>
+<li>Two such evaluators' midpoints differ by the difference of two errors, which is about 1.4 times bigger than one error.</li>
+<li>So B's midpoint falls inside A's honest interval less often than 90%: about 75% if both have the same width, and about 70% using our evaluators' actual mix of widths.</li>
+<li>We observe 51%.</li>
+</ol>
+<p>Equivalently: intervals imply a typical error of about 6 points, but the observed disagreement implies a typical error of about 12 points per evaluator on overall, and up to 21 on open science. To reach the benchmark, intervals would need to be about 2.5 times wider.</p>
+</details>
+
+<div class="scroll"><table>
+<caption>Cross-evaluator coverage by criterion, against the benchmark of realistic intervals.</caption>
+<thead><tr><th>Criterion</th><th>Pairs</th><th>Observed coverage</th><th>Expected if realistic</th><th>Intervals don't overlap</th><th>Error implied by intervals</th><th>Error implied by disagreement</th></tr></thead>
+<tbody>
+<tr><td>Overall</td><td>89</td><td>62%</td><td>72%</td><td>13%</td><td>6</td><td>12</td></tr>
+<tr><td>Claims and evidence</td><td>35</td><td>49%</td><td>70%</td><td>23%</td><td>6</td><td>15</td></tr>
+<tr><td>Methods</td><td>88</td><td>56%</td><td>66%</td><td>23%</td><td>6</td><td>12</td></tr>
+<tr><td>Advancing knowledge</td><td>90</td><td>51%</td><td>70%</td><td>27%</td><td>6</td><td>18</td></tr>
+<tr><td>Logic and communication</td><td>92</td><td>51%</td><td>70%</td><td>17%</td><td>6</td><td>14</td></tr>
+<tr><td>Open science</td><td>85</td><td>39%</td><td>70%</td><td>38%</td><td>6</td><td>21</td></tr>
+<tr><td>Real-world relevance</td><td>76</td><td>53%</td><td>71%</td><td>18%</td><td>5</td><td>14</td></tr>
+<tr><td>Global-priorities relevance</td><td>88</td><td>50%</td><td>71%</td><td>23%</td><td>6</td><td>15</td></tr>
+</tbody></table></div>
+
+<figure><img src="fig_coverage.png" alt="Paired bars per criterion: observed coverage 39 to 62 percent, expected about 66 to 72 percent." loading="lazy">
+<figcaption>Blue: how often a co-evaluator's midpoint is inside an evaluator's 90% interval. Orange: what we'd expect if intervals matched the evaluators' actual error.</figcaption></figure>
+
+<p>Wider intervals do cover more: 67% for intervals wider than 30 points against 37% for 10 points or less. So the widths carry some information. But an evaluator's own interval width barely predicts how far they end up from their co-evaluator (rank correlation 0.13). There's a little self-knowledge in the intervals, not much.</p>
+
+<details><summary>Two caveats</summary>
+<p><strong>Different targets.</strong> If two evaluators use different reference groups or read the criterion differently, they aren't estimating the same quantity, and coverage would be low even with honest intervals. Open science is the likely case. This doesn't rescue the intervals as published: a reader wants to know how much another expert might differ.</p>
+<p><strong>Shared information.</strong> If evaluators share views (same literature, same seminar circuit), they'd agree more than independent evaluators, and coverage would look <em>better</em> than it should. So that caveat cuts the other way.</p>
+</details>
+
+<details><summary>What a real calibration test would look like</summary>
+<p>Calibration can be tested properly only where outcomes resolve. Two candidates:</p>
+<ul>
+<li><strong>Anchor papers.</strong> A fixed set of papers rated by many evaluators, giving each a reference distribution (e.g. "methods: median 78, middle half 72–84"). An evaluator who consistently rates anchors well above the reference shows a scale-location difference, without pretending the reference is truth.</li>
+<li><strong>Journal-placement forecasts.</strong> The "will" tier eventually resolves (see next section). If we asked for probabilities over tiers rather than a midpoint and interval, we could score forecasts properly.</li>
+</ul>
+</details>
+
+<h2 id="tiers">The two journal-tier questions</h2>
+
+<p>We ask where a paper <strong>should</strong> be published on merit (as if journals judged fairly on the stated criteria) and where it <strong>will</strong> be published. Both are on the form now and we think both should stay. The contrast is the point: it lets evaluators say "this deserves better than it will get" or the reverse, and "will" is the one rating that eventually resolves.</p>
+
+<p>In the data, the two are close. Means are 3.8 (should) and 3.9 (will), and the correlation is 0.73. 44% of evaluations give exactly the same midpoint, and 22% the same midpoint and interval.</p>
+
+<div class="scroll"><table>
+<caption>Should vs will by the year the rating was entered. 2024 entries were mostly older evaluations transferred from PubPub.</caption>
+<thead><tr><th>Entered</th><th>Evaluations</th><th>Same midpoint</th><th>Should &gt; will</th><th>Will &gt; should</th><th>Mean should − will</th></tr></thead>
+<tbody>
+<tr><td>2024</td><td>46</td><td>61%</td><td>20%</td><td>20%</td><td>0.00</td></tr>
+<tr><td>2025</td><td>36</td><td>25%</td><td>33%</td><td>42%</td><td>−0.07</td></tr>
+<tr><td>2026</td><td>5</td><td>20%</td><td>20%</td><td>60%</td><td>−0.12</td></tr>
+</tbody></table></div>
+
+<p>The drop from 61% to 25% identical is large enough to suspect the transfer, not the evaluators. We're checking the 2024 rows against the published evaluations. If evaluators really do give different answers more often than the 2024 data suggest, the distinction is doing more work than it appears.</p>
+
+<details><summary>Our 2025 post got this wrong</summary>
+<p>The October 2025 post's test section found no significant difference (−0.03 tiers, p = 0.63), but its conclusion said evaluators "consistently" rate merit above prediction "(p &lt; 0.001)". The conclusion was a hard-coded sentence that wasn't updated when the data changed. We've corrected the source and added a note to the post.</p>
+</details>
+
+<h3>Do the "will" predictions come true?</h3>
+<p>Early evidence says somewhat. For 13 evaluated papers now published in journals that we could place on the 0–5 tier scale, the average predicted tier has a rank correlation of 0.71 with the actual tier. Predictions were slightly optimistic on average (+0.2 tiers; mean absolute error 0.5). 11 of the 18 evaluator intervals (61%) contained the actual tier. Papers already published in top journals had been predicted at 4.1 on average, against 3.7 for those still unpublished.</p>
+<details><summary>Caveats on this check</summary>
+<p>We assigned tiers to journals by hand using the guidelines' descriptions (for example, AER and Econometrica as 5, AER: Insights and Management Science as 4, Economic Journal 3.5). Those assignments should be checked. Some evaluations were done after acceptance, though the form asks evaluators to predict as if they didn't know. Thirteen papers is a small sample.</p>
+</details>
+
+<h2 id="overall">What the overall rating is built from</h2>
+
+<p>In v1 we wrote that "overall is a rigor judgment" and that relevance and open science get "zero weight". That was shorthand for a regression result, and it overstated things. Here is what we actually did and found.</p>
+
+<p><strong>The question.</strong> When an evaluator gives a paper its overall rating, how closely does it track their own ratings on the other criteria?</p>
+
+<p><strong>The method.</strong> For the 96 evaluations that rated overall and all six older sub-criteria, we regressed overall on the six sub-ratings. Together they explain 74% of the variation in overall (R² = 0.74). To split that 74% among the six, we used a Shapley decomposition, which shares the explanatory power of correlated predictors fairly instead of letting the regression arbitrarily favor one.</p>
+
+<div class="scroll"><table>
+<caption>Evaluation level, n = 96. "Correlation" is the simple correlation with overall. "Share" is each criterion's share of the 74% explained (Shapley), with a 95% interval from resampling papers. "Unique effect" is the standardized regression coefficient controlling for the others.</caption>
+<thead><tr><th>Criterion</th><th>Correlation with overall</th><th>Share of explained [95%]</th><th>Unique effect [95%]</th></tr></thead>
+<tbody>
+<tr><td>Methods</td><td>0.77</td><td>36% [24, 47]</td><td>0.42 [0.27, 0.58]</td></tr>
+<tr><td>Logic and communication</td><td>0.68</td><td>24% [13, 36]</td><td>0.28 [0.13, 0.44]</td></tr>
+<tr><td>Advancing knowledge</td><td>0.67</td><td>23% [11, 30]</td><td>0.30 [0.12, 0.48]</td></tr>
+<tr><td>Real-world relevance</td><td>0.52</td><td>9% [4, 17]</td><td>0.13 [−0.13, 0.38]</td></tr>
+<tr><td>Global-priorities relevance</td><td>0.45</td><td>6% [3, 15]</td><td>−0.10 [−0.33, 0.14]</td></tr>
+<tr><td>Open science</td><td>0.19</td><td>2% [1, 7]</td><td>−0.04 [−0.16, 0.09]</td></tr>
+</tbody></table></div>
+
+<p><strong>What this means.</strong></p>
+<ul>
+<li>Overall moves most with methods, then logic and advancing knowledge. Those three carry about 84% of what the sub-ratings explain.</li>
+<li>The two relevance criteria do correlate with overall (about 0.45 to 0.5) and carry 10 to 15% of the explained share. But once you know a paper's methods, logic and advancing-knowledge ratings, its relevance ratings tell you little more about its overall rating. Relevance overlaps strongly with advancing knowledge, which already asks about global priorities.</li>
+<li>The opposite signs for the two relevance coefficients don't mean anything; they're nearly the same variable (see the copying issue above), and the regression can't separate them. Combining them into one relevance index gives a unique effect of 0.03 [−0.14, 0.19].</li>
+<li>Open science barely relates to overall at all.</li>
+</ul>
+
+<p><strong>Why it matters.</strong> If readers take "overall" as a summary of everything we care about, including importance for global priorities, they should know it's mostly a judgment of research quality and contribution. That's a reasonable thing for overall to be, but it argues for showing relevance alongside overall rather than folding it in.</p>
+
+<details><summary>Robustness</summary>
+<p>Using paper averages instead of individual evaluations (54 papers) gives R² = 0.80 and the same pattern (methods 42% of the explained share, advancing knowledge 26%, logic 16%, relevance 13%, open science 1%). Using only evaluations from 2025 on, with global relevance alone, relevance's share rises to 14% and its unique effect to 0.18 [−0.04, 0.39], so relevance may matter somewhat more in recent evaluations. We can't tell with 48 evaluations.</p>
+<p>We also found a "halo" pattern: when one evaluator is more generous than the co-evaluator on one criterion, they tend to be more generous on all of them (deviations from the paper average correlate about 0.4 across criteria). So some of what the sub-criteria share is the evaluator, not the paper.</p>
+</details>
+
+<figure><img src="fig_correlations.png" alt="Three correlation heatmaps: evaluation level, paper means, and within-paper deviations." loading="lazy">
+<figcaption>Correlations between criteria at three levels. Note: the very high real-world/global-relevance values are inflated by the copying issue described in section 2.</figcaption></figure>
+
+<h2 id="measures">Which questions earn their place</h2>
+
+<p>GPT-5 Pro's report suggests sorting each question by two properties: is it measured reliably, and does it tell us something the other questions don't? We think that's a good frame. Here's our current reading, with the evidence behind each placement.</p>
+
+<div class="scroll"><table>
+<thead><tr><th class="l">Question</th><th class="l">Reliable?</th><th class="l">Adds something distinct?</th><th class="l">Suggestion</th></tr></thead>
+<tbody>
+<tr><td class="l">Methods</td><td class="l">Moderately (α 0.50)</td><td class="l">Yes, the main driver of overall</td><td class="l">Keep</td></tr>
+<tr><td class="l">Overall</td><td class="l">Moderately (0.45)</td><td class="l">Mostly predicted by sub-ratings (74%)</td><td class="l">Keep as the headline, but report relevance next to it</td></tr>
+<tr><td class="l">Claims and evidence</td><td class="l">Moderately (0.43, only 20 papers)</td><td class="l">Overlaps methods (0.8)</td><td class="l">Keep; sharpen the boundary with logic (below)</td></tr>
+<tr><td class="l">Logic and communication</td><td class="l">Weakly (0.30)</td><td class="l">Partly</td><td class="l">Keep; narrow to reasoning and exposition</td></tr>
+<tr><td class="l">Advancing knowledge</td><td class="l">Weakly (0.22), long tail of big gaps</td><td class="l">Overlaps overall and relevance</td><td class="l">Consider splitting into "what we learn" and "decision value"</td></tr>
+<tr><td class="l">Global-priorities relevance</td><td class="l">Weakly (0.32)</td><td class="l">Distinct from overall</td><td class="l">Keep; consider separating "importance of the question" from "usefulness of this answer"</td></tr>
+<tr><td class="l">Real-world relevance</td><td class="l">—</td><td class="l">Folded into global relevance</td><td class="l">Already dropped; stop filling it at import</td></tr>
+<tr><td class="l">Open science</td><td class="l">No (0.06)</td><td class="l">Unrelated to everything</td><td class="l">Replace the percentile with a checklist</td></tr>
+<tr><td class="l">Journal tier: should</td><td class="l">Weakly (0.31)</td><td class="l">Close to overall (0.77)</td><td class="l">Keep, with sharper wording on the difference from "will"</td></tr>
+<tr><td class="l">Journal tier: will</td><td class="l">Moderately (0.41)</td><td class="l">Resolves against outcomes</td><td class="l">Keep; the best calibration opportunity</td></tr>
+</tbody></table></div>
+
+<details><summary>Why open science looks broken as a percentile</summary>
+<p>Evaluators disagree by 19 points (median) on it, papers barely differ on it once that disagreement is removed, it's unrelated to the other criteria, and no LLM we tested ranks papers on it the way the humans do (the two frontier models also rate it 17 to 20 points lower). That pattern suggests evaluators are judging different things: data and code availability, preregistration, transparency of methods, general replicability. Most of these are checkable facts. A short checklist (data available? code? preregistered? materials? reproducibility checked?) would be more reliable and more useful to readers, with an optional summary percentile.</p>
+</details>
+
+<details><summary>Claims vs logic</summary>
+<p>The current guidance for claims asks about the strength of evidence and whether the authors characterize it correctly; the logic guidance also asks whether conclusions follow from the evidence and whether evidence is characterized correctly. Making claims about "what's claimed and how strong is the evidence" and logic about "does the reasoning follow, and is it clearly communicated" would make disagreements easier to interpret.</p>
+</details>
+
+<p>A caveat on all of this: "adds something distinct" here means "isn't predicted by the other ratings". The real test of usefulness is whether a question helps predict something we care about (later publication, citations, replication, policy use, or whether readers find it useful). We don't yet have enough outcomes to run that test except for journal placement.</p>
+
+<h2 id="llm">How LLM ratings compare</h2>
+
+<p>Our separate <a href="https://llm-uj-research-eval.netlify.app/">LLM evaluation project</a> asked several models to rate the same papers with the same rubric. We re-used those ratings for 47 matched papers.</p>
+
+<p>The fair comparison: for papers with two human evaluations, how well does the model track one randomly chosen human, compared with how well the other human tracks that same person?</p>
+
+<div class="scroll"><table>
+<caption>Rank correlation with one randomly chosen human evaluator, averaged over 200 random draws. Papers with two human evaluations only.</caption>
+<thead><tr><th>Criterion</th><th>Papers</th><th>Second human</th><th>GPT-5 Pro</th><th>Claude Opus 4.6</th><th>Gemini 2.0 Flash</th><th>GPT-4o-mini</th></tr></thead>
+<tbody>
+<tr><td>Overall</td><td>29–39</td><td>0.37–0.39</td><td>0.52</td><td>0.48</td><td>0.33</td><td>0.15</td></tr>
+<tr><td>Methods</td><td>27–38</td><td>0.28–0.42</td><td>0.51</td><td>0.43</td><td>0.18</td><td>0.11</td></tr>
+<tr><td>Advancing knowledge</td><td>28–38</td><td>0.14–0.26</td><td>0.48</td><td>0.37</td><td>0.21</td><td>0.14</td></tr>
+<tr><td>Logic and communication</td><td>28–39</td><td>0.26–0.36</td><td>0.32</td><td>0.24</td><td>0.14</td><td>0.00</td></tr>
+<tr><td>Global relevance</td><td>28–38</td><td>0.19–0.25</td><td>0.35</td><td>0.29</td><td>0.15</td><td>0.17</td></tr>
+<tr><td>Open science</td><td>28–39</td><td>−0.05–0.17</td><td>0.15</td><td>0.04</td><td>−0.05</td><td>−0.13</td></tr>
+<tr><td>Journal tier: will</td><td>22–29</td><td>0.33–0.48</td><td>0.68</td><td>0.63</td><td>—</td><td>0.30</td></tr>
+</tbody></table></div>
+
+<p>The two frontier models track a single human at least as well as a second human does on overall, methods, advancing knowledge and the "will" tier. The cheaper models don't. The samples are small (about 30 to 40 papers), so read these as "comparable", not "better".</p>
+
+<p>Two cautions:</p>
+<ul>
+<li><strong>Different scale use.</strong> GPT-5 Pro rates about 6 points above humans on overall and spreads its ratings less (standard deviation 10 against about 14 for humans). Claude Opus 4.6 rates about 8 below with a human-like spread. Mixing raw LLM numbers with human ones would distort averages. Adding GPT-5 Pro as a third rater actually lowers alpha because of this offset.</li>
+<li><strong>Open science.</strong> No model's ranking of papers matches the humans', and the two frontier models rate it 17 to 20 points lower. Models reading a PDF can't easily check data and code availability, and the humans don't agree with each other either.</li>
+</ul>
+<p>GPT-5 Pro's report suggests a good use: show the cases where both humans agree and the model strongly disagrees, or where the humans disagree and the model sides with one. Those cases may teach more about the rubric than another correlation.</p>
+
+<h2 id="recs">What to change</h2>
+
+<p>Ordered roughly by value for effort. Tags: <span class="tag fix">easy fix</span> <span class="tag chg">form change</span> <span class="tag">test first</span>.</p>
+
+<h3>Data pipeline</h3>
+<ol>
+<li><span class="tag fix">easy fix</span> Copy approved form submissions into the ratings table (the three 2026 packages are missing), standardize criterion names at import, and stop filling real-world relevance from global relevance. <em>In progress.</em></li>
+<li><span class="tag fix">easy fix</span> Automated checks on every data refresh: impossible intervals, duplicates, near-duplicate titles, fields copied into other fields, heaping, interval widths of zero, and a rubric-version field so structural missingness isn't mistaken for nonresponse.</li>
+<li><span class="tag fix">easy fix</span> Keep a stable hashed evaluator key in the private data so evaluator-level questions (are some evaluators consistently harsher?) can be answered internally. Publish only aggregates.</li>
+</ol>
+
+<h3>Evaluation form</h3>
+<ol start="4">
+<li><span class="tag chg">form change</span> Next to each slider, show how much experts typically disagree on that criterion ("evaluators of the same paper usually differ by about 10 points, and one pair in five by more than 20"). Warn when an interval is narrower than 10 points or has zero width. Block impossible intervals and tier bounds outside 0–5. <em>A Claude session is drafting this.</em></li>
+<li><span class="tag chg">form change</span> Replace the open-science percentile with a short checklist of verifiable items.</li>
+<li><span class="tag chg">form change</span> Sharpen the "should vs will" wording: for example, ask "will" first, then "if journals judged only on merit, where should it go?"</li>
+<li><span class="tag chg">form change</span> Tighten the claims/logic boundary; consider splitting advancing knowledge.</li>
+<li><span class="tag">test first</span> Anchor papers for calibration practice: a small set rated by many evaluators, with the reference distribution shown. The current calibration tool compares with a uniform distribution, which is only right for a random sample of papers.</li>
+<li><span class="tag">test first</span> Whether intervals on every criterion are worth the effort. One option: intervals only for overall, methods and the "will" tier, with a simple low/medium/high confidence elsewhere. Compare completion time, missing answers and reliability.</li>
+<li><span class="tag">test first</span> As one option for the "will" tier: probabilities over tiers 0 to 5 instead of a midpoint and interval. That would let us score forecasts properly once papers are published. It's more demanding to answer, so it's worth trying on a subset first.</li>
+<li><span class="tag">test first</span> Ask the sub-criteria before overall, so overall is a synthesis rather than an anchor. Easy to randomize.</li>
+</ol>
+
+<h3>Reporting</h3>
+<ol start="12">
+<li><span class="tag fix">easy fix</span> Report reliability in percentile points ("experts typically differ by about 10 points") next to any coefficient, and drop the "acceptable/good" labels.</li>
+<li><span class="tag fix">easy fix</span> Show overall and global-priorities relevance side by side rather than as one summary number.</li>
+<li><span class="tag fix">easy fix</span> Round published averages to the nearest 5, and indicate that a two-evaluator average on overall has a standard error of roughly 8 points from evaluator noise alone.</li>
+<li><span class="tag">test first</span> A standardized LLM rating as a separate, clearly labeled signal, adjusted for the model's offset, never averaged in raw.</li>
+<li><span class="tag">test first</span> A short "why do the evaluators disagree?" note from the evaluation manager when a pair is far apart (different reference group, different reading of the criterion, different evidence, different priorities). This turns disagreement into information about the form.</li>
+</ol>
+
+<h2 id="questions">Open questions</h2>
+<p>We'd especially welcome comments on these.</p>
+<ol>
+<li>What should "overall" mean? A quality judgment (as it now behaves), or a summary that includes importance for global priorities?</li>
+<li>How much should we ask of evaluators? Every extra question and interval costs time; which ones are worth it?</li>
+<li>Can we get a few evaluators to rate shared anchor papers, so we can separate selection from leniency?</li>
+<li>Is "advancing knowledge" one question or two?</li>
+<li>Are named and anonymous evaluators' ratings comparable? On the same paper, anonymous evaluators rate about 5 points lower. That rests on about 15 papers with one of each, so it needs more data, but if it holds it matters for averages.</li>
+<li>Which outcomes should we use to judge which questions are useful: journal placement, citations, replications, policy citations, reader feedback?</li>
+</ol>
+
+<h2 id="changes">What changed from v1, and where this came from</h2>
+
+<details open><summary>Changes from the 16 October version (v1)</summary>
+<ul>
+<li>The very high correlation between real-world and global relevance (0.89) is largely a copying artifact from 2025 on. v1 treated it as evidence they measure the same thing.</li>
+<li>"Overall gives zero weight to relevance" is replaced by an explicit decomposition: relevance's unique contribution is near zero, but it carries 10 to 15% of the shared explanatory power.</li>
+<li>v1 suggested making the "should" tier optional. We now recommend keeping both tier questions, and flag that the overlap in answers may partly be a data artifact.</li>
+<li>"Calibration" of intervals is now called cross-evaluator coverage, with the benchmark explained step by step.</li>
+<li>Added: disagreement in percentile points, alpha read as remaining disagreement, the reliability of averages, a data-quality section, the audit of the 2025 post's within-rater correlations, and the reliability-by-usefulness frame for each question.</li>
+<li>Two papers split across title variants are now merged (59 papers rather than 61), which adds a few pairs.</li>
+<li>v1's anonymity result now carries a note that it rests on about 15 papers.</li>
+</ul>
+</details>
+
+<details><summary>Sources and how this was made</summary>
+<ul>
+<li><strong>Data:</strong> The Unjournal's public ratings export (as of 16 October 2026), one 2026 evaluation added by hand from the published evaluation summary, journal outcomes from OpenAlex and our database, and LLM ratings from the <a href="https://llm-uj-research-eval.netlify.app/">LLM evaluation project</a>.</li>
+<li><strong>Earlier analyses:</strong> <a href="https://unjournal.github.io/unjournaldata/posts/uj-data-first-look/">A first look at Unjournal's data</a> (David Hugh-Jones, 2024) and <a href="https://unjournal.github.io/unjournaldata/posts/uj-data-update-2025/">Deeper analysis with more evaluations</a> (2025).</li>
+<li><strong>GPT-5 Pro Deep Research report</strong> (October 2026, commissioned by David Reinstein): contributed the alpha-as-remaining-disagreement reading, the signal-to-noise and averaging framing, the critique of interval coverage as calibration, the selection-versus-inflation point, the within-rater audit, the reliability-by-usefulness frame, and many of the form suggestions. Where its numbers came from the 2025 post, we recomputed them on current data.</li>
+<li><strong>Claude</strong> (Fable 5.1, then Opus 5.5) did the data analysis (code: <code>code/analyze_ratings_quality.py</code>), the QA checks, the regression decomposition, the cross-evaluator benchmark, the LLM comparison and this page. Some verification runs were done by Claude agents on cheaper models.</li>
+<li><strong>Anonymity:</strong> no evaluator is named or identifiable here. Evaluator-level checks used hashed identifiers and report only counts.</li>
+</ul>
+</details>
+
+<footer>
+<p>The Unjournal · <a href="https://unjournal.org">unjournal.org</a> · Working draft, version 2, 16 October 2026. Annotate with Hypothes.is; we read the comments.</p>
+</footer>
+</main>
+
+<script>
+(function(){
+  function pct(x){return Math.round(x*100)+"%";}
+  var a1=document.getElementById("a1"),a2=document.getElementById("a2");
+  function upA(){
+    var x=parseFloat(a1.value),y=parseFloat(a2.value);
+    document.getElementById("a1v").textContent=x.toFixed(2);
+    document.getElementById("a2v").textContent=y.toFixed(2);
+    document.getElementById("a1b").style.width=pct(1-Math.max(0,x));
+    document.getElementById("a2b").style.width=pct(1-Math.max(0,y));
+    var rx=1-x, ry=1-y, msg;
+    msg="At alpha "+x.toFixed(2)+", observed disagreement is <span class='big'>"+pct(rx)+"</span> of the chance level. At "+y.toFixed(2)+" it is <span class='big'>"+pct(ry)+"</span>. ";
+    if(rx>0&&ry<rx){msg+="Moving from A to B removes <span class='big'>"+pct(1-ry/rx)+"</span> of the remaining disagreement.";}
+    else if(ry>0&&rx<ry){msg+="Moving from B to A removes <span class='big'>"+pct(1-rx/ry)+"</span> of the remaining disagreement.";}
+    else {msg+="Same level.";}
+    msg+=" (Bars show the share of chance-level disagreement that remains.)";
+    document.getElementById("aout").innerHTML=msg;
+  }
+  a1.addEventListener("input",upA);a2.addEventListener("input",upA);upA();
+  var r1=document.getElementById("r1"),kk=document.getElementById("kk");
+  function upS(){
+    var r=parseFloat(r1.value),k=parseInt(kk.value,10);
+    document.getElementById("r1v").textContent=r.toFixed(2);
+    document.getElementById("kkv").textContent=k;
+    var rk=k*r/(1+(k-1)*r);
+    var sn=r/(1-r);
+    var need8=Math.ceil(0.8*(1-r)/(r*0.2)-1e-9);
+    document.getElementById("sbout").innerHTML="One evaluation: true differences and evaluator error are in the ratio <span class='big'>"+sn.toFixed(2)+" : 1</span>. The average of "+k+" evaluation"+(k>1?"s":"")+" has reliability <span class='big'>"+rk.toFixed(2)+"</span>. Reaching 0.8 would take about <span class='big'>"+need8+"</span> evaluators.";
+  }
+  r1.addEventListener("input",upS);kk.addEventListener("input",upS);upS();
+})();
+</script>
+</body>
+</html>

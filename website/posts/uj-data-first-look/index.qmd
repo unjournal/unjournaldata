@@ -12,6 +12,11 @@ editor:
 categories: [data]
 ---
 
+::: callout-note
+## Update, October 2026
+Two years on, an updated reanalysis with 114 evaluations follows up on the questions in this post and is open for comment: [What the ratings tell us](https://uj-ratings-reanalysis.netlify.app/) (AI-generated working draft; human-directed, drawing on GPT-5 Pro Deep Research and Claude).
+:::
+
 [The Unjournal](https://www.unjournal.org) is an organization aiming to
 change how scientific research is evaluated. We carry out
 journal-independent evaluation of research papers.
