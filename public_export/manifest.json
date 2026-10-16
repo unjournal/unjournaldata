@@ -34,8 +34,8 @@
         "row_created_date",
         "evaluator_is_anonymous"
       ],
-      "rows": 1058,
-      "sha256": "e3a6730d91312877cfe32851e1ea646f912f5b6a17dd60cd6f710a61fc87db88"
+      "rows": 1030,
+      "sha256": "fc894e9759a6b7fceadd127153c03c2cc46c718a13556c8ab92c4a0803106a5f"
     }
   },
   "schema_version": 1,
