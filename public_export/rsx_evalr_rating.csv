@@ -1,23 +1,42 @@
 research,evaluator,criteria,middle_rating,lower_CI,upper_CI,confidence_level,row_created_date,evaluator_is_anonymous
-"Social Safety Nets,Women's Economic
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 1,overall,60,55,70,,2026-10-16T07:46:17.660-04:00,true
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 1,merits_journal,4,3.5,4.5,,2026-10-16T07:46:17.660-04:00,true
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 1,journal_predict,5,4.5,5,,2026-10-16T07:46:17.660-04:00,true
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,overall,70,40,90,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,claims,40,20,70,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,methods,70,40,90,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,adv_knowledge,85,60,99,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,logic_comms,75,50,90,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,open_sci,30,5,60,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,gp_relevance,90,60,99,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,merits_journal,3,2,4,,2026-10-16T07:46:17.576-04:00,false
+Observational price variation in scanner data cannot reproduce experimental price elasticities,Evaluator 2,journal_predict,3.5,2,5,,2026-10-16T07:46:17.576-04:00,false
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,overall,75,70,80,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,claims,20,15,25,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,methods,33,31,35,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,adv_knowledge,70,60,80,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,logic_comms,60,55,65,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,open_sci,100,100,100,,2026-10-16T07:46:17.148-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,gp_relevance,90,80,100,,2026-10-16T07:46:17.148-04:00,true
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,overall,60,50,70,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,claims,60,50,70,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,adv_knowledge,40,30,50,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,methods,70,65,75,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,logic_comms,75,70,80,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,open_sci,75,65,85,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,real_world,55,50,60,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,gp_relevance,55,50,60,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,merits_journal,2.5,,,,2026-01-31T16:04:06.329-05:00,false
-"Social Safety Nets,Women's Economic
+"Social Safety Nets,Women’s Economic
 Achievements and Agency",Evaluator 1,journal_predict,2.5,2,3,,2026-01-31T16:04:06.329-05:00,false
 "Ends versus Means: Kantians,Utilitarians,and Moral Decisions",Evaluator 1,merits_journal,4,3.5,4.8,,2026-01-31T15:52:09.990-05:00,false
 The Governance Of Non-Profits And Their Social Impact: Evidence From A Randomized Program In Healthcare In DRC,Evaluator 2,merits_journal,3.8,3,4.1,,2026-01-31T15:52:09.990-05:00,true
@@ -74,12 +93,12 @@ A review of GiveWell’s discount rate,Evaluator 2,real_world,95,90,100,,2026-01
 "Ends versus Means: Kantians,Utilitarians,and Moral Decisions",Evaluator 2,adv_knowledge,95,93,97,,2026-01-31T15:49:44.929-05:00,false
 A review of GiveWell’s discount rate,Evaluator 2,open_sci,92,78,100,,2026-01-31T15:49:44.929-05:00,false
 A review of GiveWell’s discount rate,Evaluator 1,methods,90,79,100,,2026-01-31T15:49:44.929-05:00,true
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,claims,85,80,90.0,,2025-12-31T14:38:51.287-05:00,false
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,logic_comms,92,90,95.0,,2025-12-31T14:38:51.287-05:00,false
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,merits_journal,4.8,4.6,5.0,,2025-12-31T14:38:51.287-05:00,false
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,methods,97,95,99.0,,2025-12-31T14:38:51.287-05:00,false
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,open_sci,97,93,100.0,,2025-12-31T14:38:51.287-05:00,false
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,overall,92,85,95.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,claims,85,80,90.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,logic_comms,92,90,95.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,merits_journal,4.8,4.6,5.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,methods,97,95,99.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,open_sci,97,93,100.0,,2025-12-31T14:38:51.287-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,overall,92,85,95.0,,2025-12-31T14:38:51.287-05:00,false
 Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 1,adv_knowledge,90,80,95.0,,2025-12-31T14:38:51.287-05:00,false
 Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 1,claims,85,80,90.0,,2025-12-31T14:38:51.287-05:00,false
 Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 1,gp_relevance,90,80,94.0,,2025-12-31T14:38:51.287-05:00,false
@@ -158,7 +177,7 @@ Maternal cash transfers for gender equity and child development: Experimental ev
 Maternal cash transfers for gender equity and child development: Experimental evidence from India,Evaluator 2,open_sci,30,20,40.0,,2025-12-31T14:38:51.287-05:00,true
 Maternal cash transfers for gender equity and child development: Experimental evidence from India,Evaluator 2,overall,70,65,75.0,,2025-12-31T14:38:51.287-05:00,true
 Maternal cash transfers for gender equity and child development: Experimental evidence from India,Evaluator 2,real_world,88,84,92.0,,2025-12-31T14:38:51.287-05:00,true
-Does Online Fundraising Increase Charitable Giving? A Nationwide Field Experiment on Facebook,Evaluator 1,adv_knowledge,90,80,95.0,,2025-12-31T14:38:46.640-05:00,false
+Does online fundraising increase charitable giving? A nationwide field experiment on Facebook,Evaluator 2,adv_knowledge,90,80,95.0,,2025-12-31T14:38:46.640-05:00,false
 Adjusting for Scale-Use Heterogeneity in Self-Reported Well-Being,Evaluator 1,claims,95,90,100.0,,2025-12-31T14:37:54.003-05:00,false
 Adjusting for Scale-Use Heterogeneity in Self-Reported Well-Being,Evaluator 1,gp_relevance,86,74,95.0,,2025-12-31T14:37:54.003-05:00,false
 Adjusting for Scale-Use Heterogeneity in Self-Reported Well-Being,Evaluator 1,journal_predict,4.8,4.5,5.0,,2025-12-31T14:37:54.003-05:00,false
@@ -618,7 +637,7 @@ How Much Would Reducing Lead Exposure Improve Children’s Learning in the Devel
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,real_world,70,65,75,,2024-08-15T13:29:40.784-04:00,true
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,gp_relevance,80,70,90,,2024-08-15T13:29:40.784-04:00,true
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,merits_journal,3,2.8,3.2,,2024-08-15T13:29:40.784-04:00,true
-How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,journal_predict,4.2,2.8,3.2,,2024-08-15T13:29:40.784-04:00,true
+How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,journal_predict,3.2,2.8,4.2,,2024-08-15T13:29:40.784-04:00,true
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 2,overall,75,68,82,,2024-08-15T13:29:40.784-04:00,true
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 1,merits_journal,2.5,2,3.0,,2024-08-15T13:29:12.926-04:00,true
 How Much Would Reducing Lead Exposure Improve Children’s Learning in the Developing World?,Evaluator 1,journal_predict,3,2,3.5,,2024-08-15T13:29:12.926-04:00,true
@@ -671,14 +690,14 @@ Existential risk and growth,Evaluator 1,logic_comms,70,65,75,,2024-08-15T12:45:0
 Existential risk and growth,Evaluator 1,open_sci,63,60,70,,2024-08-15T12:45:07.105-04:00,false
 Existential risk and growth,Evaluator 1,real_world,65,60,72,,2024-08-15T12:45:07.105-04:00,false
 Existential risk and growth,Evaluator 1,gp_relevance,70,65,75,,2024-08-15T12:45:07.105-04:00,false
-Existential risk and growth,Evaluator 1,journal_predict,3.5,3.2,4.0,,2024-08-15T12:45:07.105-04:00,false
-Existential risk and growth,Evaluator 1,merits_journal,3.5,3.2,4.1,,2024-08-15T12:45:07.105-04:00,false
+Existential risk and growth,Evaluator 1,journal_predict,3.5,3.2,4.1,,2024-08-15T12:45:07.105-04:00,false
+Existential risk and growth,Evaluator 1,merits_journal,3.5,3.2,4.0,,2024-08-15T12:45:07.105-04:00,false
 Existential risk and growth,Evaluator 1,overall,68,60,70,,2024-08-15T12:45:07.105-04:00,false
 Existential risk and growth,Evaluator 2,overall,95,80,99,,2024-08-15T12:44:54.454-04:00,false
 Existential risk and growth,Evaluator 2,real_world,80,50,100,,2024-08-15T12:44:15.042-04:00,false
 Existential risk and growth,Evaluator 2,gp_relevance,80,60,100,,2024-08-15T12:44:15.042-04:00,false
-Existential risk and growth,Evaluator 2,journal_predict,4.5,4.2,5.0,,2024-08-15T12:44:15.042-04:00,false
-Existential risk and growth,Evaluator 2,merits_journal,4.5,3,5.0,,2024-08-15T12:44:15.042-04:00,false
+Existential risk and growth,Evaluator 2,journal_predict,4.5,3,5,,2024-08-15T12:44:15.042-04:00,false
+Existential risk and growth,Evaluator 2,merits_journal,4.5,4.2,5,,2024-08-15T12:44:15.042-04:00,false
 Existential risk and growth,Evaluator 2,open_sci,95,90,99,,2024-08-15T12:43:53.988-04:00,false
 Existential risk and growth,Evaluator 2,logic_comms,90,85,95,,2024-08-15T12:43:40.016-04:00,false
 Existential risk and growth,Evaluator 2,methods,90,75,95,,2024-08-15T12:43:31.956-04:00,false
@@ -739,8 +758,8 @@ Legalizing Entrepreneurship,Evaluator 1,adv_knowledge,60,50,70,,2024-07-09T10:50
 Legalizing Entrepreneurship,Evaluator 1,methods,60,50,70,,2024-07-09T10:50:42.081-04:00,true
 Legalizing Entrepreneurship,Evaluator 1,logic_comms,60,50,70,,2024-07-09T10:50:42.081-04:00,true
 Legalizing Entrepreneurship,Evaluator 1,open_sci,60,40,60,,2024-07-09T10:50:42.081-04:00,true
-Legalizing Entrepreneurship,Evaluator 1,real_world,60,70,90,,2024-07-09T10:50:42.081-04:00,true
-Legalizing Entrepreneurship,Evaluator 1,gp_relevance,60,70,90,,2024-07-09T10:50:42.081-04:00,true
+Legalizing Entrepreneurship,Evaluator 1,real_world,80,70,90,,2024-07-09T10:50:42.081-04:00,true
+Legalizing Entrepreneurship,Evaluator 1,gp_relevance,80,70,90,,2024-07-09T10:50:42.081-04:00,true
 Legalizing Entrepreneurship,Evaluator 1,journal_predict,2.5,2,3,,2024-07-09T10:50:42.081-04:00,true
 Legalizing Entrepreneurship,Evaluator 2,methods,92,86,97,,2024-07-09T10:49:10.488-04:00,true
 Legalizing Entrepreneurship,Evaluator 2,logic_comms,98,95,100,,2024-07-09T10:49:10.488-04:00,true
@@ -822,7 +841,7 @@ The Benefits and Costs of Guest Worker Programs: Experimental Evidence From the 
 "The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Evaluator 1,logic_comms,77,74,80,,2024-07-09T10:13:01.206-04:00,true
 "The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Evaluator 1,methods,75,68,82,,2024-07-09T10:12:35.779-04:00,true
 "The Long-Run Effects of Psychotherapy on Depression, Beliefs, and Economic Outcomes",Evaluator 1,adv_knowledge,83,76,90,,2024-07-09T10:12:02.995-04:00,true
-Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Evaluator 2,journal_predict,4,25,5.0,,2024-07-09T10:10:18.290-04:00,true
+Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Evaluator 2,journal_predict,4,2.5,5,,2024-07-09T10:10:18.290-04:00,true
 Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Evaluator 2,gp_relevance,70,45,90,,2024-07-09T10:09:46.429-04:00,true
 Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Evaluator 2,real_world,87,74,98,,2024-07-09T10:08:46.641-04:00,true
 Universal Basic Income: Short-Term Results from a Long-Term Experiment in Kenya,Evaluator 2,open_sci,30,10,75,,2024-07-09T10:08:29.185-04:00,true
@@ -856,7 +875,7 @@ Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Di
 Accelerating Vaccine Innovation for Emerging Infectious Diseases via Parallel Discovery,Evaluator 1,merits_journal,2,1,3,,2024-07-02T12:06:30.154-04:00,false
 Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Evaluator 1,overall,85,80,90,,2024-07-02T11:43:29.513-04:00,true
 Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Evaluator 1,merits_journal,4,,,85,2024-07-02T11:43:29.513-04:00,true
-Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Evaluator 2,merits_journal,4,3,5,,2024-07-02T11:43:01.638-04:00,false
+Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Evaluator 2,merits_journal,5,2,5,,2024-07-02T11:43:01.638-04:00,false
 Money (Not) to Burn: Payments for Ecosystem Services to Reduce Crop Residue Burning,Evaluator 2,overall,90,75,95,,2024-07-02T11:42:45.337-04:00,false
 Replicability & Generalisability:  A Guide to CEA discounts,Evaluator 2,overall,40,10,60,,2024-07-02T11:26:39.499-04:00,false
 Replicability & Generalisability:  A Guide to CEA discounts,Evaluator 1,overall,25,0,50,,2024-07-02T11:12:03.805-04:00,true
