@@ -17,6 +17,11 @@ editor:
 categories: [data, analysis]
 ---
 
+::: callout-note
+## Update, October 2026
+An updated reanalysis with more data revisits these results and is open for comment: [What the ratings tell us](https://uj-ratings-reanalysis.netlify.app/) (AI-generated working draft; human-directed, drawing on GPT-5 Pro Deep Research and Claude). Two corrections to this post: the conclusion that evaluators rate merit above predicted placement was wrong (the post's own test gives p = 0.63; corrected below), and the "within-rater" correlations partly pooled different evaluators under generic labels.
+:::
+
 *Inspired by earlier work from David Hugh-Jones
 
 ```{r}
