@@ -1061,11 +1061,8 @@ reveals several key patterns:
     analysis confirms that evaluators distinguish meaningfully between
     our different criteria.
 
-4.  **Journal tiers**: Evaluators consistently judge papers as meriting
-    higher-tier publication than they predict they will receive.
-    This difference is statistically significant (p < 0.001) with a
-    `r ifelse(abs(cohens_d) < 0.5, "small to medium", "medium to large")`
-    effect size. As we observe actual publication outcomes, we'll be able to
+4.  **Journal tiers**: `r if (abs(diff_mean) > 0.1 && t_test_result$p.value < 0.05) { paste0("Evaluators consistently judge papers as meriting ", ifelse(diff_mean > 0, "higher", "lower"), "-tier publication than they predict they will receive (p ", ifelse(t_test_result$p.value < 0.001, "< 0.001", paste("=", round(t_test_result$p.value, 3))), ", Cohen's d = ", round(cohens_d, 2), ").") } else { paste0("On average, evaluators' 'should' and 'will' journal tiers are almost identical (mean difference ", round(diff_mean, 2), " tiers, p = ", round(t_test_result$p.value, 2), "); there is no systematic gap between merit and predicted placement.") }`
+    As we observe actual publication outcomes, we'll be able to
     assess the accuracy of these predictions.
 
 As our dataset continues to grow, we will be able to conduct more
