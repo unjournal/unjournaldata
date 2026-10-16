@@ -1,0 +1,2337 @@
+{
+ "describe": {
+  "n_ratings": 1018,
+  "n_papers": 61,
+  "n_evaluations": 114,
+  "evaluations_per_paper": {
+   "1": 11,
+   "2": 47,
+   "3": 3
+  },
+  "share_anonymous_evaluations": 0.5841,
+  "n_papers_2plus": 50,
+  "criterion_coverage": [
+   {
+    "criteria": "overall",
+    "n": 111,
+    "n_ci": 98,
+    "share_of_evaluations": 0.9737,
+    "share_with_ci": 0.8829
+   },
+   {
+    "criteria": "claims",
+    "n": 48,
+    "n_ci": 47,
+    "share_of_evaluations": 0.4211,
+    "share_with_ci": 0.9792
+   },
+   {
+    "criteria": "methods",
+    "n": 108,
+    "n_ci": 97,
+    "share_of_evaluations": 0.9474,
+    "share_with_ci": 0.8981
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n": 109,
+    "n_ci": 97,
+    "share_of_evaluations": 0.9561,
+    "share_with_ci": 0.8899
+   },
+   {
+    "criteria": "logic_comms",
+    "n": 111,
+    "n_ci": 99,
+    "share_of_evaluations": 0.9737,
+    "share_with_ci": 0.8919
+   },
+   {
+    "criteria": "open_sci",
+    "n": 109,
+    "n_ci": 96,
+    "share_of_evaluations": 0.9561,
+    "share_with_ci": 0.8807
+   },
+   {
+    "criteria": "real_world",
+    "n": 98,
+    "n_ci": 88,
+    "share_of_evaluations": 0.8596,
+    "share_with_ci": 0.898
+   },
+   {
+    "criteria": "gp_relevance",
+    "n": 108,
+    "n_ci": 96,
+    "share_of_evaluations": 0.9474,
+    "share_with_ci": 0.8889
+   },
+   {
+    "criteria": "merits_journal",
+    "n": 96,
+    "n_ci": 78,
+    "share_of_evaluations": 0.8421,
+    "share_with_ci": 0.8125
+   },
+   {
+    "criteria": "journal_predict",
+    "n": 88,
+    "n_ci": 73,
+    "share_of_evaluations": 0.7719,
+    "share_with_ci": 0.8295
+   }
+  ],
+  "evaluations_by_entry_year": {
+   "2024": 58,
+   "2025": 48,
+   "2026": 8
+  },
+  "evaluations_by_stream": {
+   "academic": 93,
+   "applied": 11,
+   "None": 9
+  },
+  "evaluations_by_uj_publication_year": {
+   "2023.0": 22,
+   "2024.0": 37,
+   "2025.0": 33
+  }
+ },
+ "scale_use": {
+  "percentile_criteria": [
+   {
+    "criteria": "overall",
+    "n": 111,
+    "mean": 74.8288,
+    "sd": 15.0785,
+    "median": 77.0,
+    "p10": 51.0,
+    "p90": 90.0,
+    "min": 25.0,
+    "max": 95.0,
+    "share_ge_90": 0.1786,
+    "share_ge_80": 0.4732,
+    "share_le_30": 0.0179,
+    "share_eq_50": 0.0268,
+    "share_mult5": 0.7679,
+    "share_mult10": 0.4018
+   },
+   {
+    "criteria": "claims",
+    "n": 48,
+    "mean": 72.1042,
+    "sd": 20.065,
+    "median": 80.0,
+    "p10": 43.5,
+    "p90": 90.6,
+    "min": 20.0,
+    "max": 96.0,
+    "share_ge_90": 0.1633,
+    "share_ge_80": 0.5306,
+    "share_le_30": 0.0612,
+    "share_eq_50": 0.0204,
+    "share_mult5": 0.6939,
+    "share_mult10": 0.4082
+   },
+   {
+    "criteria": "methods",
+    "n": 108,
+    "mean": 70.8148,
+    "sd": 18.9328,
+    "median": 75.0,
+    "p10": 43.5,
+    "p90": 90.0,
+    "min": 10.0,
+    "max": 97.0,
+    "share_ge_90": 0.1607,
+    "share_ge_80": 0.4107,
+    "share_le_30": 0.0536,
+    "share_eq_50": 0.0536,
+    "share_mult5": 0.8036,
+    "share_mult10": 0.5179
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n": 109,
+    "mean": 72.8899,
+    "sd": 19.4262,
+    "median": 80.0,
+    "p10": 44.6,
+    "p90": 90.4,
+    "min": 15.0,
+    "max": 98.0,
+    "share_ge_90": 0.2432,
+    "share_ge_80": 0.5135,
+    "share_le_30": 0.0631,
+    "share_eq_50": 0.036,
+    "share_mult5": 0.7838,
+    "share_mult10": 0.4955
+   },
+   {
+    "criteria": "logic_comms",
+    "n": 111,
+    "mean": 74.6667,
+    "sd": 15.2228,
+    "median": 79.0,
+    "p10": 51.0,
+    "p90": 90.0,
+    "min": 30.0,
+    "max": 100.0,
+    "share_ge_90": 0.1875,
+    "share_ge_80": 0.4911,
+    "share_le_30": 0.0268,
+    "share_eq_50": 0.0357,
+    "share_mult5": 0.7946,
+    "share_mult10": 0.4821
+   },
+   {
+    "criteria": "open_sci",
+    "n": 109,
+    "mean": 73.1651,
+    "sd": 21.2143,
+    "median": 80.0,
+    "p10": 45.0,
+    "p90": 95.0,
+    "min": 10.0,
+    "max": 100.0,
+    "share_ge_90": 0.3304,
+    "share_ge_80": 0.5,
+    "share_le_30": 0.0714,
+    "share_eq_50": 0.0714,
+    "share_mult5": 0.7946,
+    "share_mult10": 0.5446
+   },
+   {
+    "criteria": "real_world",
+    "n": 98,
+    "mean": 76.8469,
+    "sd": 19.2634,
+    "median": 84.0,
+    "p10": 50.0,
+    "p90": 95.0,
+    "min": 15.0,
+    "max": 100.0,
+    "share_ge_90": 0.367,
+    "share_ge_80": 0.5321,
+    "share_le_30": 0.0367,
+    "share_eq_50": 0.055,
+    "share_mult5": 0.7339,
+    "share_mult10": 0.4404
+   },
+   {
+    "criteria": "gp_relevance",
+    "n": 108,
+    "mean": 78.4352,
+    "sd": 18.2461,
+    "median": 85.0,
+    "p10": 50.0,
+    "p90": 95.0,
+    "min": 10.0,
+    "max": 100.0,
+    "share_ge_90": 0.4091,
+    "share_ge_80": 0.6455,
+    "share_le_30": 0.0273,
+    "share_eq_50": 0.0545,
+    "share_mult5": 0.8182,
+    "share_mult10": 0.5364
+   }
+  ],
+  "journal_criteria": [
+   {
+    "criteria": "journal_predict",
+    "n": 88,
+    "mean": 3.8511,
+    "sd": 0.7386,
+    "median": 4.0,
+    "share_integer": 0.3587,
+    "share_half_steps": 0.2391,
+    "share_ge_4": 0.5761,
+    "share_le_1": 0.0
+   },
+   {
+    "criteria": "merits_journal",
+    "n": 96,
+    "mean": 3.8354,
+    "sd": 0.7889,
+    "median": 4.0,
+    "share_integer": 0.3737,
+    "share_half_steps": 0.2626,
+    "share_ge_4": 0.596,
+    "share_le_1": 0.0
+   }
+  ],
+  "overall_share_above_50": 0.9009,
+  "overall_share_above_70": 0.6667,
+  "overall_ks_vs_uniform_p": 0.0,
+  "straightline": {
+   "n_evaluations_with_4plus_percentile_criteria": 110,
+   "n_all_identical": 2,
+   "n_range_le_5": 5,
+   "n_range_le_10": 16,
+   "median_within_evaluation_range": 25.0,
+   "median_within_evaluation_sd": 9.1292
+  },
+  "interval_checks": {
+   "n_percentile_ratings": 827,
+   "n_missing_ci": 109,
+   "n_misspecified": 8,
+   "n_degenerate": 11,
+   "n_uninformative_0_100": 0,
+   "n_touching_0_or_100": 116,
+   "share_centered_within_1pt": 0.6574,
+   "share_mid_at_lower_edge": 0.0125,
+   "share_mid_at_upper_edge": 0.0042,
+   "mean_asymmetry_upper_minus_lower": -1.0993,
+   "share_longer_lower_tail": 0.2211,
+   "share_longer_upper_tail": 0.1141,
+   "width_mean": 20.2359,
+   "width_median": 20.0,
+   "width_p10": 10.0,
+   "width_p90": 40.0,
+   "width_share_le_10": 0.2831,
+   "width_share_ge_40": 0.1169
+  },
+  "width_by_criterion": [
+   {
+    "criteria": "overall",
+    "count": 97,
+    "mean": 22.1649,
+    "median": 20.0
+   },
+   {
+    "criteria": "claims",
+    "count": 47,
+    "mean": 19.9787,
+    "median": 16.0
+   },
+   {
+    "criteria": "methods",
+    "count": 95,
+    "mean": 20.3316,
+    "median": 20.0
+   },
+   {
+    "criteria": "adv_knowledge",
+    "count": 96,
+    "mean": 21.1146,
+    "median": 20.0
+   },
+   {
+    "criteria": "logic_comms",
+    "count": 99,
+    "mean": 19.7273,
+    "median": 19.0
+   },
+   {
+    "criteria": "open_sci",
+    "count": 94,
+    "mean": 20.0532,
+    "median": 20.0
+   },
+   {
+    "criteria": "real_world",
+    "count": 87,
+    "mean": 18.7816,
+    "median": 15.0
+   },
+   {
+    "criteria": "gp_relevance",
+    "count": 95,
+    "mean": 19.4526,
+    "median": 19.0
+   }
+  ],
+  "width_by_midpoint_bin": [
+   {
+    "bin": "<=50",
+    "count": 98,
+    "mean": 29.3469,
+    "median": 28.0
+   },
+   {
+    "bin": "51-70",
+    "count": 160,
+    "mean": 23.9937,
+    "median": 20.0
+   },
+   {
+    "bin": "71-85",
+    "count": 223,
+    "mean": 20.3632,
+    "median": 20.0
+   },
+   {
+    "bin": "86-100",
+    "count": 229,
+    "mean": 13.5873,
+    "median": 11.0
+   }
+  ],
+  "width_vs_midpoint_spearman": -0.471,
+  "share_evaluations_single_width": 0.0714,
+  "share_evaluations_width_sd_le_2": 0.102,
+  "journal_interval": {
+   "share_with_ci": 0.7906,
+   "width_median": 1.0,
+   "width_mean": 0.9854
+  },
+  "n_ratings_with_legacy_confidence_level": 4
+ },
+ "structure": {
+  "mean_offdiag_corr": {
+   "evaluation_level": 0.4687,
+   "paper_mean_level": 0.4998,
+   "within_paper_deviation (rater halo)": 0.4142
+  },
+  "pca_paper_means": {
+   "classic7": {
+    "n_papers": 55,
+    "variance_explained": [
+     0.555,
+     0.193,
+     0.132,
+     0.056
+    ],
+    "pc1_loadings": {
+     "overall": -0.436,
+     "methods": -0.41,
+     "adv_knowledge": -0.435,
+     "logic_comms": -0.351,
+     "open_sci": -0.09,
+     "real_world": -0.414,
+     "gp_relevance": -0.387
+    },
+    "pc2_loadings": {
+     "overall": 0.1,
+     "methods": 0.238,
+     "adv_knowledge": -0.269,
+     "logic_comms": 0.439,
+     "open_sci": 0.695,
+     "real_world": -0.26,
+     "gp_relevance": -0.343
+    }
+   },
+   "with_claims": {
+    "n_papers": 28,
+    "variance_explained": [
+     0.61,
+     0.142,
+     0.126,
+     0.067
+    ],
+    "pc1_loadings": {
+     "overall": -0.408,
+     "claims": -0.399,
+     "methods": -0.379,
+     "adv_knowledge": -0.372,
+     "logic_comms": -0.34,
+     "open_sci": -0.093,
+     "real_world": -0.365,
+     "gp_relevance": -0.367
+    },
+    "pc2_loadings": {
+     "overall": -0.147,
+     "claims": 0.068,
+     "methods": 0.239,
+     "adv_knowledge": -0.295,
+     "logic_comms": 0.285,
+     "open_sci": 0.833,
+     "real_world": -0.168,
+     "gp_relevance": -0.166
+    }
+   }
+  },
+  "pca_evaluation_level_classic7": {
+   "n": 96,
+   "variance_explained": [
+    0.552,
+    0.193,
+    0.123,
+    0.056
+   ]
+  },
+  "redundancy_loo": [
+   {
+    "criteria": "overall",
+    "n": 96,
+    "r2_from_others": 0.7361,
+    "best_single_predictor": "methods",
+    "r_best": 0.7671,
+    "sd": 15.0785
+   },
+   {
+    "criteria": "claims",
+    "n": 45,
+    "r2_from_others": 0.7304,
+    "best_single_predictor": "methods",
+    "r_best": 0.7842,
+    "sd": 20.065
+   },
+   {
+    "criteria": "methods",
+    "n": 96,
+    "r2_from_others": 0.6399,
+    "best_single_predictor": "overall",
+    "r_best": 0.7671,
+    "sd": 18.9328
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n": 96,
+    "r2_from_others": 0.6744,
+    "best_single_predictor": "real_world",
+    "r_best": 0.7055,
+    "sd": 19.4262
+   },
+   {
+    "criteria": "logic_comms",
+    "n": 96,
+    "r2_from_others": 0.5682,
+    "best_single_predictor": "overall",
+    "r_best": 0.6806,
+    "sd": 15.2228
+   },
+   {
+    "criteria": "open_sci",
+    "n": 96,
+    "r2_from_others": 0.2311,
+    "best_single_predictor": "logic_comms",
+    "r_best": 0.3874,
+    "sd": 21.2143
+   },
+   {
+    "criteria": "real_world",
+    "n": 96,
+    "r2_from_others": 0.8196,
+    "best_single_predictor": "gp_relevance",
+    "r_best": 0.8867,
+    "sd": 19.2634
+   },
+   {
+    "criteria": "gp_relevance",
+    "n": 96,
+    "r2_from_others": 0.7958,
+    "best_single_predictor": "real_world",
+    "r_best": 0.8867,
+    "sd": 18.2461
+   }
+  ],
+  "overall_vs_parts": {
+   "n": 109,
+   "mean_overall_minus_mean_parts": 0.743,
+   "sd_diff": 9.348,
+   "corr_overall_parts_mean": 0.7957,
+   "share_overall_above_parts_mean": 0.5229,
+   "share_overall_above_max_part": 0.0183
+  },
+  "overall_regression": {
+   "n": 96,
+   "r2": 0.7361,
+   "std_betas": {
+    "methods": 0.422,
+    "adv_knowledge": 0.3,
+    "logic_comms": 0.284,
+    "open_sci": -0.038,
+    "real_world": 0.127,
+    "gp_relevance": -0.095
+   }
+  }
+ },
+ "reliability": {
+  "table": [
+   {
+    "criteria": "overall",
+    "n_papers": 48,
+    "n_ratings": 98,
+    "alpha_interval": 0.45,
+    "alpha_ci_lo": 0.1025,
+    "alpha_ci_hi": 0.6659,
+    "icc1": 0.4463,
+    "icc1k_mean_of_raters": 0.622,
+    "mean_raters": 2.0413,
+    "rater_noise_sd": 11.4349,
+    "between_paper_sd": 10.266,
+    "mean_abs_pair_diff": 11.7885,
+    "raters_for_0.7": 2.8949,
+    "raters_for_0.8": 4.9627
+   },
+   {
+    "criteria": "claims",
+    "n_papers": 18,
+    "n_ratings": 36,
+    "alpha_interval": 0.4308,
+    "alpha_ci_lo": 0.0017,
+    "alpha_ci_hi": 0.7371,
+    "icc1": 0.4379,
+    "icc1k_mean_of_raters": 0.6091,
+    "mean_raters": 2.0,
+    "rater_noise_sd": 15.1987,
+    "between_paper_sd": 13.4145,
+    "mean_abs_pair_diff": 16.3333,
+    "raters_for_0.7": 2.9953,
+    "raters_for_0.8": 5.1348
+   },
+   {
+    "criteria": "methods",
+    "n_papers": 46,
+    "n_ratings": 94,
+    "alpha_interval": 0.498,
+    "alpha_ci_lo": 0.0882,
+    "alpha_ci_hi": 0.7092,
+    "icc1": 0.504,
+    "icc1k_mean_of_raters": 0.6749,
+    "mean_raters": 2.043,
+    "rater_noise_sd": 12.8867,
+    "between_paper_sd": 12.9901,
+    "mean_abs_pair_diff": 13.86,
+    "raters_for_0.7": 2.2963,
+    "raters_for_0.8": 3.9366
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n_papers": 46,
+    "n_ratings": 95,
+    "alpha_interval": 0.2156,
+    "alpha_ci_lo": -0.0315,
+    "alpha_ci_hi": 0.4823,
+    "icc1": 0.1817,
+    "icc1k_mean_of_raters": 0.3144,
+    "mean_raters": 2.0646,
+    "rater_noise_sd": 17.4706,
+    "between_paper_sd": 8.2329,
+    "mean_abs_pair_diff": 18.8269,
+    "raters_for_0.7": 10.5071,
+    "raters_for_0.8": 18.0122
+   },
+   {
+    "criteria": "logic_comms",
+    "n_papers": 47,
+    "n_ratings": 97,
+    "alpha_interval": 0.3011,
+    "alpha_ci_lo": -0.0528,
+    "alpha_ci_hi": 0.5977,
+    "icc1": 0.2974,
+    "icc1k_mean_of_raters": 0.4662,
+    "mean_raters": 2.0632,
+    "rater_noise_sd": 12.9801,
+    "between_paper_sd": 8.445,
+    "mean_abs_pair_diff": 14.0566,
+    "raters_for_0.7": 5.5123,
+    "raters_for_0.8": 9.4496
+   },
+   {
+    "criteria": "open_sci",
+    "n_papers": 47,
+    "n_ratings": 95,
+    "alpha_interval": 0.0609,
+    "alpha_ci_lo": -0.3424,
+    "alpha_ci_hi": 0.4513,
+    "icc1": 0.0649,
+    "icc1k_mean_of_raters": 0.1231,
+    "mean_raters": 2.0211,
+    "rater_noise_sd": 20.9795,
+    "between_paper_sd": 5.5288,
+    "mean_abs_pair_diff": 22.6122,
+    "raters_for_0.7": 33.597,
+    "raters_for_0.8": 57.5949
+   },
+   {
+    "criteria": "real_world",
+    "n_papers": 41,
+    "n_ratings": 83,
+    "alpha_interval": 0.3973,
+    "alpha_ci_lo": 0.0075,
+    "alpha_ci_hi": 0.6987,
+    "icc1": 0.4068,
+    "icc1k_mean_of_raters": 0.5812,
+    "mean_raters": 2.0241,
+    "rater_noise_sd": 15.2865,
+    "between_paper_sd": 12.6584,
+    "mean_abs_pair_diff": 14.5814,
+    "raters_for_0.7": 3.4028,
+    "raters_for_0.8": 5.8334
+   },
+   {
+    "criteria": "gp_relevance",
+    "n_papers": 45,
+    "n_ratings": 93,
+    "alpha_interval": 0.3208,
+    "alpha_ci_lo": -0.1201,
+    "alpha_ci_hi": 0.6283,
+    "icc1": 0.3263,
+    "icc1k_mean_of_raters": 0.5002,
+    "mean_raters": 2.066,
+    "rater_noise_sd": 15.3135,
+    "between_paper_sd": 10.6584,
+    "mean_abs_pair_diff": 16.1765,
+    "raters_for_0.7": 4.8166,
+    "raters_for_0.8": 8.2571
+   },
+   {
+    "criteria": "merits_journal",
+    "n_papers": 41,
+    "n_ratings": 83,
+    "alpha_interval": 0.311,
+    "alpha_ci_lo": 0.0455,
+    "alpha_ci_hi": 0.5413,
+    "icc1": 0.3013,
+    "icc1k_mean_of_raters": 0.466,
+    "mean_raters": 2.0241,
+    "rater_noise_sd": 0.6634,
+    "between_paper_sd": 0.4356,
+    "mean_abs_pair_diff": 0.7372,
+    "raters_for_0.7": 5.4115,
+    "raters_for_0.8": 9.2769
+   },
+   {
+    "criteria": "journal_predict",
+    "n_papers": 35,
+    "n_ratings": 72,
+    "alpha_interval": 0.4063,
+    "alpha_ci_lo": 0.1355,
+    "alpha_ci_hi": 0.6357,
+    "icc1": 0.377,
+    "icc1k_mean_of_raters": 0.5545,
+    "mean_raters": 2.0564,
+    "rater_noise_sd": 0.5504,
+    "between_paper_sd": 0.4282,
+    "mean_abs_pair_diff": 0.6051,
+    "raters_for_0.7": 3.8554,
+    "raters_for_0.8": 6.6093
+   }
+  ],
+  "subsets": {
+   "entry_before_2025": {
+    "n_papers": 25,
+    "alpha_overall": 0.4738,
+    "icc1_overall": 0.4668
+   },
+   "entry_2025_on": {
+    "n_papers": 22,
+    "alpha_overall": 0.4229,
+    "icc1_overall": 0.4287
+   },
+   "stream_academic": {
+    "n_papers": 40,
+    "alpha_overall": 0.373
+   },
+   "stream_applied": {
+    "n_papers": 5,
+    "alpha_overall": 0.9119
+   },
+   "by_area_overall": [
+    {
+     "area": "Global health (LMICs)",
+     "n_papers": 12,
+     "alpha_overall": 0.1593,
+     "mean_overall": 77.3077
+    },
+    {
+     "area": "Dev. econ/gov. (LMICs)",
+     "n_papers": 7,
+     "alpha_overall": -0.2788,
+     "mean_overall": 77.0
+    },
+    {
+     "area": "Environment",
+     "n_papers": 6,
+     "alpha_overall": 0.687,
+     "mean_overall": 75.1667
+    },
+    {
+     "area": "Catastrophic & X-risk, LT, forecasting",
+     "n_papers": 4,
+     "alpha_overall": 0.2162,
+     "mean_overall": 67.8
+    },
+    {
+     "area": "Econ., welfare, misc.",
+     "n_papers": 4,
+     "alpha_overall": 0.8772,
+     "mean_overall": 61.3333
+    }
+   ]
+  }
+ },
+ "calibration": {
+  "by_criterion": [
+   {
+    "criteria": "overall",
+    "n_pairs": 89,
+    "n_papers": 45,
+    "coverage_other_midpoint": 0.618,
+    "expected_coverage_if_calibrated": 0.7167,
+    "share_disjoint_intervals": 0.1348,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 11.6866,
+    "noise_ratio_empirical_over_implied": 1.9223,
+    "mean_abs_disagreement": 11.7303
+   },
+   {
+    "criteria": "claims",
+    "n_pairs": 35,
+    "n_papers": 18,
+    "coverage_other_midpoint": 0.4857,
+    "expected_coverage_if_calibrated": 0.7017,
+    "share_disjoint_intervals": 0.2286,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 15.0353,
+    "noise_ratio_empirical_over_implied": 2.4731,
+    "mean_abs_disagreement": 15.8
+   },
+   {
+    "criteria": "methods",
+    "n_pairs": 88,
+    "n_papers": 43,
+    "coverage_other_midpoint": 0.5568,
+    "expected_coverage_if_calibrated": 0.6623,
+    "share_disjoint_intervals": 0.2273,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 12.3943,
+    "noise_ratio_empirical_over_implied": 2.0387,
+    "mean_abs_disagreement": 13.2386
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n_pairs": 90,
+    "n_papers": 43,
+    "coverage_other_midpoint": 0.5111,
+    "expected_coverage_if_calibrated": 0.7015,
+    "share_disjoint_intervals": 0.2667,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 17.775,
+    "noise_ratio_empirical_over_implied": 2.9237,
+    "mean_abs_disagreement": 18.1111
+   },
+   {
+    "criteria": "logic_comms",
+    "n_pairs": 92,
+    "n_papers": 44,
+    "coverage_other_midpoint": 0.5109,
+    "expected_coverage_if_calibrated": 0.6991,
+    "share_disjoint_intervals": 0.1739,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 13.6543,
+    "noise_ratio_empirical_over_implied": 2.2459,
+    "mean_abs_disagreement": 14.7826
+   },
+   {
+    "criteria": "open_sci",
+    "n_pairs": 85,
+    "n_papers": 44,
+    "coverage_other_midpoint": 0.3882,
+    "expected_coverage_if_calibrated": 0.7014,
+    "share_disjoint_intervals": 0.3765,
+    "median_halfwidth": 10.0,
+    "implied_sd_from_intervals": 6.0796,
+    "empirical_rater_noise_sd": 21.4111,
+    "noise_ratio_empirical_over_implied": 3.5218,
+    "mean_abs_disagreement": 22.5412
+   },
+   {
+    "criteria": "real_world",
+    "n_pairs": 76,
+    "n_papers": 38,
+    "coverage_other_midpoint": 0.5263,
+    "expected_coverage_if_calibrated": 0.7064,
+    "share_disjoint_intervals": 0.1842,
+    "median_halfwidth": 7.5,
+    "implied_sd_from_intervals": 4.5597,
+    "empirical_rater_noise_sd": 14.0373,
+    "noise_ratio_empirical_over_implied": 3.0786,
+    "mean_abs_disagreement": 13.0789
+   },
+   {
+    "criteria": "gp_relevance",
+    "n_pairs": 88,
+    "n_papers": 42,
+    "coverage_other_midpoint": 0.5,
+    "expected_coverage_if_calibrated": 0.7093,
+    "share_disjoint_intervals": 0.2273,
+    "median_halfwidth": 9.75,
+    "implied_sd_from_intervals": 5.9276,
+    "empirical_rater_noise_sd": 15.2759,
+    "noise_ratio_empirical_over_implied": 2.5771,
+    "mean_abs_disagreement": 15.7955
+   }
+  ],
+  "pooled": {
+   "n_pairs": 643,
+   "coverage_other_midpoint": 0.5148,
+   "expected_coverage_if_calibrated": 0.6995,
+   "benchmark_two_calibrated_raters_normal": 0.7552,
+   "share_disjoint_intervals": 0.2271,
+   "spearman_own_halfwidth_vs_abs_disagreement": 0.1263,
+   "spearman_own_halfwidth_vs_abs_disagreement_p": 0.0013,
+   "width_multiplier_to_reach_benchmark": 2.5
+  },
+  "coverage_by_width": [
+   {
+    "width_bin": "<=10",
+    "n": 170,
+    "coverage": 0.3706,
+    "expected": 0.5681
+   },
+   {
+    "width_bin": "11-20",
+    "n": 281,
+    "coverage": 0.5089,
+    "expected": 0.7097
+   },
+   {
+    "width_bin": "21-30",
+    "n": 84,
+    "coverage": 0.6429,
+    "expected": 0.7896
+   },
+   {
+    "width_bin": ">30",
+    "n": 106,
+    "coverage": 0.6698,
+    "expected": 0.8389
+   }
+  ],
+  "per_evaluation_coverage": {
+   "n_evaluations": 83,
+   "share_evaluations_coverage_below_50pct": 0.4458,
+   "share_evaluations_coverage_zero": 0.0361,
+   "share_evaluations_full_coverage": 0.0843,
+   "corr_width_coverage_spearman": 0.3241
+  }
+ },
+ "journal": {
+  "should_vs_will": {
+   "n": 87,
+   "mean_should": 3.8241,
+   "mean_will": 3.8609,
+   "mean_diff": -0.0368,
+   "sd_diff": 0.5678,
+   "cohens_d": -0.0648,
+   "share_should_gt_will": 0.2529,
+   "share_equal": 0.4368,
+   "t": -0.6043,
+   "p": 0.5473,
+   "corr": 0.7302
+  },
+  "corr_with_overall": {
+   "merits_journal": 0.7671,
+   "journal_predict": 0.5395
+  },
+  "prediction_by_outcome_status": [
+   {
+    "status_group": "R&R/forthcoming",
+    "journal_predict_count": 3,
+    "journal_predict_mean": 4.5333,
+    "merits_journal_count": 3,
+    "merits_journal_mean": 4.5167,
+    "overall_count": 4,
+    "overall_mean": 73.125
+   },
+   {
+    "status_group": "published other",
+    "journal_predict_count": 8,
+    "journal_predict_mean": 3.5812,
+    "merits_journal_count": 10,
+    "merits_journal_mean": 3.7917,
+    "overall_count": 11,
+    "overall_mean": 74.9848
+   },
+   {
+    "status_group": "published ~top",
+    "journal_predict_count": 8,
+    "journal_predict_mean": 4.1312,
+    "merits_journal_count": 8,
+    "merits_journal_mean": 4.0312,
+    "overall_count": 8,
+    "overall_mean": 78.3125
+   },
+   {
+    "status_group": "working paper / other",
+    "journal_predict_count": 32,
+    "journal_predict_mean": 3.6719,
+    "merits_journal_count": 33,
+    "merits_journal_mean": 3.7242,
+    "overall_count": 38,
+    "overall_mean": 74.0263
+   }
+  ],
+  "n_papers_with_known_journal_tier": 13,
+  "known_tier_check": {
+   "n": 13,
+   "mean_pred": 3.9,
+   "mean_actual": 3.6923,
+   "mean_error_pred_minus_actual": 0.2077,
+   "mae": 0.5231,
+   "spearman_pred_actual": 0.7073,
+   "spearman_should_actual": 0.5008,
+   "spearman_overall_actual": 0.647,
+   "n_evaluator_intervals": 18,
+   "share_intervals_covering_actual": 0.6111,
+   "share_actual_above_interval": 0.1111,
+   "share_actual_below_interval": 0.2778
+  }
+ },
+ "trends": {
+  "by_year": [
+   {
+    "uj_pub_year": 2023.0,
+    "n_evals": 22,
+    "mean_overall": 75.9545,
+    "sd_overall": 11.7978,
+    "median_width_all_percentile_criteria": 20.0
+   },
+   {
+    "uj_pub_year": 2024.0,
+    "n_evals": 38,
+    "mean_overall": 74.6053,
+    "sd_overall": 17.1788,
+    "median_width_all_percentile_criteria": 20.0
+   },
+   {
+    "uj_pub_year": 2025.0,
+    "n_evals": 44,
+    "mean_overall": 75.0682,
+    "sd_overall": 15.2046,
+    "median_width_all_percentile_criteria": 15.5
+   },
+   {
+    "uj_pub_year": 2026.0,
+    "n_evals": 7,
+    "mean_overall": 71.0,
+    "sd_overall": 13.4907,
+    "median_width_all_percentile_criteria": 20.0
+   }
+  ],
+  "overall_vs_year_spearman": {
+   "rho": -0.0372,
+   "p": 0.6985
+  },
+  "anonymity": [
+   {
+    "criteria": "overall",
+    "n_anon": 65,
+    "n_named": 46,
+    "mean_anon": 74.0308,
+    "mean_named": 75.9565,
+    "diff_anon_minus_named": -1.9258,
+    "p": 0.5156,
+    "width_anon": 20.0,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "claims",
+    "n_anon": 27,
+    "n_named": 21,
+    "mean_anon": 67.1481,
+    "mean_named": 78.4762,
+    "diff_anon_minus_named": -11.328,
+    "p": 0.0375,
+    "width_anon": 15.5,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "methods",
+    "n_anon": 64,
+    "n_named": 44,
+    "mean_anon": 69.4375,
+    "mean_named": 72.8182,
+    "diff_anon_minus_named": -3.3807,
+    "p": 0.3553,
+    "width_anon": 15.5,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n_anon": 64,
+    "n_named": 45,
+    "mean_anon": 70.7656,
+    "mean_named": 75.9111,
+    "diff_anon_minus_named": -5.1455,
+    "p": 0.1694,
+    "width_anon": 17.0,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "logic_comms",
+    "n_anon": 65,
+    "n_named": 46,
+    "mean_anon": 76.1538,
+    "mean_named": 72.5652,
+    "diff_anon_minus_named": 3.5886,
+    "p": 0.2394,
+    "width_anon": 16.0,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "open_sci",
+    "n_anon": 65,
+    "n_named": 44,
+    "mean_anon": 73.3846,
+    "mean_named": 72.8409,
+    "diff_anon_minus_named": 0.5437,
+    "p": 0.8957,
+    "width_anon": 20.0,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "real_world",
+    "n_anon": 62,
+    "n_named": 36,
+    "mean_anon": 76.1129,
+    "mean_named": 78.1111,
+    "diff_anon_minus_named": -1.9982,
+    "p": 0.6142,
+    "width_anon": 15.0,
+    "width_named": 17.0
+   },
+   {
+    "criteria": "gp_relevance",
+    "n_anon": 64,
+    "n_named": 44,
+    "mean_anon": 77.6094,
+    "mean_named": 79.6364,
+    "diff_anon_minus_named": -2.027,
+    "p": 0.5591,
+    "width_anon": 19.0,
+    "width_named": 20.0
+   },
+   {
+    "criteria": "merits_journal",
+    "n_anon": 58,
+    "n_named": 38,
+    "mean_anon": 3.8276,
+    "mean_named": 3.8474,
+    "diff_anon_minus_named": -0.0198,
+    "p": 0.9122,
+    "width_anon": 1.0,
+    "width_named": 1.1
+   },
+   {
+    "criteria": "journal_predict",
+    "n_anon": 52,
+    "n_named": 36,
+    "mean_anon": 3.9596,
+    "mean_named": 3.6944,
+    "diff_anon_minus_named": 0.2652,
+    "p": 0.1147,
+    "width_anon": 1.0,
+    "width_named": 1.0
+   }
+  ],
+  "anonymity_within_paper": {
+   "n_paper_criteria": 102,
+   "mean_anon_minus_named": -4.7549,
+   "p_wilcoxon": 0.009
+  },
+  "by_stream": [
+   {
+    "criteria": "overall",
+    "count_academic": 92.0,
+    "mean_academic": 75.5761,
+    "count_applied": 10.0,
+    "mean_applied": 68.8
+   },
+   {
+    "criteria": "claims",
+    "count_academic": 34.0,
+    "mean_academic": 72.1765,
+    "count_applied": 6.0,
+    "mean_applied": 82.0
+   },
+   {
+    "criteria": "methods",
+    "count_academic": 90.0,
+    "mean_academic": 71.5111,
+    "count_applied": 10.0,
+    "mean_applied": 68.0
+   },
+   {
+    "criteria": "adv_knowledge",
+    "count_academic": 90.0,
+    "mean_academic": 72.9667,
+    "count_applied": 11.0,
+    "mean_applied": 71.4545
+   },
+   {
+    "criteria": "logic_comms",
+    "count_academic": 92.0,
+    "mean_academic": 75.6087,
+    "count_applied": 11.0,
+    "mean_applied": 69.2727
+   },
+   {
+    "criteria": "open_sci",
+    "count_academic": 90.0,
+    "mean_academic": 73.8111,
+    "count_applied": 11.0,
+    "mean_applied": 65.9091
+   },
+   {
+    "criteria": "real_world",
+    "count_academic": 82.0,
+    "mean_academic": 76.4268,
+    "count_applied": 9.0,
+    "mean_applied": 82.3333
+   },
+   {
+    "criteria": "gp_relevance",
+    "count_academic": 89.0,
+    "mean_academic": 78.4494,
+    "count_applied": 11.0,
+    "mean_applied": 79.6364
+   },
+   {
+    "criteria": "merits_journal",
+    "count_academic": 85.0,
+    "mean_academic": 3.8388,
+    "count_applied": 5.0,
+    "mean_applied": 4.18
+   },
+   {
+    "criteria": "journal_predict",
+    "count_academic": 78.0,
+    "mean_academic": 3.9026,
+    "count_applied": 4.0,
+    "mean_applied": 3.25
+   }
+  ],
+  "by_area": [
+   {
+    "main_cause_cat_abbrev": "Global health (LMICs)",
+    "gp_relevance": 80.2692,
+    "methods": 74.9615,
+    "overall": 77.3077,
+    "n_papers": 13
+   },
+   {
+    "main_cause_cat_abbrev": "Dev. econ/gov. (LMICs)",
+    "gp_relevance": 77.7647,
+    "methods": 69.3333,
+    "overall": 77.0,
+    "n_papers": 11
+   },
+   {
+    "main_cause_cat_abbrev": "Environment",
+    "gp_relevance": 86.75,
+    "methods": 67.1667,
+    "overall": 75.1667,
+    "n_papers": 6
+   },
+   {
+    "main_cause_cat_abbrev": "Catastrophic & X-risk, LT, forecasting",
+    "gp_relevance": 82.0,
+    "methods": 63.6667,
+    "overall": 67.8,
+    "n_papers": 5
+   },
+   {
+    "main_cause_cat_abbrev": "Econ., welfare, misc.",
+    "gp_relevance": 56.6667,
+    "methods": 68.125,
+    "overall": 61.3333,
+    "n_papers": 5
+   },
+   {
+    "main_cause_cat_abbrev": "Innovation & meta-science",
+    "gp_relevance": 69.3333,
+    "methods": 68.375,
+    "overall": 73.125,
+    "n_papers": 5
+   },
+   {
+    "main_cause_cat_abbrev": "Animal welfare, markets",
+    "gp_relevance": 82.5714,
+    "methods": 57.8571,
+    "overall": 74.5714,
+    "n_papers": 4
+   },
+   {
+    "main_cause_cat_abbrev": "Attitudes, behaviors, psych, misinfo.",
+    "gp_relevance": 73.3333,
+    "methods": 82.0,
+    "overall": 81.0,
+    "n_papers": 3
+   }
+  ]
+ },
+ "llm": {
+  "n_llm_rows": 1648,
+  "n_llm_papers_mapped": 47,
+  "agreement": [
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "adv_knowledge",
+    "n_papers": 33,
+    "spearman": 0.3757,
+    "pearson": 0.3314,
+    "bias_llm_minus_human": -1.8889,
+    "mae": 11.5556,
+    "sd_llm": 16.636,
+    "sd_human_mean": 14.4549,
+    "llm_width_median": 24.0,
+    "human_width_median": 18.75
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "claims",
+    "n_papers": 10,
+    "spearman": 0.2979,
+    "pearson": 0.4782,
+    "bias_llm_minus_human": -13.7,
+    "mae": 16.5,
+    "sd_llm": 19.8508,
+    "sd_human_mean": 14.1288,
+    "llm_width_median": 26.5,
+    "human_width_median": 17.0
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "gp_relevance",
+    "n_papers": 34,
+    "spearman": 0.3412,
+    "pearson": 0.1789,
+    "bias_llm_minus_human": -4.4755,
+    "mae": 14.1225,
+    "sd_llm": 14.5272,
+    "sd_human_mean": 16.2312,
+    "llm_width_median": 25.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "journal_predict",
+    "n_papers": 30,
+    "spearman": 0.6535,
+    "pearson": 0.6136,
+    "bias_llm_minus_human": -0.1683,
+    "mae": 0.455,
+    "sd_llm": 0.7213,
+    "sd_human_mean": 0.6517,
+    "llm_width_median": 1.5,
+    "human_width_median": 1.15
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "logic_comms",
+    "n_papers": 34,
+    "spearman": 0.0002,
+    "pearson": 0.0922,
+    "bias_llm_minus_human": -1.0441,
+    "mae": 13.8088,
+    "sd_llm": 13.8456,
+    "sd_human_mean": 13.6443,
+    "llm_width_median": 22.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "merits_journal",
+    "n_papers": 31,
+    "spearman": 0.6007,
+    "pearson": 0.6051,
+    "bias_llm_minus_human": -0.2489,
+    "mae": 0.4876,
+    "sd_llm": 0.7366,
+    "sd_human_mean": 0.6979,
+    "llm_width_median": 1.5,
+    "human_width_median": 1.175
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "methods",
+    "n_papers": 33,
+    "spearman": 0.4467,
+    "pearson": 0.4446,
+    "bias_llm_minus_human": -5.9141,
+    "mae": 14.5808,
+    "sd_llm": 19.4952,
+    "sd_human_mean": 16.52,
+    "llm_width_median": 24.0,
+    "human_width_median": 19.5
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "open_sci",
+    "n_papers": 34,
+    "spearman": -0.0617,
+    "pearson": 0.0257,
+    "bias_llm_minus_human": -20.4118,
+    "mae": 25.8235,
+    "sd_llm": 17.7153,
+    "sd_human_mean": 17.6986,
+    "llm_width_median": 30.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "overall",
+    "n_papers": 34,
+    "spearman": 0.4678,
+    "pearson": 0.5718,
+    "bias_llm_minus_human": -7.6569,
+    "mae": 12.3922,
+    "sd_llm": 18.5488,
+    "sd_human_mean": 13.3181,
+    "llm_width_median": 25.5,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "adv_knowledge",
+    "n_papers": 11,
+    "spearman": 0.1042,
+    "pearson": 0.0885,
+    "bias_llm_minus_human": 3.0909,
+    "mae": 8.7273,
+    "sd_llm": 4.4004,
+    "sd_human_mean": 9.967,
+    "llm_width_median": 17.0,
+    "human_width_median": 15.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "gp_relevance",
+    "n_papers": 11,
+    "spearman": 0.0023,
+    "pearson": 0.0417,
+    "bias_llm_minus_human": -2.4091,
+    "mae": 8.7727,
+    "sd_llm": 8.6728,
+    "sd_human_mean": 7.1738,
+    "llm_width_median": 14.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "logic_comms",
+    "n_papers": 11,
+    "spearman": 0.5849,
+    "pearson": 0.5023,
+    "bias_llm_minus_human": 5.0,
+    "mae": 7.8182,
+    "sd_llm": 4.3652,
+    "sd_human_mean": 9.6023,
+    "llm_width_median": 14.0,
+    "human_width_median": 18.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "methods",
+    "n_papers": 11,
+    "spearman": -0.5025,
+    "pearson": -0.4579,
+    "bias_llm_minus_human": 6.3182,
+    "mae": 15.5,
+    "sd_llm": 5.2984,
+    "sd_human_mean": 18.9741,
+    "llm_width_median": 20.0,
+    "human_width_median": 15.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "open_sci",
+    "n_papers": 11,
+    "spearman": 0.3739,
+    "pearson": 0.2234,
+    "bias_llm_minus_human": -0.4091,
+    "mae": 10.3182,
+    "sd_llm": 11.8613,
+    "sd_human_mean": 9.5473,
+    "llm_width_median": 14.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "criteria": "overall",
+    "n_papers": 11,
+    "spearman": 0.055,
+    "pearson": 0.0198,
+    "bias_llm_minus_human": 0.1818,
+    "mae": 6.9091,
+    "sd_llm": 4.0317,
+    "sd_human_mean": 9.1746,
+    "llm_width_median": 20.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "adv_knowledge",
+    "n_papers": 45,
+    "spearman": 0.1011,
+    "pearson": 0.1462,
+    "bias_llm_minus_human": 0.2111,
+    "mae": 13.5296,
+    "sd_llm": 15.9886,
+    "sd_human_mean": 15.512,
+    "llm_width_median": 20.0,
+    "human_width_median": 17.25
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "claims",
+    "n_papers": 17,
+    "spearman": 0.3084,
+    "pearson": 0.1925,
+    "bias_llm_minus_human": -3.5588,
+    "mae": 14.8529,
+    "sd_llm": 13.7467,
+    "sd_human_mean": 16.8474,
+    "llm_width_median": 20.0,
+    "human_width_median": 16.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "gp_relevance",
+    "n_papers": 46,
+    "spearman": 0.1102,
+    "pearson": 0.0316,
+    "bias_llm_minus_human": -2.1449,
+    "mae": 14.8768,
+    "sd_llm": 15.3035,
+    "sd_human_mean": 15.1733,
+    "llm_width_median": 20.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "journal_predict",
+    "n_papers": 41,
+    "spearman": 0.3357,
+    "pearson": 0.2701,
+    "bias_llm_minus_human": -0.2134,
+    "mae": 0.6037,
+    "sd_llm": 0.4726,
+    "sd_human_mean": 0.7034,
+    "llm_width_median": 1.0,
+    "human_width_median": 1.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "logic_comms",
+    "n_papers": 46,
+    "spearman": -0.0124,
+    "pearson": -0.0062,
+    "bias_llm_minus_human": -1.3986,
+    "mae": 11.9203,
+    "sd_llm": 14.5826,
+    "sd_human_mean": 12.914,
+    "llm_width_median": 20.0,
+    "human_width_median": 19.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "merits_journal",
+    "n_papers": 42,
+    "spearman": 0.2926,
+    "pearson": 0.2716,
+    "bias_llm_minus_human": 0.2317,
+    "mae": 0.4913,
+    "sd_llm": 0.4,
+    "sd_human_mean": 0.6713,
+    "llm_width_median": 1.0,
+    "human_width_median": 1.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "methods",
+    "n_papers": 45,
+    "spearman": 0.0991,
+    "pearson": 0.0234,
+    "bias_llm_minus_human": -1.8259,
+    "mae": 14.2926,
+    "sd_llm": 15.21,
+    "sd_human_mean": 18.1921,
+    "llm_width_median": 20.0,
+    "human_width_median": 19.5
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "open_sci",
+    "n_papers": 46,
+    "spearman": -0.2192,
+    "pearson": -0.189,
+    "bias_llm_minus_human": -7.9058,
+    "mae": 17.0797,
+    "sd_llm": 14.2319,
+    "sd_human_mean": 15.8249,
+    "llm_width_median": 20.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "overall",
+    "n_papers": 46,
+    "spearman": 0.1366,
+    "pearson": 0.1395,
+    "bias_llm_minus_human": -0.5072,
+    "mae": 12.7754,
+    "sd_llm": 16.7478,
+    "sd_human_mean": 13.8093,
+    "llm_width_median": 20.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "adv_knowledge",
+    "n_papers": 45,
+    "spearman": 0.454,
+    "pearson": 0.3005,
+    "bias_llm_minus_human": 7.6111,
+    "mae": 11.9444,
+    "sd_llm": 9.893,
+    "sd_human_mean": 15.512,
+    "llm_width_median": 17.0,
+    "human_width_median": 17.25
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "claims",
+    "n_papers": 17,
+    "spearman": 0.3918,
+    "pearson": 0.2218,
+    "bias_llm_minus_human": 3.4412,
+    "mae": 13.9706,
+    "sd_llm": 12.8002,
+    "sd_human_mean": 16.8474,
+    "llm_width_median": 16.0,
+    "human_width_median": 16.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "gp_relevance",
+    "n_papers": 46,
+    "spearman": 0.3939,
+    "pearson": 0.3102,
+    "bias_llm_minus_human": 6.0942,
+    "mae": 11.4855,
+    "sd_llm": 9.3345,
+    "sd_human_mean": 15.1733,
+    "llm_width_median": 17.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "journal_predict",
+    "n_papers": 41,
+    "spearman": 0.752,
+    "pearson": 0.6948,
+    "bias_llm_minus_human": 0.1159,
+    "mae": 0.3988,
+    "sd_llm": 0.5334,
+    "sd_human_mean": 0.7034,
+    "llm_width_median": 1.2,
+    "human_width_median": 1.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "logic_comms",
+    "n_papers": 46,
+    "spearman": 0.284,
+    "pearson": 0.1938,
+    "bias_llm_minus_human": 9.4275,
+    "mae": 12.5145,
+    "sd_llm": 6.7968,
+    "sd_human_mean": 12.914,
+    "llm_width_median": 14.0,
+    "human_width_median": 19.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "merits_journal",
+    "n_papers": 42,
+    "spearman": 0.5054,
+    "pearson": 0.4157,
+    "bias_llm_minus_human": 0.2817,
+    "mae": 0.4937,
+    "sd_llm": 0.4383,
+    "sd_human_mean": 0.6713,
+    "llm_width_median": 1.1,
+    "human_width_median": 1.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "methods",
+    "n_papers": 45,
+    "spearman": 0.5622,
+    "pearson": 0.3566,
+    "bias_llm_minus_human": 4.4185,
+    "mae": 11.9815,
+    "sd_llm": 12.3372,
+    "sd_human_mean": 18.1921,
+    "llm_width_median": 19.0,
+    "human_width_median": 19.5
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "open_sci",
+    "n_papers": 46,
+    "spearman": 0.1022,
+    "pearson": 0.1303,
+    "bias_llm_minus_human": -17.2101,
+    "mae": 22.471,
+    "sd_llm": 17.1124,
+    "sd_human_mean": 15.8249,
+    "llm_width_median": 27.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "overall",
+    "n_papers": 46,
+    "spearman": 0.5375,
+    "pearson": 0.3505,
+    "bias_llm_minus_human": 6.2319,
+    "mae": 10.0652,
+    "sd_llm": 10.0365,
+    "sd_human_mean": 13.8093,
+    "llm_width_median": 15.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "adv_knowledge",
+    "n_papers": 9,
+    "spearman": 0.1526,
+    "pearson": 0.1583,
+    "bias_llm_minus_human": -2.9074,
+    "mae": 15.1296,
+    "sd_llm": 16.1202,
+    "sd_human_mean": 16.6984,
+    "llm_width_median": 27.0,
+    "human_width_median": 17.5
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "claims",
+    "n_papers": 9,
+    "spearman": 0.318,
+    "pearson": 0.2486,
+    "bias_llm_minus_human": -5.0556,
+    "mae": 18.7222,
+    "sd_llm": 17.565,
+    "sd_human_mean": 21.4371,
+    "llm_width_median": 28.0,
+    "human_width_median": 17.5
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "gp_relevance",
+    "n_papers": 9,
+    "spearman": 0.3617,
+    "pearson": 0.5001,
+    "bias_llm_minus_human": 1.4444,
+    "mae": 7.4444,
+    "sd_llm": 7.9057,
+    "sd_human_mean": 9.5583,
+    "llm_width_median": 21.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "journal_predict",
+    "n_papers": 8,
+    "spearman": 0.9696,
+    "pearson": 0.8956,
+    "bias_llm_minus_human": -0.2875,
+    "mae": 0.5625,
+    "sd_llm": 0.7386,
+    "sd_human_mean": 1.1171,
+    "llm_width_median": 1.65,
+    "human_width_median": 1.4
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "logic_comms",
+    "n_papers": 9,
+    "spearman": -0.2689,
+    "pearson": -0.2514,
+    "bias_llm_minus_human": -2.3148,
+    "mae": 14.3519,
+    "sd_llm": 11.3688,
+    "sd_human_mean": 13.1549,
+    "llm_width_median": 23.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "merits_journal",
+    "n_papers": 8,
+    "spearman": 0.3856,
+    "pearson": 0.5328,
+    "bias_llm_minus_human": -0.15,
+    "mae": 0.5375,
+    "sd_llm": 0.7066,
+    "sd_human_mean": 0.9335,
+    "llm_width_median": 1.45,
+    "human_width_median": 1.25
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "methods",
+    "n_papers": 9,
+    "spearman": 0.0502,
+    "pearson": 0.0172,
+    "bias_llm_minus_human": -2.5556,
+    "mae": 24.5556,
+    "sd_llm": 20.0375,
+    "sd_human_mean": 22.9671,
+    "llm_width_median": 30.0,
+    "human_width_median": 22.5
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "open_sci",
+    "n_papers": 9,
+    "spearman": -0.5084,
+    "pearson": -0.6005,
+    "bias_llm_minus_human": -22.6296,
+    "mae": 28.7407,
+    "sd_llm": 20.3039,
+    "sd_human_mean": 13.6788,
+    "llm_width_median": 32.0,
+    "human_width_median": 17.0
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "criteria": "overall",
+    "n_papers": 9,
+    "spearman": 0.4706,
+    "pearson": 0.3332,
+    "bias_llm_minus_human": -2.6667,
+    "mae": 14.6667,
+    "sd_llm": 16.9837,
+    "sd_human_mean": 17.6253,
+    "llm_width_median": 25.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "adv_knowledge",
+    "n_papers": 45,
+    "spearman": 0.1428,
+    "pearson": 0.1101,
+    "bias_llm_minus_human": -2.0778,
+    "mae": 12.1667,
+    "sd_llm": 5.8214,
+    "sd_human_mean": 15.512,
+    "llm_width_median": 25.0,
+    "human_width_median": 17.25
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "claims",
+    "n_papers": 17,
+    "spearman": 0.0234,
+    "pearson": 0.2013,
+    "bias_llm_minus_human": -0.0294,
+    "mae": 12.7353,
+    "sd_llm": 8.0096,
+    "sd_human_mean": 16.8474,
+    "llm_width_median": 25.0,
+    "human_width_median": 16.0
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "gp_relevance",
+    "n_papers": 46,
+    "spearman": 0.1311,
+    "pearson": 0.1585,
+    "bias_llm_minus_human": -0.2754,
+    "mae": 12.3986,
+    "sd_llm": 7.2831,
+    "sd_human_mean": 15.1733,
+    "llm_width_median": 25.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "logic_comms",
+    "n_papers": 46,
+    "spearman": 0.0804,
+    "pearson": 0.0801,
+    "bias_llm_minus_human": 6.0362,
+    "mae": 10.8841,
+    "sd_llm": 4.9782,
+    "sd_human_mean": 12.914,
+    "llm_width_median": 20.0,
+    "human_width_median": 19.0
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "methods",
+    "n_papers": 45,
+    "spearman": 0.1677,
+    "pearson": 0.1804,
+    "bias_llm_minus_human": -2.137,
+    "mae": 14.0926,
+    "sd_llm": 8.822,
+    "sd_human_mean": 18.1921,
+    "llm_width_median": 25.0,
+    "human_width_median": 19.5
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "open_sci",
+    "n_papers": 46,
+    "spearman": -0.1182,
+    "pearson": -0.0296,
+    "bias_llm_minus_human": -1.9275,
+    "mae": 14.5797,
+    "sd_llm": 9.7857,
+    "sd_human_mean": 15.8249,
+    "llm_width_median": 30.0,
+    "human_width_median": 20.0
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "overall",
+    "n_papers": 46,
+    "spearman": 0.2918,
+    "pearson": 0.3288,
+    "bias_llm_minus_human": -5.7029,
+    "mae": 12.0072,
+    "sd_llm": 8.4449,
+    "sd_human_mean": 13.8093,
+    "llm_width_median": 30.0,
+    "human_width_median": 20.0
+   }
+  ],
+  "llm_as_extra_rater": [
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "overall",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.5198,
+    "spearman_human_vs_human": 0.3719,
+    "alpha_humans_only": 0.5202,
+    "alpha_humans_plus_llm": 0.3999
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "claims",
+    "n_papers": 12,
+    "spearman_llm_vs_one_human": 0.2821,
+    "spearman_human_vs_human": 0.4866,
+    "alpha_humans_only": 0.4431,
+    "alpha_humans_plus_llm": 0.2734
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "methods",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.5083,
+    "spearman_human_vs_human": 0.4169,
+    "alpha_humans_only": 0.5559,
+    "alpha_humans_plus_llm": 0.388
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "adv_knowledge",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.4827,
+    "spearman_human_vs_human": 0.2581,
+    "alpha_humans_only": 0.2444,
+    "alpha_humans_plus_llm": 0.2356
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "logic_comms",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.3248,
+    "spearman_human_vs_human": 0.2681,
+    "alpha_humans_only": 0.3568,
+    "alpha_humans_plus_llm": 0.1677
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "open_sci",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.1476,
+    "spearman_human_vs_human": -0.049,
+    "alpha_humans_only": 0.027,
+    "alpha_humans_plus_llm": 0.0465
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "gp_relevance",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.3462,
+    "spearman_human_vs_human": 0.1947,
+    "alpha_humans_only": 0.3757,
+    "alpha_humans_plus_llm": 0.2491
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "merits_journal",
+    "n_papers": 35,
+    "spearman_llm_vs_one_human": 0.4659,
+    "spearman_human_vs_human": 0.2482,
+    "alpha_humans_only": 0.3203,
+    "alpha_humans_plus_llm": 0.3013
+   },
+   {
+    "model": "GPT-5 Pro",
+    "criteria": "journal_predict",
+    "n_papers": 29,
+    "spearman_llm_vs_one_human": 0.6795,
+    "spearman_human_vs_human": 0.476,
+    "alpha_humans_only": 0.4156,
+    "alpha_humans_plus_llm": 0.4956
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "overall",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.1536,
+    "spearman_human_vs_human": 0.371,
+    "alpha_humans_only": 0.5202,
+    "alpha_humans_plus_llm": 0.2807
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "claims",
+    "n_papers": 12,
+    "spearman_llm_vs_one_human": 0.3178,
+    "spearman_human_vs_human": 0.4938,
+    "alpha_humans_only": 0.4431,
+    "alpha_humans_plus_llm": 0.3169
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "methods",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.1124,
+    "spearman_human_vs_human": 0.4164,
+    "alpha_humans_only": 0.5559,
+    "alpha_humans_plus_llm": 0.2726
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "adv_knowledge",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.1377,
+    "spearman_human_vs_human": 0.2574,
+    "alpha_humans_only": 0.2444,
+    "alpha_humans_plus_llm": 0.2008
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "logic_comms",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": -0.0009,
+    "spearman_human_vs_human": 0.2638,
+    "alpha_humans_only": 0.3568,
+    "alpha_humans_plus_llm": 0.1476
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "open_sci",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": -0.1343,
+    "spearman_human_vs_human": -0.0496,
+    "alpha_humans_only": 0.027,
+    "alpha_humans_plus_llm": -0.048
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "gp_relevance",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.1698,
+    "spearman_human_vs_human": 0.2015,
+    "alpha_humans_only": 0.3757,
+    "alpha_humans_plus_llm": 0.1799
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "merits_journal",
+    "n_papers": 35,
+    "spearman_llm_vs_one_human": 0.2048,
+    "spearman_human_vs_human": 0.2488,
+    "alpha_humans_only": 0.3203,
+    "alpha_humans_plus_llm": 0.2308
+   },
+   {
+    "model": "GPT-4o-mini",
+    "criteria": "journal_predict",
+    "n_papers": 29,
+    "spearman_llm_vs_one_human": 0.3018,
+    "spearman_human_vs_human": 0.4743,
+    "alpha_humans_only": 0.4156,
+    "alpha_humans_plus_llm": 0.3107
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "overall",
+    "n_papers": 29,
+    "spearman_llm_vs_one_human": 0.4812,
+    "spearman_human_vs_human": 0.3887,
+    "alpha_humans_only": 0.5446,
+    "alpha_humans_plus_llm": 0.5873
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "methods",
+    "n_papers": 27,
+    "spearman_llm_vs_one_human": 0.4286,
+    "spearman_human_vs_human": 0.2799,
+    "alpha_humans_only": 0.3284,
+    "alpha_humans_plus_llm": 0.3128
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "adv_knowledge",
+    "n_papers": 28,
+    "spearman_llm_vs_one_human": 0.3703,
+    "spearman_human_vs_human": 0.1371,
+    "alpha_humans_only": 0.177,
+    "alpha_humans_plus_llm": 0.2906
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "logic_comms",
+    "n_papers": 28,
+    "spearman_llm_vs_one_human": 0.2386,
+    "spearman_human_vs_human": 0.3633,
+    "alpha_humans_only": 0.5017,
+    "alpha_humans_plus_llm": 0.3601
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "open_sci",
+    "n_papers": 28,
+    "spearman_llm_vs_one_human": 0.0449,
+    "spearman_human_vs_human": 0.1668,
+    "alpha_humans_only": 0.2468,
+    "alpha_humans_plus_llm": 0.0718
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "gp_relevance",
+    "n_papers": 28,
+    "spearman_llm_vs_one_human": 0.286,
+    "spearman_human_vs_human": 0.2522,
+    "alpha_humans_only": 0.4623,
+    "alpha_humans_plus_llm": 0.3033
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "merits_journal",
+    "n_papers": 27,
+    "spearman_llm_vs_one_human": 0.5009,
+    "spearman_human_vs_human": 0.2243,
+    "alpha_humans_only": 0.2762,
+    "alpha_humans_plus_llm": 0.4023
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "criteria": "journal_predict",
+    "n_papers": 22,
+    "spearman_llm_vs_one_human": 0.63,
+    "spearman_human_vs_human": 0.333,
+    "alpha_humans_only": 0.2937,
+    "alpha_humans_plus_llm": 0.4665
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "overall",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.3263,
+    "spearman_human_vs_human": 0.3694,
+    "alpha_humans_only": 0.5202,
+    "alpha_humans_plus_llm": 0.3803
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "claims",
+    "n_papers": 12,
+    "spearman_llm_vs_one_human": 0.099,
+    "spearman_human_vs_human": 0.4988,
+    "alpha_humans_only": 0.4431,
+    "alpha_humans_plus_llm": 0.2684
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "methods",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.1764,
+    "spearman_human_vs_human": 0.4157,
+    "alpha_humans_only": 0.5559,
+    "alpha_humans_plus_llm": 0.3286
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "adv_knowledge",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.2109,
+    "spearman_human_vs_human": 0.2564,
+    "alpha_humans_only": 0.2444,
+    "alpha_humans_plus_llm": 0.1582
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "logic_comms",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": 0.138,
+    "spearman_human_vs_human": 0.2692,
+    "alpha_humans_only": 0.3568,
+    "alpha_humans_plus_llm": 0.171
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "open_sci",
+    "n_papers": 39,
+    "spearman_llm_vs_one_human": -0.0494,
+    "spearman_human_vs_human": -0.0536,
+    "alpha_humans_only": 0.027,
+    "alpha_humans_plus_llm": -0.0043
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "criteria": "gp_relevance",
+    "n_papers": 38,
+    "spearman_llm_vs_one_human": 0.1465,
+    "spearman_human_vs_human": 0.1948,
+    "alpha_humans_only": 0.3757,
+    "alpha_humans_plus_llm": 0.2234
+   }
+  ],
+  "profile_agreement": [
+   {
+    "model": "GPT-5 Pro",
+    "n_comparisons": 83,
+    "mean_within_paper_profile_spearman": 0.3011,
+    "share_positive": 0.6747
+   },
+   {
+    "model": "GPT-5.2 Pro",
+    "n_comparisons": 17,
+    "mean_within_paper_profile_spearman": 0.3066,
+    "share_positive": 0.8235
+   },
+   {
+    "model": "GPT-4o-mini",
+    "n_comparisons": 83,
+    "mean_within_paper_profile_spearman": 0.2236,
+    "share_positive": 0.7349
+   },
+   {
+    "model": "Claude Sonnet 4",
+    "n_comparisons": 18,
+    "mean_within_paper_profile_spearman": 0.2588,
+    "share_positive": 0.7222
+   },
+   {
+    "model": "Claude Opus 4.6",
+    "n_comparisons": 60,
+    "mean_within_paper_profile_spearman": 0.2526,
+    "share_positive": 0.7667
+   },
+   {
+    "model": "Gemini 2.0 Flash",
+    "n_comparisons": 83,
+    "mean_within_paper_profile_spearman": 0.2123,
+    "share_positive": 0.6867
+   },
+   {
+    "model": "Human vs human",
+    "n_comparisons": 49,
+    "mean_within_paper_profile_spearman": 0.1822,
+    "share_positive": 0.7347
+   }
+  ]
+ },
+ "private": {
+  "named_evaluators": 58,
+  "named_evaluators_with_2plus_papers": 9,
+  "named_evaluators_with_3plus_papers": 5,
+  "max_papers_per_evaluator": 7,
+  "evaluator_effects": [
+   {
+    "criteria": "overall",
+    "n_evaluators_2plus": 8,
+    "n_residuals": 26,
+    "anova_F": 2.5269,
+    "anova_p": 0.0535,
+    "evaluator_effect_sd": 4.9092,
+    "residual_sd": 9.4183,
+    "max_abs_evaluator_mean_resid": 13.2583
+   },
+   {
+    "criteria": "methods",
+    "n_evaluators_2plus": 7,
+    "n_residuals": 23,
+    "anova_F": 0.9507,
+    "anova_p": 0.4875,
+    "evaluator_effect_sd": 0.0,
+    "residual_sd": 19.5532,
+    "max_abs_evaluator_mean_resid": 13.7886
+   },
+   {
+    "criteria": "adv_knowledge",
+    "n_evaluators_2plus": 7,
+    "n_residuals": 24,
+    "anova_F": 1.1043,
+    "anova_p": 0.3999,
+    "evaluator_effect_sd": 0.0,
+    "residual_sd": 16.895,
+    "max_abs_evaluator_mean_resid": 10.6066
+   },
+   {
+    "criteria": "logic_comms",
+    "n_evaluators_2plus": 7,
+    "n_residuals": 24,
+    "anova_F": 2.2171,
+    "anova_p": 0.092,
+    "evaluator_effect_sd": 7.0402,
+    "residual_sd": 10.2803,
+    "max_abs_evaluator_mean_resid": 15.3796
+   },
+   {
+    "criteria": "gp_relevance",
+    "n_evaluators_2plus": 7,
+    "n_residuals": 24,
+    "anova_F": 1.9555,
+    "anova_p": 0.1294,
+    "evaluator_effect_sd": 7.1482,
+    "residual_sd": 11.1608,
+    "max_abs_evaluator_mean_resid": 14.3189
+   }
+  ],
+  "width_icc_across_evaluators_papers": -0.225,
+  "width_n_evaluators_2plus": 8,
+  "experience_hours": [
+   {
+    "x": "years",
+    "y": "overall_rating",
+    "n": 16,
+    "spearman": -0.1754,
+    "p": 0.5158
+   },
+   {
+    "x": "years",
+    "y": "ov_width",
+    "n": 15,
+    "spearman": 0.3254,
+    "p": 0.2366
+   },
+   {
+    "x": "n_reviews",
+    "y": "overall_rating",
+    "n": 15,
+    "spearman": 0.2987,
+    "p": 0.2795
+   }
+  ],
+  "hours_summary": {
+   "n": 33,
+   "median": 8.0,
+   "mean": 9.5909
+  }
+ }
+}

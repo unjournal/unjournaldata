@@ -1,0 +1,5 @@
+status_group,journal_predict_count,journal_predict_mean,merits_journal_count,merits_journal_mean,overall_count,overall_mean
+R&R/forthcoming,3,4.533333333333334,3,4.516666666666667,4,73.125
+published other,8,3.58125,10,3.7916666666666665,11,74.98484848484848
+published ~top,8,4.13125,8,4.03125,8,78.3125
+working paper / other,32,3.671875,33,3.724242424242424,38,74.02631578947368

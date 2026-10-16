@@ -1,0 +1,8 @@
+research,evaluator,criteria,middle_rating,lower_CI,upper_CI,confidence_level,row_created_date,evaluator_is_anonymous
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,overall,75,70,80,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,claims,20,15,25,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,methods,33,31,35,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,adv_knowledge,70,60,80,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,logic_comms,60,55,65,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,open_sci,100,100,100,,2026-09-22T00:00:00.000-04:00,true
+Technical Report: The Value of Existential Risk Mitigation,Evaluator 1,gp_relevance,90,80,100,,2026-09-22T00:00:00.000-04:00,true
