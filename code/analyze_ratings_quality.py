@@ -500,8 +500,13 @@ def reliability(d, meta, out, label="all"):
         lo_, hi_ = bootstrap_alpha(groups)
         ic = icc_oneway(groups)
         pr = pairs_table(d, c)
+        gaps = (pr.mid_i - pr.mid_j).abs()[pr.i < pr.j] if len(pr) else pd.Series(dtype=float)
         rows.append({
             "criteria": c, "n_papers": len(groups), "n_ratings": int(sum(len(g) for g in groups)),
+            "n_pairs": int(len(gaps)), "median_abs_gap": float(gaps.median()) if len(gaps) else np.nan,
+            "share_gap_gt_20": float((gaps > 20).mean()) if len(gaps) else np.nan,
+            "share_gap_gt_30": float((gaps > 30).mean()) if len(gaps) else np.nan,
+            "share_gap_gt_1tier": float((gaps > 1).mean()) if len(gaps) else np.nan,
             "alpha_interval": a, "alpha_ci_lo": lo_, "alpha_ci_hi": hi_,
             "icc1": ic["icc1"], "icc1k_mean_of_raters": ic["icc1k"], "mean_raters": ic["n0"],
             "rater_noise_sd": np.sqrt(ic["msw"]) if np.isfinite(ic["msw"]) else np.nan,
@@ -655,6 +660,15 @@ def journal(d, mid, lo, hi, meta, out, private_db=None):
         "share_should_gt_will": float((diff > 0).mean()), "share_equal": float((diff == 0).mean()),
         "t": float(t.statistic), "p": float(t.pvalue), "corr": float(nan_corr(j.merits_journal.values, j.journal_predict.values)[0]),
     }
+    # should vs will by data-entry year (identical answers are much more common in rows entered in 2024)
+    jy = j.join(meta.set_index("eval_id")[["year"]])
+    by = jy.groupby("year").apply(lambda g: pd.Series({
+        "n": len(g), "share_same_mid": float((g.merits_journal == g.journal_predict).mean()),
+        "share_should_gt_will": float((g.merits_journal > g.journal_predict).mean()),
+        "share_will_gt_should": float((g.merits_journal < g.journal_predict).mean()),
+        "mean_should_minus_will": float((g.merits_journal - g.journal_predict).mean())}))
+    by.to_csv(out / "tbl_should_will_by_year.csv")
+    res["should_vs_will_by_entry_year"] = by.reset_index()
     # relation to overall
     ov = mid["overall"]
     res["corr_with_overall"] = {c: float(nan_corr(mid[c].values, ov.values)[0]) for c in JOURNAL}
