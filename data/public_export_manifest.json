@@ -5,8 +5,8 @@
         "evaluation_stream",
         "hours_spent_manual_impute"
       ],
-      "rows": 213,
-      "sha256": "c6dca5842f01ec1fab1d27a60bca88a6c77ca72ef63bbfef8f30394c77e5562f"
+      "rows": 215,
+      "sha256": "2de80140f4daf18b2902bf979883af5b6399c2fc1fd3efdcca7349151830eab8"
     },
     "research.csv": {
       "columns": [
@@ -34,8 +34,8 @@
         "row_created_date",
         "evaluator_is_anonymous"
       ],
-      "rows": 1039,
-      "sha256": "880dff1fbd83820f2749d41ec5a0c1dd90e119dd47a871adb05a1d902afff035"
+      "rows": 1030,
+      "sha256": "fc894e9759a6b7fceadd127153c03c2cc46c718a13556c8ab92c4a0803106a5f"
     }
   },
   "schema_version": 1,

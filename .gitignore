@@ -76,3 +76,7 @@ analysis.log
 
 # Claude Code local settings (user-specific)
 .claude/settings.local.json
+
+# Never commit credential or password hashes
+hashes.txt
+*.htpasswd
