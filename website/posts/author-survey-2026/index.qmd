@@ -1,0 +1,154 @@
+---
+title: "Authors on Unjournal evaluations: what the survey shows"
+author: "The Unjournal"
+date: "2026-04-18"
+categories: [impact, evaluations, authors, survey, Hybrid]
+generation: "Hybrid"
+description: "Results from our author survey — quantitative ratings, qualitative feedback, and candid perspectives on what works and what needs improving."
+freeze: true
+---
+
+**Production: Hybrid.** Largely drafted with Claude, with substantial follow-up editing and direction from the Unjournal team.
+
+What do the researchers whose work we evaluate actually think of the experience? This post presents results from our author survey, alongside other evidence from the growing body of author perspectives we have been collecting. We try to present a fair picture, which includes both positive feedback and legitimate critiques.
+
+A companion post examines [whether authors update their papers in response to evaluations](../do-authors-respond-2026/index.html) and what engagement looks like in practice.
+
+## The survey
+
+Evaluated authors were invited to complete a short voluntary survey about their experience. Eight authors responded, covering papers evaluated between 2023 and 2025. Respondents were asked whether their comments could be shared, and all who answered indicated they were comfortable sharing their content but preferred not to be named. Accordingly, all survey responses below are presented without individual attribution. Two respondents additionally requested that their responses remain fully anonymous; their quantitative ratings are included but their qualitative responses are omitted entirely.
+
+One important piece of context for interpreting these results: the great majority of respondents did not submit their work to The Unjournal. We identified their papers as having potential impact on global priorities and contacted them to let them know their work would be evaluated. Authors who actively seek out a process may have different baseline expectations than those who find themselves in one they did not initiate — and this could plausibly bias survey responses in a more negative direction relative to the broader population of authors who have engaged with us.
+
+The survey asked authors to rate the overall quality of the evaluations on a 0–100 percentile scale (relative to other feedback they have received on their work), the usefulness of evaluator engagement, communication with the Unjournal team, and the informativeness of our process documentation. It also asked about their likelihood of engaging with Unjournal in the future.
+
+## Evaluation quality ratings
+
+Ratings of evaluation quality ranged from 30 to 90, with a mean of around 59 and a median of around 51. This reflects genuine variation in experience — some authors found the evaluations highly valuable, others less so.
+
+| Respondent | Eval. quality (0–100) | Engagement (0–100) |
+|---|---|---|
+| A | 40 | 55 |
+| B | 76 | 83 |
+| C | 30 | 51 |
+| D | 51 | 62 |
+| E | 85 | 80 |
+| F | 90 | 80 |
+| Anonymous | 50 | — |
+| Anonymous | 50 | 50 |
+
+Communication with the Unjournal team was rated highly by most respondents (mostly 9–10 out of 10). One respondent gave a notably low communication rating of 3, citing a difficult dynamic during the process — a signal we take seriously.
+
+## What worked
+
+Several authors found the evaluation quality to be at or above the standard of traditional peer review.
+
+One respondent, whose paper received evaluations they described as meeting or clearing the bar for peer review, offered a nuanced take on what the process prompted:
+
+> "It's a bit misleading when I say that I am unlikely to revise in response to the evaluations; instead, they prompted significant original work which was reflected in my own response to the evaluators."
+
+Another respondent, reflecting on a large and detailed evaluation, gave it an 85th percentile rating:
+
+> "I'm not very calibrated on this given my limited exposure to academia. But I'd put it in terms of 85th percentile of feedback I've received on my work."
+
+One author rated the engagement 83 out of 100 and commented:
+
+> "As good as a standard referee report or better. I particularly like the question on journal rank tier."
+
+Another respondent, reflecting on the post-publication review model more broadly:
+
+> "This is a new model (post publication review) but a good one. An option might be to have the reviewers place the paper in a broader context and assess the strengths and weaknesses."
+
+## Key critiques
+
+### Timing: reviews too late to act on
+
+The most consistent theme across respondents was timing. Several authors received Unjournal evaluations at or after the point of journal acceptance, which meant they could not act on substantive suggestions even when they wanted to. In more than one case, the paper had already cleared final review at a journal by the time the Unjournal evaluations arrived, leaving room only for minor cosmetic changes.
+
+This is a structural challenge: we often identify papers at the working paper stage, but the evaluation process takes time, and papers move through journal pipelines at variable speeds. The feedback is clear that earlier intervention — or at minimum, better timing — would substantially increase the value of evaluations for authors through the feedback and improvement channel. That channel is one important part of our theory of change, not the entirety of it: evaluations also provide an independent signal of research quality, generate visibility, and help readers assess work in progress.
+
+### Reviewer expertise matching
+
+For interdisciplinary papers, reviewer expertise matching is difficult. One respondent felt that one of their evaluators lacked sufficient grounding in the specific subfield to give constructive methodological feedback, while the other was well-matched. The tension between finding reviewers who can evaluate both the substantive and methodological dimensions of complex, cross-disciplinary work is a genuine constraint.
+
+### The asymmetric incentives problem
+
+One respondent offered the most articulate statement of a structural concern about the Unjournal model relative to traditional journal peer review:
+
+> "Engaging in the conventional peer review process is a lot of work, but it has a reward at the end of the rainbow — publication in a journal that confers a short-hand signifier of merit to people who are not in a position to independently evaluate the research merits on their own. Meanwhile, conventional peer review caps some of the downside reputational costs by generally not publishing peer review reports (or if they do, it's generally after the paper has been accepted, which signals that criticisms of the paper are not fatal). Unfortunately, Unjournal evaluations don't have these features."
+
+They add that they would be unlikely to voluntarily engage again given the opportunity costs. This is a candid and fair structural observation. Another respondent echoed something related: they would be "nervous about potentially getting a bad review and then having it online."
+
+These are real features of open peer review that we have not fully resolved, and we think they deserve a more honest treatment than a simple assertion that transparency wins in the long run.
+
+Our [FAQ for researchers](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/faq-interaction/for-researchers-authors#is-it-risky-to-have-my-work-evaluated-in-the-unjournal) addresses the asymmetric-signal concern directly. The core argument is that "unbiased signals cannot systematically lead to beliefs updating in one direction": if evaluators are not systematically biased, readers will adjust for the public record accordingly, and the absence of any public evaluation might itself raise suspicion. The analogy to conference presentations — where academics routinely face public critique without lasting career damage — is apt. But we acknowledge this argument may carry more weight for senior researchers than for those at earlier career stages, where reputations are less established and a single negative public evaluation may loom larger.
+
+One concrete mitigation we offer: early-career researchers can request a [conditional embargo](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/faq-interaction/for-researchers-authors#is-it-risky-to-have-my-work-evaluated-in-the-unjournal) on publication of their evaluation, delaying its public release until a specified date or condition is met. This does not resolve the structural incentive problem described above — the absence of the journal publication "reward" at the end of the process — but it does reduce downside exposure for the most vulnerable researchers.
+
+The [full case for why engagement is worth it](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/faq-interaction/for-researchers-authors#why-should-i-submit-my-work-to-the-unjournal-why-should-i-engage-with-them) — feedback quality, impact signals, prize eligibility, visibility — is set out in our researcher FAQ. We find that case compelling. But the survey responses here are a useful reminder that the case does not make itself, and that individual researchers weigh these trade-offs differently depending on their career stage, field norms, and prior experience of the process.
+
+### Misaligned expectations
+
+One respondent described finding the overall experience difficult, feeling that the critical feedback they received did not shift their views about their paper, and that there were significant differences in perspective between them and the evaluation team. They rated communication at 3 out of 10.
+
+We don't think it's appropriate to paper over experiences like this. Evaluations that feel misaligned — where authors and evaluators have deeply different epistemic priors or methodological frameworks — are a real risk in any review system, and ours is no exception.
+
+## An important caveat: who responded?
+
+Only 8 of 57+ evaluated authors responded to the survey, all of whom were directly invited to participate. This is a small and possibly non-representative sample. There are reasons to think it could over-represent both extremes: those with strong positive or negative reactions may be more motivated to respond. Those who found the evaluation helpful but unremarkable may simply have moved on.
+
+There is other evidence suggesting a more uniformly positive picture among those who have not formally responded. In December 2025, we recorded an extended discussion with Professor Larisa Cioaca of the Freeman School of Business at Tulane — a co-author on the Ashish Arora et al. "Effect of Public Science on Corporate R&D" paper — about her experience with our evaluation process. [The full interview is available here.](https://www.youtube.com/watch?v=7LWVH-qVc7c)
+
+Her assessment was strongly positive. On evaluation quality:
+
+> "I would say it's on par with the best journals I've ever received feedback at."
+
+On the value for early-career researchers:
+
+> "For me this was the first time that we engaged in open dialogue that was all going to happen in the public view... engaging in that dialogue is part of the learning process and I think that for me was very valuable."
+
+On the absence of gatekeeping dynamics:
+
+> "From my perspective it was: what is the intellectual response that addresses this? And maybe I don't need to worry about coaxing my reviewer into liking me in the process, because this is all about the subject matter."
+
+And notably, she said she would want to participate again — both as an author and as a reviewer.
+
+We also have informal feedback from other authors — received in emails during and after the evaluation process — that tends to be positive, though those authors have not given permission for their views to be cited here.
+
+### What public author responses show
+
+A number of evaluated authors have posted formal responses to their evaluations on our [PubPub platform](https://unjournal.pubpub.org/search?q=authors%27+response). These carry an inherent courtesy bias — authors responding publicly to people who evaluated their work have social incentives toward cordiality — and they are not a random sample of opinion. But they contain substantive observations that go beyond mere politeness.
+
+David Denkenberger and co-authors (responding to evaluations of their paper on resilient foods and catastrophic risk) wrote:
+
+> "To start with we would like to commend the format and reviewer comments which were of extremely high quality... A format which allows work to be published and reviewed in an open nuanced manner can reduce the friction of working on such questions and speed up communal sense making on important questions."
+
+Joel McGuire and the Happier Lives Institute team, in their public response:
+
+> "The work they evaluated ran to 250 A4 pages... something that is far outside the scope of conventional academic journals, thus showing the distinctive utility of The Unjournal."
+
+Rosie Bettle (Founders Pledge), responding to evaluation of her cost-effectiveness discounts guide:
+
+> "I'm especially pleased that Unjournal chose to review it, as it is often difficult to get reviews of this style of work."
+
+The pattern across these responses is consistent with the survey: authors who find the evaluation substantive and well-matched tend to engage positively, and several highlight the distinctive value of The Unjournal for work that sits outside the scope of traditional journals. This is genuinely encouraging, even discounting for the cordiality effect.
+
+## What we are taking from this
+
+A few concrete signals stand out:
+
+1. **Timing matters most for the author-feedback channel.** Getting evaluations to authors while they can still act on them is the highest-leverage improvement for the feedback and improvement dimension of our theory of change. This likely means prioritising earlier-stage working papers or moving faster once we identify a paper.
+
+2. **Reviewer matching for interdisciplinary work needs more care.** A mismatch on one of two evaluators can substantially shape an author's overall impression of the process.
+
+3. **The perceived risk of public evaluation is a real friction — though whether the underlying asymmetry is real is contested.** Our [FAQ argues](https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space/faq-interaction/for-researchers-authors#is-it-risky-to-have-my-work-evaluated-in-the-unjournal) that unbiased evaluations cannot systematically update beliefs in one direction — readers adjust for the fact that work has been publicly scrutinised, and the absence of any public record might itself raise suspicion. This argument deserves more prominence in how we communicate with authors. We could also do more to frame evaluations in ways that are evidently developmental rather than verdictive.
+
+4. **Communication quality is uneven.** High marks from most respondents, but at least one instance of a breakdown that affected the author's overall view of the process.
+
+The survey covers a small number of responses and we should be cautious about generalising. We plan to continue collecting structured feedback from authors and will update this analysis as the sample grows.
+
+---
+
+*The underlying data (with respondents anonymised per their stated preferences) is available in our [GitHub repository](https://github.com/unjournal/unjournaldata).*
+
+*This post was largely drafted with AI assistance (Claude, by Anthropic), with substantial follow-up editing and direction from the Unjournal team.*

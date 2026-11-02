@@ -1,5 +1,10 @@
 project:
   type: website
+  render:
+    - index.qmd
+    - posts.qmd
+    - "posts/*/index.qmd"
+    - "!posts/ratings-reliability-2026/**"
   resources:
     - llms.txt
 
