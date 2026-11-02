@@ -81,6 +81,15 @@ analysis files and unpublished drafts. For verification, render the affected
 pages, check the production notes and category filters, and independently
 recalculate the hours summary. Follow the existing publishing procedure above.
 
+For an editorial release, build a clean archive of pushed main with
+`quarto render website --use-freezer -M freeze:true`. Then run
+`code/prepare_editorial_blog_release.py --source <website-source>
+--published <gh-pages-archive> --built <rendered-site>` to retain the previously
+published R snapshots and their resources while adding the source provenance
+notes. This avoids silently updating a dated snapshot when its local freeze
+cache is unavailable. The helper also keeps search in sync and excludes draft
+source files. Review the resulting site before publishing with `--no-render`.
+
 As of November 2, 2026, the revised hours article and provenance labels have been
 prepared and locally rendered; website publication is pending. Continue from
 the request about evaluator-reported time and post production labels.

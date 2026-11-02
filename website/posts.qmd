@@ -1,7 +1,9 @@
 ---
 title: Blog Posts
 listing:
-  contents: "posts/*/index.qmd"
+  contents:
+    - "posts/*/index.qmd"
+    - "!posts/ratings-reliability-2026/**"
   sort: "date desc"
   type: default
   categories: true
