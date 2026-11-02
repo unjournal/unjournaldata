@@ -2,13 +2,16 @@
 title: "Where Are Unjournal Papers Hosted? A Multi-Platform Analysis"
 author: "David Reinstein with Claude Code assistance"
 date: "2026-02-24"
-categories: [data, infrastructure, open-science]
+categories: [data, infrastructure, open-science, "Hybrid"]
 execute:
   echo: false
   warning: false
   message: false
 freeze: auto
+generation: "Hybrid"
 ---
+
+**Production:** Hybrid. The post credits David Reinstein with Claude Code assistance.
 
 We analyzed where the 315 papers in The Unjournal's database are hosted across academic platforms and repositories. Understanding this distribution helps us identify opportunities for improving discoverability and integrating with scholarly infrastructure initiatives like [COAR Notify](https://notify.coar-repositories.org/).
 

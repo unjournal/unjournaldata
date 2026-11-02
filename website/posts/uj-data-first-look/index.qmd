@@ -9,8 +9,11 @@ editor_options:
 editor: 
   markdown: 
     wrap: 72
-categories: [data]
+categories: [data, "Human-generated"]
+generation: "Human-generated"
 ---
+
+**Production:** Human-generated original article by David Hugh-Jones. The October 2026 update note was added with AI assistance.
 
 ::: callout-note
 ## Update, October 2026

@@ -2,8 +2,11 @@
 title: "Unjournal Evaluations Data - January 2026"
 description: "Static snapshot of evaluation data while the interactive dashboard is being updated"
 date: "2026-01-19"
-categories: [data, evaluations]
+categories: [data, evaluations, "AI-generated"]
+generation: "AI-generated"
 ---
+
+**Production:** AI-generated (human-directed). The page and analysis code were created with Claude Code; substantive human editing is not documented.
 
 ```{r}
 #| label: setup

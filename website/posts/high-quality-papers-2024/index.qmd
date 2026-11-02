@@ -9,8 +9,11 @@ execute:
   freeze: auto
   code-fold: true
   code-summary: "Show code"
-categories: [data, analysis, highlights, 2024]
+categories: [data, analysis, highlights, 2024, "Hybrid"]
+generation: "Hybrid"
 ---
+
+**Production:** Hybrid. The credited author is David Reinstein, with substantial Claude Code assistance in the analysis and drafting.
 
 ## Introduction
 

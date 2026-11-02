@@ -2,13 +2,16 @@
 title: "Do authors update their papers after Unjournal evaluations?"
 author: "The Unjournal"
 date: "2026-04-17"
-categories: [impact, evaluations, data]
+categories: [impact, evaluations, data, "Provenance unverified"]
 freeze: true
 format:
   html:
     comments:
       hypothesis: true
+generation: "Provenance unverified"
 ---
+
+**Production:** Provenance unverified. The available post and commit records do not establish how much of the writing was produced by humans or AI.
 
 A key question for any evaluation process is whether it actually changes anything. Do researchers engage with the feedback they receive — and do they revise their work as a result?
 

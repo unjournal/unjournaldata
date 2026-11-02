@@ -14,8 +14,11 @@ editor_options:
 editor:
   markdown:
     wrap: 72
-categories: [data, analysis]
+categories: [data, analysis, "Hybrid"]
+generation: "Hybrid"
 ---
+
+**Production:** Hybrid. The post credits David Reinstein with orchestrating the analysis with Claude Code assistance.
 
 ::: callout-note
 ## Update, October 2026

@@ -3,9 +3,12 @@ title: "Ratings, intervals, reliability and calibration: a 2026 reanalysis"
 author: "David Reinstein with Claude Code assistance"
 date: "2026-10-16"
 draft: true
-categories: [data, analysis, evaluators]
+categories: [data, analysis, evaluators, "AI-generated"]
 description: "What 114 evaluations of 61 papers say about how evaluators use the percentile scales and 90% intervals, how much they agree, and what to change in the form."
+generation: "AI-generated"
 ---
+
+**Production:** AI-generated (human-directed working draft). Claude Code drafted the prose; the draft below has not yet been reviewed.
 
 ::: callout-warning
 ## Draft
