@@ -86,13 +86,16 @@ For an editorial release, build a clean archive of pushed main with
 `code/prepare_editorial_blog_release.py --source <website-source>
 --published <gh-pages-archive> --built <rendered-site>` to retain the previously
 published R snapshots and their resources while adding the source provenance
-notes. This avoids silently updating a dated snapshot when its local freeze
+notes. The helper also refreshes the listing runtime from the installed Quarto
+version, so older frozen libraries cannot break the category filters. This
+avoids silently updating a dated snapshot when its local freeze
 cache is unavailable. The helper also keeps search in sync and excludes draft
 source files. Review the resulting site before publishing with `--no-render`.
 
-Published and verified live on November 2, 2026: `gh-pages` release `025e87f`,
-from clean, pushed `main` source `d8b62fe`. All eight post labels, the hours
-summary, homepage/index links, mobile layout, and search cleanup were checked.
+Published and verified live on November 2, 2026: `gh-pages` release `9b3ae05`,
+from clean, pushed `main` source `b67ab1d`. All eight post labels, the hours
+summary, homepage/index links, mobile layout, category filters, and search cleanup
+were checked.
 The five historical R article bodies and assets retain their prior published
 results. The author-response post remains "Provenance unverified"; change that
 only when its drafting history is established. Continue from the request about
