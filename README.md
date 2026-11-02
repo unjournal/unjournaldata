@@ -90,9 +90,13 @@ notes. This avoids silently updating a dated snapshot when its local freeze
 cache is unavailable. The helper also keeps search in sync and excludes draft
 source files. Review the resulting site before publishing with `--no-render`.
 
-As of November 2, 2026, the revised hours article and provenance labels have been
-prepared and locally rendered; website publication is pending. Continue from
-the request about evaluator-reported time and post production labels.
+Published and verified live on November 2, 2026: `gh-pages` release `025e87f`,
+from clean, pushed `main` source `d8b62fe`. All eight post labels, the hours
+summary, homepage/index links, mobile layout, and search cleanup were checked.
+The five historical R article bodies and assets retain their prior published
+results. The author-response post remains "Provenance unverified"; change that
+only when its drafting history is established. Continue from the request about
+evaluator-reported time and post production labels.
 
 ## Data
 
