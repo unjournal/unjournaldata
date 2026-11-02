@@ -25,7 +25,7 @@ def main():
     preserved = []
     for source in sorted((args.source / 'posts').glob('*/index.qmd')):
         text = source.read_text()
-        if '```{r}' not in text or re.search(r'^draft:\s*true\s*$', text, re.M):
+        if '```{r' not in text or re.search(r'^draft:\s*true\s*$', text, re.M):
             continue
         slug = source.parent.name
         baseline = args.published / 'posts' / slug
