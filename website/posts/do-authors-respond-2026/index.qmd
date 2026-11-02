@@ -2,6 +2,7 @@
 title: "Do authors update their papers after Unjournal evaluations?"
 author: "The Unjournal"
 date: "2026-04-17"
+description: "Tracking whether authors revise their papers after Unjournal evaluations and how they engage with the feedback."
 categories: [impact, evaluations, data, "Provenance unverified"]
 freeze: true
 format:
