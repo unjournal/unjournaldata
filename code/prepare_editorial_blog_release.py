@@ -10,6 +10,7 @@ import html
 import json
 import re
 import shutil
+import subprocess
 from pathlib import Path
 from urllib.parse import quote
 
@@ -55,6 +56,14 @@ def main():
             if resource.is_file() and not target.exists():
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(resource, target)
+    # Frozen computations can restore a listing script from an older Quarto.
+    # Match the runtime to the Quarto version that generated the current markup.
+    quarto_paths = subprocess.check_output(['quarto', '--paths'], text=True).splitlines()
+    listing_assets = Path(quarto_paths[1]) / 'projects/website/listing'
+    for name in ['quarto-listing.js', 'list.min.js']:
+        target = args.built / 'site_libs/quarto-listing' / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(listing_assets / name, target)
     # Search must describe the retained snapshots and must drop the replaced survey text.
     before = json.loads((args.published / 'search.json').read_text())
     after = json.loads((args.built / 'search.json').read_text())
