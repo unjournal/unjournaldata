@@ -1,7 +1,7 @@
 ---
 title: Blog Posts
 listing:
-  contents: posts
+  contents: "posts/*/index.qmd"
   sort: "date desc"
   type: default
   categories: true
@@ -12,3 +12,7 @@ title-block-banner: true
 ---
 
 
+
+Looking for **time taken per evaluation**? See [evaluator-reported hours](posts/evaluator-survey-insights/index.html#time-commitment): median **8 hours**, mean **9.6 hours**, from **33 evaluation records** with reported hours (public export checked November 2, 2026).
+
+Post production labels describe the available drafting evidence: **Human-generated**, **AI-generated** (under human direction), or **Hybrid** (credited human and AI contributions). **Provenance unverified** means the available records do not establish a category. Labels do not certify factual accuracy or human review.

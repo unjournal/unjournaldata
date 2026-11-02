@@ -31,6 +31,8 @@ including feedback and discussion, can be found on our
 
 We also have an [interactive dashboard](https://unjournal.shinyapps.io/uj-dashboard/).
 
+For evaluator-reported **time taken per evaluation**, see the [hours summary](posts/evaluator-survey-insights/index.html#time-commitment), including the median, mean, range, and missing-data limits.
+
 This site and the dashboard present data and analysis on The Unjournal's 
 pipeline and evaluation output. We use them to:
 
@@ -77,3 +79,5 @@ here and in the accompanying dashboards.
 
 
 ```
+
+:::

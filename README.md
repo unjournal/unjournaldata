@@ -60,6 +60,31 @@ created on GitHub, but directly on developer machines.
   <https://quarto.org/docs/publishing/github-pages.html> for more details.
 
 
+## Evaluator time and post provenance
+
+The evaluator-time article stays at
+[`website/posts/evaluator-survey-insights/index.qmd`](website/posts/evaluator-survey-insights/index.qmd)
+and its [existing public URL](https://unjournal.github.io/unjournaldata/posts/evaluator-survey-insights/).
+Its aggregate table comes only from the approved two-column hours export.
+Refresh it with `python3 code/summarize_evaluation_hours.py --as-of YYYY-MM-DD`
+after installing a verified export, then render the post and `website/posts.qmd`.
+The command checks the export hash and row count against the public manifest;
+it writes the included `_hours-summary.md`. The calculation date does not date
+the underlying survey responses. Update the numeric descriptions in the post,
+posts index, and `website/llms.txt` if the results change.
+
+Post production labels live in each post's `generation` field, category, and
+visible production note. Preserve the evidence for the label; use
+"Provenance unverified" when the drafting history is unclear. The posts index
+explains the labels and lists only `posts/*/index.qmd`, excluding supporting
+analysis files and unpublished drafts. For verification, render the affected
+pages, check the production notes and category filters, and independently
+recalculate the hours summary. Follow the existing publishing procedure above.
+
+As of November 2, 2026, the revised hours article and provenance labels have been
+prepared and locally rendered; website publication is pending. Continue from
+the request about evaluator-reported time and post production labels.
+
 ## Data
 
 ### CSV Files (Primary Data Format)
