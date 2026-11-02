@@ -8,6 +8,7 @@
 
 <meta name="author" content="The Unjournal">
 <meta name="dcterms.date" content="2026-04-17">
+<meta name="description" content="Tracking whether authors revise their papers after Unjournal evaluations and how they engage with the feedback.">
 
 <title>Do authors update their papers after Unjournal evaluations? – The Unjournal Data Blog</title>
 <style>
@@ -79,12 +80,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
-<!-- discoverability tags added by seo_kit.py -->
-<link rel="canonical" href="https://unjournal.github.io/unjournaldata/posts/do-authors-respond-2026/">
 <meta property="og:title" content="Do authors update their papers after Unjournal evaluations? – The Unjournal Data Blog">
-<meta property="og:url" content="https://unjournal.github.io/unjournaldata/posts/do-authors-respond-2026/">
-<meta property="og:type" content="website">
+<meta property="og:description" content="Tracking whether authors revise their papers after Unjournal evaluations and how they engage with the feedback.">
+<meta property="og:site_name" content="The Unjournal Data Blog">
+<meta name="twitter:title" content="Do authors update their papers after Unjournal evaluations? – The Unjournal Data Blog">
+<meta name="twitter:description" content="Tracking whether authors revise their papers after Unjournal evaluations and how they engage with the feedback.">
 <meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://unjournal.github.io/unjournaldata/posts/do-authors-respond-2026/">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -125,10 +127,16 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Do authors update their papers after Unjournal evaluations?</h1>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          Tracking whether authors revise their papers after Unjournal evaluations and how they engage with the feedback.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">impact</div>
                 <div class="quarto-category">evaluations</div>
                 <div class="quarto-category">data</div>
+                <div class="quarto-category">Provenance unverified</div>
               </div>
                   </div>
   </div>
@@ -165,6 +173,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p><strong>Production:</strong> Provenance unverified. The available post and commit records do not establish how much of the writing was produced by humans or AI.</p>
 <p>A key question for any evaluation process is whether it actually changes anything. Do researchers engage with the feedback they receive — and do they revise their work as a result?</p>
 <p>We have begun tracking this systematically across our portfolio. The results so far are available here:</p>
 <p><strong><a href="https://valentinklotzbuecher.github.io/llm-uj-research-eval/paper_response_analysis.html#combined-evidence">Did Authors Respond to Unjournal Evaluations? (interactive table and analysis)</a></strong></p>
@@ -318,7 +327,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/unjournal\.github\.io");
+        var filterRegex = new RegExp("https:\/\/unjournal\.github\.io\/unjournaldata\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -70,15 +70,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="styles.css">
-<!-- discoverability tags added by seo_kit.py -->
-<meta name="description" content="Analysis and updates on The Unjournal&#x27;s evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation.">
-<link rel="canonical" href="https://unjournal.github.io/unjournaldata/">
 <meta property="og:title" content="The Unjournal data blog – The Unjournal Data Blog">
-<meta property="og:description" content="Analysis and updates on The Unjournal&#x27;s evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation.">
-<meta property="og:url" content="https://unjournal.github.io/unjournaldata/">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "The Unjournal Data Blog", "url": "https://unjournal.github.io/unjournaldata/", "author": {"@type": "Organization", "name": "The Unjournal", "url": "https://unjournal.org/", "sameAs": ["https://unjournal.pubpub.org/", "https://info.unjournal.org/"]}, "description": "Analysis and updates on The Unjournal's evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation."}</script>
+<meta property="og:description" content="Analysis and updates on The Unjournal’s evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation.">
+<meta property="og:image" content="https://unjournal.github.io/unjournaldata/logo.png">
+<meta property="og:site_name" content="The Unjournal Data Blog">
+<meta property="og:image:height" content="419">
+<meta property="og:image:width" content="1500">
+<meta name="twitter:title" content="The Unjournal data blog – The Unjournal Data Blog">
+<meta name="twitter:description" content="Analysis and updates on The Unjournal’s evaluation data: ratings, evaluator and author surveys, and what happens to papers after evaluation.">
+<meta name="twitter:image" content="https://unjournal.github.io/unjournaldata/logo.png">
+<meta name="twitter:image-height" content="419">
+<meta name="twitter:image-width" content="1500">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://unjournal.github.io/unjournaldata/">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light">
@@ -135,6 +139,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="https://www.unjournal.org">The Unjournal</a> coordinates the public evaluation of papers and research projects. We are working independently of traditional academic journals to build an open platform and a sustainable system for feedback, ratings, and assessment. Our initial focus is quantitative work that informs global priorities, especially in economics, policy, and other social sciences. We will encourage better research by making it easier for researchers to get feedback and credible ratings on their work. Our aim is to make rigorous research more impactful, and impactful research more rigorous.</p>
 <p>This site hosts the <a href="posts.html">Unjournal data blog</a>. Our main web site, <a href="https://www.unjournal.org">unjournal.org</a>, and our <a href="https://globalimpact.gitbook.io/the-unjournal-project-and-communication-space">knowledge base</a> explain and present our vision, procedures and progress. The ‘output’ evaluations, including feedback and discussion, can be found on our <a href="https://unjournal.pubpub.org/">PubPub page</a>, and are indexed in scholarly archives.</p>
 <p>We also have an <a href="https://unjournal.shinyapps.io/uj-dashboard/">interactive dashboard</a>.</p>
+<p>For evaluator-reported <strong>time taken per evaluation</strong>, see the <a href="posts/evaluator-survey-insights/index.html#time-commitment">hours summary</a>, including the median, mean, range, and missing-data limits.</p>
 <p>This site and the dashboard present data and analysis on The Unjournal’s pipeline and evaluation output. We use them to:</p>
 <ol type="1">
 <li><p>Keep track of what we are covering, when and how.</p></li>
@@ -158,9 +163,9 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="unnumbered" data-anchor-id="data-dashboard">Data dashboard</h3>
 <div class="column-body-outset">
 <iframe height="900" width="120%" frameborder="no" src="https://unjournal.shinyapps.io/uj-dashboard/"> </iframe>
-
-
 </div>
+
+
 </section>
 </main> 
     <div class="about-footer"><div class="about-links">
@@ -242,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/unjournal\.github\.io");
+        var filterRegex = new RegExp("https:\/\/unjournal\.github\.io\/unjournaldata\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
