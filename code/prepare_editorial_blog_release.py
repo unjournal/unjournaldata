@@ -34,13 +34,15 @@ def main():
         label = re.search(r'^generation:\s*"([^"]+)"\s*$', text, re.M).group(1)
         note = next(line for line in text.splitlines() if line.startswith('**Production:'))
         rendered_note = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', html.escape(note))
+        old_html = re.sub(r'<p(?: class="production-note")?><strong>Production[^<]*</strong>.*?</p>\s*', '', old_html, count=1, flags=re.S)
         header = re.search(r'<header id="title-block-header"[^>]*>.*?</header>', old_html, re.S)
         if not header:
             raise ValueError(f'Missing title block in {slug}')
         old_html = old_html[:header.end()] + '\n<p class="production-note">' + rendered_note + '</p>\n' + old_html[header.end():]
         chip = ('<a href="../../posts.html#category=' + quote(label) + '">'
                 '<div class="quarto-category">' + html.escape(label) + '</div></a>')
-        old_html = old_html.replace('<div class="quarto-categories">', '<div class="quarto-categories">' + chip, 1)
+        if not re.search(r'<div class="quarto-category">\s*' + re.escape(html.escape(label)) + r'\s*</div>', old_html):
+            old_html = old_html.replace('<div class="quarto-categories">', '<div class="quarto-categories">' + chip, 1)
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(baseline, target)
@@ -48,7 +50,11 @@ def main():
         preserved.append('posts/' + slug + '/')
     # Keep resources referenced by the historical HTML, alongside newly built libraries.
     if (args.published / 'site_libs').exists():
-        shutil.copytree(args.published / 'site_libs', args.built / 'site_libs', dirs_exist_ok=True)
+        for resource in (args.published / 'site_libs').rglob('*'):
+            target = args.built / resource.relative_to(args.published)
+            if resource.is_file() and not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(resource, target)
     # Search must describe the retained snapshots and must drop the replaced survey text.
     before = json.loads((args.published / 'search.json').read_text())
     after = json.loads((args.built / 'search.json').read_text())
