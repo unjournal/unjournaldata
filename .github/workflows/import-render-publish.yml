@@ -16,8 +16,10 @@ permissions:
 
 jobs:
   import-render-publish:
-    runs-on: ubuntu-latest
-    
+    # Pinned: ubuntu-latest moved to 26.04 (GCC 15), where readxl 1.4.3 in
+    # renv.lock fails to compile (missing <cstdint>). Failing daily since Oct 2026.
+    runs-on: ubuntu-24.04
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
