@@ -70,6 +70,30 @@ criteria_titles <- c(
 #| include: false
 
 research <- readr::read_csv(here("data/research.csv"), show_col_types = FALSE)
+
+# One mapping from Coda status labels to pipeline stages, shared by the
+# status bar chart and the pipeline donut. Matches on the numeric prefix
+# and keywords rather than exact labels, so small wording changes in Coda
+# (e.g. "deprioritized" vs "de-prioritized") don't send papers to Unknown.
+# 901_PQ_candidate_eval (Pivotal Questions candidates) counts as under
+# consideration.
+research <- research |>
+  mutate(
+    pipeline_stage = case_when(
+      is.na(status) | str_trim(status) == "" ~ "Unknown",
+      str_detect(status, "^50_") ~ "Evaluation published",
+      str_detect(status, regex("de-?prioriti[sz]|rejected|blocked|not a paper",
+                               ignore_case = TRUE)) ~ "Deprioritized",
+      str_detect(status, "^(04|10|20|30|40)_") |
+        status %in% c("Applied and Policy Research Stream",
+                      "In interim evaluation",
+                      "contacting/awaiting_authors_response_to_evaluation")
+        ~ "Accepted and under evaluation",
+      str_detect(status, "^(01|02|03|901)_") ~ "Under consideration",
+      .default = "Unknown"
+    )
+  )
+
 ratings <- readr::read_csv(here("data/rsx_evalr_rating.csv"), show_col_types = FALSE) |>
   mutate(
     middle_rating = as.numeric(middle_rating),
@@ -446,30 +470,7 @@ output$barplot_proposals <- renderPlot({
 
   plot_data |>
     mutate(
-      Status = case_match(status,
-        c("03_awaiting authors' consent (if needed) or update",
-          "02_final consideration needed",
-          "01_Needs prioritization/assessor rating")
-          ~ "Under consideration",
-        c("de-prioritized bc. of journal-publication status, authors' permission, age, etc.",
-          "authors rejected/blocked us",
-          "deprioritized -- low ratings/voting",
-          "deprioritized -- out of scope or other subjective judgment or managerial concern",
-          "deprioritized - no open access version",
-          "Not a paper/project")
-          ~ "Deprioritized",
-        c("Applied and Policy Research Stream",
-          "20_awaiting_evaluations",
-          "contacting/awaiting_authors_response_to_evaluation",
-          "In interim evaluation",
-          "10_seeking_(more)_evaluators",
-          "04_selected_choose_evaluation_manager")
-          ~ "Accepted and under evaluation",
-        c("50_published evaluations (on PubPub, by Unjournal)")
-          ~ "Evaluation published",
-        .default = "Unknown"
-      ),
-      Status = forcats::fct_relevel(Status,
+      Status = forcats::fct_relevel(pipeline_stage,
                                     "Under consideration",
                                     "Deprioritized",
                                     "Accepted and under evaluation",
@@ -1194,17 +1195,16 @@ output$plot_pipeline_donut <- renderPlotly({
   # Use full research dataset (not filtered by period/area)
   # Categorize papers into pipeline stages based on status
   pipeline_data <- research |>
-    filter(!is.na(status)) |>
     mutate(
-      stage = case_when(
-        str_detect(status, "50_published") ~ "Evaluated",
-        str_detect(status, regex("seeking.*evaluator|awaiting_evaluation", ignore_case = TRUE)) ~ "Evaluating",
-        str_detect(status, regex("deprioritized|rejected|blocked|Not a paper", ignore_case = TRUE)) ~ "Deprioritized",
-        TRUE ~ "Prioritizing"
+      stage = case_match(pipeline_stage,
+        "Evaluation published" ~ "Evaluated",
+        "Accepted and under evaluation" ~ "Evaluating",
+        "Under consideration" ~ "Prioritizing",
+        .default = NA_character_
       )
     ) |>
-    # Only show active pipeline (exclude deprioritized for the donut)
-    filter(stage != "Deprioritized") |>
+    # Only show active pipeline (excludes deprioritized and unknown status)
+    filter(!is.na(stage)) |>
     count(stage)
 
   if (nrow(pipeline_data) == 0) {
