@@ -109,6 +109,13 @@ results. The author-response post remains "Provenance unverified"; change that
 only when its drafting history is established. Continue from the request about
 evaluator-reported time and post production labels.
 
+Restoration published and verified live November 23, 2026: `gh-pages` release
+`cbde63d` from source `febb9ad`. Experience, broad expertise and process-feedback
+summaries, and aggregate willingness results are restored with their historical
+sample and parsing limitations. Hours analysis and AI labels remain intact.
+An independent review is recorded in
+[`docs/reviews/survey-restoration-2026-11-23.md`](docs/reviews/survey-restoration-2026-11-23.md).
+
 ## Data
 
 ### CSV Files (Primary Data Format)
