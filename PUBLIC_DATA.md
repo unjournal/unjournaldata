@@ -31,8 +31,19 @@ pseudonyms.
 ## Prohibited content
 
 Do not commit raw evaluation-form exports, author or evaluator email addresses,
-confidential comments, COI disclosures, willingness or process feedback,
+confidential comments, COI disclosures, raw willingness or process feedback,
 private Coda links, evaluator names joined to papers, or internal pseudonyms.
 
 Operational data, imports, SQLite files, server scripts, and private audit
 evidence belong in `unjournal/unjournal-database`.
+
+## Approved aggregate survey restoration
+
+David authorized restoring non-identifying experience statistics and process
+feedback summaries on November 23, 2026. The historical aggregate snapshot in
+`website/posts/evaluator-survey-insights/survey_aggregate_snapshot.json` contains
+only summary statistics and counts. The post may present broad paraphrased
+feedback themes and aggregate willingness counts with their sample and parsing
+limitations. This exception does not permit individual answers, distinctive
+quotations, respondent-level experience or expertise, or links between feedback,
+people, and papers. Raw survey files remain private.

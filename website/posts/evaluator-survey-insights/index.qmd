@@ -2,10 +2,10 @@
 title: "How long does an Unjournal evaluation take?"
 author: "The Unjournal"
 date: "2025-11-12"
-date-modified: "2026-11-02"
+date-modified: "2026-11-23"
 generation: "Hybrid"
 categories: [evaluators, process, survey, Hybrid]
-description: "Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes the range, quartiles, and missing-data limits."
+description: "Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes hours limitations and historical summaries of evaluator experience and process feedback."
 ---
 
 **Production: Hybrid.** The original article credited David Reinstein with Claude Code assistance. The updated hours analysis and wording were prepared with Codex under human direction.
@@ -19,6 +19,8 @@ description: "Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 
 Evaluators report the time they spent on an evaluation. The published numeric field, `hours_spent_manual_impute`, includes manual conversion or imputation of reported answers. These figures are estimates of working time, rather than elapsed days from invitation to publication.
 
 The unit is an evaluation record, rather than a paper or a unique evaluator. The approved export removes paper and evaluator identifiers, so it supports aggregate time statistics without linking hours to individuals. Missing hours are excluded from the calculations, rather than counted as zero.
+
+{{< include _survey-summary.md >}}
 
 ## Data, calculation, and dashboard
 

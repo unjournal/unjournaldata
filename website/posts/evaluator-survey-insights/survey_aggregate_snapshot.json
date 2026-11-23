@@ -1,0 +1,22 @@
+{
+  "source": "Stored computed aggregate output of the original November 2025 survey post; recovered locally on 2026-11-23. These are historical aggregates, not a recalculation from the newer survey file.",
+  "survey_records": 111,
+  "years": {
+    "n": 78,
+    "mean": 9.3,
+    "median": 10,
+    "at_least_ten": 44
+  },
+  "prior_reviews": {
+    "n": 70,
+    "mean": 41.8,
+    "median": 22.5,
+    "at_least_hundred": 11
+  },
+  "feedback_responses": 38,
+  "reevaluation": {
+    "n": 41,
+    "contains_yes": 27
+  },
+  "field_responses": 20
+}

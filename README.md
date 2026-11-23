@@ -73,6 +73,14 @@ it writes the included `_hours-summary.md`. The calculation date does not date
 the underlying survey responses. Update the numeric descriptions in the post,
 posts index, and `website/llms.txt` if the results change.
 
+The historical survey restoration uses only the approved aggregate snapshot
+`website/posts/evaluator-survey-insights/survey_aggregate_snapshot.json`. Run
+`python3 code/render_evaluator_survey_summary.py` to regenerate its included
+`_survey-summary.md`. These restore the November 2025 computed results, not a
+new analysis of individual answers. Preserve the disclosed parsing filters and
+the distinction between historical survey samples and the hours export.
+Do not restore respondent-level quotations or experience/expertise tables.
+
 Post production labels live in each post's `generation` field, category, and
 visible production note. Preserve the evidence for the label; use
 "Provenance unverified" when the drafting history is unclear. The posts index
