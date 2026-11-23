@@ -8,7 +8,7 @@
 
 <meta name="author" content="The Unjournal">
 <meta name="dcterms.date" content="2025-11-12">
-<meta name="description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes the range, quartiles, and missing-data limits.">
+<meta name="description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes hours limitations and historical summaries of evaluator experience and process feedback.">
 
 <title>How long does an Unjournal evaluation take? – The Unjournal Data Blog</title>
 <style>
@@ -110,10 +110,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="How long does an Unjournal evaluation take? – The Unjournal Data Blog">
-<meta property="og:description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes the range, quartiles, and missing-data limits.">
+<meta property="og:description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes hours limitations and historical summaries of evaluator experience and process feedback.">
 <meta property="og:site_name" content="The Unjournal Data Blog">
 <meta name="twitter:title" content="How long does an Unjournal evaluation take? – The Unjournal Data Blog">
-<meta name="twitter:description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes the range, quartiles, and missing-data limits.">
+<meta name="twitter:description" content="Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes hours limitations and historical summaries of evaluator experience and process feedback.">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://unjournal.github.io/unjournaldata/posts/evaluator-survey-insights/">
 </head>
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">How long does an Unjournal evaluation take?</h1>
                   <div>
         <div class="description">
-          Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes the range, quartiles, and missing-data limits.
+          Evaluator-reported time: median 8 hours, mean 9.6 hours, based on 33 evaluation records. Includes hours limitations and historical summaries of evaluator experience and process feedback.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 2, 2026</p>
+        <p class="date-modified">November 23, 2026</p>
       </div>
     </div>
       
@@ -254,6 +254,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="what-the-figures-measure">What the figures measure</h2>
 <p>Evaluators report the time they spent on an evaluation. The published numeric field, <code>hours_spent_manual_impute</code>, includes manual conversion or imputation of reported answers. These figures are estimates of working time, rather than elapsed days from invitation to publication.</p>
 <p>The unit is an evaluation record, rather than a paper or a unique evaluator. The approved export removes paper and evaluator identifiers, so it supports aggregate time statistics without linking hours to individuals. Missing hours are excluded from the calculations, rather than counted as zero.</p>
+<!-- Generated from survey_aggregate_snapshot.json by code/render_evaluator_survey_summary.py. -->
+</section>
+<section id="evaluator-experience" class="level2">
+<h2 class="anchored" data-anchor-id="evaluator-experience">Evaluator experience</h2>
+<p>The original November 2025 survey snapshot contained <strong>111 evaluation records</strong>. Among answers that the original analysis could parse:</p>
+<ul>
+<li><strong>Years in the field:</strong> 78 usable answers; median <strong>10 years</strong>, mean <strong>9.3 years</strong>. Of these, 44 (56%) gave values of at least ten years.</li>
+<li><strong>Previous reviewing experience:</strong> 70 retained answers; median <strong>22.5 previous reviews</strong>, mean <strong>41.8</strong>. Of these, 11 (16%) gave values of at least a hundred.</li>
+</ul>
+<p>These are historical results from subsets of the survey records, rather than counts of distinct people or an updated survey analysis. The original code extracted numeric values from free-text answers, excluded parsed years at or above a hundred, and retained prior-review counts only when they were at least five. Responses expressed as ranges or lower bounds were reduced to a single number. The prior-review question covered proposals, papers, and projects reviewed for journals, grants, or other peer review. These parsing choices and exclusions limit how representative and precise the summaries are.</p>
+</section>
+<section id="fields-represented" class="level2">
+<h2 class="anchored" data-anchor-id="fields-represented">Fields represented</h2>
+<p>The original snapshot included <strong>20 nonempty field-of-expertise responses</strong>. The broad areas included economics, policy, behavioral research, and environmental research. This count describes answers, rather than distinct disciplines or distinct people.</p>
+</section>
+<section id="feedback-on-the-evaluation-process" class="level2">
+<h2 class="anchored" data-anchor-id="feedback-on-the-evaluation-process">Feedback on the evaluation process</h2>
+<p>The original snapshot included <strong>38 nonempty responses</strong> about the template and process. Broad themes were:</p>
+<ul>
+<li>Appreciation for clear guidance, a helpful template, and the opportunity to combine written assessment with quantitative ratings.</li>
+<li>Requests for a shorter questionnaire and less form-filling after completing the written evaluation.</li>
+<li>Difficulty using sliders and interpreting ratings with uncertainty intervals.</li>
+<li>Requests for worked examples and clearer instructions.</li>
+</ul>
+<p>These themes summarize the earlier post; they were not coded into mutually exclusive categories, and no response shares or ranking of themes are inferred. They describe feedback on the evaluation process rather than on particular papers.</p>
+</section>
+<section id="willingness-to-consider-a-revised-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="willingness-to-consider-a-revised-evaluation">Willingness to consider a revised evaluation</h2>
+<p>Of <strong>41 nonempty answers</strong> to whether the evaluator would consider evaluating a revised version, <strong>27 (66%)</strong> contained “yes.” This reproduces the original simple text classification. Conditional answers may be included; it does not establish a firm commitment or measure satisfaction.</p>
+<p><em>The experience and feedback figures above preserve the original November 2025 computed snapshot. They use a different sample from the separately checked public hours export above. The <a href="survey_aggregate_snapshot.json">aggregate snapshot</a> and <a href="https://github.com/unjournal/unjournaldata/blob/main/code/render_evaluator_survey_summary.py">rendering script</a> reproduce the displayed historical summaries; the rendering script does not reanalyse individual survey answers.</em></p>
 </section>
 <section id="data-calculation-and-dashboard" class="level2">
 <h2 class="anchored" data-anchor-id="data-calculation-and-dashboard">Data, calculation, and dashboard</h2>
